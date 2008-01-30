@@ -1,0 +1,11 @@
+Source: webtornado
+Section: web
+Priority: extra
+Maintainer: Alexey Alexandrov <swined@gmail.com>
+Build-Depends: debhelper
+Standards-Version: 3.7.2
+
+Package: webtornado
+Architecture: any
+Depends: libdbd-mysql-perl, libconfig-file-perl, python-mysqldb, perl, python, bittorrent, libcgi-session-perl, libcgi-perl, libcgi-debug-perl, libbencode-perl
+Description: web based bittorrent download manager
