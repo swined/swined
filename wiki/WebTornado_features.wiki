@@ -1,5 +1,3 @@
-#summary WebTornado feature requests
-
 || *TMS* || *feature* || *comments* ||
 || || Add .torrents from URL || wont work with private trackers and requires lots of paranoid checks -> not next version ||
 || 0.0.5 || Count ratio as UP/DOWN || needs careful updates in ratio-limit code to avoid deletion of undone downloads ||
