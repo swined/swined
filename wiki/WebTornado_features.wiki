@@ -1,10 +1,9 @@
 #summary WebTornado feature requests
 
-* *_Add .torrents from URL_ option*
-* *Count _ratio_ as _UP/DOWN_*
-* *Add _DOWN_ column*
-* *Direct links to files*
-* *Disable tar for single-file torrents*
-* *Add _PEERS_ column*
-* *Add _stop after download_ option*
-
+  * *_Add .torrents from URL_ option*
+  * *Count _ratio_ as _UP/DOWN_*
+  * *Add _DOWN_ column*
+  * *Direct links to files*
+  * *Disable tar for single-file torrents*
+  * *Add _PEERS_ column*
+  * *Add _stop after download_ option*
