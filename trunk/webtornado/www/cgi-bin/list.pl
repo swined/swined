@@ -109,7 +109,7 @@ $table->addRow([
     'total',
     fmsz($total->{size} * 1024 * 1024), 
     fmsz($total->{up} * 1024 * 1024),     
-    fmsq($total->{down} * (1 << 20)),
+    fmsz($total->{down} * (1 << 20)),
     ($total->{up} and $total->{size}) ? r10($total->{up} / $total->{size}) : '--',
     fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
     progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
