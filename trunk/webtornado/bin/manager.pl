@@ -8,6 +8,9 @@ my $wt = new WT;
 my $c = $wt->conf;
 my $dbh = $wt->dbh;
 
+# syncdb
+$wt->syncdb;
+
 # suck .torrents to db
 my $sth = $dbh->prepare('SELECT * FROM torrents WHERE filename IS NOT NULL AND torrent IS NULL');
 $sth->execute;

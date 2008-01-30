@@ -5,6 +5,8 @@ use CGI;
 use DBI;
 use Bencode;
 use Config::File;
+use DBIx::DBSchema::Column;
+use DBIx::DBSchema::Table;
 
 sub new {
     my ($c, %p) = @_;
@@ -65,6 +67,35 @@ sub getTorrentInfo {
 	}
 	$r->{'total_size'} += $_->{'size'} for @{$r->{'files'}};
 	return $r;
+}
+
+sub syncdb {
+    my $dbh = shift->dbh;
+    my $cur_table = new_odbc DBIx::DBSchema::Table($dbh, 'torrents');
+    my $req_table = new DBIx::DBSchema::Table({
+	name => 'torrents', 
+	columns => [
+	    new DBIx::DBSchema::Column('id', 'int', 0, 11, undef, 'auto_increment'),
+	    new DBIx::DBSchema::Column('pid', 'int', 1),
+	    new DBIx::DBSchema::Column('active', 'int', 1),
+	    new DBIx::DBSchema::Column('del', 'int', 1),
+	    new DBIx::DBSchema::Column('owner', 'text', 1), 
+	    new DBIx::DBSchema::Column('filename', 'text', 1),
+	    new DBIx::DBSchema::Column('outdir', 'text', 1),
+	    new DBIx::DBSchema::Column('output', 'text', 1),  
+	    new DBIx::DBSchema::Column('size', 'double', 1),
+	    new DBIx::DBSchema::Column('up', 'double', 1), 
+	    new DBIx::DBSchema::Column('error', 'int', 1),
+	    new DBIx::DBSchema::Column('progress', 'int', 1),
+	    new DBIx::DBSchema::Column('downrate', 'int', 1),
+	    new DBIx::DBSchema::Column('uprate', 'int', 1),
+	    new DBIx::DBSchema::Column('eta', 'int', 1),
+	    new DBIx::DBSchema::Column('info', 'text', 1),
+	    new DBIx::DBSchema::Column('maxratio', 'double', 1),
+	    new DBIx::DBSchema::Column('torrent', 'text', 1), 
+	],
+    });
+    $dbh->do($_) for $cur_table->sql_alter_table($req_table, $dbh);
 }
 
 1
