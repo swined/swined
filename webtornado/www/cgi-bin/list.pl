@@ -116,8 +116,8 @@ $table->addRow([
 ], { style => 'text-align: center' });
 
 my @pb = df '/var/cache/webtornado/users';
-print 'diskspace: ' . fmsz($pb[]) . ' of ' . fmsz($pb[]) . 'free';
-print progressbar int(100*$pb[]/$pb[]), 0, '97%';
+print 'diskspace: ' . fmsz($pb[3]) . ' of ' . fmsz($pb[2] + $pb[3]) . 'free';
+print progressbar int(100*$pb[3]/($pb[2] + $pb[3])), 0, '97%';
 
 print br . $table->render . br . 
     A('/start/all', 'start all') . ' | ' .
