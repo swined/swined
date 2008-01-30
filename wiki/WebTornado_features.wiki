@@ -8,3 +8,5 @@
 || || Add 'stop after download' option || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
 || || DB autoupdate on upgrades || ||
+|| || store .torrents in db || ||
+|| || rewrite download code in perl || just a dream :) ||
