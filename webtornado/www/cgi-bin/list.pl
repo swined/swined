@@ -115,7 +115,7 @@ $table->addRow([
     progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
 ], { style => 'text-align: center' });
 
-my @pb = df '/var/cache/webtornado/users';
+my @pb = df '/var/cache/webtornado/users/';
 print 'diskspace: ' . fmsz($pb[3]) . ' of ' . fmsz($pb[2] + $pb[3]) . 'free';
 print progressbar int(100*$pb[3]/($pb[2] + $pb[3])), 0, '97%';
 
