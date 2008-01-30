@@ -1,19 +1,27 @@
 #summary WebTornado feature requests
 
-  * _Add .torrents from URL_
-  wont work with private trackers and requires lots of paranoid checks -> not next version
-  * _Count ratio as UP/DOWN_
+===Add .torrents from URL===
+wont work with private trackers and requires lots of paranoid checks -> not next version
+
+===Count ratio as UP/DOWN===
 *TMS: 0.0.5*
-  * _Add DOWN column_
+
+===Add DOWN column===
 *TMS: 0.0.5*
 in order not to touch the db (until db autoupgrades are implemented) will be implemented as progress*size. might show bullshit when checking, but it doesnt seem to be really important.
-  * _Direct links to files_
+
+===Direct links to files===
 requires _Unauthenticated file downloads_ and all related redesign
-  * _Disable tar for single-file torrents_
+
+===Disable tar for single-file torrents===
 requires _Unauthenticated file downloads_ and all related redesign
-  * _Add PEERS column_
+
+===Add PEERS column===
 needs db updates -> not next version
-  * _Add 'stop after download' option_
-  * _Unauthenticated file downloads_
+
+===Add 'stop after download' option===
+
+===Unauthenticated file downloads===
 requires redesign of file layout and modrewrite rules
-  * _DB autoupdate on upgrades_
+
+===DB autoupdate on upgrades===
