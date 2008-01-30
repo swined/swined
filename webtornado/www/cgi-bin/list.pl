@@ -18,6 +18,7 @@ sub r10 { int(10 * (shift or $_)) / 10 }
 
 sub fmsz {
     my $s = shift;
+    return r10 . 'T' if 0.7 < abs(local $_ = $s/1024/1024/1024/1024);
     return r10 . 'G' if 0.7 < abs(local $_ = $s/1024/1024/1024);
     return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);    
     return r10 . 'k' if 0.7 < abs(local $_ = $s/1024);    
@@ -116,7 +117,7 @@ $table->addRow([
 ], { style => 'text-align: center' });
 
 my @pb = df '/var/cache/webtornado/users';
-print 'diskspace: ' . $pb[3] . ' of ' . fmsz($pb[2] + $pb[3]) . ' free';
+print 'diskspace: ' . fmsz($pb[3] << 10) . ' of ' . fmsz(($pb[2] + $pb[3]) << 10) . ' free';
 print progressbar int(100*$pb[3]/($pb[2] + $pb[3])), 0, '97%';
 
 print br . $table->render . br . 
