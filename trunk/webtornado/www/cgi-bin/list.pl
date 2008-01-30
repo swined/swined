@@ -118,7 +118,7 @@ $table->addRow([
 
 my @pb = df '/var/cache/webtornado/users';
 print 'diskspace: ' . fmsz($pb[3] * (1 << 10)) . ' of ' . fmsz(($pb[2] + $pb[3]) * (1 << 10)) . ' free';
-print progressbar int(100*$pb[3]/($pb[2] + $pb[3])), 0, '97%';
+print progressbar int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%';
 
 print br . $table->render . br . 
     A('/start/all', 'start all') . ' | ' .
