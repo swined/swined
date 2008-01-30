@@ -44,7 +44,8 @@ my %fs_type = (
 	       1397118030 => "NTFS_SB_MAGIC",		# 0x5346544e
 	       1481003842 => "XFS_SUPER_MAGIC",         # 0x58465342
 	       4187351113 => "HPFS_SUPER_MAGIC",        # 0xF995E849
-	       1448756819 => "VZFS?!",
+	       #1448756819 => "VZFS?!",
+	       21318 => "VZFS?!",
 );
 if (0) {
     printf "%10u 0x%010x %s\n", $_, $_, $fs_type{$_}
