@@ -4,10 +4,10 @@
 wont work with private trackers and requires lots of paranoid checks -> not next version
 
 ====Count ratio as UP/DOWN====
-*TMS: 0.0.5*
+_(TMS: 0.0.5)_
 
 ====Add DOWN column====
-*TMS: 0.0.5*
+_(TMS: 0.0.5)_
 in order not to touch the db (until db autoupgrades are implemented) will be implemented as progress*size. might show bullshit when checking, but it doesnt seem to be really important.
 
 ====Direct links to files====
