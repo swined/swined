@@ -7,3 +7,4 @@
   * _Disable tar for single-file torrents_
   * _Add PEERS column_
   * _Add 'stop after download' option_
+  * _Unauthenticated file downloads_
