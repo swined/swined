@@ -65,7 +65,6 @@ while (my $r = $sth->fetchrow_hashref) {
     $total->{downrate} += $r->{downrate};        
     $total->{uprate} += $r->{uprate};
     $total->{has_undone} = 1 unless $r->{done};
-    $total->{down} += $r->{down};
     my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
     $statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
     $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
