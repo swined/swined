@@ -51,7 +51,7 @@ my $table = new HTML::Widgets::Table({
     style => 'width: 100%',
 });
 $table->addHeaderRow(['&nbsp;', 'name', 'size', 'up', 'down', 'ratio', 'speed', 'status'], { style => 'background-color: #eeeeee' });
-my $sth = $wt->dbh->prepare('SELECT *,up/size AS ratio,progress*size/100 AS down
+my $sth = $wt->dbh->prepare('SELECT *,100*up/progress/size AS ratio,progress*size/100 AS down
     FROM torrents WHERE owner = ? ORDER BY up/size DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
@@ -90,7 +90,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>" 
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
     my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz($r->{size} * $r->{maxratio} * 1024 * 1024 - $r->{up} * 1024 * 1024) : fmsz($r->{up} * 1024 * 1024)) : '--';
-    $up =~ s/--/+/g;
+    $up =~ s/^--(.)/+$1/g;
     my $err = $r->{error} ? "<br><font color=red>$r->{error}</font>" : "";
     $table->addRow([
 	$statusimg,
