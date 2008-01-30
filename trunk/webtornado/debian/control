@@ -7,5 +7,5 @@ Standards-Version: 3.7.2
 
 Package: webtornado
 Architecture: any
-Depends: libdbd-mysql-perl, libconfig-file-perl, python-mysqldb, perl, python, bittorrent, libcgi-session-perl, libcgi-perl, libcgi-debug-perl, libbencode-perl, libdbix-dbschema-perl
+Depends: libdbd-mysql-perl, libconfig-file-perl, python-mysqldb, perl, python, bittorrent, libcgi-session-perl, libcgi-perl, libcgi-debug-perl, libbencode-perl, libfilesys-diskspace-perl
 Description: web based bittorrent download manager

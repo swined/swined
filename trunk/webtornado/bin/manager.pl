@@ -2,6 +2,7 @@
 
 use lib '/usr/share/webtornado/pm';
 use WT;
+#use URI::Escape;
 use Data::Dumper;
 
 my $wt = new WT;
@@ -21,7 +22,7 @@ while (my $r = $sth->fetchrow_hashref) {
 }
 
 # delete overseeded
-$dbh->do('UPDATE torrents SET del = 1 WHERE maxratio > 0 AND size > 0 AND up/size > maxratio');
+$dbh->do('UPDATE torrents SET del = 1 WHERE maxratio > 0 AND size > 0 AND up/size > maxratio AND progress = 100');
 
 # stop deleting
 $dbh->do('UPDATE torrents SET active = 0 WHERE del > 0');
