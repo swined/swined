@@ -7,6 +7,6 @@
 || || Add PEERS column || needs db updates -> not next version ||
 || || Add 'stop after download' option || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
-|| || DB autoupdate on upgrades || ||
+|| 0.0.6 || ~~DB autoupdate on upgrades~~ || ||
 || || store .torrents in db || ||
 || 0.1.0 || rewrite download code in perl || just a dream :) ||
