@@ -127,5 +127,5 @@ print br . $table->render . br .
     'add new torrent: ' . start_form('post', '/upload') . 
     filefield('file') . '&nbsp;' . submit . endform;
 
-print "<font color=gray>webtornado 0.0.5 &copy; swined</font>";
+print "<font color=gray>webtornado 0.0.6 &copy; swined</font>";
 print "</center>";
