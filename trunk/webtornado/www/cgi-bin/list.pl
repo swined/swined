@@ -50,8 +50,8 @@ my $table = new HTML::Widgets::Table({
     alternating_row_colors => ['#ffffff', '#f2f2f2'], 
     style => 'width: 100%',
 });
-$table->addHeaderRow(['&nbsp;', 'name', 'size', 'up', 'ratio', 'speed', 'status'], { style => 'background-color: #eeeeee' });
-my $sth = $wt->dbh->prepare('SELECT *,up/size AS ratio 
+$table->addHeaderRow(['&nbsp;', 'name', 'size', 'up', 'down', 'ratio', 'speed', 'status'], { style => 'background-color: #eeeeee' });
+my $sth = $wt->dbh->prepare('SELECT *,up/size AS ratio,progress*size/100 AS down
     FROM torrents WHERE owner = ? ORDER BY up/size DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
@@ -60,10 +60,12 @@ while (my $r = $sth->fetchrow_hashref) {
     $total->{active}++ if $r->{active};
     $total->{size} += $r->{size};    
     $total->{up} += $r->{up};        
-    $total->{progress} += int($r->{progress} * $r->{size} / 100);    
+    $total->{progress} += int($r->{progress} * $r->{size} / 100);
+    $total->{down} += $r->{down};
     $total->{downrate} += $r->{downrate};        
     $total->{uprate} += $r->{uprate};
     $total->{has_undone} = 1 unless $r->{done};
+    $total->{down} += $r->{down};
     my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
     $statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
     $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
@@ -95,6 +97,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	div({ -style => 'text-align: left' }, $name, $files, $err),
 	$r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--', 
 	$up,
+	fmsz($r->{down} * (1 << 20)),
 	"<nobr>$ratio</nobr>",
 	$r->{active} ? $speed : '--',
 	progressbar($r->{progress}, $r->{eta}), 	
@@ -106,6 +109,7 @@ $table->addRow([
     'total',
     fmsz($total->{size} * 1024 * 1024), 
     fmsz($total->{up} * 1024 * 1024),     
+    fmsq($total->{down} * (1 << 20)),
     ($total->{up} and $total->{size}) ? r10($total->{up} / $total->{size}) : '--',
     fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
     progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
