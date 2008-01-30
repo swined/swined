@@ -5,6 +5,7 @@ use CGI qw/:all/;
 use CGI::Debug;
 use WT;
 use HTML::Widgets::Table;
+use Filesys::DiskSpace;
 
 my $wt = new WT;
 
@@ -114,12 +115,9 @@ $table->addRow([
     progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
 ], { style => 'text-align: center' });
 
-if (my $df = `df -H /var/cache/webtornado/users/ | tail -n1`) {
-    $df =~ s/[\r\n]//g;
-    my @pb = split ' ', $df;
-    print "diskspace: @pb[3] of @pb[1] free";
-    print progressbar @pb[4], 0, '97%';
-};
+my @pb = df '/var/cache/webtornado/users';
+print 'diskspace: ' . fmsz($pb[]) . ' of ' . fmsz($pb[]) . 'free';
+print progressbar int(100*$pb[]/$pb[]), 0, '97%';
 
 print br . $table->render . br . 
     A('/start/all', 'start all') . ' | ' .
