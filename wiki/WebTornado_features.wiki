@@ -5,5 +5,5 @@
   * _Add DOWN column_
   * _Direct links to files_
   * _Disable tar for single-file torrents_
-  * _Add _PEERS_ column_
+  * _Add PEERS column_
   * _Add 'stop after download' option_
