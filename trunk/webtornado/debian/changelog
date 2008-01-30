@@ -1,0 +1,23 @@
+webtornado (0.0.4) unstable; urgency=low
+
+  * minor ui changes
+
+ -- Alexey Alexandrov <swined@gmail.com>  Sat, 29 Dec 2007 18:32:58 +0600
+
+webtornado (0.0.3) unstable; urgency=low
+
+  * minor ui changes
+
+ -- Alexey Alexandrov <swined@gmail.com>  Wed, 26 Dec 2007 18:47:50 +0600
+
+webtornado (0.0.2) unstable; urgency=low
+
+  * added reupload support
+
+ -- Alexey Alexandrov <swined@gmail.com>  Fri, 21 Dec 2007 17:58:17 +0600
+
+webtornado (0.0.1) unstable; urgency=low
+
+  * initial commit 
+
+ -- Alexey Alexandrov <swined@gmail.com>  Tue, 06 Nov 2007 16:12:55 +0600

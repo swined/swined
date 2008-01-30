@@ -1,0 +1,3 @@
+svn commit -m 'auto commit' \
+    && svn-buildpackage -rfakeroot -us -uc \
+    && sudo dpkg -i ../build-area/webtornado_*_i386.deb

@@ -1,0 +1,8 @@
+etc
+etc/cron.d
+usr/bin
+usr/share/perl5
+usr/share/webtornado/bin
+usr/share/webtornado/www/img
+usr/share/webtornado/www/cgi-bin
+var/cache/webtornado/users
