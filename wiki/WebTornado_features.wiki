@@ -6,7 +6,7 @@
 *TMS: 0.0.5*
   * _Add DOWN column_
 *TMS: 0.0.5*
-in order not to touch the db (until db autoupgrades are implemented) will be implemented as progress x size. might show bullshit when checking, but it doesnt seem to be really important.
+in order not to touch the db (until db autoupgrades are implemented) will be implemented as progress*size. might show bullshit when checking, but it doesnt seem to be really important.
   * _Direct links to files_
 requires _Unauthenticated file downloads_ and all related redesign
   * _Disable tar for single-file torrents_
