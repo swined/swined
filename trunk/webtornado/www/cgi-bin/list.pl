@@ -82,6 +82,7 @@ while (my $r = $sth->fetchrow_hashref) {
     eval {
 	local $SIG{__DIE__} = sub {
 	    $dbh->do('UPDATE torrents SET torrent = NULL WHERE id = ?', undef, $r->{id});
+	    $statusimg .= '*';
 	};
 	$VAR1 = bdecode uri_unescape $r->{torrent};
     };
