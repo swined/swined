@@ -84,7 +84,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	    $dbh->do('UPDATE torrents SET torrent = NULL WHERE id = ?', undef, $r->{id});
 	};
 	$VAR1 = bdecode uri_unescape $r->{torrent};
-    }
+    };
     #eval $r->{info};
     my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$VAR1->{files}};
     my $fc = scalar @{$VAR1->{files}};
