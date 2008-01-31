@@ -1,3 +1,3 @@
 svn commit -m 'auto commit' \
-    && svn-buildpackage -rfakeroot -us -uc \
-    && sudo dpkg -i ../build-area/webtornado_*_i386.deb
+    && svn-buildpackage -rfakeroot -us -uc --svn-move-to /home/debian/public_html/pool \
+    && sudo dpkg -i /home/debian/public_html/webtornado_*_i386.deb
