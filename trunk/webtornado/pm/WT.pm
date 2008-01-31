@@ -92,7 +92,7 @@ sub syncdb {
 	    new DBIx::DBSchema::Column('eta', 'int', 1),
 	    new DBIx::DBSchema::Column('info', 'text', 1),
 	    new DBIx::DBSchema::Column('maxratio', 'double', 1),
-	    new DBIx::DBSchema::Column('torrent', 'text', 1), 
+	    new DBIx::DBSchema::Column('torrent', 'longtext', 1), 
 	],
     });
     $dbh->do($_) for $cur_table->sql_alter_table($req_table, $dbh);
