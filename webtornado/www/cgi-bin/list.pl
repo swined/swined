@@ -85,7 +85,6 @@ while (my $r = $sth->fetchrow_hashref) {
 	};
 	$VAR1 = WT::getTorrentInfo(uri_unescape $r->{torrent});
     };
-    #eval $r->{info};
     my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$VAR1->{files}};
     my $fc = scalar @{$VAR1->{files}};
     $files = $fc > 1 ? "<div id='files_$r->{id}' style='color: #666666; display: inline'><a onclick='files_$r->{id}.innerHTML=files_$r->{id}_content.innerHTML'>[$fc files]</a></div><div style='display: none' id='files_$r->{id}_content'><br>$files</div>" : '';
