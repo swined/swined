@@ -17,7 +17,7 @@ sub _bdecode_string {
 	if ( m/ \G ( 0 | [1-9] \d* ) : /xgc ) {
 		my $len = $1;
 
-		warn _msg 'unexpected end of string data starting at %s' if $len > length() - pos();
+		#warn _msg 'unexpected end of string data starting at %s' if $len > length() - pos();
 
 		my $str = substr $_, pos(), $len;
 		pos() = pos() + $len;
