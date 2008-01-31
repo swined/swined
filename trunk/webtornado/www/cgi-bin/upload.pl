@@ -27,6 +27,6 @@ if ($r->{id}) {
 	undef, "$c/torrents/$f", $bt->{total_size} / 1024 / 1024, uri_escape($tor), $r->{id});
 } else {
     $wt->dbh->do('INSERT INTO torrents(owner, filename, output, size, torrent) VALUES(?, ?, ?, ?, ?)', 
-	undef, $ENV{REMOTE_USER}, "$c/torrents/$f", "$c/output/$nf", $bt->{total_size} / 1024 / 1024, $tor);
+	undef, $ENV{REMOTE_USER}, "$c/torrents/$f", "$c/output/$nf", $bt->{total_size} / 1024 / 1024, uri_escape($tor));
 }
 print $wt->cgi->header(-location => '/', -status => 302);
