@@ -18,7 +18,7 @@ $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
     next unless -e $r->{filename};
     $dbh->do('UPDATE torrents SET torrent = ? WHERE id = ?', 
-	undef, WT::cat($r->{filename}), $r->{id});
+	undef, uri_escape(WT::cat($r->{filename})), $r->{id});
 }
 
 # delete overseeded

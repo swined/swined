@@ -6,6 +6,8 @@ use CGI::Debug;
 use WT;
 use HTML::Widgets::Table;
 use Filesys::DiskSpace;
+use URI::Escape;
+use Bencode qw/bdecode/;
 
 my $wt = new WT;
 
