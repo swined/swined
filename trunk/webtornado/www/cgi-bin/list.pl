@@ -7,7 +7,6 @@ use WT;
 use HTML::Widgets::Table;
 use Filesys::DiskSpace;
 use URI::Escape;
-use Bencode qw/bdecode/;
 
 my $wt = new WT;
 
@@ -84,7 +83,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	    $dbh->do('UPDATE torrents SET torrent = NULL WHERE id = ?', undef, $r->{id});
 	    $statusimg .= '*';
 	};
-	$VAR1 = bdecode uri_unescape $r->{torrent};
+	$VAR1 = WT::getTorrentInfo(uri_unescape $r->{torrent});
     };
     #eval $r->{info};
     my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$VAR1->{files}};
