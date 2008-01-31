@@ -80,8 +80,8 @@ while (my $r = $sth->fetchrow_hashref) {
     my $VAR1;
     eval {
 	local $SIG{__DIE__} = sub {
+	    $r->{error} = shift;
 	    $dbh->do('UPDATE torrents SET torrent = NULL WHERE id = ?', undef, $r->{id});
-	    $statusimg .= '*';
 	};
 	$VAR1 = WT::getTorrentInfo(uri_unescape $r->{torrent});
     };
