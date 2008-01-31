@@ -76,7 +76,14 @@ while (my $r = $sth->fetchrow_hashref) {
     $speed = 'stalled' unless $r->{uprate} or $r->{downrate};
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
-    eval $r->{info};
+    my $VAR1;
+    eval {
+	local $SIG{__DIE__} = sub {
+	    $dbh->do('UPDATE torrents SET torrent = NULL WHERE id = ?', undef, $r->{id});
+	};
+	$VAR1 = bdecode uri_unescape $r->{torrent};
+    }
+    #eval $r->{info};
     my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$VAR1->{files}};
     my $fc = scalar @{$VAR1->{files}};
     $files = $fc > 1 ? "<div id='files_$r->{id}' style='color: #666666; display: inline'><a onclick='files_$r->{id}.innerHTML=files_$r->{id}_content.innerHTML'>[$fc files]</a></div><div style='display: none' id='files_$r->{id}_content'><br>$files</div>" : '';
