@@ -54,10 +54,13 @@ my $table = new HTML::Widgets::Table({
     style => 'width: 100%',
 });
 $table->addHeaderRow(['&nbsp;', 'name', 'size', 'up', 'down', 'ratio', 'speed', 'status'], { style => 'background-color: #eeeeee' });
-my $sth = $wt->dbh->prepare('SELECT *,100*up/progress/size AS ratio,progress*size/100 AS down
-    FROM torrents WHERE owner = ? ORDER BY up/size DESC');
+my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/size DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
+    my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
+    $r->{size} = $bt->{total_size} / (1 << 20);
+    $r->{ratio} = 100 * $r->{up} / $r->{progress} / $r->{size};
+    $r->{down} = $r->{progress} * $r->{size} / 100;
     $r->{done} = $r->{progress} >= 100;
     $total->{count}++;
     $total->{active}++ if $r->{active};
@@ -77,16 +80,8 @@ while (my $r = $sth->fetchrow_hashref) {
     $speed = 'stalled' unless $r->{uprate} or $r->{downrate};
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
-    my $VAR1;
-    eval {
-	local $SIG{__DIE__} = sub {
-	    $r->{error} = shift;
-	    $dbh->do('UPDATE torrents SET torrent = NULL WHERE id = ?', undef, $r->{id});
-	};
-	$VAR1 = WT::getTorrentInfo(uri_unescape $r->{torrent});
-    };
-    my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$VAR1->{files}};
-    my $fc = scalar @{$VAR1->{files}};
+    my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$bt->{files}};
+    my $fc = scalar @{$bt->{files}};
     $files = $fc > 1 ? "<div id='files_$r->{id}' style='color: #666666; display: inline'><a onclick='files_$r->{id}.innerHTML=files_$r->{id}_content.innerHTML'>[$fc files]</a></div><div style='display: none' id='files_$r->{id}_content'><br>$files</div>" : '';
     my $ratio = (r10($r->{ratio}) or '--') . ($r->{maxratio} ? ' (' . r10($r->{maxratio}) . ')' : '');
     $ratio = "<div style='color: red'><b>$ratio</b></div>" if $r->{maxratio} and ($r->{ratio} > $r->{maxratio});
