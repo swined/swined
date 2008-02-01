@@ -59,7 +59,7 @@ $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
     my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
     $r->{size} = $bt->{total_size} / (1 << 20);
-    $r->{ratio} = 100 * $r->{up} / $r->{progress} / $r->{size};
+    $r->{ratio} = 100 * $r->{up} / ($r->{progress} or 0.001) / $r->{size};
     $r->{down} = $r->{progress} * $r->{size} / 100;
     $r->{done} = $r->{progress} >= 100;
     $total->{count}++;
