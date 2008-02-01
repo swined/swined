@@ -1,0 +1,76 @@
+#!/usr/bin/perl
+
+use CGI qw/param/;
+use XML::Writer;
+use LWP::UserAgent;
+use Cache::FastMmap;
+
+my $ua = new LWP::UserAgent(cookie_jar => {});
+my ($ll, $hp) = (param('login'), param('hash'));
+
+my $cache = new Cache::FastMmap(
+    share_file => '/var/cache/lj2rss/cache',
+    expire_time => '1d',
+    unlink_on_exit => 0,
+    read_cb => sub {
+	my $w = $ua->get($_[1] . '?format=light')->content;
+	return if $w !~ /<blockquote>/s;
+	my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
+	local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
+	    s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
+	{ subject => $t, content => $_ };
+    },
+);
+
+sub login {
+    my $s = { split /\n/, $ua->post('http://www.livejournal.com/interface/flat', [
+	mode => sessiongenerate, user => $ll, hpassword => $hp, expiration => short
+	])->content }->{ljsession};
+    my $l = $s =~ /^.+?:(.+?:.+?):/ ? $1 : return;
+    $ua->cookie_jar->set_cookie(0, 'ljsession', $s, '/', '.livejournal.com');
+    $ua->cookie_jar->set_cookie(0, 'ljloggedin', $l, '/', '.livejournal.com');
+}
+
+sub links {
+    my $rs = $ua->get('http://www.livejournal.com/mobile/friends.bml');
+    grep s/.*: <a href='(.*?)\?.*?'>.*/$1/, split '<b', $rs->content;
+}
+
+sub getJName {
+    map { return $1 if @_[0] =~ $_ } 
+	('^http://(.*?)\.livejournal\.com/[0-9]*\.html',
+	'^http://users\.livejournal\.com/(.*?)/[0-9]*\.html',
+	'^http://community\.livejournal\.com/(.*?)/[0-9]*\.html');
+    return '***';
+}
+
+sub addEntry {
+    my ($xml, $lnk, $ttl, $dsc, $dtm) = @_;
+    $xml->startTag('item');
+    $xml->dataElement('guid', $lnk, isPermaLink => 'true');
+    $xml->dataElement('link', $lnk);
+    $xml->dataElement('title', $ttl);
+    $xml->dataElement('description', $dsc);
+    $xml->endTag;
+}
+
+print "content-type: text/xml; charset=utf-8\n\n";
+
+my $xml = new XML::Writer(OUTPUT => STDOUT);
+$xml->startTag('rss', version => '2.0');
+$xml->startTag('channel');
+$xml->dataElement($_, "${ll}'s friends") for ('title', 'description');
+$xml->dataElement('link', "http://www.livejournal.com/~$ll/friends");
+if (login) {
+    foreach (links) {
+	my $et = eval { alarm 0; $cache->get($_); } or next;
+	addEntry($xml, $_, ($et->{subject} or getJName($_) . ': untitled'), $et->{content});	
+    }
+} else {
+    addEntry($xml, "http://$ENV{HTTP_HOST}/?rand=" . rand, 'error', 
+	'Could not log into your LJ account.');
+}
+$xml->dataElement('debug', '', 'time' => time - $^T);
+$xml->endTag;
+$xml->endTag;
+$xml->end;
