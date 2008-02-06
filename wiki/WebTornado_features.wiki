@@ -5,8 +5,10 @@
 || || Direct links to files || requires _Unauthenticated file downloads_ and all related redesign ||
 || || Disable tar for single-file torrents || requires _Unauthenticated file downloads_ and all related redesign ||
 || || Add PEERS column || needs db updates -> not next version ||
-|| || Add 'stop after download' option || ||
+|| 0.0.7 || stop after ratio-limit || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
 || 0.0.6 || ~~DB autoupdate on upgrades~~ || ||
 || || store .torrents in db || ||
 || 0.1.0 || rewrite download code in perl || just a dream :) ||
+|| 0.0.7 || add separate DOWN column || ||
+|| 0.0.7 || optimize list rendering || generic feature :) could be started with .torrent parsed contents caching ||
