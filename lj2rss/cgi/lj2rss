@@ -32,7 +32,7 @@ sub login {
 }
 
 sub links {
-    my $rs = $ua->get('http://www.livejournal.com/mobile/friends.bml');
+    my $rs = $ua->get('http://www.livejournal.com/mobile/friends.bml?skip=' . param('skip'));
     grep s/.*: <a href='(.*?)\?.*?'>.*/$1/, split '<b', $rs->content;
 }
 
