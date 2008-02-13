@@ -18,7 +18,7 @@ foreach my $entry (reverse $feed->entries) {
     my $cache = "$c->{cache}/" . md5_hex $entry->link->href;
     next if -e $cache;
     use Data::Dumper;
-    my $content = "<b>" . $entry->title . "</b><br>" . $entry->content->body . "<br><br>[Crossposted from <a href='$c->{url}'>$c->{name}</a>] [<a href='" . $entry->link->href . "'>Comments</a>]";
+    my $content = $entry->content->body . "<br><br>[Crossposted from <a href='$c->{url}'>$c->{name}</a>] [<a href='" . $entry->link->href . "'>Comments</a>]";
     my @t = localtime;    
     my $data = {
 	ver => 1,
@@ -26,7 +26,6 @@ foreach my $entry (reverse $feed->entries) {
 	user => $c->{ljuser}, 
 	hpassword => md5_hex($c->{ljpass}),
 	event => $content,
-#	subject => 'crosspost',
 	prop_opt_nocomments => 1,
 	year => $t[5] + 1900,
 	mon => $t[4] + 1,
