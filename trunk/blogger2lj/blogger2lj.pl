@@ -26,7 +26,7 @@ foreach my $entry (reverse $feed->entries) {
 	user => $c->{ljuser}, 
 	hpassword => md5_hex($c->{ljpass}),
 	event => $content,
-	subject => 'crosspost',
+#	subject => 'crosspost',
 	prop_opt_nocomments => 1,
 	year => $t[5] + 1900,
 	mon => $t[4] + 1,
@@ -39,5 +39,4 @@ foreach my $entry (reverse $feed->entries) {
     $req->content(join("&", map { "$_=" . uri_escape_utf8($data->{$_}) } keys %$data));
     die $_ if local $_ = { split /\n/, LWP::UserAgent->new->request($req)->content }->{errmsg};
     open(F, '>', $cache) and close(F);
-    exit;
 }
