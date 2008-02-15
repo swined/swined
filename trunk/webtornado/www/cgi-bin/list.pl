@@ -29,12 +29,11 @@ sub fmsz {
 
 sub progressbar {
     my ($p, $e, $w) = @_;
-    return "unknown" unless $p;    
-    return "done" if $p >= 100;
+    return 'unknown' unless $p;    
+    return 'done' if $p >= 100;
     $p .= '%' unless $p =~ /%$/;
-    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 
-	"border: 1px solid black; width: " . ($w or '100px') . "; height: 5px; background-color: black; text-align: left"
-	}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
+    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'border: 1px solid black; width: ' . ($w or '100px') . 
+	'; height: 5px; background-color: black; text-align: left'}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
 }
 
 print meta({ -http_equiv => 'REFRESH', -content => '30;URL=/' });
