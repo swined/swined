@@ -37,7 +37,7 @@ sub progressbar {
 }
 
 print meta({ -http_equiv => 'REFRESH', -content => '30;URL=/' });
-print "<center>";
+print '<center>';
 
 my $total = {};
 my $table = new HTML::Widgets::Table({ 
@@ -86,7 +86,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
     my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz($r->{size} * $r->{maxratio} * 1024 * 1024 - $r->{up} * 1024 * 1024) : fmsz($r->{up} * 1024 * 1024)) : '--';
     $up =~ s/^--(.)/+$1/g;
-    my $err = $r->{error} ? "<br><font color=red>$r->{error}</font>" : "";
+    my $err = $r->{error} ? br . "<font color=red>$r->{error}</font>" : "";
     $table->addRow([
 	$statusimg,
 	div({ -style => 'text-align: left' }, $name, $files, $err),
