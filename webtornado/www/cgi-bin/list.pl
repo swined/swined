@@ -31,18 +31,9 @@ sub progressbar {
     my ($p, $e, $w) = @_;
     return "unknown" unless $p;    
     return "done" if $p >= 100;
-#    my @E = gmtime($e);
-#    my $eta = "@E[1]:@E[0]";
-#    --@E[3];
-#    $eta = "@E[2]:$eta" if @E[2];
-#    $eta = "@E[3]d $eta" if @E[3];
-#    $eta = '> 1 week' if @E[3] > 6;
-#    $eta = $e ? "eta $eta" : '';
-#    $eta =~ s/:(\d)(?!\d)/:0$1/g;
-    $w = '100px' unless $w;
     $p .= '%' unless $p =~ /%$/;
     center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 
-	"border: 1px solid black; width: $w; height: 5px; background-color: black; text-align: left"
+	"border: 1px solid black; width: " . ($w or '100px') . "; height: 5px; background-color: black; text-align: left"
 	}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
 }
 
