@@ -79,7 +79,7 @@ while (my $r = $sth->fetchrow_hashref) {
     $ratio = "<a onclick='set_maxratio_$r->{id}.innerHTML=set_maxratio_$r->{id}_content.innerHTML'>$ratio</a>" .
     div({ -id => "set_maxratio_$r->{id}" }) . 
     div({ -id => "set_maxratio_$r->{id}_content", -style => 'display: none' },
-	start_form('get', '/cgi-bin/action.pl')
+	start_form('get', '/cgi-bin/action.plc')
 	. "<input type=hidden name=action value=set_maxratio>"
 	. input({ -type => 'hidden', -name => 'id', -value => $r->{id} })
 	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>" 
