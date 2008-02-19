@@ -15,10 +15,6 @@ configure-stamp:
 	touch configure-stamp
 
 build: build-stamp
-	perlcc -B www/cgi-bin/list.pl -o www/cgi-bin/list.plc
-	perlcc -B www/cgi-bin/action.pl -o www/cgi-bin/action.plc
-	perlcc -B www/cgi-bin/upload.pl -o www/cgi-bin/upload.plc
-	perlcc -B www/cgi-bin/get.pl -o www/cgi-bin/get.plc	
 
 build-stamp: configure-stamp 
 	dh_testdir
@@ -36,7 +32,11 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 	cp -R {bin,pm,www} $(CURDIR)/debian/webtornado/usr/share/webtornado
-	rm -f $(CURDIR)/debian/webtornado/usr/share/webtornado/www/cgi-bin/*.pl
+	perlcc -B www/cgi-bin/list.pl -o $(CURDIR)/debian/webtornado/usr/share/webtornado/www/cgi-bin/list.pl
+	perlcc -B www/cgi-bin/action.pl -o $(CURDIR)/debian/webtornado/usr/share/webtornado/www/cgi-bin/action.pl
+	perlcc -B www/cgi-bin/upload.pl -o $(CURDIR)/debian/webtornado/usr/share/webtornado/www/cgi-bin/upload.pl
+	perlcc -B www/cgi-bin/get.pl -o $(CURDIR)/debian/webtornado/usr/share/webtornado/www/cgi-bin/get.pl	
+	perlcc -B bin/manager.pl -o $(CURDIR)/debian/webtornado/usr/share/webtornado/bin/manager.pl
 	cp webtornado.conf $(CURDIR)/debian/webtornado/etc
 	touch $(CURDIR)/debian/webtornado/etc/webtornado.auth
 
