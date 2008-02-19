@@ -2,7 +2,7 @@ Source: webtornado
 Section: web
 Priority: extra
 Maintainer: Alexey Alexandrov <swined@gmail.com>
-Build-Depends: debhelper
+Build-Depends: debhelper, perl
 Standards-Version: 3.7.2
 
 Package: webtornado

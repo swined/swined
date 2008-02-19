@@ -15,6 +15,10 @@ configure-stamp:
 	touch configure-stamp
 
 build: build-stamp
+	perlcc -B www/cgi-bin/list.pl -o www/cgi-bin/list.pl
+	perlcc -B www/cgi-bin/action.pl -o www/cgi-bin/action.pl
+	perlcc -B www/cgi-bin/upload.pl -o www/cgi-bin/upload.pl
+	perlcc -B www/cgi-bin/get.pl -o www/cgi-bin/get.pl	
 
 build-stamp: configure-stamp 
 	dh_testdir
