@@ -15,7 +15,7 @@ configure-stamp:
 	touch configure-stamp
 
 build: build-stamp
-	-e build || mkdir build
+	test -e build || mkdir build
 	cp -R {bin,www,pm} build
 	perlcc -B build/www/cgi-bin/list.pl -o build/www/cgi-bin/list.pl
 	perlcc -B build/www/cgi-bin/action.pl -o build/www/cgi-bin/action.pl
