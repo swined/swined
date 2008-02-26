@@ -14,7 +14,7 @@ sub put {
 	my ($size, $hash) = ($stat[7], md5_hex($name . time));
 	open F, '<', $file;
 	while (sysread F, $b, 1 << 20) {
-		$g->append('.gstorage-data', "Subject: .gstorage/data/$hash/" . $i++ . "\n\n" . encode_base64 $b) or die 'store failed';
+		$g->append('.gstorage-data', "Subject: .gstorage/data/$hash/" . $i++ . "\n\n" . encode_base64 $b) or die 'put failed';
 		push @$c, md5_hex $b;
 	}
 	$g->append('.gstorage-files', "Subject: .gstorage/file/$hash/" . encode_base64($name) . "\n\n" . encode_base64 bencode { hash => $hash, size => $size, chunks => $c });
