@@ -39,5 +39,5 @@ my $g = new Mail::IMAPClient(
 $g->create('.gstorage-files');
 $g->create('.gstorage-data');
 
-put $g, '', '';
+#put $g, '', '';
 print for list $g;
