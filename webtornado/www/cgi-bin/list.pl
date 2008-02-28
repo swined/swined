@@ -22,8 +22,8 @@ sub fmsz {
     my $s = shift;
     return r10 . 'T' if 0.7 < abs(local $_ = $s/1024/1024/1024/1024);
     return r10 . 'G' if 0.7 < abs(local $_ = $s/1024/1024/1024);
-    return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);    
-    return r10 . 'k' if 0.7 < abs(local $_ = $s/1024);    
+    return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);
+    return r10 . 'k' if 0.7 < abs(local $_ = $s/1024);
     return int($s) . 'b';
 }
 
@@ -55,11 +55,11 @@ while (my $r = $sth->fetchrow_hashref) {
     $r->{done} = $r->{progress} >= 100;
     $total->{count}++;
     $total->{active}++ if $r->{active};
-    $total->{size} += $r->{size};    
-    $total->{up} += $r->{up};        
+    $total->{size} += $r->{size};
+    $total->{up} += $r->{up};
     $total->{progress} += int($r->{progress} * $r->{size} / 100);
     $total->{down} += $r->{down};
-    $total->{downrate} += $r->{downrate};        
+    $total->{downrate} += $r->{downrate};
     $total->{uprate} += $r->{uprate};
     $total->{has_undone} = 1 unless $r->{done};
     my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
@@ -77,7 +77,7 @@ while (my $r = $sth->fetchrow_hashref) {
     my $ratio = (r10($r->{ratio}) or '--') . ($r->{maxratio} ? ' (' . r10($r->{maxratio}) . ')' : '');
     $ratio = "<div style='color: red'><b>$ratio</b></div>" if $r->{maxratio} and ($r->{ratio} > $r->{maxratio});
     $ratio = "<a onclick='set_maxratio_$r->{id}.innerHTML=set_maxratio_$r->{id}_content.innerHTML'>$ratio</a>" .
-    div({ -id => "set_maxratio_$r->{id}" }) . 
+    div({ -id => "set_maxratio_$r->{id}" }) .
     div({ -id => "set_maxratio_$r->{id}_content", -style => 'display: none' },
 	start_form('get', '/cgi-bin/action.pl')
 	. "<input type=hidden name=action value=set_maxratio>"
@@ -90,12 +90,12 @@ while (my $r = $sth->fetchrow_hashref) {
     $table->addRow([
 	$statusimg,
 	div({ -style => 'text-align: left' }, $name, $files, $err),
-	$r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--', 
+	$r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--',
 	$up,
 	fmsz($r->{down} * (1 << 20)),
 	"<nobr>$ratio</nobr>",
 	$r->{active} ? $speed : '--',
-	progressbar($r->{progress}, $r->{eta}), 	
+	progressbar($r->{progress}, $r->{eta}),
     ], { style => 'text-align: center', valign => 'top' });
 }
 $total->{active} |= 0;

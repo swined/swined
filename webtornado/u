@@ -1,3 +1,10 @@
-svn commit -m 'auto commit' \
-    && svn-buildpackage -rfakeroot -us -uc --svn-move-to /home/debian/public_html/pool \
-    && sudo dpkg -i /home/debian/public_html/pool/webtornado_*_i386.deb
+#!/bin/sh
+
+die() {
+    echo $1
+    exit 1
+}
+
+svn commit -m 'auto commit' || die commit failed
+svn-buildpackage -rfakeroot -us -uc --svn-move-to $PWD || die build failed
+sudo dpkg -i webtornado_*_i386.deb || die installation failed
