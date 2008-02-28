@@ -6,7 +6,7 @@ die() {
 }
 
 svn commit -m 'auto commit' || die commit failed
-SVNREV=$(LANG=en_US.UTF8 svn info | grep ^Revision: | awk '{ print $2 }')
+SVNREV=$(LANG=en_US.UTF-8 svn info | grep ^Revision: | awk '{ print $2 }')
 die $SVNREV
 svn-buildpackage -rfakeroot -us -uc --svn-move-to $PWD || die build failed
 sudo dpkg -i webtornado_*_i386.deb || die installation failed
