@@ -5,9 +5,10 @@ die() {
     exit 1
 }
 
-SVNREV=$(LANG=en_US.UTF-8 svn info | grep ^Revision: | awk '{ print $2 }')
-die $SVNREV
+REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
+VER=0.1.$REV
 
+dch -v $VER "svn revision $REV" || die dch failed
 svn commit -m 'auto commit' || die commit failed
-svn-buildpackage -rfakeroot -us -uc --svn-move-to $PWD || die build failed
-sudo dpkg -i webtornado_*_i386.deb || die installation failed
+svn-buildpackage -rfakeroot -us -uc --svn-move || die build failed
+sudo dpkg -i ../webtornado_${VER}_i386.deb || die installation failed
