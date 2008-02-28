@@ -9,6 +9,7 @@ REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
 VER=0.1.$REV
 
 dch -v $VER "svn revision $REV" || die dch failed
+svn up
 svn commit -m 'auto commit' || die commit failed
 svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
 sudo dpkg -i ../webtornado_${VER}_i386.deb || die installation failed
