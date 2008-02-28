@@ -1,20 +1,8 @@
-webtornado (0.1.112) unstable; urgency=low
+webtornado (0.1.113) unstable; urgency=low
 
-  * svn revision 112
+  * svn revision 113
 
- -- Alexey Alexandrov <alex@km21910-26.keymachine.de>  Thu, 28 Feb 2008 19:52:23 +0600
-
-webtornado (0.1.111) unstable; urgency=low
-
-  * svn revision 111
-
- -- Alexey Alexandrov <alex@km21910-26.keymachine.de>  Thu, 28 Feb 2008 19:37:53 +0600
-
-webtornado (0.1.110) unstable; urgency=low
-
-  * svn revision 110
-
- -- Alexey Alexandrov <alex@km21910-26.keymachine.de>  Thu, 28 Feb 2008 19:33:44 +0600
+ -- Alexey Alexandrov <swined@gmail.com>  Thu, 28 Feb 2008 19:55:40 +0600
 
 webtornado (0.0.6) unstable; urgency=low
 
