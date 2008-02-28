@@ -15,11 +15,6 @@ configure-stamp:
 	touch configure-stamp
 
 build: build-stamp
-	perlcc -B www/cgi-bin/list.pl -o www/cgi-bin/list.plc
-	perlcc -B www/cgi-bin/action.pl -o www/cgi-bin/action.plc
-	perlcc -B www/cgi-bin/upload.pl -o www/cgi-bin/upload.plc
-	perlcc -B www/cgi-bin/get.pl -o www/cgi-bin/get.plc
-	perlcc -B bin/manager.pl -o bin/manager.plc
 
 build-stamp: configure-stamp 
 	dh_testdir
@@ -59,4 +54,10 @@ binary-arch: build install
 	dh_builddeb
 
 binary: binary-indep binary-arch
+	perlcc -B www/cgi-bin/list.pl -o www/cgi-bin/list.plc
+	perlcc -B www/cgi-bin/action.pl -o www/cgi-bin/action.plc
+	perlcc -B www/cgi-bin/upload.pl -o www/cgi-bin/upload.plc
+	perlcc -B www/cgi-bin/get.pl -o www/cgi-bin/get.plc
+	perlcc -B bin/manager.pl -o bin/manager.plc
+
 .PHONY: build clean binary-indep binary-arch binary install configure
