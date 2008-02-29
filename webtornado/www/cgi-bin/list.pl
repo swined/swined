@@ -20,7 +20,7 @@ sub IMG { img({ -border => 0, -src => shift }) }
 sub r10 { int(10 * (shift or $_)) / 10 }
 
 sub fmsz {
-    my $s = shift;
+    my $s = shift return;
     return r10 . 'T' if 0.7 < abs(local $_ = $s/1024/1024/1024/1024);
     return r10 . 'G' if 0.7 < abs(local $_ = $s/1024/1024/1024);
     return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);
@@ -59,10 +59,6 @@ while (my $r = $sth->fetchrow_hashref) {
     my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
     $statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
     $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
-#    my $name = (-e $r->{output}) ? $r->{output} : $r->{filename};
-#    $name =~ s{.+/}{};
-    my $speed = ($r->{done} ? '' : fmsz($r->{downrate}) . ' / ') . fmsz($r->{uprate});
-    $speed = 'stalled' unless $r->{uprate} or $r->{downrate};
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
     my $files = join '<br>', map { '[' . fmsz($_->{size}) . '] ' . $_->{name} } @{$bt->{files}};
@@ -80,17 +76,19 @@ while (my $r = $sth->fetchrow_hashref) {
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
     (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
     push @torrents, {
+	id => $r->{id},
 	active => $r->{active},
 	error => $r->{error},
+	done => $r->{done},
 	icons => $statusimg,
-#	name => $name,
 	name => $bt->{name},
 	files => $files,
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
 	down => fmsz($r->{down} * (1 << 20)),
 	ratio => $ratio,
-	speed => $speed,
+	uprate => fmsz($r->{uprate}),
+	downrate => fmsz($r->{downrate}),
 	status => progressbar($r->{progress}, $r->{eta}),
     };
 }
@@ -115,7 +113,7 @@ $tmpl->param({
     total_up => fmsz($total->{up} * (1 << 20)),     
     total_down => fmsz($total->{down} * (1 << 20)),
     total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
-    total_speed => fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
+    total_speed => (fmsz($total->{downrate}) or '0b') . ' / ' . (fmsz($total->{uprate}) or '0b'),
     total_status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
     version => $VER::VER,
 });
