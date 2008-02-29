@@ -6,7 +6,36 @@
 
 diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 
-%table% <br>
+<table border="0" style="width: 100%" summary="">
+<thead>
+<tr>
+<th style="background-color: #eeeeee">&nbsp;</th>
+<th style="background-color: #eeeeee">name</th>
+<th style="background-color: #eeeeee">size</th>
+<th style="background-color: #eeeeee">up</th>
+<th style="background-color: #eeeeee">down</th>
+<th style="background-color: #eeeeee">ratio</th>
+<th style="background-color: #eeeeee">speed</th>
+<th style="background-color: #eeeeee">status</th>
+</tr>
+</thead>
+<tbody>
+<tmpl_loop torrents>
+<tr bgcolor="<tmpl_if __odd__>#ffffff<tmpl_else>#f2f2f2</tmpl_if>">
+<td style="text-align: center" valign="top">%icons%</td>
+<td style="text-align: center" valign="top">%name%</td>
+<td style="text-align: center" valign="top">%size%</td>
+<td style="text-align: center" valign="top">%up%</td>
+<td style="text-align: center" valign="top">%down%</td>
+<td style="text-align: center" valign="top">%ratio%</td>
+<td style="text-align: center" valign="top">%speed%</td>
+<td style="text-align: center" valign="top">%status%</td>
+</tr>
+</tmpl_loop>
+</tbody>
+</table>
+
+<br>
 
 <a href='/start/all'>start all</a> | 
 <a href='/stop/all'>stop all</a> | 

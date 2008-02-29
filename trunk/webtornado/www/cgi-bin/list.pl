@@ -5,7 +5,6 @@ use CGI qw/:all/;
 use CGI::Debug;
 use WT;
 use VER;
-use HTML::Widgets::Table;
 use HTML::Template;
 use Filesys::DiskSpace;
 use URI::Escape;
@@ -38,12 +37,8 @@ sub progressbar {
 	'; height: 5px; background-color: black; text-align: left'}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
 }
 
+my @torrents;
 my $total = {};
-my $table = new HTML::Widgets::Table({ 
-    alternating_row_colors => ['#ffffff', '#f2f2f2'], 
-    style => 'width: 100%',
-});
-$table->addHeaderRow(['&nbsp;', 'name', 'size', 'up', 'down', 'ratio', 'speed', 'status'], { style => 'background-color: #eeeeee' });
 my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/size DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
@@ -86,28 +81,28 @@ while (my $r = $sth->fetchrow_hashref) {
     my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz($r->{size} * $r->{maxratio} * 1024 * 1024 - $r->{up} * 1024 * 1024) : fmsz($r->{up} * 1024 * 1024)) : '--';
     $up =~ s/^--(.)/+$1/g;
     my $err = $r->{error} ? br . "<font color=red>$r->{error}</font>" : "";
-    $table->addRow([
-	$statusimg,
-	div({ -style => 'text-align: left' }, $name, $files, $err),
-	$r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--',
-	$up,
-	fmsz($r->{down} * (1 << 20)),
-	"<nobr>$ratio</nobr>",
-	$r->{active} ? $speed : '--',
-	progressbar($r->{progress}, $r->{eta}),
-    ], { style => 'text-align: center', valign => 'top' });
+    push @torrents, {
+	icons => $statusimg,
+	name => div({ -style => 'text-align: left' }, $name, $files, $err),
+	size => $r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--',
+	up => $up,
+	down => fmsz($r->{down} * (1 << 20)),
+	ratio => "<nobr>$ratio</nobr>",
+	speed => ($r->{active} ? $speed : '--'),
+	status => progressbar($r->{progress}, $r->{eta}),
+    };
 }
 $total->{active} |= 0;
-$table->addRow([
-    "$total->{active} / $total->{count}",
-    'total',
-    fmsz($total->{size} * 1024 * 1024), 
-    fmsz($total->{up} * 1024 * 1024),     
-    fmsz($total->{down} * (1 << 20)),
-    ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
-    fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
-    progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
-], { style => 'text-align: center' });
+push @torrents, {
+    icons => "$total->{active} / $total->{count}",
+    name => 'total',
+    size => fmsz($total->{size} * 1024 * 1024), 
+    up => fmsz($total->{up} * 1024 * 1024),     
+    down => fmsz($total->{down} * (1 << 20)),
+    ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
+    speed => fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
+    status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
+};
 
 my @pb = df '/var/cache/webtornado/users';
 
@@ -116,7 +111,7 @@ $tmpl->param({
     disk_free => fmsz($pb[3] * (1 << 10)),
     disk_total => fmsz(($pb[2] + $pb[3]) * (1 << 10)),
     disk_progressbar => progressbar(int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%'),
-    table => $table->render,
+    torrents => [@torrents],
     version => $VER::VER,
 });
 print $tmpl->output;
