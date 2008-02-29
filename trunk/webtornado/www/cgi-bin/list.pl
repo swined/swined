@@ -80,7 +80,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	icons => $statusimg,
 	name => $bt->{name},
 	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name} }} @{$bt->{files}} ] : ''),
+	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name} }} @{$bt->{files}} ] : []),
 	files_count => $fc,
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
