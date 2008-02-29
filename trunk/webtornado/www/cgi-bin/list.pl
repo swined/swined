@@ -117,6 +117,6 @@ $tmpl->param({
     disk_total => fmsz(($pb[2] + $pb[3]) * (1 << 10)),
     disk_progressbar => progressbar(int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%'),
     table => $table->render,
-    version => $VER,
+    version => $VER::VER,
 });
 print $tmpl->output;

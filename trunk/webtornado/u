@@ -12,7 +12,7 @@ REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
 VER=0.0.$REV
 export DEBEMAIL='Alexey Alexandrov <swined@gmail.com>'
 dch -v $VER "svn revision $REV" || die dch failed
-echo "package VER; use Exporter; our @ISA = qw/Exporter/; our @EXPORT = qw/\$VER/; our \$VER = '$VER'; 1;" > pm/VER.pm
+echo "package VER; our \$VER = '$VER'; 1;" > pm/VER.pm
 svn commit -m 'auto commit' || die commit failed
 svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
 rm ../webtornado_${VER}_i386.changes
