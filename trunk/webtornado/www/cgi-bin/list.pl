@@ -20,7 +20,7 @@ sub IMG { img({ -border => 0, -src => shift }) }
 sub r10 { int(10 * (shift or $_)) / 10 }
 
 sub fmsz {
-    my $s = shift return;
+    my $s = shift or return;
     return r10 . 'T' if 0.7 < abs(local $_ = $s/1024/1024/1024/1024);
     return r10 . 'G' if 0.7 < abs(local $_ = $s/1024/1024/1024);
     return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);
