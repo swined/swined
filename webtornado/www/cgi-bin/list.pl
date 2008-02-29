@@ -61,7 +61,6 @@ while (my $r = $sth->fetchrow_hashref) {
     $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
-    my $ratio = (r10($r->{ratio}) or '--');
     (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
     push @torrents, {
@@ -78,7 +77,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
 	down => fmsz($r->{down} * (1 << 20)),
-	ratio => $ratio,
+	ratio => r10($r->{ratio}),
 	uprate => fmsz($r->{uprate}),
 	downrate => fmsz($r->{downrate}),
 	status => progressbar($r->{progress}, $r->{eta}),
