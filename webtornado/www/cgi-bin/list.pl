@@ -62,14 +62,6 @@ while (my $r = $sth->fetchrow_hashref) {
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
     my $ratio = (r10($r->{ratio}) or '--') . ($r->{maxratio} ? ' (' . r10($r->{maxratio}) . ')' : '');
-    $ratio = "<a onclick='set_maxratio_$r->{id}.innerHTML=set_maxratio_$r->{id}_content.innerHTML'>$ratio</a>" .
-    div({ -id => "set_maxratio_$r->{id}" }) .
-    div({ -id => "set_maxratio_$r->{id}_content", -style => 'display: none' },
-	start_form('get', '/cgi-bin/action.pl')
-	. "<input type=hidden name=action value=set_maxratio>"
-	. input({ -type => 'hidden', -name => 'id', -value => $r->{id} })
-	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>"
-	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
     (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
     push @torrents, {
@@ -79,6 +71,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	done => $r->{done},
 	icons => $statusimg,
 	name => $bt->{name},
+	maxratio => $r->{maxratio},
 	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
 	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name} }} @{$bt->{files}} ] : []),
 	files_count => $fc,
