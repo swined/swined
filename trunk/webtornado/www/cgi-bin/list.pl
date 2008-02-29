@@ -4,6 +4,7 @@ use lib '/usr/share/webtornado/pm';
 use CGI qw/:all/;
 use CGI::Debug;
 use WT;
+use VER;
 use HTML::Widgets::Table;
 use Filesys::DiskSpace;
 use URI::Escape;
@@ -120,5 +121,5 @@ print br . $table->render . br .
     'add new torrent: ' . start_form('post', '/upload') . 
     filefield('file') . '&nbsp;' . submit . endform;
 
-print "<font color=gray>webtornado " . $WT::VER . " &copy; swined</font>";
+print "<font color=gray>webtornado $VER &copy; swined</font>";
 print "</center>";
