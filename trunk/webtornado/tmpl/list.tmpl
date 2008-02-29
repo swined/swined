@@ -26,7 +26,14 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td style="text-align: center" valign="top">%down%</td>
 <td style="text-align: center" valign="top"><nobr>
 <tmpl_if overseed><div style='color: red'><b></tmpl_if>
-%ratio%
+<a onclick='set_maxratio_%id%.innerHTML=set_maxratio_%id%_content.innerHTML'>%ratio%</a>
+<div id='set_maxratio_%id%'></div><div id='set_maxratio_%id%_content' style='display: none'>
+<form method='get' action='/cgi-bin/action.pl'>
+<input type=hidden name=action value=set_maxratio>
+<input type=hidden name=id value=%id%>
+<input type=text name=maxratio value='%maxratio%' style='width: 50px'>"
+<input type=submit style='width: 30px' value='OK'>
+</form></div>
 <tmpl_if overseed></b></div></tmpl_if>
 </nobr></td>
 <td style="text-align: center" valign="top"><tmpl_if active>
