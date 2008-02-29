@@ -31,7 +31,7 @@ install: build
 	dh_testroot
 	dh_clean -k 
 	dh_installdirs
-	cp -R {bin,pm,www} $(CURDIR)/debian/webtornado/usr/share/webtornado/
+	cp -R {bin,pm,www,tmpl} $(CURDIR)/debian/webtornado/usr/share/webtornado/
 	cp webtornado.conf $(CURDIR)/debian/webtornado/etc
 	touch $(CURDIR)/debian/webtornado/etc/webtornado.auth
 
