@@ -38,9 +38,6 @@ sub progressbar {
 	'; height: 5px; background-color: black; text-align: left'}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
 }
 
-print meta({ -http_equiv => 'REFRESH', -content => '30;URL=/' });
-print '<center>';
-
 my $total = {};
 my $table = new HTML::Widgets::Table({ 
     alternating_row_colors => ['#ffffff', '#f2f2f2'], 
@@ -113,14 +110,13 @@ $table->addRow([
 ], { style => 'text-align: center' });
 
 my @pb = df '/var/cache/webtornado/users';
-print 'diskspace: ' . fmsz($pb[3] * (1 << 10)) . ' of ' . fmsz(($pb[2] + $pb[3]) * (1 << 10)) . ' free';
-print progressbar int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%';
 
-print br . $table->render . br . 
-    A('/start/all', 'start all') . ' | ' .
-    A('/stop/all', 'stop all') . ' | ' .
-    'add new torrent: ' . start_form('post', '/upload') . 
-    filefield('file') . '&nbsp;' . submit . endform;
-
-print "<font color=gray>webtornado $VER &copy; swined</font>";
-print "</center>";
+my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1);
+$tmpl->param({
+    disk_free => fmsz($pb[3] * (1 << 10)),
+    disk_total => fmsz(($pb[2] + $pb[3]) * (1 << 10)),
+    disk_progressbar => progressbar(int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%'),
+    table => $table->render,
+    version => $VER,
+});
+print $tmpl->output;
