@@ -82,13 +82,14 @@ while (my $r = $sth->fetchrow_hashref) {
     $up =~ s/^--(.)/+$1/g;
     my $err = $r->{error} ? br . "<font color=red>$r->{error}</font>" : "";
     push @torrents, {
+	active => $r->{active},
 	icons => $statusimg,
 	name => div({ -style => 'text-align: left' }, $name, $files, $err),
 	size => $r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--',
 	up => $up,
 	down => fmsz($r->{down} * (1 << 20)),
-	ratio => "<nobr>$ratio</nobr>",
-	speed => ($r->{active} ? $speed : '--'),
+	ratio => $ratio,
+	speed => $speed,
 	status => progressbar($r->{progress}, $r->{eta}),
     };
 }
