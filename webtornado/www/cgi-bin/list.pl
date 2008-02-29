@@ -78,14 +78,14 @@ while (my $r = $sth->fetchrow_hashref) {
 	. input({ -type => 'hidden', -name => 'id', -value => $r->{id} })
 	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>" 
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
-    my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz($r->{size} * $r->{maxratio} * 1024 * 1024 - $r->{up} * 1024 * 1024) : fmsz($r->{up} * 1024 * 1024)) : '--';
+    my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--';
     $up =~ s/^--(.)/+$1/g;
-    my $err = $r->{error} ? br . "<font color=red>$r->{error}</font>" : "";
     push @torrents, {
 	active => $r->{active},
+	error => $r->{error},
 	icons => $statusimg,
-	name => div({ -style => 'text-align: left' }, $name, $files, $err),
-	size => $r->{size} ? fmsz($r->{size} * 1024 * 1024) : '--',
+	name => "$name $files",
+	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
 	down => fmsz($r->{down} * (1 << 20)),
 	ratio => $ratio,
