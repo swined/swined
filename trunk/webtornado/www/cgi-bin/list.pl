@@ -6,6 +6,7 @@ use CGI::Debug;
 use WT;
 use VER;
 use HTML::Widgets::Table;
+use HTML::Template;
 use Filesys::DiskSpace;
 use URI::Escape;
 use Time::Duration;
