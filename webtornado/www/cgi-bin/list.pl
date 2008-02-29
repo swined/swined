@@ -59,8 +59,8 @@ while (my $r = $sth->fetchrow_hashref) {
     my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
     $statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
     $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
-    my $name = (-e $r->{output}) ? $r->{output} : $r->{filename};
-    $name =~ s{.+/}{};
+#    my $name = (-e $r->{output}) ? $r->{output} : $r->{filename};
+#    $name =~ s{.+/}{};
     my $speed = ($r->{done} ? '' : fmsz($r->{downrate}) . ' / ') . fmsz($r->{uprate});
     $speed = 'stalled' unless $r->{uprate} or $r->{downrate};
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
@@ -78,13 +78,14 @@ while (my $r = $sth->fetchrow_hashref) {
 	. input({ -type => 'hidden', -name => 'id', -value => $r->{id} })
 	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>" 
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
-    my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--';
-    $up =~ s/^--(.)/+$1/g;
+    (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
     push @torrents, {
 	active => $r->{active},
 	error => $r->{error},
 	icons => $statusimg,
-	name => "$name $files",
+#	name => $name,
+	name => $bt->{name},
+	files => $files,
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
 	down => fmsz($r->{down} * (1 << 20)),
