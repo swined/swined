@@ -26,7 +26,8 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td style="text-align: center" valign="top">%down%</td>
 <td style="text-align: center" valign="top"><nobr>
 <tmpl_if overseed><div style='color: red'><b></tmpl_if>
-<a onclick='set_maxratio_%id%.innerHTML=set_maxratio_%id%_content.innerHTML'>%ratio%<tmpl_if maxratio> (%maxratio%)</tmpl_if></a>
+<a onclick='set_maxratio_%id%.innerHTML=set_maxratio_%id%_content.innerHTML'>
+<tmpl_if ratio>%ratio%<tmpl_else>--</tmpl_if><tmpl_if maxratio> (%maxratio%)</tmpl_if></a>
 <div id='set_maxratio_%id%'></div><div id='set_maxratio_%id%_content' style='display: none'>
 <form method='get' action='/cgi-bin/action.pl'>
 <input type=hidden name=action value=set_maxratio>
