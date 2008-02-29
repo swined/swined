@@ -106,7 +106,12 @@ push @torrents, {
 
 my @pb = df '/var/cache/webtornado/users';
 
-my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1);
+my $tmpl = new HTML::Template(
+    filename => '/usr/share/webtornado/tmpl/list.tmpl', 
+    die_on_bad_params => 0, 
+    vanguard_compatibility_mode => 1,
+    loop_context_vars => 1,
+);
 $tmpl->param({
     disk_free => fmsz($pb[3] * (1 << 10)),
     disk_total => fmsz(($pb[2] + $pb[3]) * (1 << 10)),
