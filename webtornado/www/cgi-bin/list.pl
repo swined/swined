@@ -110,7 +110,7 @@ $tmpl->param({
     total_icons => "$total->{active} / $total->{count}",
     total_name => 'total',
     total_size => fmsz($total->{size} * (1 << 20)), 
-    total_up => fmsz($total->{up} * (1* 20)),     
+    total_up => fmsz($total->{up} * (1 << 20)),     
     total_down => fmsz($total->{down} * (1 << 20)),
     total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
     total_speed => fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
