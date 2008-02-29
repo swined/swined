@@ -30,10 +30,10 @@ sub fmsz {
 
 sub progressbar {
     my ($p, $e, $w) = @_;
-    return 'unknown' unless $p;    
+    return 'unknown' unless $p;
     return 'done' if $p >= 100;
     $p .= '%' unless $p =~ /%$/;
-    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'border: 1px solid black; width: ' . ($w or '100px') . 
+    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'border: 1px solid black; width: ' . ($w or '100px') .
 	'; height: 5px; background-color: black; text-align: left'}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
 }
 
@@ -62,14 +62,13 @@ while (my $r = $sth->fetchrow_hashref) {
     $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
     my $ratio = (r10($r->{ratio}) or '--') . ($r->{maxratio} ? ' (' . r10($r->{maxratio}) . ')' : '');
-    $ratio = "<div style='color: red'><b>$ratio</b></div>" if $r->{maxratio} and ($r->{ratio} > $r->{maxratio});
     $ratio = "<a onclick='set_maxratio_$r->{id}.innerHTML=set_maxratio_$r->{id}_content.innerHTML'>$ratio</a>" .
     div({ -id => "set_maxratio_$r->{id}" }) .
     div({ -id => "set_maxratio_$r->{id}_content", -style => 'display: none' },
 	start_form('get', '/cgi-bin/action.pl')
 	. "<input type=hidden name=action value=set_maxratio>"
 	. input({ -type => 'hidden', -name => 'id', -value => $r->{id} })
-	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>" 
+	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>"
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
     (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
     push @torrents, {
@@ -79,7 +78,8 @@ while (my $r = $sth->fetchrow_hashref) {
 	done => $r->{done},
 	icons => $statusimg,
 	name => $bt->{name},
-	files => (scalar(@{$bt->{files}}) > 1 ? [ map { size => fmsz($_->{size}), name => $_->{name} } @{$bt->{files}} : ''),
+	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
+	files => (scalar(@{$bt->{files}}) > 1 ? [ map { size => fmsz($_->{size}), name => $_->{name} } @{$bt->{files}} ] : ''),
 	files_count => scalar(@{$bt->{files}}),
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
@@ -95,8 +95,8 @@ $total->{active} ||= 0;
 my @pb = df '/var/cache/webtornado/users';
 
 my $tmpl = new HTML::Template(
-    filename => '/usr/share/webtornado/tmpl/list.tmpl', 
-    die_on_bad_params => 0, 
+    filename => '/usr/share/webtornado/tmpl/list.tmpl',
+    die_on_bad_params => 0,
     vanguard_compatibility_mode => 1,
     loop_context_vars => 1,
 );
@@ -107,8 +107,8 @@ $tmpl->param({
     torrents => [@torrents],
     total_icons => "$total->{active} / $total->{count}",
     total_name => 'total',
-    total_size => fmsz($total->{size} * (1 << 20)), 
-    total_up => fmsz($total->{up} * (1 << 20)),     
+    total_size => fmsz($total->{size} * (1 << 20)),
+    total_up => fmsz($total->{up} * (1 << 20)),
     total_down => fmsz($total->{down} * (1 << 20)),
     total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
     total_speed => (fmsz($total->{downrate}) or '0b') . ' / ' . (fmsz($total->{uprate}) or '0b'),
