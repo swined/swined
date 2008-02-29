@@ -71,6 +71,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	. "<input type=text name=maxratio value=$r->{maxratio} style='width: 50px'>"
 	. submit({ -style => 'width: 30px', -value => 'OK' }) . endform);
     (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
+	my $fc = scalar @{$bt->{files}};
     push @torrents, {
 	id => $r->{id},
 	active => $r->{active},
@@ -79,8 +80,8 @@ while (my $r = $sth->fetchrow_hashref) {
 	icons => $statusimg,
 	name => $bt->{name},
 	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-	files => (scalar(@{$bt->{files}}) > 1 ? [ map { size => fmsz($_->{size}), name => $_->{name} } @{$bt->{files}} ] : ''),
-	files_count => scalar(@{$bt->{files}}),
+	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name} }} @{$bt->{files}} ] : ''),
+	files_count => $fc,
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
 	down => fmsz($r->{down} * (1 << 20)),
