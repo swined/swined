@@ -92,17 +92,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	status => progressbar($r->{progress}, $r->{eta}),
     };
 }
-$total->{active} |= 0;
-push @torrents, {
-    icons => "$total->{active} / $total->{count}",
-    name => 'total',
-    size => fmsz($total->{size} * 1024 * 1024), 
-    up => fmsz($total->{up} * 1024 * 1024),     
-    down => fmsz($total->{down} * (1 << 20)),
-    ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
-    speed => fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
-    status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
-};
+$total->{active} ||= 0;
 
 my @pb = df '/var/cache/webtornado/users';
 
@@ -117,6 +107,14 @@ $tmpl->param({
     disk_total => fmsz(($pb[2] + $pb[3]) * (1 << 10)),
     disk_progressbar => progressbar(int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%'),
     torrents => [@torrents],
+    total_icons => "$total->{active} / $total->{count}",
+    total_name => 'total',
+    total_size => fmsz($total->{size} * (1 << 20)), 
+    total_up => fmsz($total->{up} * (1* 20)),     
+    total_down => fmsz($total->{down} * (1 << 20)),
+    total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
+    total_speed => fmsz($total->{downrate}) . ' / ' . fmsz($total->{uprate}),
+    total_status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
     version => $VER::VER,
 });
 print $tmpl->output;
