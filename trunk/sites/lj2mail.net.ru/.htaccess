@@ -1,0 +1,5 @@
+RewriteEngine	On
+RewriteBase	/
+RewriteRule	^$	cgi-bin/index.pl
+RewriteRule	^([a-z0-9]{32})$	cgi-bin/index.pl?action=regvrf&hash=$1
+RewriteRule	^u([a-z0-9]{32})$	cgi-bin/index.pl?action=unsub&hash=$1
