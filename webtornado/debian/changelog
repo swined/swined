@@ -1,3 +1,9 @@
+webtornado (0.0.7+svn182) unstable; urgency=low
+
+  * svn revision 182
+
+ -- Alexey Alexandrov <swined@gmail.com>  Sun, 02 Mar 2008 19:17:45 +0600
+
 webtornado (0.0.6) unstable; urgency=low
 
   * add syncdb
