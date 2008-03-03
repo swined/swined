@@ -1,5 +1,6 @@
 etc
 etc/cron.d
+etc/apache2/conf.d
 usr/bin
 usr/share/perl5
 usr/share/webtornado/bin
