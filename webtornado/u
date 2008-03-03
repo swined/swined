@@ -18,5 +18,5 @@ svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build
 rm ../webtornado_${VER}_i386.changes
 sudo dpkg -i ../webtornado_${VER}_i386.deb || die installation failed
 cd ..
-./repup.sh
+sudo ./repup.sh
 cd $CPWD
