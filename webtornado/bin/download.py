@@ -49,6 +49,8 @@ class HeadlessDisplayer:
 	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
 	    self.upTotal = upTotal
 	    self.dbup('error', '')
+	if dict.has_key('peers'):
+	    self.dbup('error', 'has peers!')
 	
     def chooseFile(self, default, size, saveas, dir):
 	self.cr.execute('UPDATE torrents SET size = %s, output = %s WHERE id = %s', 
