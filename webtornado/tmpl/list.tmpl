@@ -24,7 +24,10 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td style="text-align: center" valign="top">%size%</td>
 <td style="text-align: center" valign="top">%up%</td>
 <td style="text-align: center" valign="top">%down%</td>
-<td style="text-align: center" valign="top"><tmpl_if active>%seeds%s/%leechers%l<tmpl_else>--</tmpl_if></td>
+<td style="text-align: center" valign="top"><tmpl_if active>
+<tmpl_if seeds>%seeds%s<tmpl_if leechers>/%leechers%l</tmpl_if>
+<tmpl_else><tmpl_if leechers>%leechers%l<tmpl_else>none</tmpl_if></tmpl_if>
+<tmpl_else>--</tmpl_if></td>
 <td style="text-align: center" valign="top"><nobr>
 <tmpl_if overseed><div style='color: red'><b></tmpl_if>
 <a onclick='set_maxratio_%id%.innerHTML=set_maxratio_%id%_content.innerHTML'>
