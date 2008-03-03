@@ -16,7 +16,9 @@ echo "package VER; our \$VER = '$VER'; 1;" > pm/VER.pm
 svn commit -m 'auto commit' || die commit failed
 svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
 rm ../webtornado_${VER}_i386.changes
-sudo dpkg -i ../webtornado_${VER}_i386.deb || die installation failed
+#sudo dpkg -i ../webtornado_${VER}_i386.deb || die installation failed
 cd ..
 sudo ./repup.sh
+sudo apt-get update
+sudo apt-get install webtornado
 cd $CPWD
