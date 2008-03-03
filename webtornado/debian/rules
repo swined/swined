@@ -33,6 +33,7 @@ install: build
 	dh_installdirs
 	cp -R {bin,pm,www,tmpl} $(CURDIR)/debian/webtornado/usr/share/webtornado/
 	cp webtornado.conf $(CURDIR)/debian/webtornado/etc
+	cp apache2.conf $(CURDIR)/debian/webtornado/etc/apache2/conf.d/webtornado
 	touch $(CURDIR)/debian/webtornado/etc/webtornado.auth
 
 binary-indep: build install
