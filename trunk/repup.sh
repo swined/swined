@@ -1,5 +1,6 @@
 #!/bin/sh
 
+REP=/var/web/deb.swined.net.ru
 for deb in *.deb; do
-    reprepro -b /var/web/deb.swined.net.ru includedeb stable $deb && rm $deb
+    reprepro -b $REP includedeb stable $deb && rm $deb
 done

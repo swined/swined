@@ -5,20 +5,16 @@ die() {
     exit 1
 }
 
-CPWD=$PWD
 svn up
 svn commit -m 'auto commit' || die commit failed
 REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
 VER=0.0.7+svn$REV
 export DEBEMAIL='Alexey Alexandrov <swined@gmail.com>'
 dch -v $VER "svn revision $REV" || die dch failed
-echo "package VER; our \$VER = '$VER'; 1;" > pm/VER.pm
+echo "package VER; our \$VER = '$VER';" > pm/VER.pm
 svn commit -m 'auto commit' || die commit failed
 svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
 rm ../webtornado_${VER}_i386.changes
-#sudo dpkg -i ../webtornado_${VER}_i386.deb || die installation failed
-cd ..
-sudo ./repup.sh
+for deb in ../*.deb; do reprepro -b /var/web/deb.swined.net.ru includedeb stable $deb && rm $deb; done
 sudo apt-get update
 sudo apt-get install -y --force-yes webtornado
-cd $CPWD
