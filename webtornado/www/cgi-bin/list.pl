@@ -101,7 +101,7 @@ $tmpl->param({
 #    disk_progressbar => progressbar(int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%'),
     disk_free => fmsz($pb[0]*$pb[3]),
     disk_total => fmsz($pb[0]*$pb[2]),
-    disk_progressbar => progressbar(int(100*($pb[0]/$pb[0])), 0, '97%'),
+    disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
     torrents => [@torrents],
     total_icons => "$total->{active} / $total->{count}",
     total_name => 'total',
