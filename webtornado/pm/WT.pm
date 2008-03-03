@@ -8,8 +8,6 @@ use Config::File;
 use DBIx::DBSchema::Column;
 use DBIx::DBSchema::Table;
 
-our $VER = '0.0.117';
-
 sub new {
     my ($c, %p) = @_;
     $p{conffile} |= '/etc/webtornado.conf';
