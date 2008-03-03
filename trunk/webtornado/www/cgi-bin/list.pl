@@ -6,7 +6,6 @@ use CGI::Debug;
 use WT;
 use VER;
 use HTML::Template;
-#use Filesys::DiskSpace;
 use Filesys::Statvfs;
 use URI::Escape;
 use Time::Duration;
@@ -86,7 +85,6 @@ while (my $r = $sth->fetchrow_hashref) {
 }
 $total->{active} ||= 0;
 
-#my @pb = df '/var/cache/webtornado/users';
 my @pb = statvfs '/var/cache/webtornado/users';
 
 my $tmpl = new HTML::Template(
@@ -96,9 +94,6 @@ my $tmpl = new HTML::Template(
     loop_context_vars => 1,
 );
 $tmpl->param({
-#    disk_free => fmsz($pb[3] * (1 << 10)),
-#    disk_total => fmsz(($pb[2] + $pb[3]) * (1 << 10)),
-#    disk_progressbar => progressbar(int(100*$pb[2]/($pb[2] + $pb[3])), 0, '97%'),
     disk_free => fmsz($pb[0]*$pb[3]),
     disk_total => fmsz($pb[0]*$pb[2]),
     disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
