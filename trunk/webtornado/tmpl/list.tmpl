@@ -31,8 +31,7 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td style="text-align: center" valign="top">%up%</td>
 <td style="text-align: center" valign="top">%down%</td>
 <td style="text-align: center" valign="top"><tmpl_if active>
-<tmpl_if seeds>%seeds%S<tmpl_if leechers> / %leechers%L</tmpl_if>
-<tmpl_else><tmpl_if leechers>%leechers%S<tmpl_else>none</tmpl_if></tmpl_if>
+<tmpl_if peers>%peers%<tmpl_else>none</tmpl_if>
 <tmpl_else>--</tmpl_if></td>
 <td style="text-align: center" valign="top"><nobr>
 <tmpl_if overseed><div style='color: red'><b></tmpl_if>
@@ -59,7 +58,7 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td style="text-align: center" valign="top">%total_size%</td>
 <td style="text-align: center" valign="top">%total_up%</td>
 <td style="text-align: center" valign="top">%total_down%</td>
-<td style="text-align: center" valign="top">&nbsp;</td>
+<td style="text-align: center" valign="top"><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></td>
 <td style="text-align: center" valign="top">%total_ratio%</td>
 <td style="text-align: center" valign="top">%total_speed%</td>
 <td style="text-align: center" valign="top">%total_status%</td>

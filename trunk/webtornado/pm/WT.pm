@@ -93,8 +93,7 @@ sub syncdb {
 	    ['eta', 'int', 1],
 	    ['maxratio', 'double', 1],
 	    ['torrent', 'longtext', 1], 
-	    ['seeds', 'int', 0],
-	    ['leechers', 'int', 0],
+	    ['peers', 'int', 0],
 	],
     });
     $dbh->do($_) for $cur_table->sql_alter_table($req_table, $dbh);

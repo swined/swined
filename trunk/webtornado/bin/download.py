@@ -22,8 +22,7 @@ class HeadlessDisplayer:
 	self.upTotal = 0
 	self.downTotal = 0	
 	self.lastUpdate = 0
-	self.seeds = 0
-	self.leechers = 0
+	self.peers = 0
 	
     def dbup(self, k, v):
 	if self.dict.get(k) != v:
@@ -58,10 +57,15 @@ class HeadlessDisplayer:
 	    self.downTotal = downTotal
 	    self.dbup('error', '')
 	if dict.has_key('spew'):
-	    c = 0
-	    for t in dict['spew']:
-		c++
-	    self.dbup('seeds', c)
+		spew = dict['spew']
+		c = 0
+		for t in spew:
+			c = c + 1
+		self.dbup('seeds', c)
+#	    c = 0
+#	    for t in dict['spew']:
+#		c++
+#	    self.dbup('seeds', c)
 	
     def chooseFile(self, default, size, saveas, dir):
 	self.cr.execute('UPDATE torrents SET size = %s, output = %s WHERE id = %s', 
