@@ -1,3 +1,9 @@
+webtornado (0.0.7+svn284) unstable; urgency=low
+
+  * svn revision 284
+
+ -- Alexey Alexandrov <swined@gmail.com>  Tue, 04 Mar 2008 14:11:31 +0600
+
 webtornado (0.0.7+svn280) unstable; urgency=low
 
   * svn revision 280
