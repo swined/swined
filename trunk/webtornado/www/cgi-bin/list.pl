@@ -59,12 +59,12 @@ while (my $r = $sth->fetchrow_hashref) {
     my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
     $statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
     $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
-    $statusimg .= A("/$r->{id}.tar", IMG('/img/tar_down.gif')) if $r->{done} and not $r->{del};
     $statusimg .= A("/delete/$r->{id}", IMG('/img/delete.png')) unless $r->{del};
     (my $up = $r->{up} ? ($r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) : '--') =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
     push @torrents, {
 	id => $r->{id},
+	del => $r->{del},
 	active => $r->{active},
 	error => $r->{error},
 	done => $r->{done},
