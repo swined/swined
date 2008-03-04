@@ -72,6 +72,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	leechers => $r->{leechers},
 	icons => $statusimg,
 	name => $bt->{name},
+	ue_name => uri_escape($bt->{name}),
 	maxratio => r10($r->{maxratio}),
 	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
 	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name} }} @{$bt->{files}} ] : []),
