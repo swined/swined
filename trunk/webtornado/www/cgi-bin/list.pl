@@ -42,48 +42,47 @@ my $total = {};
 my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/down DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
-    my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
-    $r->{size} = $bt->{total_size} / (1 << 20);
-    $r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
-    $r->{done} = $r->{progress} >= 100;
-    $total->{count}++;
-    $total->{active}++ if $r->{active};
-    $total->{size} += $r->{size};
-    $total->{up} += $r->{up};
-    $total->{progress} += int($r->{progress} * $r->{size} / 100);
-    $total->{down} += $r->{down};
-    $total->{downrate} += $r->{downrate} if $r->{active};
-    $total->{uprate} += $r->{uprate} if $r->{active};
-    $total->{peers} += $r->{peers} if $r->{active};
-    $total->{has_undone} = 1 unless $r->{done};
-    my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
-    $statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
-    $statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
-    (my $up = $r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) =~ s/^--(.)/+$1/g;
+	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
+	$r->{size} = $bt->{total_size} / (1 << 20);
+	$r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
+	$r->{done} = $r->{progress} >= 100;
+	$total->{count}++;
+	$total->{active}++ if $r->{active};
+	$total->{size} += $r->{size};
+	$total->{up} += $r->{up};
+	$total->{progress} += int($r->{progress} * $r->{size} / 100);
+	$total->{down} += $r->{down};
+	$total->{downrate} += $r->{downrate} if $r->{active};
+	$total->{uprate} += $r->{uprate} if $r->{active};
+	$total->{peers} += $r->{peers} if $r->{active};
+	$total->{has_undone} = 1 unless $r->{done};
+	my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
+	$statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
+	$statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
+	(my $up = $r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
-    push @torrents, {
-	id => $r->{id},
-	user => $ENV{REMOTE_USER},
-	del => $r->{del},
-	active => $r->{active},
-	error => $r->{error},
-	done => $r->{done},
-	peers => $r->{peers},
-	icons => $statusimg,
-	name => $bt->{name},
-	ue_name => uri_escape($bt->{name}),
-	maxratio => r10($r->{maxratio}),
-	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
-	files_count => $fc,
-	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
-	up => $up,
-	down => fmsz($r->{down} * (1 << 20)),
-	ratio => r10($r->{ratio}),
-	uprate => fmsz($r->{uprate}),
-	downrate => fmsz($r->{downrate}),
-	status => progressbar($r->{progress}, $r->{eta}),
-    };
+	push @torrents, {
+		%$r,
+		user => $ENV{REMOTE_USER},
+		icons => $statusimg,
+		name => $bt->{name},
+		ue_name => uri_escape($bt->{name}),
+		maxratio => r10($r->{maxratio}),
+		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
+		files => ($fc > 1 ? [ map {{ 
+			size => fmsz($_->{size}),
+			name => $_->{name},
+			user => $ENV{REMOTE_USER}
+		}} @{$bt->{files}} ] : []),
+		files_count => $fc,
+		size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
+		up => $up,
+		down => fmsz($r->{down} * (1 << 20)),
+		ratio => r10($r->{ratio}),
+		uprate => fmsz($r->{uprate}),
+		downrate => fmsz($r->{downrate}),
+		status => progressbar($r->{progress}, $r->{eta}),
+	};
 }
 $total->{active} ||= 0;
 
@@ -96,19 +95,19 @@ my $tmpl = new HTML::Template(
     loop_context_vars => 1,
 );
 $tmpl->param({
-    disk_free => fmsz($pb[0]*$pb[3]),
-    disk_total => fmsz($pb[0]*$pb[2]),
-    disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
-    torrents => [@torrents],
-    total_icons => "$total->{active} / $total->{count}",
-    total_name => 'total',
-    total_size => fmsz($total->{size} * (1 << 20)),
-    total_up => fmsz($total->{up} * (1 << 20)),
-    total_down => fmsz($total->{down} * (1 << 20)),
-    total_peers => $total->{peers},
-    total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
-    total_speed => (fmsz($total->{downrate}) or '0b') . ' / ' . (fmsz($total->{uprate}) or '0b'),
-    total_status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
-    version => $VER::VER,
+	disk_free => fmsz($pb[0]*$pb[3]),
+	disk_total => fmsz($pb[0]*$pb[2]),
+	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
+	torrents => [@torrents],
+	total_active => $total->{active},
+	total_count => $total->{count},
+	total_size => fmsz($total->{size} * (1 << 20)),
+	total_up => fmsz($total->{up} * (1 << 20)),
+	total_down => fmsz($total->{down} * (1 << 20)),
+	total_peers => $total->{peers},
+	total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
+	total_speed => (fmsz($total->{downrate}) or '0b') . ' / ' . (fmsz($total->{uprate}) or '0b'),
+	total_status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
+	version => $VER::VER,
 });
 print $tmpl->output;
