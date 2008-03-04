@@ -12,7 +12,9 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <tmpl_loop torrents>
     <tr bgcolor="<tmpl_if __odd__>#ffffff<tmpl_else>#f2f2f2</tmpl_if>">
 <td style="text-align: center" valign="top">%icons%
-<tmpl_if done><tmpl_unless files><a href="/files/%ue_name%">D</a></tmpl_unless></tmpl_if>
+<tmpl_unless del>
+    <tmpl_if done><a href="<tmpl_if files>/files/%ue_name%<tmpl_else>/%id%.tar</tmpl_if>"><img src="/img/tar_down.gif"></a></tmpl_if>
+</tmpl_unless>
 </td>
 <td style="text-align: left" valign="top">%name%
 <tmpl_if files>
