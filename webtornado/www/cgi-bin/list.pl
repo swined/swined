@@ -74,7 +74,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	ue_name => uri_escape($bt->{name}),
 	maxratio => r10($r->{maxratio}),
 	overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name} }} @{$bt->{files}} ] : []),
+	files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
 	files_count => $fc,
 	size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
 	up => $up,
