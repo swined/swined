@@ -64,8 +64,8 @@ class HeadlessDisplayer:
 		self.dbup('peers', c)
 	
     def chooseFile(self, default, size, saveas, dir):
-	self.cr.execute('UPDATE torrents SET size = %s, output = %s WHERE id = %s', 
-	    (float(size) / (1 << 20), abspath(default), self.torrentId))
+	self.cr.execute('UPDATE torrents SET output = %s WHERE id = %s', 
+	    (abspath(default), self.torrentId))
         return default	
 	
     def newpath(self, path):
