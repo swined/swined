@@ -11,7 +11,9 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <tbody>
 <tmpl_loop torrents>
     <tr bgcolor="<tmpl_if __odd__>#ffffff<tmpl_else>#f2f2f2</tmpl_if>">
-<td style="text-align: center" valign="top">%icons%</td>
+<td style="text-align: center" valign="top">%icons%
+<tmpl_if done><a href="/files/%ue_name%">D</a></tmpl_if>
+</td>
 <td style="text-align: left" valign="top">%name%
 <tmpl_if files>
     <div id='files_%id%' style='color: #666666; display: inline'><a onclick='files_%id%.innerHTML=files_%id%_content.innerHTML'>[%files_count% files]</a>
