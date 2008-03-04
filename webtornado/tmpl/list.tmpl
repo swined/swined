@@ -6,6 +6,7 @@
 
 diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 
+<tmpl_if torrents>
 <table border='0' style='width: 100%'>
 <thead><tr bgcolor='#cccccc'><th>&nbsp;</th><th>name</th><th>size</th><th>up</th><th>down</th><th>peers</th><th>ratio</th><th>speed</th><th>status</th></tr></thead>
 <tbody>
@@ -64,10 +65,11 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 </tr>
 </tbody>
 </table>
+</tmpl_if>
 
 <br>
 
-<a href='/start/all'>start all</a> | <a href='/stop/all'>stop all</a> |
+<tmpl_if torrents><a href='/start/all'>start all</a> | <a href='/stop/all'>stop all</a> |</tmpl_if>
 add new torrent: <form method='post' action='/upload' enctype='multipart/form-data'>
 <input type='file' name='file' />&nbsp;<input type='submit' name='.submit' /></form>
 <font color=gray>webtornado %version% &copy; swined</font>
