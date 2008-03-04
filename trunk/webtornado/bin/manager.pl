@@ -65,11 +65,12 @@ while (my $r = $sth->fetchrow_hashref) {
     next if not $r->{owner} or $r->{owner} =~ /\W/;
     my $cachedir = "/var/cache/webtornado";
     my $userdir = "$cachedir/users/$r->{owner}";
-    my $outdir = "$userdir/output";    
+    my $outdir = "$userdir/output";
     mkdir $userdir;
     mkdir $outdir;
     next unless -e $outdir;
     $dbh->do('UPDATE torrents SET outdir = ?, error = "", progress = 0, peers = 0, downrate = 0, uprate = 0, eta = 0 WHERE id = ?', undef, $outdir, $r->{id});
-    my $s = WT::shesc("begin-base64 644 file\n" . encode_base64(uri_unescape $r->{torrent}) . "====");
-    `echo $s | uudecode -o /dev/stdout | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
+#     my $s = WT::shesc("begin-base64 644 file\n" . encode_base64(uri_unescape $r->{torrent}) . "====");
+	my $s = WT::shesc(encode_base64(uri_unescape $r->{torrent}));
+    `perl -MMIME::Base64 -e "print decode_base64 join '', <>" | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
 }
