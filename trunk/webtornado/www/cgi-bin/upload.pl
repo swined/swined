@@ -6,27 +6,17 @@ use URI::Escape;
 
 $CGI::POST_MAX = 1 << 20;
 
-my $wt = new WT;
+my ($u, $c, $wt) = ($ENV{REMOTE_USER}, "/var/cache/webtornado/users/$ENV{REMOTE_USER}/output", new WT);
 
-my $c = "/var/cache/webtornado/users/$ENV{REMOTE_USER}";
-
-mkdir($c) and mkdir("$c/torrents");
 my $f = $wt->cgi->param('file') or die 'nothing uploaded';
-my $tor; $tor .= $_ while <$f>;
-open F, '>', "$c/torrents/$f";
-print F $tor;
-close F;
+my $tor = join '', <$f>; 
+my ($bt, $tor) = (WT::getTorrentInfo($tor), uri_escape $tor);
+my ($nf, $sz) = ("$c/$bt->{name}", $bt->{total_size} / (1 << 20));
 
-my $bt = WT::getTorrentInfo($tor);
-(my $nf = $bt->{files}->[0]->{name}) =~ s{/.*}{};
-my $r = $wt->dbh->selectrow_hashref(
-    'SELECT * FROM torrents WHERE owner = ? AND output = ?',
-    undef, $ENV{REMOTE_USER}, "$c/output/$nf");
+my $r = $wt->dbh->selectrow_hashref('SELECT * FROM torrents WHERE owner = ? AND output = ?', undef, $u, $nf);
 if ($r->{id}) {
-    $wt->dbh->do('UPDATE torrents SET active = 0, progress = 0, maxratio = 0, filename = ?, size = ?, torrent = ? WHERE id = ?', 
-	undef, "$c/torrents/$f", $bt->{total_size} / 1024 / 1024, uri_escape($tor), $r->{id});
+    $wt->dbh->do('UPDATE torrents SET active = 0, progress = 0, maxratio = 0, size = ?, torrent = ? WHERE id = ?', undef, $sz, $tor, $r->{id});
 } else {
-    $wt->dbh->do('INSERT INTO torrents(owner, filename, output, size, torrent) VALUES(?, ?, ?, ?, ?)', 
-	undef, $ENV{REMOTE_USER}, "$c/torrents/$f", "$c/output/$nf", $bt->{total_size} / 1024 / 1024, uri_escape($tor));
+    $wt->dbh->do('INSERT INTO torrents(owner, output, size, torrent) VALUES(?, ?, ?, ?)', undef, $u, $nf, $sz, $tor);
 }
 print $wt->cgi->header(-location => '/', -status => 302);
