@@ -61,11 +61,7 @@ class HeadlessDisplayer:
 		c = 0
 		for t in spew:
 			c = c + 1
-		self.dbup('seeds', c)
-#	    c = 0
-#	    for t in dict['spew']:
-#		c++
-#	    self.dbup('seeds', c)
+		self.dbup('peers', c)
 	
     def chooseFile(self, default, size, saveas, dir):
 	self.cr.execute('UPDATE torrents SET size = %s, output = %s WHERE id = %s', 
