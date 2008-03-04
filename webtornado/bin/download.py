@@ -85,9 +85,10 @@ def run(p):
 	(os.getpid(), h.torrentId));
     os.chdir(r[1])
     del p[0:5]
-    p.append(r[2])
-#    for item in p:
-#	print item
+#    p.append(r[2])
+    p.append('--spew');
+    p.append('1')
+    p.append('file:///dev/stdin')
     download(p, h.chooseFile, h.display, h.finished, h.error, Event(), 80, h.newpath)
     h.cr.close 
     h.db.close
