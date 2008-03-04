@@ -80,7 +80,6 @@ sub syncdb {
 	    ['active', 'int', 1],
 	    ['del', 'int', 1],
 	    ['owner', 'text', 1], 
-	    ['filename', 'text', 1],
 	    ['outdir', 'text', 1],
 	    ['output', 'text', 1],  
 	    ['size', 'double', 1],
