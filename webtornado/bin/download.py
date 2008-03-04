@@ -49,11 +49,11 @@ class HeadlessDisplayer:
 	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
 	    self.upTotal = upTotal
 	    self.dbup('error', '')
-	if dict.has_key('spew'):
-	    c = 0
-	    for t in dict['spew']:
-		c++
-	    self.dbup('seeds', c)
+#	if dict.has_key('spew'):
+#	    c = 0
+#	    for t in dict['spew']:
+#		c++
+#	    self.dbup('seeds', c)
 	
     def chooseFile(self, default, size, saveas, dir):
 	self.cr.execute('UPDATE torrents SET size = %s, output = %s WHERE id = %s', 
