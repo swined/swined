@@ -12,9 +12,6 @@ my $dbh = $wt->dbh;
 # syncdb
 $wt->syncdb;
 
-# fix down
-$dbh->do('UPDATE torrents SET down = size*progress/100 WHERE down = 0');
-
 # suck .torrents to db
 my $sth = $dbh->prepare('SELECT * FROM torrents WHERE filename IS NOT NULL AND torrent IS NULL');
 $sth->execute;

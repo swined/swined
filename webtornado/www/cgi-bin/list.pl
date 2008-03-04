@@ -45,7 +45,6 @@ while (my $r = $sth->fetchrow_hashref) {
     my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
     $r->{size} = $bt->{total_size} / (1 << 20);
     $r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
-#    $r->{down} = $r->{progress} * $r->{size} / 100;
     $r->{done} = $r->{progress} >= 100;
     $total->{count}++;
     $total->{active}++ if $r->{active};
