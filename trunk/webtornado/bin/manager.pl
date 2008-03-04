@@ -3,6 +3,7 @@
 use lib '/usr/share/webtornado/pm';
 use WT;
 use URI::Escape;
+use MIME::Base64;
 use Data::Dumper;
 
 my $wt = new WT;
@@ -72,6 +73,6 @@ while (my $r = $sth->fetchrow_hashref) {
     mkdir $outdir;
     next unless -e $outdir;
     $dbh->do('UPDATE torrents SET outdir = ? WHERE id = ?', undef, $outdir, $r->{id});
-    my $s = WT::shesc(uri_unescape $r->{torrent});
-    `echo -n $s | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
+    my $s = WT::shesc("begin-base64 644 file\n" . encode_base64(uri_unescape $r->{torrent}) . "\n====");
+    `echo -n $s | uudecode /dev/stdout | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
 }
