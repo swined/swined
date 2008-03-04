@@ -46,13 +46,11 @@ $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
 	my $p = join ' ', map { WT::shesc($_) } $r->{id}, $c->{dbhost}, $c->{dbuser}, $c->{dbpass}, $c->{dbname}, '--minport', ($c->{minport} or '49000'), '--maxport', ($c->{maxport} or '49999');
 	next if not $r->{owner} or $r->{owner} =~ /\W/;
-	my $cachedir = "/var/cache/webtornado";
-	my $userdir = "$cachedir/users/$r->{owner}";
-	my $outdir = "$userdir/output";
-	mkdir $userdir;
-	mkdir $outdir;
+	mkdir my $userdir = "/var/cache/webtornado/users/$r->{owner}";
+	mkdir my $outdir = "$userdir/output";
 	next unless -e $outdir;
 	$dbh->do('UPDATE torrents SET outdir = ?, error = "", progress = 0, peers = 0, downrate = 0, uprate = 0, eta = 0 WHERE id = ?', undef, $outdir, $r->{id});
 	my $s = encode_base64 uri_unescape $r->{torrent};
-	`perl -MMIME::Base64 -e "print decode_base64 '$s'" | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
+# 	print "perl -MMIME::Base64 -e \"print decode_base64 '$s'\" | /usr/share/webtornado/bin/download.py $p";
+ 	`perl -MMIME::Base64 -e "print decode_base64 '$s'" | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
 }
