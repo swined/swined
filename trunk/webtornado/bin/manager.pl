@@ -63,7 +63,7 @@ $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
     my $p = join ' ', map { WT::shesc($_) } 
 	$r->{id}, $c->{dbhost}, $c->{dbuser}, $c->{dbpass}, $c->{dbname},
-	'--minport', ($c->{minport} or '49000'), '--maxport', ($c->{maxport} or '49999');
+	'--minport', ($c->{minport} or '49000'), '--maxport', ($c->{maxport} or '49999'), '--spew', '1';
     next if not $r->{owner} or $r->{owner} =~ /\W/;
     my $cachedir = "/var/cache/webtornado";
     my $userdir = "$cachedir/users/$r->{owner}";
@@ -72,5 +72,5 @@ while (my $r = $sth->fetchrow_hashref) {
     mkdir $outdir;
     next unless -e $outdir;
     $dbh->do('UPDATE torrents SET outdir = ? WHERE id = ?', undef, $outdir, $r->{id});
-    `/usr/share/webtornado/bin/download.py $p < /dev/null > /dev/null 2>&1 &`
+    `/usr/share/webtornado/bin/download.py $p < /dev/null > /dev/null 2>&1 &`;
 }
