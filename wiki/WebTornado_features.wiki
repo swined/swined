@@ -5,7 +5,7 @@
 || || Direct links to files || requires _Unauthenticated file downloads_ and all related redesign ||
 || 0.0.7 || ~~Disable tar for single-file torrents~~ || requires _Unauthenticated file downloads_ and all related redesign ||
 || || Add PEERS column || needs db updates -> not next version ||
-|| 0.0.7 || stop after ratio-limit || ||
+|| || stop after ratio-limit || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
 || 0.0.6 || ~~DB autoupdate on upgrades~~ || ||
 || || store .torrents in db || ||
