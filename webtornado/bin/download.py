@@ -20,6 +20,7 @@ class HeadlessDisplayer:
 	self.db = MySQLdb.connect(host = dbhost, user = dbuser, passwd = dbpass, db = dbname)
         self.cr = self.db.cursor()
 	self.upTotal = 0
+	self.downTotal = 0	
 	self.lastUpdate = 0
 	
     def dbup(self, k, v):
@@ -49,11 +50,11 @@ class HeadlessDisplayer:
 	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
 	    self.upTotal = upTotal
 	    self.dbup('error', '')
-#	if dict.has_key('spew'):
-#	    c = 0
-#	    for t in dict['spew']:
-#		c++
-#	    self.dbup('seeds', c)
+	downTotal = float(dict.get('downTotal') or 0)	    
+	if downTotal > self.downTotal:
+	    self.cr.execute('UPDATE torrents SET down = down + %s WHERE id = %s', (downTotal - self.downTotal, self.torrentId))
+	    self.downTotal = downTotal
+	    self.dbup('error', '')
 	
     def chooseFile(self, default, size, saveas, dir):
 	self.cr.execute('UPDATE torrents SET size = %s, output = %s WHERE id = %s', 

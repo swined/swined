@@ -12,6 +12,9 @@ my $dbh = $wt->dbh;
 # syncdb
 $wt->syncdb;
 
+# fix down
+$dbh->do('UPDATE torrents SET down = size*progress/100 WHERE down = 0');
+
 # suck .torrents to db
 my $sth = $dbh->prepare('SELECT * FROM torrents WHERE filename IS NOT NULL AND torrent IS NULL');
 $sth->execute;
@@ -22,7 +25,7 @@ while (my $r = $sth->fetchrow_hashref) {
 }
 
 # delete overseeded
-$dbh->do('UPDATE torrents SET del = 1 WHERE maxratio > 0 AND size > 0 AND up/size > maxratio AND progress = 100');
+$dbh->do('UPDATE torrents SET del = 1 WHERE maxratio > 0 AND size > 0 AND up/down > maxratio AND progress = 100');
 
 # stop deleting
 $dbh->do('UPDATE torrents SET active = 0 WHERE del > 0');

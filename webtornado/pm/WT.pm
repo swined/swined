@@ -85,6 +85,7 @@ sub syncdb {
 	    ['output', 'text', 1],  
 	    ['size', 'double', 1],
 	    ['up', 'double', 1], 
+	    ['down', 'double', 0],
 	    ['error', 'text', 1],
 	    ['progress', 'int', 1],
 	    ['downrate', 'int', 1],
