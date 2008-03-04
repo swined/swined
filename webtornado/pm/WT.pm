@@ -82,7 +82,6 @@ sub syncdb {
 	    ['owner', 'text', 1], 
 	    ['outdir', 'text', 1],
 	    ['output', 'text', 1],  
-	    ['size', 'double', 1],
 	    ['up', 'double', 1], 
 	    ['down', 'double', 0],
 	    ['error', 'text', 1],
