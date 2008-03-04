@@ -73,6 +73,6 @@ while (my $r = $sth->fetchrow_hashref) {
     mkdir $outdir;
     next unless -e $outdir;
     $dbh->do('UPDATE torrents SET outdir = ? WHERE id = ?', undef, $outdir, $r->{id});
-    my $s = WT::shesc("begin-base64 644 file\n" . encode_base64(uri_unescape $r->{torrent}) . "\n====");
-    `echo -n $s | uudecode /dev/stdout | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
+    my $s = WT::shesc("begin-base64 644 file\n" . encode_base64(uri_unescape $r->{torrent}));
+    `echo $s | uudecode -o /dev/stdout | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
 }
