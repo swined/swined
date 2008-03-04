@@ -1,14 +1,14 @@
 || *TMS* || *feature* || *comments* ||
-|| || Add .torrents from URL || wont work with private trackers and requires lots of paranoid checks -> not next version ||
 || 0.0.5 || ~~Count ratio as UP/DOWN~~ || needs careful updates in ratio-limit code to avoid deletion of undone downloads ||
 || 0.0.5 || ~~Add DOWN column~~ || in order not to touch the db (until db autoupgrades are implemented) will be implemented as progress*size. might show bullshit when checking, but it doesnt seem to be really important. ||
-|| || Direct links to files || requires _Unauthenticated file downloads_ and all related redesign ||
+|| 0.0.6 || ~~DB autoupdate on upgrades~~ || ||
+|| 0.0.7 || ~~Direct links to files~~ || requires _Unauthenticated file downloads_ and all related redesign ||
 || 0.0.7 || ~~Disable tar for single-file torrents~~ || requires _Unauthenticated file downloads_ and all related redesign ||
+|| 0.0.7 || ~~add separate DOWN column~~ || ||
+|| 0.0.7 || optimize list rendering || generic feature :) could be started with .torrent parsed contents caching ||
+|| 0.1.0 || rewrite download code in perl || just a dream :) ||
+|| || store .torrents in db || ||
+|| || Add .torrents from URL || wont work with private trackers and requires lots of paranoid checks -> not next version ||
 || || Add PEERS column || needs db updates -> not next version ||
 || || stop after ratio-limit || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
-|| 0.0.6 || ~~DB autoupdate on upgrades~~ || ||
-|| || store .torrents in db || ||
-|| 0.1.0 || rewrite download code in perl || just a dream :) ||
-|| 0.0.7 || ~~add separate DOWN column~~ || ||
-|| 0.0.7 || optimize list rendering || generic feature :) could be started with .torrent parsed contents caching ||
