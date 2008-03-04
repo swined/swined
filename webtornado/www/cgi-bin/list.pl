@@ -64,6 +64,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	my $fc = scalar @{$bt->{files}};
     push @torrents, {
 	id => $r->{id},
+	user => $ENV{REMOTE_USER},
 	del => $r->{del},
 	active => $r->{active},
 	error => $r->{error},
