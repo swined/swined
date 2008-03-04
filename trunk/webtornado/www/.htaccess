@@ -6,7 +6,6 @@ RewriteRule	^login$	cgi-bin/login.pl
 RewriteRule	^upload$	cgi-bin/upload.pl
 
 RewriteRule	^(\d+).tar$	cgi-bin/get.pl?id=$1
-RewriteRule	^files/([^/]+)$	cgi-bin/get.pl?file=$1
 
 RewriteRule	^stop/(\d+|all)$	cgi-bin/action.pl?action=stop&id=$1
 RewriteRule	^start/(\d+|all)$	cgi-bin/action.pl?action=start&id=$1

@@ -13,7 +13,7 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     <tr bgcolor="<tmpl_if __odd__>#ffffff<tmpl_else>#f2f2f2</tmpl_if>">
 <td style="text-align: center" valign="top">%icons%
 <tmpl_unless del>
-    <tmpl_if done><a href="<tmpl_if files>/%id%.tar<tmpl_else>/files/%ue_name%</tmpl_if>"><img src="/img/tar_down.gif" border="0"></a></tmpl_if>
+    <tmpl_if done><a href="<tmpl_if files>/%id%.tar<tmpl_else>/webtornado/users/%user%/output/%ue_name%</tmpl_if>"><img src="/img/tar_down.gif" border="0"></a></tmpl_if>
 </tmpl_unless>
 </td>
 <td style="text-align: left" valign="top">%name%
