@@ -59,7 +59,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
 	$statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
 	$statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
-	(my $up = $r->{maxratio} ? '-' . fmsz(($r->{size} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) =~ s/^--(.)/+$1/g;
+	(my $up = $r->{maxratio} ? '-' . fmsz(($r->{down} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
 	push @torrents, {
 		%$r,
@@ -69,7 +69,7 @@ while (my $r = $sth->fetchrow_hashref) {
 		ue_name => uri_escape($bt->{name}),
 		maxratio => r10($r->{maxratio}),
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-		files => ($fc > 1 ? [ map {{ 
+		files => ($fc > 1 ? [ map {{
 			size => fmsz($_->{size}),
 			name => $_->{name},
 			user => $ENV{REMOTE_USER}
