@@ -49,6 +49,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	mkdir my $outdir = "$userdir/output";
 	next unless -e $outdir;
 	$dbh->do('UPDATE torrents SET outdir = ?, error = "", progress = 0, peers = 0, downrate = 0, uprate = 0, eta = 0 WHERE id = ?', undef, $outdir, $r->{id});
-	my $s = encode_base64 uri_unescape $r->{torrent};
- 	`perl -MMIME::Base64 -e "print decode_base64 '$s'" | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
+# 	my $s = encode_base64 uri_unescape $r->{torrent};
+#  	`perl -MMIME::Base64 -e "print decode_base64 '$s'" | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
+	`/usr/share/webtornado/bin/download.py $p < /dev/null > /dev/null 2>&1 &`;
 }

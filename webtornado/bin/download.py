@@ -11,6 +11,7 @@ from time import time
 
 import MySQLdb
 import os
+from urllib import unquote
 
 class HeadlessDisplayer:
 
@@ -73,21 +74,24 @@ class HeadlessDisplayer:
 
 def run(p):
     h = HeadlessDisplayer(p[0], p[1], p[2], p[3], p[4])
-    h.cr.execute('SELECT pid,outdir FROM torrents WHERE id = %s', (h.torrentId))
+    h.cr.execute('SELECT pid,outdir,torrent FROM torrents WHERE id = %s', (h.torrentId))
     r = h.cr.fetchone()
+    fn = '/tmp/webtornado.' + str(os.getpid()) + '.torrent'
+    f = open(fn, 'w')
+    f.write(unquote(r[2]))
+    f.close()
+    p.append('--spew');
+    p.append('1')
+    p.append(fn)
     if not r:
 	print "no such torrent: %s" % (h.torrentId)
 	return
     if r[0] != 0:
 	print "download is already running: %s" % (r[0])
 	return
-    h.cr.execute('UPDATE torrents SET pid = %s, error = "" WHERE id = %s',
-	(os.getpid(), h.torrentId));
+    h.cr.execute('UPDATE torrents SET pid = %s, error = "" WHERE id = %s', (os.getpid(), h.torrentId));
     os.chdir(r[1])
     del p[0:5]
-    p.append('--spew');
-    p.append('1')
-    p.append('file:///dev/stdin')
     download(p, h.chooseFile, h.display, h.finished, h.error, Event(), 80, h.newpath)
     h.cr.close
     h.db.close
