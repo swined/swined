@@ -4,7 +4,6 @@ use lib '/usr/share/webtornado/pm';
 use WT;
 use URI::Escape;
 use MIME::Base64;
-use Data::Dumper;
 
 my $wt = new WT;
 my $c = $wt->conf;
@@ -19,7 +18,7 @@ $dbh->do('UPDATE torrents SET del = 1 WHERE maxratio > 0 AND up/down > maxratio 
 # stop deleting
 $dbh->do('UPDATE torrents SET active = 0 WHERE del > 0');
 
-# kill 
+# kill
 my @t = map { $_->[0] } @{$wt->selectall_arrayref('SELECT pid FROM torrents WHERE active = 0 AND pid > 0')};
 kill(9, @t) and sleep 3 if @t;
 
@@ -51,6 +50,5 @@ while (my $r = $sth->fetchrow_hashref) {
 	next unless -e $outdir;
 	$dbh->do('UPDATE torrents SET outdir = ?, error = "", progress = 0, peers = 0, downrate = 0, uprate = 0, eta = 0 WHERE id = ?', undef, $outdir, $r->{id});
 	my $s = encode_base64 uri_unescape $r->{torrent};
-# 	print "perl -MMIME::Base64 -e \"print decode_base64 '$s'\" | /usr/share/webtornado/bin/download.py $p";
  	`perl -MMIME::Base64 -e "print decode_base64 '$s'" | /usr/share/webtornado/bin/download.py $p > /dev/null 2>&1 &`;
 }

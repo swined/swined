@@ -20,23 +20,23 @@ class HeadlessDisplayer:
 	self.db = MySQLdb.connect(host = dbhost, user = dbuser, passwd = dbpass, db = dbname)
         self.cr = self.db.cursor()
 	self.upTotal = 0
-	self.downTotal = 0	
+	self.downTotal = 0
 	self.lastUpdate = 0
 	self.peers = 0
-	
+
     def dbup(self, k, v):
 	if self.dict.get(k) != v:
-	    self.cr.execute('UPDATE torrents SET ' + k + ' = %s WHERE id = %s', 
+	    self.cr.execute('UPDATE torrents SET ' + k + ' = %s WHERE id = %s',
 		(v, self.torrentId))
 	    self.dict[k] = v
 	    print 'dbup: %s => %s' % (k, v)
 
     def error(self, msg):
 	self.dbup('error', msg)
-	
+
     def finished(self):
 	self.dbup('progress', 100)
-	
+
     def display(self, dict):
 	if time() - self.lastUpdate < 15:
 	    return
@@ -51,7 +51,7 @@ class HeadlessDisplayer:
 	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
 	    self.upTotal = upTotal
 	    self.dbup('error', '')
-	downTotal = float(dict.get('downTotal') or 0)	    
+	downTotal = float(dict.get('downTotal') or 0)
 	if downTotal > self.downTotal:
 	    self.cr.execute('UPDATE torrents SET down = down + %s WHERE id = %s', (downTotal - self.downTotal, self.torrentId))
 	    self.downTotal = downTotal
@@ -62,12 +62,12 @@ class HeadlessDisplayer:
 		for t in spew:
 			c = c + 1
 		self.dbup('peers', c)
-	
+
     def chooseFile(self, default, size, saveas, dir):
-	self.cr.execute('UPDATE torrents SET output = %s WHERE id = %s', 
+	self.cr.execute('UPDATE torrents SET output = %s WHERE id = %s',
 	    (abspath(default), self.torrentId))
-        return default	
-	
+        return default
+
     def newpath(self, path):
 	print "newpath: %s" % (path)
 
@@ -77,19 +77,19 @@ def run(p):
     r = h.cr.fetchone()
     if not r:
 	print "no such torrent: %s" % (h.torrentId)
-	return 
+	return
     if r[0] != 0:
 	print "download is already running: %s" % (r[0])
 	return
-    h.cr.execute('UPDATE torrents SET pid = %s, error = "" WHERE id = %s', 
+    h.cr.execute('UPDATE torrents SET pid = %s, error = "" WHERE id = %s',
 	(os.getpid(), h.torrentId));
     os.chdir(r[1])
     del p[0:5]
-    p.append('--spew');
-    p.append('1')
-    p.append('file:///dev/stdin')
+    p.append('--spew', '1', 'file:///dev/stdin');
+    #p.append('1')
+    #p.append('file:///dev/stdin')
     download(p, h.chooseFile, h.display, h.finished, h.error, Event(), 80, h.newpath)
-    h.cr.close 
+    h.cr.close
     h.db.close
 
 if __name__ == '__main__':
