@@ -61,7 +61,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	$statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
 	(my $up = $r->{maxratio} ? '-' . fmsz(($r->{down} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
-	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
+	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) * (1 << 20) / $r->{uprate}: 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
 	push @torrents, {
 		%$r,
 		user => $ENV{REMOTE_USER},
@@ -99,6 +99,7 @@ $tmpl->param({
 	disk_free => fmsz($pb[0]*$pb[3]),
 	disk_total => fmsz($pb[0]*$pb[2]),
 	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
+	has_undone => $total->{has_undone},
 	torrents => [@torrents],
 	total_active => $total->{active},
 	total_count => $total->{count},
