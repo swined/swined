@@ -34,7 +34,7 @@ sub progressbar {
 }
 
 my @torrents;
-my $total = {};
+my $t = {};
 my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/down DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
@@ -43,12 +43,12 @@ while (my $r = $sth->fetchrow_hashref) {
 	$r->{size} = $bt->{total_size};
 	$r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
 	$r->{done} = $r->{progress} >= 100;
-	$total->{count}++;
-	$total->{active}++ if $r->{active};
-	$total->{$_} += $r->{$_} for 'size', 'up', 'down';
-	$total->{progress} += int($r->{progress} * $r->{size} / 100);
+	$t->{count}++;
+	$t->{active}++ if $r->{active};
+	$t->{$_} += $r->{$_} for 'size', 'up', 'down';
+	$t->{progress} += int($r->{progress} * $r->{size} / 100);
 	$r->{active} and $total->{$_} += $r->{$_} for 'downrate', 'uprate', 'peers';
-	$total->{has_undone} = 1 unless $r->{done};
+	$t->{has_undone} = 1 unless $r->{done};
 	my $statusimg = IMG('/img/black.gif', "/start/$r->{id}");
 	$statusimg = IMG('/img/green.gif', "/stop/$r->{id}") if $r->{active} and $r->{pid};
 	$statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
@@ -87,17 +87,17 @@ $tmpl->param({
 	disk_free => fmsz($pb[0]*$pb[3]),
 	disk_total => fmsz($pb[0]*$pb[2]),
 	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
-	has_undone => $total->{has_undone},
+	has_undone => $t->{has_undone},
 	torrents => [@torrents],
-	total_active => $total->{active},
-	total_count => $total->{count},
-	total_size => fmsz($total->{size}),
-	total_up => fmsz($total->{up}),
-	total_down => fmsz($total->{down}),
-	total_peers => $total->{peers},
-	total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
-	total_speed => (fmsz($total->{downrate}) or '0b') . ' / ' . (fmsz($total->{uprate}) or '0b'),
-	total_status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
+	total_active => $t->{active},
+	total_count => $t->{count},
+	total_size => fmsz($t->{size}),
+	total_up => fmsz($t->{up}),
+	total_down => fmsz($t->{down}),
+	total_peers => $t->{peers},
+	total_ratio => ($t->{up} and $t->{down}) ? r10($t->{up} / $t->{down}) : '--',
+	total_speed => (fmsz($t->{downrate}) or '0b') . ' / ' . (fmsz($t->{uprate}) or '0b'),
+	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 });
 
