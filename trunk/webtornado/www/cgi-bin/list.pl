@@ -81,7 +81,7 @@ my $tmpl = new HTML::Template(
 $tmpl->param({
 	%$t,
 	(map { ("total_$_" => $t->{$_}) } keys %$t), 
-	(map { ("total_$_" => fmsz($t->{$_})) } 'size', 'up', 'down'),
+	(map { ("total_$_" => fmsz($t->{$_})) } 'size', 'up', 'down', 'uprate', 'downrate'),
 	disk_free => fmsz($pb[0]*$pb[3]),
 	disk_total => fmsz($pb[0]*$pb[2]),
 	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
