@@ -39,8 +39,10 @@ my $total = {};
 my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/down DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
+	$r->{up} *= 1 << 20;
+	$r->{down} *= 1 << 20;
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
-	$r->{size} = $bt->{total_size} / (1 << 20);
+	$r->{size} = $bt->{total_size};
 	$r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
 	$r->{done} = $r->{progress} >= 100;
 	$total->{count}++;
@@ -56,9 +58,9 @@ while (my $r = $sth->fetchrow_hashref) {
 	my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
 	$statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
 	$statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
-	(my $up = $r->{maxratio} ? '-' . fmsz(($r->{down} * $r->{maxratio} - $r->{up}) * (1 << 20)) : fmsz($r->{up} * (1 << 20))) =~ s/^--(.)/+$1/g;
+	(my $up = $r->{maxratio} ? '-' . fmsz($r->{down} * $r->{maxratio} - $r->{up}) : fmsz($r->{up})) =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
-	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) * (1 << 20) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
+	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
 	push @torrents, {
 		%$r,
 		user => $ENV{REMOTE_USER},
@@ -73,9 +75,9 @@ while (my $r = $sth->fetchrow_hashref) {
 			user => $ENV{REMOTE_USER}
 		}} @{$bt->{files}} ] : []),
 		files_count => $fc,
-		size => $r->{size} ? fmsz($r->{size} * (1 << 20)) : '--',
+		size => $r->{size} ? fmsz($r->{size}) : '--',
 		up => $up,
-		down => fmsz($r->{down} * (1 << 20)),
+		down => fmsz($r->{down}),
 		ratio => r10($r->{ratio}),
 		uprate => fmsz($r->{uprate}),
 		downrate => fmsz($r->{downrate}),
@@ -100,9 +102,9 @@ $tmpl->param({
 	torrents => [@torrents],
 	total_active => $total->{active},
 	total_count => $total->{count},
-	total_size => fmsz($total->{size} * (1 << 20)),
-	total_up => fmsz($total->{up} * (1 << 20)),
-	total_down => fmsz($total->{down} * (1 << 20)),
+	total_size => fmsz($total->{size}),
+	total_up => fmsz($total->{up}),
+	total_down => fmsz($total->{down}),
 	total_peers => $total->{peers},
 	total_ratio => ($total->{up} and $total->{down}) ? r10($total->{up} / $total->{down}) : '--',
 	total_speed => (fmsz($total->{downrate}) or '0b') . ' / ' . (fmsz($total->{uprate}) or '0b'),
