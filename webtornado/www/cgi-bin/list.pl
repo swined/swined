@@ -31,11 +31,8 @@ sub progressbar {
     center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p), -class => 'pbi' })));
 }
 
-my @torrents;
-my $t = {};
-my $sth = $wt->dbh->prepare('SELECT *,up/down AS ratio FROM torrents WHERE owner = ? ORDER BY up/down DESC');
-$sth->execute($ENV{REMOTE_USER});
-while (my $r = $sth->fetchrow_hashref) {
+my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ? ORDER BY up/down DESC', 'id', undef, $ENV{REMOTE_USER}));
+foreach my $r (map { $q->{$_} } keys %$q) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
 	$r->{size} = $bt->{total_size};
@@ -57,17 +54,12 @@ while (my $r = $sth->fetchrow_hashref) {
 		name => $bt->{name},
 		ue_name => uri_escape($bt->{name}),
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-		files => ($fc > 1 ? [ map {{
-			size => fmsz($_->{size}),
-			name => $_->{name},
-			user => $ENV{REMOTE_USER}
-		}} @{$bt->{files}} ] : []),
+		files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
 		files_count => $fc,
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
 }
-$total->{active} ||= 0;
 
 my @pb = statvfs '/var/cache/webtornado/users';
 
