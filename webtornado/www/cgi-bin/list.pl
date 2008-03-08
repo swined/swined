@@ -56,12 +56,12 @@ while (my $r = $sth->fetchrow_hashref) {
 	my $fc = scalar @{$bt->{files}};
 	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
 	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
+	$r->{$_} = r10($r->{$_}) for 'ratio', 'maxratio';
 	push @torrents, { %$r,
 		user => $ENV{REMOTE_USER},
 		icons => $statusimg,
 		name => $bt->{name},
 		ue_name => uri_escape($bt->{name}),
-		maxratio => r10($r->{maxratio}),
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
 		files => ($fc > 1 ? [ map {{
 			size => fmsz($_->{size}),
@@ -69,7 +69,6 @@ while (my $r = $sth->fetchrow_hashref) {
 			user => $ENV{REMOTE_USER}
 		}} @{$bt->{files}} ] : []),
 		files_count => $fc,
-		ratio => r10($r->{ratio}),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
