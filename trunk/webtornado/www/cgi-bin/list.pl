@@ -62,14 +62,7 @@ foreach my $r (map { $q->{$_} } keys %$q) {
 }
 
 my @pb = statvfs '/var/cache/webtornado/users';
-
-my $tmpl = new HTML::Template(
-    filename => '/usr/share/webtornado/tmpl/list.tmpl',
-    die_on_bad_params => 0,
-    vanguard_compatibility_mode => 1,
-    loop_context_vars => 1,
-);
-
+my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1, loop_context_vars => 1);
 $tmpl->param({
 	%$t,
 	(map { ("total_$_" => $t->{$_}) } keys %$t), 
@@ -82,5 +75,4 @@ $tmpl->param({
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 });
-
 print header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
