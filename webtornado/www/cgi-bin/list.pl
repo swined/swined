@@ -13,8 +13,6 @@ use Time::Duration;
 
 my $wt = new WT;
 
-print $wt->cgi->header(-content_type => 'text/html; charset=utf-8');
-
 sub A { a({ -href => shift }, join ' ', @_) }
 sub IMG { img({ -src => shift }) }
 
@@ -89,6 +87,13 @@ $total->{active} ||= 0;
 
 my @pb = statvfs '/var/cache/webtornado/users';
 
+my $ajax = new CGI::Ajax(
+	'external' => '/',
+	'files' => sub {
+		'<br>' . join '', map { "[" . fmsz($_->{size}) . "] <a href='/webtornado/users/$ENV{REMOTE_USER}/output/$_->{name}'>$_->{name}</a><br>"}  @{WT::getTorrentInfo(uri_unescape $dbh->selectrow_hashref('SELECT * FROM torrents WHERE id = ? AND owner = ?', undef, shift, $ENV{REMOTE_USER})->{torrent})->{files}};
+	},
+);
+
 my $tmpl = new HTML::Template(
     filename => '/usr/share/webtornado/tmpl/list.tmpl',
     die_on_bad_params => 0,
@@ -113,10 +118,4 @@ $tmpl->param({
 	version => $VER::VER,
 });
 
-my $ajax = new CGI::Ajax(
-	'files' => sub {
-		'<br>' . join '', map { "[" . fmsz($_->{size}) . "] <a href='/webtornado/users/$ENV{REMOTE_USER}/output/$_->{name}'>$_->{name}</a><br>"}  @{WT::getTorrentInfo(uri_unescape $dbh->selectrow_hashref('SELECT * FROM torrents WHERE id = ? AND owner = ?', undef, shift, $ENV{REMOTE_USER})->{torrent})->{files}};
-	},
-);
-
-print $ajax->build_html(CGI->new(), sub { $tmpl->output });
+print $ajax->build_html(CGI->new(), sub { $tmpl->output }, { -content_type => 'text/html; charset=utf-8' });
