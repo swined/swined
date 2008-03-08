@@ -33,7 +33,7 @@ sub progressbar {
     return 'unknown' unless $p;
     return 'done' if $p >= 100;
     $p .= '%' unless $p =~ /%$/;
-    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo'}, div({ -style => "width: ${p}; height: 100%; background-color: #00FF00" })));
+    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => "width: ${p}", -class => 'pbi' })));
 }
 
 my @torrents;
