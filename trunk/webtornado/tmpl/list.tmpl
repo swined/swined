@@ -1,6 +1,12 @@
 <html>
     <head>
 	<meta http-equiv='REFRESH' content='30;URL=/' />
+	<style>
+TD {
+	text-align: center;
+	vertical-align: top;
+}
+	</style>
     </head>
     <body><center>
 
@@ -12,12 +18,12 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <tbody>
 <tmpl_loop torrents>
     <tr bgcolor="<tmpl_if __odd__>#ffffff<tmpl_else>#f2f2f2</tmpl_if>">
-<td style="text-align: center" valign="top">%icons%
+<td>%icons%
 <tmpl_unless del>
     <tmpl_if done><a href="<tmpl_if files>/%id%.tar<tmpl_else>/webtornado/users/%user%/output/%ue_name%</tmpl_if>"><img src="/img/tar_down.gif" border="0"></a></tmpl_if><a href="/delete/%id%"><img src="/img/delete.png" border="0"></a>
 </tmpl_unless>
 </td>
-<td style="text-align: left" valign="top">%name%
+<td style="text-align: left">%name%
 <tmpl_if files>
     <div id='files_%id%' style='color: #666666; display: inline'><a onclick='files_%id%.innerHTML=files_%id%_content.innerHTML'>[%files_count% files]</a>
     </div><div style='display: none' id='files_%id%_content'><br>
@@ -26,13 +32,13 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 </tmpl_if>
 <tmpl_if active><tmpl_if error><br><font color=red>%error%</font></tmpl_if></tmpl_if>
 </td>
-<td style="text-align: center" valign="top">%size%</td>
-<td style="text-align: center" valign="top">%up%</td>
-<td style="text-align: center" valign="top">%down%</td>
-<td style="text-align: center" valign="top"><tmpl_if active>
+<td>%size%</td>
+<td>%up%</td>
+<td>%down%</td>
+<td><tmpl_if active>
 <tmpl_if peers>%peers%<tmpl_else>none</tmpl_if>
 <tmpl_else>--</tmpl_if></td>
-<td style="text-align: center" valign="top"><nobr>
+<td><nobr>
 <tmpl_if overseed><div style='color: red'><b></tmpl_if>
 <a onclick='set_maxratio_%id%.innerHTML=set_maxratio_%id%_content.innerHTML'>
 <tmpl_if ratio>%ratio%<tmpl_else>--</tmpl_if><tmpl_if maxratio> (%maxratio%)</tmpl_if></a>
@@ -45,22 +51,22 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 </form></div>
 <tmpl_if overseed></b></div></tmpl_if>
 </nobr></td>
-<td style="text-align: center" valign="top"><tmpl_if active>
+<td><tmpl_if active>
 <tmpl_if uprate><tmpl_if downrate>%downrate% / </tmpl_if>%uprate%<tmpl_else><tmpl_if downrate>%downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if>
 <tmpl_else>--</tmpl_if></td>
-<td style="text-align: center" valign="top"><tmpl_if done><tmpl_if active>seeding %seedstatus%<tmpl_else>done</tmpl_if><tmpl_else>%status%</tmpl_if></td>
+<td><tmpl_if done><tmpl_if active>seeding %seedstatus%<tmpl_else>done</tmpl_if><tmpl_else>%status%</tmpl_if></td>
 </tr>
 </tmpl_loop>
 <tr bgcolor='#cccccc'>
-<td style="text-align: center" valign="top">%total_active% / %total_count%</td>
-<td style="text-align: center" valign="top">total</td>
-<td style="text-align: center" valign="top">%total_size%</td>
-<td style="text-align: center" valign="top">%total_up%</td>
-<td style="text-align: center" valign="top">%total_down%</td>
-<td style="text-align: center" valign="top"><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></td>
-<td style="text-align: center" valign="top">%total_ratio%</td>
-<td style="text-align: center" valign="top">%total_speed%</td>
-<td style="text-align: center" valign="center">%total_status%</td>
+<td>%total_active% / %total_count%</td>
+<td>total</td>
+<td>%total_size%</td>
+<td>%total_up%</td>
+<td>%total_down%</td>
+<td><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></td>
+<td>%total_ratio%</td>
+<td>%total_speed%</td>
+<td>%total_status%</td>
 </tr>
 </tbody>
 </table>
