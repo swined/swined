@@ -2,14 +2,25 @@
     <head>
 	<meta http-equiv='REFRESH' content='30;URL=/' />
 	<style>
-TD {
-	text-align: center;
-	vertical-align: top;
-}
-TH {
-	background-color: #cccccc;
-}
+		TD {
+			text-align: center;
+			vertical-align: top;
+		}
+		TH {
+			background-color: #cccccc;
+		}
 	</style>
+	<script language='javascript'>
+		function maxratio(id, maxratio) {
+			document.getElementById('set_maxratio_' + id).innerHTML = "
+				<form method='get' action='/cgi-bin/action.pl'>
+				<input type=hidden name=action value=set_maxratio>
+				<input type=hidden name=id value=" + id + ">
+				<input type=text name=maxratio value='" + maxratio + "' style='width: 50px'>
+				<input type=submit style='width: 30px' value='OK'>
+				</form>";
+		}
+	</script>
     </head>
     <body><center>
 
@@ -43,15 +54,9 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <tmpl_else>--</tmpl_if></td>
 <td><nobr>
 <tmpl_if overseed><div style='color: red'><b></tmpl_if>
-<a onclick='set_maxratio_%id%.innerHTML=set_maxratio_%id%_content.innerHTML'>
+<a onclick='set_maxratio(%id%, %maxratio%)'>
 <tmpl_if ratio>%ratio%<tmpl_else>--</tmpl_if><tmpl_if maxratio> (%maxratio%)</tmpl_if></a>
-<div id='set_maxratio_%id%'></div><div id='set_maxratio_%id%_content' style='display: none'>
-<form method='get' action='/cgi-bin/action.pl'>
-<input type=hidden name=action value=set_maxratio>
-<input type=hidden name=id value=%id%>
-<input type=text name=maxratio value='%maxratio%' style='width: 50px'>
-<input type=submit style='width: 30px' value='OK'>
-</form></div>
+<div id='set_maxratio_%id%'></div>
 <tmpl_if overseed></b></div></tmpl_if>
 </nobr></td>
 <td><tmpl_if active>
