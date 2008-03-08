@@ -15,7 +15,7 @@ my $wt = new WT;
 print $wt->cgi->header(-content_type => 'text/html; charset=utf-8');
 
 sub A { a({ -href => shift }, join ' ', @_) }
-sub IMG { img({ -border => 0, -src => shift }) }
+sub IMG { img({ -src => shift }) }
 
 sub r10 { int(10 * (shift or $_)) / 10 }
 
