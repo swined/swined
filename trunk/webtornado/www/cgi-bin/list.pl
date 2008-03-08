@@ -47,7 +47,7 @@ while (my $r = $sth->fetchrow_hashref) {
 	$t->{active}++ if $r->{active};
 	$t->{$_} += $r->{$_} for 'size', 'up', 'down';
 	$t->{progress} += int($r->{progress} * $r->{size} / 100);
-	$r->{active} and $total->{$_} += $r->{$_} for 'downrate', 'uprate', 'peers';
+	$r->{active} and $t->{$_} += $r->{$_} for 'downrate', 'uprate', 'peers';
 	$t->{has_undone} = 1 unless $r->{done};
 	my $statusimg = IMG('/img/black.gif', "/start/$r->{id}");
 	$statusimg = IMG('/img/green.gif', "/stop/$r->{id}") if $r->{active} and $r->{pid};
@@ -86,8 +86,8 @@ my $tmpl = new HTML::Template(
 
 $tmpl->param({
 	%$t,
-	map { "total_$_" => $t->{$_} } keys %$t, 
-	map { "total_$_" => fmsz($t->{$_}) } ('size', 'up', 'down'),
+	(map { "total_$_" => $t->{$_} } keys %$t), 
+	(map { "total_$_" => fmsz($t->{$_}) } 'size', 'up', 'down'),
 	disk_free => fmsz($pb[0]*$pb[3]),
 	disk_total => fmsz($pb[0]*$pb[2]),
 	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
