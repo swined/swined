@@ -12,8 +12,7 @@ use Time::Duration;
 
 my $wt = new WT;
 
-sub A { a({ -href => shift }, join ' ', @_) }
-sub IMG { img({ -src => shift }) }
+sub IMG { $_[1] ? a({ -href => $_[1] }, img({ -src => $_[0] })) : img({ -src => $_[0] }) }
 
 sub r10 { int(10 * (shift or $_)) / 10 }
 
@@ -50,14 +49,14 @@ while (my $r = $sth->fetchrow_hashref) {
 	$total->{progress} += int($r->{progress} * $r->{size} / 100);
 	$r->{active} and $total->{$_} += $r->{$_} for 'downrate', 'uprate', 'peers';
 	$total->{has_undone} = 1 unless $r->{done};
-	my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
-	$statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
+	my $statusimg = IMG('/img/black.gif', "/start/$r->{id}");
+	$statusimg = IMG('/img/green.gif', "/stop/$r->{id}") if $r->{active} and $r->{pid};
 	$statusimg = IMG('/img/yellow.gif') if $r->{active} and ! $r->{pid} or ! $r->{active} and $r->{pid};
 	(my $up = $r->{maxratio} ? '-' . fmsz($r->{down} * $r->{maxratio} - $r->{up}) : fmsz($r->{up})) =~ s/^--(.)/+$1/g;
 	my $fc = scalar @{$bt->{files}};
 	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
-	push @torrents, {
-		%$r,
+	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
+	push @torrents, { %$r,
 		user => $ENV{REMOTE_USER},
 		icons => $statusimg,
 		name => $bt->{name},
@@ -70,12 +69,8 @@ while (my $r = $sth->fetchrow_hashref) {
 			user => $ENV{REMOTE_USER}
 		}} @{$bt->{files}} ] : []),
 		files_count => $fc,
-		size => fmsz($r->{size}),
-		up => $up,
-		down => fmsz($r->{down}),
 		ratio => r10($r->{ratio}),
-		uprate => fmsz($r->{uprate}),
-		downrate => fmsz($r->{downrate}),
+		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
 }
