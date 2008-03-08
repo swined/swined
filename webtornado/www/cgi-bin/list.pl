@@ -87,7 +87,6 @@ $tmpl->param({
 	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
 	torrents => [@torrents],
 	total_ratio => ($t->{up} and $t->{down}) ? r10($t->{up} / $t->{down}) : '--',
-	total_speed => (fmsz($t->{downrate}) or '0b') . ' / ' . (fmsz($t->{uprate}) or '0b'),
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 });
