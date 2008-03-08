@@ -48,10 +48,10 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td>%icons%<tmpl_unless del><tmpl_if done><a href="<tmpl_if files>/%id%.tar<tmpl_else>/webtornado/users/%user%/output/%ue_name%</tmpl_if>"><img src="/img/tar_down.gif"></a></tmpl_if><a href="/delete/%id%"><img src="/img/delete.png"></a></tmpl_unless></td>
 <td style="text-align: left">%name%
 <tmpl_if files>
-    <div id='files_%id%' style='color: #666666; display: inline'><a onclick='files(["args__%id%"], ["files_%id%"])'>[%files_count% files]</a></div>
-<!--<div style='display: none' id='files_%id%_content'><br>
+    <div id='files_%id%' style='color: #666666; display: inline'><a onclick='document.getElementById("files_%id%").innerHTML=document.getElementById("files_%id%_content").innerHTML'>[%files_count% files]</a></div>
+<div style='display: none' id='files_%id%_content'><br>
     <tmpl_loop files>[%size%] <a href="/webtornado/users/%user%/output/%name%">%name%</a><br></tmpl_loop>
-    </div>-->
+    </div>
 </tmpl_if>
 <tmpl_if active><tmpl_if error><br><font color=red>%error%</font></tmpl_if></tmpl_if>
 </td>
