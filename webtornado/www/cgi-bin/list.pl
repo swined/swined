@@ -32,7 +32,7 @@ sub progressbar {
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
-foreach my $r (sort { $a->{ratio} <=> $b->{ratio} } map { $q->{$_} } keys %$q) {
+foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
 	$r->{size} = $bt->{total_size};
