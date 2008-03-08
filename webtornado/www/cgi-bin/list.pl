@@ -39,21 +39,16 @@ my $total = {};
 my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/down DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
-	$r->{up} *= 1 << 20;
-	$r->{down} *= 1 << 20;
+	$r->{$_} *= 1 << 20 for 'up', 'down';
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
 	$r->{size} = $bt->{total_size};
 	$r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
 	$r->{done} = $r->{progress} >= 100;
 	$total->{count}++;
 	$total->{active}++ if $r->{active};
-	$total->{size} += $r->{size};
-	$total->{up} += $r->{up};
+	$total->{$_} += $r->{$_} for 'size', 'up', 'down';
 	$total->{progress} += int($r->{progress} * $r->{size} / 100);
-	$total->{down} += $r->{down};
-	$total->{downrate} += $r->{downrate} if $r->{active};
-	$total->{uprate} += $r->{uprate} if $r->{active};
-	$total->{peers} += $r->{peers} if $r->{active};
+	$r->{active} and $total->{$_} += $r->{$_} for 'downrate', 'uprate', 'peers';
 	$total->{has_undone} = 1 unless $r->{done};
 	my $statusimg = A("/start/$r->{id}", IMG('/img/black.gif'));
 	$statusimg = A("/stop/$r->{id}", IMG('/img/green.gif')) if $r->{active} and $r->{pid};
@@ -75,7 +70,7 @@ while (my $r = $sth->fetchrow_hashref) {
 			user => $ENV{REMOTE_USER}
 		}} @{$bt->{files}} ] : []),
 		files_count => $fc,
-		size => $r->{size} ? fmsz($r->{size}) : '--',
+		size => fmsz($r->{size}),
 		up => $up,
 		down => fmsz($r->{down}),
 		ratio => r10($r->{ratio}),
