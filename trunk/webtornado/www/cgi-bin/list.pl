@@ -5,6 +5,7 @@ use CGI qw/:all/;
 use CGI::Debug;
 use WT;
 use VER;
+use CGI::Ajax;
 use HTML::Template;
 use Filesys::Statvfs;
 use URI::Escape;
@@ -111,4 +112,11 @@ $tmpl->param({
 	total_status => progressbar($total->{has_undone} ? int(100 * $total->{progress} / ($total->{size} or 1)) : 100),
 	version => $VER::VER,
 });
-print $tmpl->output;
+
+my $ajax = new CGI::Ajax(
+	'files' => sub {
+		'<br>' . join '', map { "[" . fmsz($_->{size}) . "] <a href='/webtornado/users/$ENV{REMOTE_USER}/output/$_->{name}'>$_->{name}</a><br>"}  @{WT::getTorrentInfo(uri_unescape $dbh->selectrow_hashref('SELECT * FROM torrents WHERE id = ? AND owner = ?', undef, shift, $ENV{REMOTE_USER})->{torrent})->{files}};
+	},
+);
+
+print $ajax->build_html(CGI->new(), sub { $tmpl->output });
