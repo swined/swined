@@ -57,7 +57,8 @@ while (my $r = $sth->fetchrow_hashref) {
 	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
 	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
 	$r->{$_} = r10($r->{$_}) for 'ratio', 'maxratio';
-	push @torrents, { %$r,
+	push @torrents, { 
+		%$r,
 		user => $ENV{REMOTE_USER},
 		icons => $statusimg,
 		name => $bt->{name},
@@ -86,8 +87,8 @@ my $tmpl = new HTML::Template(
 
 $tmpl->param({
 	%$t,
-	(map { "total_$_" => $t->{$_} } keys %$t), 
-	(map { "total_$_" => fmsz($t->{$_}) } 'size', 'up', 'down'),
+	(map { ("total_$_" => $t->{$_}) } keys %$t), 
+	(map { ("total_$_" => fmsz($t->{$_})) } 'size', 'up', 'down'),
 	disk_free => fmsz($pb[0]*$pb[3]),
 	disk_total => fmsz($pb[0]*$pb[2]),
 	disk_progressbar => progressbar(int(100*(1-$pb[3]/$pb[2])), 0, '97%'),
