@@ -15,24 +15,24 @@ my $wt = new WT;
 sub r10 { int(10 * (shift or $_)) / 10 }
 
 sub fmsz {
-    my $s = shift;
-    return r10 . 'T' if 0.7 < abs(local $_ = $s/1024/1024/1024/1024);
-    return r10 . 'G' if 0.7 < abs(local $_ = $s/1024/1024/1024);
-    return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);
-    return r10 . 'k' if 0.7 < abs(local $_ = $s/1024);
-    return int $s;
+	my $s = shift;
+	return r10 . 'T' if 0.7 < abs(local $_ = $s/1024/1024/1024/1024);
+	return r10 . 'G' if 0.7 < abs(local $_ = $s/1024/1024/1024);
+	return r10 . 'M' if 0.7 < abs(local $_ = $s/1024/1024);
+	return r10 . 'k' if 0.7 < abs(local $_ = $s/1024);
+	return int $s;
 }
 
 sub progressbar {
-    my ($p, $e, $w) = @_;
-    return 'unknown' unless $p;
-    return 'done' if $p >= 100;
-    $p .= '%' unless $p =~ /%$/;
-    center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p), -class => 'pbi' })));
+	my ($p, $e, $w) = @_;
+	return 'unknown' unless $p;
+	return 'done' if $p >= 100;
+	$p .= '%' unless $p =~ /%$/;
+	center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p), -class => 'pbi' })));
 }
 
-my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ? ORDER BY up/down DESC', 'id', undef, $ENV{REMOTE_USER}));
-foreach my $r (map { $q->{$_} } keys %$q) {
+my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
+foreach my $r (sort { $a->{ratio} <=> $b->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
 	$r->{size} = $bt->{total_size};
