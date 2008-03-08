@@ -33,13 +33,12 @@ sub progressbar {
 
 my @torrents;
 my $t = {};
-my $sth = $wt->dbh->prepare('SELECT * FROM torrents WHERE owner = ? ORDER BY up/down DESC');
+my $sth = $wt->dbh->prepare('SELECT *,up/down AS ratio FROM torrents WHERE owner = ? ORDER BY up/down DESC');
 $sth->execute($ENV{REMOTE_USER});
 while (my $r = $sth->fetchrow_hashref) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
 	$r->{size} = $bt->{total_size};
-	$r->{ratio} = $r->{down} ? $r->{up} / $r->{down} : 0;
 	$r->{done} = $r->{progress} >= 100;
 	$t->{count}++;
 	$t->{active}++ if $r->{active};
