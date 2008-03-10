@@ -58,7 +58,7 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 </td>
 <td>%size%</td><td>%up%</td><td>%down%</td>
 <td><tmpl_if active><tmpl_if peers>%peers%<tmpl_else>none</tmpl_if><tmpl_else>--</tmpl_if></td>
-<td id='set_maxratio_%id%' onClick='set_maxratio(%id%, %maxratio%)'><tmpl_if overseed><div style='color: red'><b></tmpl_if><tmpl_if ratio>%ratio%<tmpl_else>--</tmpl_if><tmpl_if maxratio> (%maxratio%)</tmpl_if></div><tmpl_if overseed></b></tmpl_if></td>
+<td id='set_maxratio_%id%' onClick='set_maxratio(%id%, %maxratio%)'><tmpl_if overseed><div style='color: red'><b></tmpl_if><tmpl_if ratio>%ratio%<tmpl_else>--</tmpl_if><tmpl_if maxratio> (%maxratio%)</tmpl_if><tmpl_if overseed></b></tmpl_if></td>
 <td><tmpl_if active><tmpl_if uprate><tmpl_if downrate>%downrate% / </tmpl_if>%uprate%<tmpl_else><tmpl_if downrate>%downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if><tmpl_else>--</tmpl_if></td>
 <td><tmpl_if done><tmpl_if active>seeding %seedstatus%<tmpl_else>done</tmpl_if><tmpl_else>%status%</tmpl_if></td>
 </tr>
