@@ -17,8 +17,8 @@ my $wt = new WT;
 sub r10 { int(10 * (shift or $_)) / 10 }
 
 sub fmsz {
-	my ($i, $s) = (3, shift);
-	1 < abs(local $_ = $s / 1 << 10 * $i--) and return r10 for 'G', 'M', 'k', 'b';
+	my $i = 3;
+	0.99 < abs(local $n = $_[0] / (1 << 10 * $i--)) and return r10($n) . $_ for 'G', 'M', 'k', 'b';
 # 	return r10 . 'T' if 1 < abs(local $_ = $s / (1 << 40));
 # 	return r10 . 'G' if 1 < abs(local $_ = $s / (1 << 30));
 # 	return r10 . 'M' if 1 < abs(local $_ = $s / (1 << 20));
