@@ -28,7 +28,7 @@ sub progressbar {
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
 	$p .= '%' unless $p =~ /%$/;
-	center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p) . '%', -class => 'pbi' })));
+	($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p) . '%', -class => 'pbi' }));
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
@@ -48,7 +48,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
 	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
 	$r->{$_} = r10($r->{$_}) for 'ratio', 'maxratio';
-	push @torrents, { 
+	push @torrents, {
 		%$r,
 		user => $ENV{REMOTE_USER},
 		name => $bt->{name},
@@ -65,7 +65,7 @@ my @pb = statvfs '/var/cache/webtornado/users';
 my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1, loop_context_vars => 1);
 $tmpl->param({
 	%$t,
-	(map { ("total_$_" => $t->{$_}) } keys %$t), 
+	(map { ("total_$_" => $t->{$_}) } keys %$t),
 	(map { ("total_$_" => fmsz($t->{$_})) } 'size', 'up', 'down', 'uprate', 'downrate'),
 	disk_free => fmsz($pb[0]*$pb[3]),
 	disk_total => fmsz($pb[0]*$pb[2]),
