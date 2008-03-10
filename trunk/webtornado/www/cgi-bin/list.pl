@@ -5,11 +5,13 @@ use CGI qw/:all/;
 use CGI::Debug;
 use WT;
 use VER;
+use Time::HiRes qw/time/;
 use HTML::Template;
 use Filesys::Statvfs;
 use URI::Escape;
 use Time::Duration;
 
+my $tm = time;
 my $wt = new WT;
 
 sub r10 { int(10 * (shift or $_)) / 10 }
@@ -74,5 +76,6 @@ $tmpl->param({
 	total_ratio => ($t->{up} and $t->{down}) ? r10($t->{up} / $t->{down}) : '--',
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
+	gtime => $tm - time(),
 });
 print header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
