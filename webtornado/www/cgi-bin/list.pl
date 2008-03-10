@@ -18,7 +18,7 @@ sub r10 { int(10 * (shift or $_)) / 10 }
 
 sub fmsz {
 	my $s = shift;
-	return r10 . 'T' if 1 < abs(local $_ = $s / (1 << 40));
+# 	return r10 . 'T' if 1 < abs(local $_ = $s / (1 << 40));
 	return r10 . 'G' if 1 < abs(local $_ = $s / (1 << 30));
 	return r10 . 'M' if 1 < abs(local $_ = $s / (1 << 20));
 	return r10 . 'k' if 1 < abs(local $_ = $s / (1 << 10));
