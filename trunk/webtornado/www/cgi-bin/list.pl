@@ -76,6 +76,6 @@ $tmpl->param({
 	total_ratio => ($t->{up} and $t->{down}) ? r10($t->{up} / $t->{down}) : '--',
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
-	gtime => $tm - time(),
+	gtime => int((time()-$tm)*1000)/1000,
 });
 print header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
