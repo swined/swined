@@ -15,16 +15,7 @@ my $tm = time;
 my $wt = new WT;
 
 sub r10 { int(10 * (shift or $_)) / 10 }
-
-sub fmsz {
-	my $i = 3;
-	0.99 < abs(local $n = $_[0] / (1 << 10 * $i--)) and return r10($n) . $_ for 'G', 'M', 'k', 'b';
-# 	return r10 . 'T' if 1 < abs(local $_ = $s / (1 << 40));
-# 	return r10 . 'G' if 1 < abs(local $_ = $s / (1 << 30));
-# 	return r10 . 'M' if 1 < abs(local $_ = $s / (1 << 20));
-# 	return r10 . 'k' if 1 < abs(local $_ = $s / (1 << 10));
-# 	return int $s;
-}
+sub fmsz { local $i = 3, map { return r10($n) . $_ if 0.99 < abs(local $n = $_[0] / (1 << 10 * $i--)) } split '', 'GMkb' }
 
 sub progressbar {
 	my ($p, $e, $w) = @_;
