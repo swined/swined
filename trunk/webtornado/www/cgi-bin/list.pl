@@ -28,7 +28,7 @@ sub progressbar {
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
 	$p .= '%' unless $p =~ /%$/;
-	($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p) . '%', -class => 'pbi' }));
+	center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p) . '%', -class => 'pbi' })));
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
