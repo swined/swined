@@ -19,7 +19,7 @@ my $metacache = new Cache::FastMmap(
 	share_file => '/var/cache/webtornado/metacache',
 	expire_time => '1d',
 	unlink_on_exit => 0,
-	read_cb => sub { warn("cache miss: meta " . $_[1]) and WT::getTorrentInfo(uri_unescape $wt->dbh->selectrow_hashref('SELECT torrent FROM torrents WHERE owner = ? AND sha1(torrent) = ?', undef, $ENV{REMOTE_USER}, $_[1])->{torrent}) },
+	read_cb => sub { WT::getTorrentInfo(uri_unescape $wt->dbh->selectrow_hashref('SELECT torrent FROM torrents WHERE owner = ? AND sha1(torrent) = ?', undef, $ENV{REMOTE_USER}, $_[1])->{torrent}) },
 );
 
 sub r10 { int(10 * (shift or $_)) / 10 }
