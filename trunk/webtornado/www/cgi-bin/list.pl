@@ -11,7 +11,7 @@ use Filesys::Statvfs;
 use URI::Escape;
 use Time::Duration;
 
-my $tm = time;
+my ($tm, $pt) = (time, 0);
 my $wt = new WT;
 
 sub r10 { int(10 * (shift or $_)) / 10 }
@@ -28,7 +28,9 @@ sub progressbar {
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
 foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
+	my $xt = time;
 	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
+	$pt += time - $xt;
 	$r->{size} = $bt->{total_size};
 	$r->{done} = $r->{progress} >= 100;
 	$t->{count}++;
@@ -69,5 +71,6 @@ $tmpl->param({
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 	gtime => int((time()-$tm)*1000)/1000,
+	ptime => int($pt*1000)/1000,
 });
 print header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
