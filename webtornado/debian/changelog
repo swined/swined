@@ -1,3 +1,9 @@
+webtornado (0.0.7+svn470) unstable; urgency=low
+
+  * svn revision 470
+
+ -- Alexey Alexandrov <swined@gmail.com>  Tue, 11 Mar 2008 15:25:28 +0600
+
 webtornado (0.0.7+svn467) unstable; urgency=low
 
   * svn revision 467
