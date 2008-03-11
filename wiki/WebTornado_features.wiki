@@ -6,9 +6,9 @@
 || 0.0.7 || ~~Disable tar for single-file torrents~~ || requires _Unauthenticated file downloads_ and all related redesign ||
 || 0.0.7 || ~~add separate DOWN column~~ || ||
 || 0.0.7 || ~~Add PEERS column~~ || needs db updates -> not next version ||
+|| 0.0.7 || ~~store .torrents in db~~ || ||
+|| 0.0.7 || ~~optimize list rendering~~ || added metafile parsed contents cache ||
 || 0.1.0 || rewrite download code in perl || just a dream :) ||
-|| || optimize list rendering || generic feature :) could be started with .torrent parsed contents caching ||
-|| || store .torrents in db || ||
 || || Add .torrents from URL || wont work with private trackers and requires lots of paranoid checks -> not next version ||
 || || stop after ratio-limit || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
