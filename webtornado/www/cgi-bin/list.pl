@@ -15,7 +15,7 @@ my ($tm, $pt) = (time, 0);
 my $wt = new WT;
 
 sub r10 { int(10 * (shift or $_)) / 10 }
-sub fmsz { local $i = 3, (map { return r10($n) . $_ if 0.99 < abs local $n = $_[0] / (1 << 10 * $i--) } split '', 'GMkb'), return 0 }
+sub fmsz { local $i = 3, (map { return r10($n) . $_ if 0.99 < abs(local $n = $_[0] / (1 << 10 * $i--)) } split '', 'GMkb'), return 0 }
 
 sub progressbar {
 	my ($p, $e, $w) = @_;
