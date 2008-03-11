@@ -10,9 +10,17 @@ use HTML::Template;
 use Filesys::Statvfs;
 use URI::Escape;
 use Time::Duration;
+use Cache::FastMmap;
 
-my ($tm, $pt) = (time, 0);
+my $tm = time;
 my $wt = new WT;
+
+my $metacache = new Cache::FastMmap(
+    share_file => '/var/cache/webtornado/metacache',
+    expire_time => '1d',
+    unlink_on_exit => 0,
+    read_cb => sub { WT::getTorrentInfo(uri_unescape $wt->dbh->selectrow_hashref('SELECT torrent FROM torrents WHERE owner = ? AND sha1(torrent) = ?', undef, $ENV{REMOTE_USER}, $_[1])) },
+);
 
 sub r10 { int(10 * (shift or $_)) / 10 }
 sub fmsz { local $i = 3, (map { return r10($n) . $_ if 0.99 < abs(local $n = $_[0] / (1 << 10 * $i--)) } split '', 'GMkb'), return 0 }
@@ -25,12 +33,10 @@ sub progressbar {
 	center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p) . '%', -class => 'pbi' })));
 }
 
-my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
+my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio, sha1(torrent) AS metahash FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
 foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
-	my $xt = time;
-	my $bt = WT::getTorrentInfo(uri_unescape $r->{torrent});
-	$pt += time - $xt;
+	my $bt = eval { alarm 0; $metacache->get($r->{metahash}) };
 	$r->{size} = $bt->{total_size};
 	$r->{done} = $r->{progress} >= 100;
 	$t->{count}++;
@@ -71,6 +77,5 @@ $tmpl->param({
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 	gtime => int((time()-$tm)*1000)/1000,
-	ptime => int($pt*1000)/1000,
 });
 print header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
