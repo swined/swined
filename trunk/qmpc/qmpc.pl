@@ -13,7 +13,7 @@ $a->setMainWidget($m);
 };
 
 *MainWin::helpAbout = sub {
-    AboutBox($a, 'aboutBox')->show;
+    AboutBox($m)->show;
 };
 
 exit $a->exec;
