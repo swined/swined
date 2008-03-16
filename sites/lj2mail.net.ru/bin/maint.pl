@@ -5,7 +5,7 @@ use mail;
 
 my $dbh = DBI->connect('DBI:mysql:database=lj2mail');
 
-=
+=cut
 my $sth = $dbh->prepare('SELECT * FROM users WHERE failures > 20');
 $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
@@ -26,7 +26,7 @@ $dbh->do('DELETE FROM prereg WHERE updated < ?', undef, time - 60*60*24);
 #$dbh->do('DELETE FROM entries WHERE updated < ?', undef, time - 60*60*24*30);
 $dbh->do('DELETE FROM entries WHERE owner NOT IN (SELECT id FROM users)');
 
-=
+=cut
 my $sth = $dbh->prepare('SELECT COUNT(*) FROM users');
 $sth->execute;
 my $uc = $sth->fetchrow_hashref->{'COUNT(*)'};
