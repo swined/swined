@@ -35,7 +35,11 @@
 			document.getElementById("set_maxratio_" + id).id = "set_maxratio_form_" + id;
 		}
 	</script>
-	<title>[wt] <tmpl_if total_uprate><tmpl_if total_downrate>d:%total_downrate% / </tmpl_if>u:%total_uprate%<tmpl_else><tmpl_if total_downrate>d:%total_downrate%<tmpl_else>stalled</tmpl_if></tmpl_if></title>
+	<title>[wt] r:<tmpl_if total_ratio>%total_ratio%<tmpl_else>--</tmpl_if>
+	    <tmpl_if total_peers>p:%total_peers%</tmpl_if>
+	    <tmpl_if total_downrate>d:%total_downrate%</tmpl_if>
+	    <tmpl_if total_uprate>u:%total_uprate%</tmpl_if>
+	</title>
     </head>
     <body><center>
 
