@@ -1,3 +1,5 @@
 package WWW::FreeProxy::Test;
 
-print __PACKAGE__ . "\n";
+#print __PACKAGE__ . "\n";
+
+1;

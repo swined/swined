@@ -3,10 +3,12 @@ package WWW::FreeProxy;
 BEGIN {
 	foreach my $dir (@INC) {
 		next unless -d ($dir .= '/WWW/FreeProxy');
-		opendir DIR, $dir;
-		map { require $_ } grep /\.pmc?$/, readdir DIR;
-		closedir DIR;
+		opendir $dir, $dir;
+		map { require $_ } grep /\.pmc?$/, readdir $dir;
+		closedir $dir;
 	}
 }
+
+sub plugins { grep s/::$//, keys %WWW::FreeProxy:: }
 
 1;
