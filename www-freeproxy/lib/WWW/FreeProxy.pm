@@ -7,9 +7,9 @@ our @EXPORT = qw/fetch_proxies/;
 
 BEGIN {
 	foreach my $dir (@INC) {
-		next unless -d ($dir .= '/WWW/FreeProxy');
-		opendir $dir, $dir;
-		map { require $_ } grep /\.pmc?$/, readdir $dir;
+		next unless -d ($dir . '/WWW/FreeProxy');
+		opendir $dir, $dir . '/WWW/FreeProxy';
+		map { require "WWW/FreeProxy/$_" } grep /\.pmc?$/, readdir $dir;
 		closedir $dir;
 	}
 }
