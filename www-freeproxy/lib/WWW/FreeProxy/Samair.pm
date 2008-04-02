@@ -1,30 +1,20 @@
 package WWW::FreeProxy::Samair;
 
 use LWP::Simple;
-use HTML::TreeBuilder;
 
 sub fetch {
-	my ($i, $b, $self, $callback) = (0, 1, @_);
-	my %page = ('01'=>0);
-	while ($b){
-		$b = 0;
-		foreach my $p(keys %page) {
-			next if($page{$p});
-			$page{$p} = 1;
-			$b = 1;
-			my $content = get("http://www.samair.ru/proxy/proxy-$p.htm") or next;
-			$page{$1} ||= 0 while $content =~ /proxy-(\d{2})\.htm/g;
-			my $h = HTML::TreeBuilder->new_from_content($content);
-			$h->ignore_unknown(0);
-			$h = $h->elementify();
-			my $t = $h->look_down('_tag', 'table', 'class', 'tablelist');
-			my @td = $t->look_down('_tag', 'td', sub {if($_[0]) {$_[0]->as_text() =~ /\d+\.\d+\.\d+\.\d+/}});
-			foreach(@td) {
-				my $a = $_->as_text();
-				$a =~ s/\s+//g;
-				&$callback($a);
-			}
-			$h = $h->delete();
+	my ($self, $callback) = @_;
+	for (1 .. 10) {
+		(my $p = $_) =~ s/^\d$/0$&/;
+		my $c = get "http://www.samair.ru/proxy/proxy-$p.htm";
+		$c =~ s{<script type="text/javascript">}{<script>}g;
+		$c =~ m{<script>\s*((\w=\d;)+)</script>}s;
+		my ($s, %h) = $1;
+		$h{$1} = $2 while $s =~ /(\w)=(\d)/g;
+		while ($c =~ m{<td>((?:\d+\.){3}\d+)<script>document\.write\(":"((?:\+\w)+)\)</script>}g) {
+			my ($i, $n, $r) = ($1, $2);
+			$r .= $h{$1} while $n =~ /\+(\w)/g;
+			&$callback("$i:$r");
 		}
 	}
 }
