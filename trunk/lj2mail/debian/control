@@ -1,0 +1,10 @@
+Source: webtornado
+Section: web
+Priority: extra
+Maintainer: Alexey Alexandrov <swined@gmail.com>
+Standards-Version: 3.7.2
+
+Package: webtornado
+Architecture: any
+Depends: bittornado
+Description: web based bittorrent download manager
