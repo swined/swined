@@ -31,7 +31,17 @@ WWW::FreeProxy - fetch proxies from free proxy lists
 
 =head1 OVERVIEW
 
+When the module is included it searches for all WWW::FreeProxy::* modules in @INC and loads them as plugins. It means that you can add your own plugins as ./WWW/FreeProxy/YourPlugin.pm. After that any calls to fetch_proxies() will go through all loaded plugins and call fetch() from them to get more proxies.
 
+=head1 PLUGIN FORMAT
+
+	package WWW::FreeProxy::SamplePlugin;
+	
+	sub fetch {
+		my ($self, $callback) = @_;
+		# find some proxies
+		&$callback($_) foreach @proxies;
+	}
 
 =head1 FUNCTIONS
 
@@ -45,7 +55,7 @@ sub plugins() { grep s/::$//, keys %WWW::FreeProxy:: }
 
 =head2 fetch_proxies(&)
 
-Fetches proxies. In order to save memory proxies are not returned as a list, but are reported through a callback function one by one.
+Fetches proxies. In order to save memory proxies are not returned as a list, but are reported through a callback function one by one instead.
 
 =cut
 
