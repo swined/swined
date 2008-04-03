@@ -28,14 +28,12 @@ sub fmsz { local $i = 3, (map { return r10($n) . $_ if 0.99 < abs(local $n = $_[
 sub progressbar {
 	my ($p, $e, $w) = @_;
 	$p = int $p;
+	$w ||= '100px';
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
 	center(
 		($e ? 'eta ' . duration($e, 1) : '') . 
-		div(
-			{ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, 
-			"<div style='width: ${p}%' class='pbi'></div>"
-		)
+		"<div style='width: $w' class='pbo'><div style='width: ${p}%' class='pbi'></div></div>"
 	);
 }
 
