@@ -27,10 +27,16 @@ sub fmsz { local $i = 3, (map { return r10($n) . $_ if 0.99 < abs(local $n = $_[
 
 sub progressbar {
 	my ($p, $e, $w) = @_;
+	$p = int $p;
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
-	$p .= '%' unless $p =~ /%$/;
-	center(($e ? 'eta ' . duration($e, 1) : '') . div({ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, div({ -style => 'width: ' . int($p) . '%', -class => 'pbi' })));
+	center(
+		($e ? 'eta ' . duration($e, 1) : '') . 
+		div(
+			{ -style => 'width: ' . ($w or '100px'), -class => 'pbo' }, 
+			"<div style='width: ${p}%' class='pbi'></div>"
+		)
+	);
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
