@@ -1,0 +1,4 @@
+#!/bin/sh
+
+touch .lock || exit 1
+flock -nx .lock mono /usr/lib/lj2mail/lj2mail.exe
