@@ -17,7 +17,7 @@ BEGIN {
 
 =head1 NAME
 
-WWW::FreeProxy - fetch proxies from various proxy-lists
+WWW::FreeProxy - fetch proxies from free proxy lists
 
 =head1 SYNOPSIS
 
@@ -41,7 +41,7 @@ Lists all currently loaded plugins.
 
 =cut
 
-sub plugins { grep s/::$//, keys %WWW::FreeProxy:: }
+sub plugins() { grep s/::$//, keys %WWW::FreeProxy:: }
 
 =head2 fetch_proxies(&)
 
