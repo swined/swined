@@ -30,10 +30,7 @@ sub progressbar {
 	$p = int $p;
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
-	center(
-		($e ? 'eta ' . duration($e, 1) : '') . 
-		"<div" . ($w ? " style='width: $w'" : "") . " class='pb'><div style='width: ${p}%'></div></div>"
-	);
+	($e ? 'eta ' . duration($e, 1) : '') . "<div" . ($w ? " style='width: $w'" : "") . " class='pb'><div style='width: ${p}%'></div></div>";
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
