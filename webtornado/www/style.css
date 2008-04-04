@@ -1,0 +1,20 @@
+TD {
+	text-align: center;
+	vertical-align: top;
+}
+TH {
+	background-color: #CCCCCC;
+}
+IMG {
+	border: 0px;
+}
+DIV.pb {
+	border: 1px solid black;
+	height: 5px;
+	background-color: black;
+	text-align: left;
+}
+DIV.pb>DIV {
+	height: 100%;
+	background-color: #00FF00;
+}
