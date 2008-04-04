@@ -33,7 +33,7 @@ sub progressbar {
 	return 'done' if $p >= 100;
 	center(
 		($e ? 'eta ' . duration($e, 1) : '') . 
-		"<div style='width: $w' class='pbo'><div style='width: ${p}%' class='pbi'></div></div>"
+		"<div style='width: $w' class='pb'><div style='width: ${p}%'></div></div>"
 	);
 }
 
