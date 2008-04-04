@@ -23,3 +23,7 @@ DIV.pb>DIV {
 	height: 100%;
 	background-color: #00FF00;
 }
+DIV.fd {
+	color: #666666; 
+	display: inline;
+}
