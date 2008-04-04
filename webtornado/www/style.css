@@ -11,6 +11,7 @@ IMG {
 DIV.pb {
 	border: 1px solid black;
 	height: 5px;
+	width: 100px;
 	background-color: black;
 	text-align: left;
 }
