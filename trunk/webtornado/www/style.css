@@ -8,6 +8,10 @@ TH {
 IMG {
 	border: 0px;
 }
+TABLE {
+        border: 0px;
+	width: 100%;
+}
 DIV.pb {
 	border: 1px solid black;
 	height: 5px;
