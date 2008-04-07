@@ -19,4 +19,4 @@ if ($r->{id}) {
 } else {
     $wt->dbh->do('INSERT INTO torrents(owner, output, torrent) VALUES(?, ?, ?)', undef, $u, $nf, $tor);
 }
-print $wt->cgi->header(-location => '/', -status => 302);
+print $wt->cgi->header(-location => '/webtornado', -status => 302);
