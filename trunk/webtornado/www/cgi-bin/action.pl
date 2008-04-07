@@ -26,4 +26,4 @@ sub cp { $wt->cgi->param(shift) }
     },
 }->{cp('action')} or sub {})->();
 
-print $wt->cgi->header(-location => '/', -status => 302);
+print $wt->cgi->header(-location => '/webtornado', -status => 302);
