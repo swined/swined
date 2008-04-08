@@ -3,6 +3,11 @@ import wsgiref.handlers
 from google.appengine.api import users
 from google.appengine.ext import webapp
 
+class FriendsPage(webapp.RequestHandler):
+  def get(self):
+    self.response.headers['Content-Type'] = 'text/plain'
+    self.response.out.write('hellow')
+
 class MainPage(webapp.RequestHandler):
   def get(self):
     user = users.get_current_user()
@@ -10,13 +15,13 @@ class MainPage(webapp.RequestHandler):
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.out.write('Hello, ' + user.nickname())
     else:
-#      self.response.headers['Content-Type'] = 'text/plain'
-#      self.response.out.write('Hello, ' + self.request.uri)
-    
       self.redirect(users.create_login_url(self.request.uri))
 
 def main():
-  application = webapp.WSGIApplication([('/', MainPage)], debug=True)
+  application = webapp.WSGIApplication([
+      ('/', MainPage), 
+      ('/friends.rss', FriendsPage)
+    ])
   wsgiref.handlers.CGIHandler().run(application)
 
 if __name__ == "__main__":
