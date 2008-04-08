@@ -40,7 +40,6 @@ if (my $id = param('files')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT sha1(torrent) AS metahash FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
         my $bt = eval { alarm 0; $metacache->get($r->{metahash}) };
 	print "content-type: text/javascript\n\n";
-	print "alert('shit');\n";
 	print "var p = '/webtornado-users/$ENV{REMOTE_USER}/output';\n";
 	print "var d = document.getElementById('files_$id');\n";
 	print "function a(s, n) { d.innerHTML += '[' + s + '] <a href=\"' + p + '/' + n + '\">' + n + '</a><br>'; };\n";
