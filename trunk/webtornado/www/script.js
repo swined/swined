@@ -10,5 +10,5 @@ function set_maxratio(id, maxratio) {
 }
 function show_files(id) {
 //    document.getElementById("files_" + id).innerHTML = document.getElementById("files_" + id + "_content").innerHTML;
-	document.writeln('<script src="/webtornado?files=' + id + '" language="javascript"></script>');
+	document.body.innerHTML += '<script src="/webtornado?files=' + id + '" language="javascript"></script>';
 }
