@@ -44,7 +44,7 @@ if (my $id = param('files')) {
 	print "var d = document.getElementById('files_$id');\n";
 	print "function a(s, n) { d.innerHTML += '[' + s + '] <a href=\"' + p + '/' + n + '\">' + n + '</a><br>'; }\n";
 	print "d.innerHTML = '<br>';\n";
-	print "a('" + fmsz($_->{size}) + "', '$_->{name}');\n" for @{$bt->{files}};
+	print "a('" . fmsz($_->{size}) . "', '$_->{name}');\n" for @{$bt->{files}};
 	exit;
 }
 
