@@ -42,7 +42,7 @@ if (my $id = param('files')) {
 	print "content-type: text/javascript\n\n";
 	print "var p = '/webtornado-users/$ENV{REMOTE_USER}/output';\n";
 	print "var d = document.getElementById('files_$id');\n";
-	print "function a(s, n) { d.innerHTML += '[' + s + '] <a href=\"' + p + '/' + n + '\">' + n + '</a><br>'; }\n";
+	print "function a(s, n) { d.innerHTML += '[' + s + '] <a href=\"' + p + '/' + n + '\">' + n + '</a><br>'; };\n";
 	print "d.innerHTML = '<br>';\n";
 	print "a('" . fmsz($_->{size}) . "', '$_->{name}');\n" for @{$bt->{files}};
 	exit;
