@@ -45,6 +45,7 @@ if (my $id = param('files')) {
 	print "function a(s, n) { d.innerHTML += '[' + s + '] <a href=\"' + p + '/' + n + '\">' + n + '</a><br>'; }\n";
 	print "d.innerHTML = '<br>';\n";
 	print "a('" + fmsz($_->{size}) + "', '$_->{name}');\n" for @{$bt->{files}};
+	exit;
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
