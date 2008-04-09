@@ -11,14 +11,14 @@ class Page(webapp.RequestHandler):
 
 class FriendsPage(Page):
   def get(self):
-    self.response.headers['Content-Type'] = 'text/plain'
+    self.response.headers['Content-Type'] = 'text/html'
     self.response.out.write('hellow')
 
 class MainPage(Page):    
   def get(self):
     self.authenticate()
-    self.response.headers['Content-Type'] = 'text/plain'
-    self.response.out.write('Hello, ' + self.user.nickname())
+    self.response.headers['Content-Type'] = 'text/html'
+    self.response.out.write('Hello, <a href="mailto:' + self.user.email() + '">' + self.user.nickname() + '</a>')
 
 def main():
   application = webapp.WSGIApplication([
