@@ -38,13 +38,10 @@ sub progressbar {
 
 if (my $id = param('files')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT sha1(torrent) AS metahash FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
-        my $bt = eval { alarm 0; $metacache->get($r->{metahash}) };
-	print "content-type: text/javascript\n\n";
-	print "var p = '/webtornado-users/$ENV{REMOTE_USER}/output';\n";
-	print "var d = document.getElementById('files_$id');\n";
-	print "function a(s, n) { d.innerHTML += '[' + s + '] <a href=\"' + p + '/' + n + '\">' + n + '</a><br>'; };\n";
-	print "d.innerHTML = '<br>';\n";
-	print "a('" . fmsz($_->{size}) . "', '$_->{name}');\n" for @{$bt->{files}};
+        my $b = eval { alarm 0; $metacache->get($r->{metahash}) };
+	my $p = "/webtornado-users/$ENV{REMOTE_USER}/output";
+	print "content-type: text/html\n\n<br>\n";
+	print "[" . fmsz($_->{size}) . "] <a href='$p/$_->{name}'>$_->{name}</a><br>\n" for @{$b->{files}};
 	exit;
 }
 
