@@ -69,7 +69,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		ue_name => uri_escape($bt->{name}),
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
 #		files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
-		files_count => $fc,
+		files_count => ($fc > 1) ? $fc : 0,
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
