@@ -1,4 +1,5 @@
 import wsgiref.handlers
+import re
 
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.api.urlfetch import fetch, POST
@@ -26,12 +27,14 @@ class FriendsPage(Page):
     url = 'http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip')
     result = fetch(url, headers = cookies)
     if result.status_code != 200: return
-    return result.content
+    r = []
+    for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(result.content): r.append(l.group(1))
+    return r
   def get(self):
     self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
     cookies = self.login()
     if not cookies: return self.w('shit happened')
-    self.w(self.list(cookies))
+    for i in self.list(cookies): self.w(i + '<br>')
 
 class MainPage(Page):
   def get(self):
