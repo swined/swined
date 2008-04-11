@@ -1,40 +1,56 @@
 import wsgiref.handlers
 import re
 
+from logging import debug
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
-from google.appengine.api.urlfetch import fetch, POST
+from google.appengine.api.urlfetch import fetch, GET, POST
+
+class UserAgent:
+  cookies = {}
+  def cookie_string(self): return '; '.join(['%s=%s' % (k, v) for k, v in self.cookies.items()])
+  def get(self, url): return self.request(url)
+  def post(self, url, data): return self.request(url, data, POST)
+  def request(self, url, data = None, method = GET):
+    res = fetch(url, data, method, { 'Cookie' : self.cookie_string() })
+    if res.status_code == 200: return res.content
 
 class Page(RequestHandler):
-  def w(self, text):
-    self.response.out.write(text)
-  def p(self, name):
-    return self.request.get(name)
+  def w(self, text): self.response.out.write(text)
+  def p(self, name): return self.request.get(name)
 
 class FriendsPage(Page):
+  ua = UserAgent()
   def login(self):
     data = 'mode=sessiongenerate&expiration=short&user=' + self.p('login') + '&hpassword=' + self.p('hash')
-    result = fetch('http://www.livejournal.com/interface/flat', data, POST)
-    if result.status_code != 200: return
+    res = self.ua.post('http://www.livejournal.com/interface/flat', data)
+    if not res: return
     n = 0
-    for ljsession in result.content.split("\n"):
+    for ljsession in res.split("\n"):
       if n: 
         if not ljsession: return
 	t = ljsession.split(':')
-	ljloggedin = t[1] + ':' + t[2]
-	return { 'Cookie' : 'ljsession=' + ljsession + '; ljloggedin=' + ljloggedin + ';' }
+	self.ua.cookies['ljsession'] = ljsession
+	self.ua.cookies['ljloggedin'] = ':'.join(t[1:2])
+	debug(self.ua.cookie_string())
+	return 1
       if ljsession == 'ljsession': n = 1
-  def list(self, cookies):
-    url = 'http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip')
-    result = fetch(url, headers = cookies)
-    if result.status_code != 200: return
-    r = []
-    for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(result.content): r.append(l.group(1))
-    return r
+  def list(self):
+    res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip'))
+    if not res: return
+    return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
+  def entry(self, url):
+    # check cache
+    res = self.ua.get(url + '?format=light')
+    if not res: return
+    # update cache
+    return { 'content' : res }
   def get(self):
     self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-    cookies = self.login()
-    if not cookies: return self.w('shit happened')
-    for i in self.list(cookies): self.w(i + '<br>')
+    if not self.login(): return self.w('shit happened')
+    for url in self.list(): 
+      entry = self.entry(url)
+      if not entry: return self.w('no entry: ' + url)
+#      return self.w(entry['content'])
 
 class MainPage(Page):
   def get(self):
