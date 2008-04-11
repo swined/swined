@@ -20,18 +20,18 @@ class FriendsPage(Page):
         if not ljsession: return
 	t = ljsession.split(':')
 	ljloggedin = t[1] + ':' + t[2]
-	return ljsession
+	return { 'ljsession' : ljsession, 'ljloggedin' : ljloggedin }
       if ljsession == 'ljsession': n = 1
   def list(self, cookies):
     url = 'http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip')
     result = fetch(url, headers = cookies)
+    if result.status_code != 200: return
+    return result.content
   def get(self):
     self.response.headers['Content-Type'] = 'text/html'
-    cookie = self.login()
-    if cookie:
-      self.w(cookie)
-    else:
-      self.w('shit happened')
+    cookies = self.login()
+    if not cookies: return self.w('shit happened')
+    self.w(self.list(cookies))
 
 class MainPage(Page):
   def get(self):
@@ -45,5 +45,5 @@ def main():
     ])
   wsgiref.handlers.CGIHandler().run(application)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   main()
