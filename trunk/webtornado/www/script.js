@@ -52,8 +52,11 @@ function onLoad() {
 				var div = nc.getElementsByTagName('div').item(j);
 				if (div) {
 					div.setAttribute('class', 'fd');
+					div.id = 'files_' + row.id;
 				}
 			}
+			var rc = row.cells.item(6);
+			rc.id = 'set_maxratio_' + row.id;
 			if (!(i % 2)) {
 				row.style.cssText = 'background-color: #f0f0f0';
 			}
