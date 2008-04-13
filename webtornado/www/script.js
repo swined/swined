@@ -46,7 +46,14 @@ function onLoad() {
 	for (var i in torrents.rows) {
 		var row = torrents.rows.item(i);
 		if (i > 0) {
-			row.cells.item(1).style.cssText = 'text-align: left';
+			var nc = row.cells.item(1);
+			nc.style.cssText = 'text-align: left';
+			for (var j in nc.getElementsByTagName('div')) {
+				var div = nc.getElementsByTagName('div').item(j);
+				if (div) {
+					div.setAttribute('class', 'fd');
+				}
+			}
 			if (!(i % 2)) {
 				row.style.cssText = 'background-color: #f0f0f0';
 			}
