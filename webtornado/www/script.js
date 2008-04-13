@@ -42,4 +42,11 @@ function get_xhr(){
 }
 
 function onLoad() {
+	var torrents = document.getElementById('torrents');
+	for (var i in torrents.rows) {
+		var row = torrents.rows.item(i);
+		if (i > 0) {
+		    row.cells.item(1).style.cssText = 'text-align: left';
+		}
+	}
 }
