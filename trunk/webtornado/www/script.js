@@ -7,8 +7,7 @@ function set_maxratio(id, maxratio) {
 		"<input type=text name=maxratio value='" + maxratio + "' style='width: 50px'>" +
 		"<input type=submit style='width: 30px' value='OK'>" +
 		"</form>";
-	div.onClick = function() {};
-	//document.getElementById("set_maxratio_" + id).id = "set_maxratio_form_" + id;
+	div.id += '_';
 }
 
 function show_files(id) {
@@ -21,7 +20,7 @@ function show_files(id) {
 		div.innerHTML = xhr.responseText;
 	};
 	div.innerHTML = '[loading]';
-	div.onClick = function() {};
+	div.id += '_';
 	xhr.send(null);			 
 }
 
