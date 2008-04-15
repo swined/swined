@@ -32,28 +32,19 @@ function show_peers(id) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState != 4) { return }
 		if (xhr.status != 200) { return }
+		div.style.cssText = 'text-align: left;';
 		div.innerHTML = xhr.responseText;
 	};
 	div.innerHTML = '<font color=gray>[loading]</font>';
 	div.setAttribute('onClick', '');
-	div.style.cssText = 'text-align: left;';
 	xhr.send(null);			 
 }
 
 function get_xhr(){
 	var xmlhttp;
-	try {
-    		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-	        try {
-	        	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (E) {
-			xmlhttp = false;
-		}
-	}
-	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-		xmlhttp = new XMLHttpRequest();
-	}
+	try { xmlhttp = new ActiveXObject("Msxml2.XMLHTTP") } catch (e) {
+	try { xmlhttp = new ActiveXObject("Microsoft.XMLHTTP") } catch (E) { xmlhttp = false } }
+	if (!xmlhttp && typeof XMLHttpRequest!='undefined') xmlhttp = new XMLHttpRequest();
 	return xmlhttp;
 }
 
