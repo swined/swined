@@ -47,22 +47,13 @@ function onLoad() {
 		var row = torrents.rows.item(i);
 		if (i == 0) continue;
 		var id = row.getAttribute('wt:id');
-		var fc = row.getAttribute('wt:id');
+		var fc = row.getAttribute('wt:fc');
 		
 		var nc = row.cells.item(1);
 		nc.style.cssText = 'text-align: left';
 		
 		if ((fc > 1) && ! document.getElementById('files_' + id)) 
 		    nc.innerHTML += ' <div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
-		
-//		for (var j in nc.getElementsByTagName('div')) {
-//			var div = nc.getElementsByTagName('div').item(j);
-//			if (!div || div.id) continue;
-//			div.id = 'files_' + id;
-//			div.innerHTML = '[' + div.innerHTML + ' files]';
-//			div.setAttribute('class', 'fd');
-//			div.setAttribute('onClick', 'show_files(' + id + ')');
-//		}
 		
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
