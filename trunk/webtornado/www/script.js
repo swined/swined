@@ -62,7 +62,7 @@ function onLoad() {
 //			div.innerHTML = '[' + div.innerHTML + ' files]';
 //			div.setAttribute('class', 'fd');
 //			div.setAttribute('onClick', 'show_files(' + id + ')');
-		}
+//		}
 		
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
