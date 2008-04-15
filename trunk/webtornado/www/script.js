@@ -32,7 +32,7 @@ function show_peers(id) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState != 4) { return }
 		if (xhr.status != 200) { return }
-		div.innerHTML = c + ':' + xhr.responseText;
+		div.innerHTML = xhr.responseText;
 	};
 	div.innerHTML = '<font color=gray>[loading]</font>';
 	div.setAttribute('onClick', '');
