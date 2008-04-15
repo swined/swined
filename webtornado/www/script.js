@@ -52,8 +52,8 @@ function onLoad() {
 		var mr = row.getAttribute('wt:mr');
 		
 		var ic = row.cells.item(0);
-		for (var j in ic.getelementsByTagName('a')) {
-			var c = ic.getelementsByTagName('a').item(j);
+		for (var j in ic.getElementsByTagName('a')) {
+			var c = ic.getElementsByTagName('a').item(j);
 			if (c.getAttribute('class') == 'delete') c.setAttribute('href', '/webtornado/delete/' + id);
 			if (c.getAttribute('class') == 'green') c.setAttribute('href', '/webtornado/stop/' + id);
 			if (c.getAttribute('class') == 'black') c.setAttribute('href', '/webtornado/start/' + id);
