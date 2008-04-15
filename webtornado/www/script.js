@@ -57,6 +57,7 @@ function onLoad() {
 		var id = row.getAttribute('wt:id');
 		var fc = row.getAttribute('wt:fc');
 		var mr = row.getAttribute('wt:mr');
+		var sp = row.getAttribute('wt:sp');
 		
 		var ic = row.cells.item(0);
 		for (var j in ic.getElementsByTagName('a')) {
@@ -74,7 +75,10 @@ function onLoad() {
 		
 		var pc = row.cells.item(5);
 		pc.id = 'peers_' + id;
-		if (pc.innerHTML > 0) pc.setAttribute('onClick', 'show_peers(' + id + ')');
+		if (pc.innerHTML > 0) {
+			pc.setAttribute('onClick', 'show_peers(' + id + ')');
+			if (sp > 0) show_peers(id);
+		}
 
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
