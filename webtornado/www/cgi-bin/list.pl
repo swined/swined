@@ -107,4 +107,4 @@ $tmpl->param({
 	version => $VER::VER,
 	gtime => int((time()-$tm)*1000)/1000,
 });
-print header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
+print $ses->header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
