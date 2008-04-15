@@ -48,15 +48,18 @@ if (my $id = param('files')) {
 	exit;
 }
 
+sub peers {
+	my $ic = new IP::Country::Fast;
+	join '<br>', map { 
+	    my $cc = lc $ic->inet_atocc($_);
+	    "<nobr>" . ($cc =~ /^\w{2}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
+	} sort split /\|/, shift;
+}
+
 if (my $id = param('peers')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
 	$ses->param("show_peers_$id", 1);
-	print "content-type: text/html\n\n";
-	my $ic = new IP::Country::Fast;
-	print join '<br>', map { 
-	    my $cc = lc $ic->inet_atocc($_);
-	    "<nobr>" . ($cc =~ /^\w{2}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
-	} sort split /\|/, $r->{peerlist};
+	print "content-type: text/html\n\n\n" . peers $r->{peerslist};
 	exit;
 }
 
@@ -87,6 +90,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 #		files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
 		files_count => ($fc > 1) ? $fc : 0,
 		show_peers => $ses->param("show_peers_$r->{id}"),
+		peer_list => peers($r->{peerlist}),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
