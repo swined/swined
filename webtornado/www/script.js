@@ -36,6 +36,7 @@ function show_peers(id) {
 	};
 	div.innerHTML = '<font color=gray>[loading]</font>';
 	div.setAttribute('onClick', '');
+	div.style.cssText = 'text-align: left;';
 	xhr.send(null);			 
 }
 
