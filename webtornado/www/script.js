@@ -53,7 +53,7 @@ function onLoad() {
 		nc.style.cssText = 'text-align: left';
 		
 		if ((fc > 1) && ! document.getElementById('files_' + id)) 
-		    nc.innerHTML += '<div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
+		    nc.innerHTML += ' <div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
 		
 //		for (var j in nc.getElementsByTagName('div')) {
 //			var div = nc.getElementsByTagName('div').item(j);
