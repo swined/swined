@@ -45,21 +45,20 @@ function onLoad() {
 	var torrents = document.getElementById('torrents');
 	for (var i in torrents.rows) {
 		var row = torrents.rows.item(i);
-		if (i > 0) {
-			var nc = row.cells.item(1);
-			nc.style.cssText = 'text-align: left';
-			for (var j in nc.getElementsByTagName('div')) {
-				var div = nc.getElementsByTagName('div').item(j);
-				if (div) {
-					div.setAttribute('class', 'fd');
-					div.id = 'files_' + row.id;
-				}
-			}
-			var rc = row.cells.item(6);
-			rc.id = 'set_maxratio_' + row.id;
-			if (!(i % 2)) {
-				row.style.cssText = 'background-color: #f0f0f0';
-			}
+		if (i == 0) continue;
+		var nc = row.cells.item(1);
+		nc.style.cssText = 'text-align: left';
+		for (var j in nc.getElementsByTagName('div')) {
+			var div = nc.getElementsByTagName('div').item(j);
+			if (!div) continue;
+			if (!div.id) div.innerHTML = '[' + div.innerHTML + ' files]';
+			div.setAttribute('class', 'fd');
+			div.id = 'files_' + row.id;
+		}
+		var rc = row.cells.item(6);
+		rc.id = 'set_maxratio_' + row.id;
+		if (!(i % 2)) {
+			row.style.cssText = 'background-color: #f0f0f0';
 		}
 	}
 }
