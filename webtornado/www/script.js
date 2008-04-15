@@ -11,7 +11,7 @@ function set_maxratio(id, maxratio) {
 }
 
 function show_files(id) {
-	var div = document.getElementById("files_" + id);
+	var div = document.getElementById('files_' + id);
 	var xhr = get_xhr();
 	xhr.open('GET', '/webtornado?files=' + id, true);
 	xhr.onreadystatechange = function() {
@@ -20,7 +20,7 @@ function show_files(id) {
 		div.innerHTML = xhr.responseText;
 	};
 	div.innerHTML = '[loading]';
-	div.id += '_';
+	div.setAttribute('onClick', '');
 	xhr.send(null);			 
 }
 
@@ -46,18 +46,24 @@ function onLoad() {
 	for (var i in torrents.rows) {
 		var row = torrents.rows.item(i);
 		if (i == 0) continue;
+		var id = row.getAttribute('wt:id');
+		
 		var nc = row.cells.item(1);
 		nc.style.cssText = 'text-align: left';
+		
 		for (var j in nc.getElementsByTagName('div')) {
 			var div = nc.getElementsByTagName('div').item(j);
 			if (!div || div.id) continue;
-			div.id = 'files_' + row.id;
+			div.id = 'files_' + id;
 			div.innerHTML = '[' + div.innerHTML + ' files]';
 			div.setAttribute('class', 'fd');
-			div.setAttribute('onClick', 'show_files(' + row.id + ')');
+			div.setAttribute('onClick', 'show_files(' + id + ')');
 		}
+		
 		var rc = row.cells.item(6);
-		rc.id = 'set_maxratio_' + row.id;
+		rc.id = 'set_maxratio_' + id;
+		rc.setAttribute('onClick', 'set_maxratio(' + id + ', ' + row.getAttribute('wt:mr') + ')');
+		
 		if (!(i % 2)) {
 			row.style.cssText = 'background-color: #f0f0f0';
 		}
