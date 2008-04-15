@@ -11,6 +11,7 @@ use Filesys::Statvfs;
 use URI::Escape;
 use Time::Duration;
 use Cache::FastMmap;
+use IP::Country::Fast;
 
 my $tm = time;
 my $wt = new WT;
@@ -48,7 +49,11 @@ if (my $id = param('files')) {
 if (my $id = param('peers')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
 	print "content-type: text/html\n\n<br>\n";
-	print join '<br>', split /\|/, $r->{peerlist};
+	my $ic = new IP::Country::Fast;
+	print join '<br>', map { 
+	    my $cc = $ic->inet_atocc($_);
+	    "<span class='cc_$cc'><nobr>[$cc] $_</nobr></span>";
+	} split /\|/, $r->{peerlist};
 	exit;
 }
 
