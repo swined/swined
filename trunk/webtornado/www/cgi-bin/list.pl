@@ -12,9 +12,11 @@ use URI::Escape;
 use Time::Duration;
 use Cache::FastMmap;
 use IP::Country::Fast;
+use CGI::Session;
 
 my $tm = time;
 my $wt = new WT;
+my $ses = new CGI::Session;
 
 my $metacache = new Cache::FastMmap(
 	share_file => '/var/cache/webtornado/metacache',
@@ -48,6 +50,7 @@ if (my $id = param('files')) {
 
 if (my $id = param('peers')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
+	$ses->param("show_peers_$id", 1);
 	print "content-type: text/html\n\n";
 	my $ic = new IP::Country::Fast;
 	print join '<br>', map { 
@@ -56,6 +59,7 @@ if (my $id = param('peers')) {
 	} sort split /\|/, $r->{peerlist};
 	exit;
 }
+
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
 foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
@@ -82,6 +86,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
 #		files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
 		files_count => ($fc > 1) ? $fc : 0,
+		show_peers => $ses->param("show_peers_$r->{id}"),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
