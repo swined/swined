@@ -24,6 +24,20 @@ function show_files(id) {
 	xhr.send(null);			 
 }
 
+function show_peers(id) {
+	var div = document.getElementById('peers_' + id);
+	var xhr = get_xhr();
+	xhr.open('GET', '/webtornado?peers=' + id, true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState != 4) { return }
+		if (xhr.status != 200) { return }
+		div.innerHTML = xhr.responseText;
+	};
+	div.innerHTML = '<font color=gray>[loading]</font>';
+	div.setAttribute('onClick', '');
+	xhr.send(null);			 
+}
+
 function get_xhr(){
 	var xmlhttp;
 	try {
@@ -54,6 +68,7 @@ function onLoad() {
 		var ic = row.cells.item(0);
 		for (var j in ic.getElementsByTagName('a')) {
 			var c = ic.getElementsByTagName('a').item(j);
+			if (!c) continue;
 			if (c.getAttribute('class') == 'delete') c.setAttribute('href', '/webtornado/delete/' + id);
 			if (c.getAttribute('class') == 'green') c.setAttribute('href', '/webtornado/stop/' + id);
 			if (c.getAttribute('class') == 'black') c.setAttribute('href', '/webtornado/start/' + id);
@@ -64,6 +79,10 @@ function onLoad() {
 		if ((fc > 1) && ! document.getElementById('files_' + id)) 
 		    nc.innerHTML += ' <div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
 		
+		var pc = row.cells.item(5);
+		pc.id = 'peers_' + id;
+		pc.setAttribute('onClick', 'show_peers(' + id + ')');
+
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
 		rc.setAttribute('onClick', 'set_maxratio(' + id + ', ' + mr + ')');

@@ -92,6 +92,7 @@ sub syncdb {
 	    ['maxratio', 'double', 1],
 	    ['torrent', 'longtext', 1], 
 	    ['peers', 'int', 0],
+	    ['peerlist', 'text', 0],
 	],
     });
     $dbh->do($_) for $cur_table->sql_alter_table($req_table, $dbh);
