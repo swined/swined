@@ -52,7 +52,7 @@ if (my $id = param('peers')) {
 	my $ic = new IP::Country::Fast;
 	print join '<br>', map { 
 	    my $cc = lc $ic->inet_atocc($_);
-	    "<nobr>" . ($cc =~ /^\w{2}$/ ? "<img src='/webtornado/img/cc/${cc}.png'>" : "[$cc]") . " $_</nobr>";
+	    "<nobr>" . ($cc =~ /^\w{2}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
 	} sort split /\|/, $r->{peerlist};
 	exit;
 }
