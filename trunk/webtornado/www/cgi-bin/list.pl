@@ -48,7 +48,8 @@ if (my $id = param('files')) {
 if (my $id = param('peers')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
 	print "content-type: text/html\n\n<br>\n";
-	exit print join '<br>', split '|', $r->{peerlist};
+	print join '<br>', split /\|/, $r->{peerlist};
+	exit;
 }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
