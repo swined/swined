@@ -52,7 +52,7 @@ if (my $id = param('peers')) {
 	my $ic = new IP::Country::Fast;
 	print join '<br>', map { 
 	    my $cc = $ic->inet_atocc($_);
-	    "<span class='cc_$cc'><nobr>[$cc] $_</nobr></span>";
+	    "<span class='cc_$cc'>$_</span>";
 	} split /\|/, $r->{peerlist};
 	exit;
 }
