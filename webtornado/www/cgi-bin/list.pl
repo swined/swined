@@ -53,7 +53,7 @@ if (my $id = param('peers')) {
 	print join '<br>', map { 
 	    my $cc = $ic->inet_atocc($_);
 	    "<nobr><span class='cc_$cc'>$_</span></nobr>";
-	} split /\|/, $r->{peerlist};
+	} sort split /\|/, $r->{peerlist};
 	exit;
 }
 
