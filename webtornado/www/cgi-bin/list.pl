@@ -48,7 +48,7 @@ if (my $id = param('files')) {
 
 if (my $id = param('peers')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
-	print "content-type: text/html\n\n";
+	print "content-type: text/html\n\n<link rel=stylesheet href=/webtornado/flags.css>\n";
 	my $ic = new IP::Country::Fast;
 	print join '<br>', map { 
 	    my $cc = $ic->inet_atocc($_);
