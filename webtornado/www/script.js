@@ -46,21 +46,28 @@ function onLoad() {
 	for (var i in torrents.rows) {
 		var row = torrents.rows.item(i);
 		if (i == 0) continue;
+		
 		var id = row.getAttribute('wt:id');
 		var fc = row.getAttribute('wt:fc');
+		var mr = row.getAttribute('wt:mr');
+		
+		var ic = row.cells.item(0);
+		for (var j in ic.getelementsByTagName('a')) {
+			var c = ic.getelementsByTagName('a').item(j);
+			if (c.getAttribute('class') == 'delete') c.setAttribute('href', '/webtornado/delete/' + id);
+			if (c.getAttribute('class') == 'green') c.setAttribute('href', '/webtornado/stop/' + id);
+			if (c.getAttribute('class') == 'black') c.setAttribute('href', '/webtornado/start/' + id);
+		}
 		
 		var nc = row.cells.item(1);
 		nc.style.cssText = 'text-align: left';
-		
 		if ((fc > 1) && ! document.getElementById('files_' + id)) 
 		    nc.innerHTML += ' <div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
 		
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
-		rc.setAttribute('onClick', 'set_maxratio(' + id + ', ' + row.getAttribute('wt:mr') + ')');
+		rc.setAttribute('onClick', 'set_maxratio(' + id + ', ' + mr + ')');
 		
-		if (!(i % 2)) {
-			row.style.cssText = 'background-color: #f0f0f0';
-		}
+		if (!(i % 2)) row.style.cssText = 'background-color: #eeeeee';
 	}
 }
