@@ -50,10 +50,11 @@ function onLoad() {
 		nc.style.cssText = 'text-align: left';
 		for (var j in nc.getElementsByTagName('div')) {
 			var div = nc.getElementsByTagName('div').item(j);
-			if (!div) continue;
-			if (!div.id) div.innerHTML = '[' + div.innerHTML + ' files]';
-			div.setAttribute('class', 'fd');
+			if (!div || div.id) continue;
 			div.id = 'files_' + row.id;
+			div.innerHTML = '[' + div.innerHTML + ' files]';
+			div.setAttribute('class', 'fd');
+			div.setAttribute('onClick', 'show_files(' + row.id + ')');
 		}
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + row.id;
