@@ -52,7 +52,8 @@ sub peers {
 	my $ic = new IP::Country::Fast;
 	join '<br>', map { 
 	    my $cc = lc $ic->inet_atocc($_);
-	    "<nobr>" . ($cc =~ /^\w{2}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
+	    $cc =~ s/^\*\*$/lan/;
+	    "<nobr>" . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
 	} sort split /\|/, shift;
 }
 
