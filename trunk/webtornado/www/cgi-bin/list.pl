@@ -63,6 +63,12 @@ if (my $id = param('peers')) {
 	exit;
 }
 
+if (my $id = param('hide_peers')) {
+        my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
+	$ses->param("show_peers_$id", 0);
+	print "content-type: text/html\n\n\n" . $r->{peers};
+	exit;
+}
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ?', 'id', undef, $ENV{REMOTE_USER}));
 foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
