@@ -52,6 +52,7 @@ sub peers {
 	my $r = shift;
 	return '--' unless $r->{active} and $r->{pid};
 	return 'none' unless $r->{peers};
+	return $r->{peers} unless $ses->param("show_peers_$r->{id}");
 	my $ic = new IP::Country::Fast;
 	'<div style="text-align: left">' . join('<br>', map { 
 	    my $cc = lc $ic->inet_atocc($_);
@@ -62,7 +63,7 @@ sub peers {
 
 if (my $id = param('peers')) {
         my $r = $wt->dbh->selectrow_hashref('SELECT * FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
-	$ses->param("show_peers_$id", !$ses->param("show_peers_$id"));
+	$ses->param("show_peers_$id", !$ses->param("show_peers_$id")) if param('toggle');
 	print "content-type: text/html\n\n\n" . peers($r);
 	exit;
 }

@@ -24,10 +24,10 @@ function show_files(id) {
 	xhr.send(null);			 
 }
 
-function show_peers(id) {
+function toggle_peers(id) {
 	var div = document.getElementById('peers_' + id);
 	var xhr = get_xhr();
-	xhr.open('GET', '/webtornado?peers=' + id, true);
+	xhr.open('GET', '/webtornado?toggle=1&peers=' + id, true);
 	var c = div.innerHTML;
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState != 4) { return }
@@ -72,7 +72,7 @@ function onLoad() {
 		
 		var pc = row.cells.item(5);
 		pc.id = 'peers_' + id;
-		if (pc.innerHTML > 0) pc.setAttribute('onClick', 'show_peers(' + id + ')');
+		pc.setAttribute('onClick', 'toggle_peers(' + id + ')');
 
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
