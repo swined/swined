@@ -66,7 +66,6 @@ function onLoad() {
 		}
 		
 		var nc = row.cells.item(1);
-		nc.style.cssText = 'text-align: left';
 		if ((fc > 1) && ! document.getElementById('files_' + id)) 
 		    nc.innerHTML += ' <div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
 		
