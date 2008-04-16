@@ -1,11 +1,11 @@
 #!/bin/sh
 
 die() {
-    echo $1
+    echo $*
     exit 1
 }
 
-svn up
+svn up || die up failed
 svn commit -m 'auto commit' || die commit failed
 REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
 VER=0.0.7+svn$REV
