@@ -93,12 +93,10 @@ function onLoad() {
 		
 		var pc = row.cells.item(5);
 		pc.id = 'peers_' + id;
-		if (pc.innerHTML > 0) {
-			if (sp > 0) {
-				pc.setAttribute('onClick', 'hide_peers(' + id + ')');
-			} else {
-				pc.setAttribute('onClick', 'show_peers(' + id + ')');
-			}
+		if (sp > 0) {
+			pc.setAttribute('onClick', 'hide_peers(' + id + ')');
+		} else {
+			if (pc.innerHTML > 0) pc.setAttribute('onClick', 'show_peers(' + id + ')');
 		}
 
 		var rc = row.cells.item(6);
