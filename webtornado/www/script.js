@@ -36,7 +36,7 @@ function show_peers(id) {
 		div.innerHTML = xhr.responseText;
 		div.setAttribute('onClick', 'hide_peers(' + id + ')');
 	};
-	div.innerHTML = '<font color=gray>[loading]</font>';
+	div.innerHTML = '<center><img src=/webtornado/img/loading.gif></center>';
 	div.setAttribute('onClick', '');
 	xhr.send(null);			 
 }
@@ -53,7 +53,7 @@ function hide_peers(id) {
 		div.setAttribute('onClick', 'show_peers(' + id + ')');
 	};
 	div.style.cssText = 'text-align: center;';
-	div.innerHTML = '<font color=gray>[loading]</font>';
+	div.innerHTML = '<center><img src=/webtornado/img/loading.gif></center>';
 	div.setAttribute('onClick', '');
 	xhr.send(null);			 
 }
