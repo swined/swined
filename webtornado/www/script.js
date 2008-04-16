@@ -34,7 +34,25 @@ function show_peers(id) {
 		if (xhr.status != 200) { return }
 		div.style.cssText = 'text-align: left;';
 		div.innerHTML = xhr.responseText;
+		div.setAttribute('onClick', 'hide_peers(' + id + ')');
 	};
+	div.innerHTML = '<font color=gray>[loading]</font>';
+	div.setAttribute('onClick', '');
+	xhr.send(null);			 
+}
+
+function hide_peers(id) {
+	var div = document.getElementById('peers_' + id);
+	var xhr = get_xhr();
+	xhr.open('GET', '/webtornado?hide_peers=' + id, true);
+	var c = div.innerHTML;
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState != 4) { return }
+		if (xhr.status != 200) { return }
+		div.innerHTML = xhr.responseText;
+		div.setAttribute('onClick', 'show_peers(' + id + ')');
+	};
+	div.style.cssText = 'text-align: center;';
 	div.innerHTML = '<font color=gray>[loading]</font>';
 	div.setAttribute('onClick', '');
 	xhr.send(null);			 
@@ -75,7 +93,13 @@ function onLoad() {
 		
 		var pc = row.cells.item(5);
 		pc.id = 'peers_' + id;
-		if (! (sp > 0) && (pc.innerHTML > 0)) pc.setAttribute('onClick', 'show_peers(' + id + ')');
+		if (pc.innerHTML > 0) {
+			if (sp > 0) {
+				pc.setAttribute('onClick', 'hide_peers(' + id + ')');
+			} else {
+				pc.setAttribute('onClick', 'show_peers(' + id + ')');
+			}
+		}
 
 		var rc = row.cells.item(6);
 		rc.id = 'set_maxratio_' + id;
