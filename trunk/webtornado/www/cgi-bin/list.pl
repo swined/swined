@@ -64,7 +64,7 @@ if (my $id = param('peers')) {
 }
 
 if (my $id = param('hide_peers')) {
-        my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
+        my $r = $wt->dbh->selectrow_hashref('SELECT peers FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
 	$ses->param("show_peers_$id", 0);
 	print "content-type: text/html\n\n\n" . $r->{peers};
 	exit;
