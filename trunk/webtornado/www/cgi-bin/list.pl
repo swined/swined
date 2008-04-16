@@ -49,25 +49,21 @@ if (my $id = param('files')) {
 }
 
 sub peers {
+	my $r = shift;
+	return '--' unless $r->{active} and $r->{pid};
+	return 'none' unless $r->{peers};
 	my $ic = new IP::Country::Fast;
-	join '<br>', map { 
+	'<div style="text-align: left">' . join('<br>', map { 
 	    my $cc = lc $ic->inet_atocc($_);
 	    $cc =~ s/^\*\*$/lan/;
 	    "<nobr>" . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
-	} sort split /\|/, shift;
+	} sort split /\|/, $r->{peerlist}) . '</div>';
 }
 
 if (my $id = param('peers')) {
-        my $r = $wt->dbh->selectrow_hashref('SELECT peerlist FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
-	$ses->param("show_peers_$id", 1);
-	print "content-type: text/html\n\n\n" . peers($r->{peerlist});
-	exit;
-}
-
-if (my $id = param('hide_peers')) {
-        my $r = $wt->dbh->selectrow_hashref('SELECT peers FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
-	$ses->param("show_peers_$id", 0);
-	print "content-type: text/html\n\n\n" . $r->{peers};
+        my $r = $wt->dbh->selectrow_hashref('SELECT * FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
+	$ses->param("show_peers_$id", !$ses->param("show_peers_$id"));
+	print "content-type: text/html\n\n\n" . peers($r);
 	exit;
 }
 
@@ -94,10 +90,8 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		name => $bt->{name},
 		ue_name => uri_escape($bt->{name}),
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
-#		files => ($fc > 1 ? [ map {{ size => fmsz($_->{size}), name => $_->{name}, user => $ENV{REMOTE_USER} }} @{$bt->{files}} ] : []),
 		files_count => ($fc > 1) ? $fc : 0,
-		show_peers => $ses->param("show_peers_$r->{id}"),
-		peer_list => peers($r->{peerlist}),
+		peers => peers($r),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
 	};
