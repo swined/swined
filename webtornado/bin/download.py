@@ -68,7 +68,7 @@ class HeadlessDisplayer:
 			r = p['ip'] + ':'
 			ur, ui, uc = p['upload']
 			dr, di, dc, ds = p['download']
-			if uc and dc: r = r + 'c'
+			if ur or dr: r = r + 'r'
 			pl.append(r)
 		self.dbup('peerlist', '|'.join(pl))
 
