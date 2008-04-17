@@ -58,7 +58,7 @@ sub peers {
 	    my @p = split ':';
 	    my $cc = lc $ic->inet_atocc($p[0]);
 	    $cc =~ s/^\*\*$/lan/;
-	    "<span style='" . ($p[1] =~ /c/ ? 'color: gray': '') .  "'><nobr>" 
+	    "<span style='" . ($p[1] !~ /r/ ? 'color: gray': '') .  "'><nobr>" 
 	    . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") 
 	    . " $p[0]</nobr></span>";
 	} sort split /\|/, $r->{peerlist}) . '</div>';
