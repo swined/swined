@@ -7,28 +7,25 @@ function set_maxratio(id, maxratio) {
 		"<input type=text name=maxratio value='" + maxratio + "' style='width: 50px'>" +
 		"<input type=submit style='width: 30px' value='OK'>" +
 		"</form>";
-	div.id += '_';
+	div.setAttribute('onClick', '');
 }
 
 function show_files(id) {
 	var div = document.getElementById('files_' + id);
-	var xhr = get_xhr();
-	xhr.open('GET', '/webtornado?files=' + id, true);
+	var xhr = get_xhr('/webtornado?files=' + id);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState != 4) { return }
 		if (xhr.status != 200) { return }
 		div.innerHTML = xhr.responseText;
 	};
-	div.innerHTML = '[loading]';
+	div.innerHTML = '<img src=/webtornado/img/loading.gif>';
 	div.setAttribute('onClick', '');
 	xhr.send(null);			 
 }
 
 function toggle_peers(id) {
 	var div = document.getElementById('peers_' + id);
-	var xhr = get_xhr();
-	xhr.open('GET', '/webtornado?toggle=1&peers=' + id, true);
-	var c = div.innerHTML;
+	var xhr = get_xhr('/webtornado?toggle=1&peers=' + id);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState != 4) { return }
 		if (xhr.status != 200) { return }
@@ -38,11 +35,12 @@ function toggle_peers(id) {
 	xhr.send(null);			 
 }
 
-function get_xhr(){
+function get_xhr(url) {
 	var xmlhttp;
 	try { xmlhttp = new ActiveXObject("Msxml2.XMLHTTP") } catch (e) {
 	try { xmlhttp = new ActiveXObject("Microsoft.XMLHTTP") } catch (E) { xmlhttp = false } }
 	if (!xmlhttp && typeof XMLHttpRequest!='undefined') xmlhttp = new XMLHttpRequest();
+	xhr.open('GET', url, true);
 	return xmlhttp;
 }
 
@@ -68,14 +66,6 @@ function onLoad() {
 		var nc = row.cells.item(1);
 		if ((fc > 1) && ! document.getElementById('files_' + id)) 
 		    nc.innerHTML += ' <div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div>';
-		
-		var pc = row.cells.item(5);
-		pc.id = 'peers_' + id;
-		pc.setAttribute('onClick', 'toggle_peers(' + id + ')');
-
-		var rc = row.cells.item(6);
-		rc.id = 'set_maxratio_' + id;
-		rc.setAttribute('onClick', 'set_maxratio(' + id + ', ' + mr + ')');
 		
 		if (!(i % 2)) row.style.cssText = 'background-color: #eeeeee';
 	}
