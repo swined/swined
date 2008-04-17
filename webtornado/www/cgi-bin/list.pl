@@ -55,9 +55,12 @@ sub peers {
 	return $r->{peers} unless $ses->param("show_peers_$r->{id}");
 	my $ic = new IP::Country::Fast;
 	'<div style="text-align: left">' . join('<br>', map { 
-	    my $cc = lc $ic->inet_atocc($_);
+	    my @p = split ':';
+	    my $cc = lc $ic->inet_atocc($p[0]);
 	    $cc =~ s/^\*\*$/lan/;
-	    "<nobr>" . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") . " $_</nobr>";
+	    "<span style='" . ($p[1] =~ /c/ ? 'color: gray': '') .  "'><nobr>" 
+	    . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") 
+	    . " $p[0]</nobr></span>";
 	} sort split /\|/, $r->{peerlist}) . '</div>';
 }
 
