@@ -69,6 +69,7 @@ class HeadlessDisplayer:
 			ur, ui, uc = p['upload']
 			dr, di, dc, ds = p['download']
 			if uc and dc: r = r + 'c'
+			pl.append(r)
 		self.dbup('peerlist', '|'.join(pl))
 
     def chooseFile(self, default, size, saveas, dir):
