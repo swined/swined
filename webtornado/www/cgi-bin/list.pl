@@ -62,7 +62,7 @@ sub peers {
 	    "<span style='" . ($p[1] !~ /r/ ? 'color: gray': '') .  "'><nobr>" 
 	    . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") 
 	    . " $p[0]</nobr></span>";
-	} sort { Net::IP->new($a)->intip <=> Net::IP->new($b)->intip } split /\|/, $r->{peerlist}) . '</div>';
+	} sort { Net::IP->new([split ':', $a]->[0])->intip <=> Net::IP->new([split ':', $b]->[0])->intip } split /\|/, $r->{peerlist}) . '</div>';
 }
 
 if (my $id = param('peers')) {
