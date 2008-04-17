@@ -50,11 +50,11 @@ function onLoad() {
 	var torrents = document.getElementById('torrents');
 	for (var i in torrents.rows) {
 		var row = torrents.rows.item(i);
-		if (i == 0) continue;
-		
 		var id = row.getAttribute('wt:id');
 		var fc = row.getAttribute('wt:fc');
 		var mr = row.getAttribute('wt:mr');
+		
+		if (!id) continue;
 		
 		var ic = row.cells.item(0);
 		for (var j in ic.getElementsByTagName('a')) {
