@@ -66,8 +66,8 @@ class HeadlessDisplayer:
 		pl = []
 		for p in spew:
 			r = p['ip'] + ':'
-			ur, ui, uc = c['upload']
-			dr, di, dc, ds = c['download']
+			ur, ui, uc = p['upload']
+			dr, di, dc, ds = p['download']
 			if uc and dc: r = r + 'c'
 		self.dbup('peerlist', '|'.join(pl))
 
