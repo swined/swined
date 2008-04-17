@@ -27,7 +27,10 @@ DIV.fd {
 	color: #666666; 
 	display: inline;
 }
-A.green:before { content: url(/webtornado/img/green.gif) }
-A.black:before { content: url(/webtornado/img/black.gif) }
-A.tar:before { content: url(/webtornado/img/tar_down.gif) }
-A.delete:before { content: url(/webtornado/img/delete.png) }
+DIV.fd>A {
+	color: #666666; 
+}
+A.green:before { content: url(/webtornado/img/green.gif); }
+A.black:before { content: url(/webtornado/img/black.gif); }
+A.tar:before { content: url(/webtornado/img/tar_down.gif); }
+A.delete:before { content: url(/webtornado/img/delete.png); }
