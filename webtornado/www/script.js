@@ -40,7 +40,7 @@ function get_xhr(url) {
 	try { xmlhttp = new ActiveXObject("Msxml2.XMLHTTP") } catch (e) {
 	try { xmlhttp = new ActiveXObject("Microsoft.XMLHTTP") } catch (E) { xmlhttp = false } }
 	if (!xmlhttp && typeof XMLHttpRequest!='undefined') xmlhttp = new XMLHttpRequest();
-	xhr.open('GET', url, true);
+	xmlhttp.open('GET', url, true);
 	return xmlhttp;
 }
 
