@@ -13,6 +13,7 @@ use Time::Duration;
 use Cache::FastMmap;
 use IP::Country::Fast;
 use CGI::Session;
+use Net::IP;
 
 my $tm = time;
 my $wt = new WT;
@@ -61,7 +62,7 @@ sub peers {
 	    "<span style='" . ($p[1] !~ /r/ ? 'color: gray': '') .  "'><nobr>" 
 	    . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") 
 	    . " $p[0]</nobr></span>";
-	} sort split /\|/, $r->{peerlist}) . '</div>';
+	} sort { Net::IP->new($a)->intip <=> Net::IP->new($b)->intip } split /\|/, $r->{peerlist}) . '</div>';
 }
 
 if (my $id = param('peers')) {
