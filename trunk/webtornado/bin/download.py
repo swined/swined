@@ -63,7 +63,13 @@ class HeadlessDisplayer:
 		for t in spew:
 			c = c + 1
 		self.dbup('peers', c)
-		self.dbup('peerlist', '|'.join([p['ip'] for p in spew]))
+		pl = []
+		for p in spew:
+			r = p['ip'] + ':'
+			ur, ui, uc = c['upload']
+			dr, di, dc, ds = c['download']
+			if uc and dc: r = r + 'c'
+		self.dbup('peerlist', '|'.join(pl))
 
     def chooseFile(self, default, size, saveas, dir):
 	self.cr.execute('UPDATE torrents SET output = %s WHERE id = %s',
