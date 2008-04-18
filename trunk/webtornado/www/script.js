@@ -43,14 +43,3 @@ function get_xhr(url) {
 	xmlhttp.open('GET', url, true);
 	return xmlhttp;
 }
-
-function onLoad() {
-	var torrents = document.getElementById('torrents');
-	for (var i in torrents.rows) {
-		var row = torrents.rows.item(i);
-		
-		if (!id) continue;
-		
-		if (!(i % 2)) row.style.cssText = 'background-color: #eeeeee';
-	}
-}

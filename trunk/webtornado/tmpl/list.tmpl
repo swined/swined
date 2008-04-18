@@ -12,16 +12,16 @@
 	    <tmpl_if total_uprate>u:%total_uprate%</tmpl_if>
 	</title>
     </head>
-    <body onLoad='onLoad()'><center>
+    <body><center>
 
 diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 
 <tmpl_if torrents>
-<table id='torrents'>
+<table>
 <thead><tr><th>&nbsp;</th><th>name</th><th>size</th><th>up</th><th>down</th><th>peers</th><th>ratio</th><th>speed</th><th>status</th></tr></thead>
 <tbody>
 <tmpl_loop torrents>
-<tr wt:id='%id%'>
+<tr wt:id='%id%'<tmpl_unless __odd__> style='background-color: #eeeeee'</tmpl_unless>>
 <td>
     <nobr>
 	<tmpl_if active>
