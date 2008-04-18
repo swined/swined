@@ -1,4 +1,2 @@
 || *TMS* || *feature* || *comments* ||
-|| || Add .torrents from URL || wont work with private trackers and requires lots of paranoid checks -> not next version ||
-|| || stop after ratio-limit || ||
 || || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
