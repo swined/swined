@@ -63,10 +63,6 @@ function onLoad() {
 			if (c.getAttribute('class') == 'black') c.setAttribute('href', '/webtornado/start/' + id);
 		}
 		
-		var nc = row.cells.item(1);
-		if ((fc > 1) && ! document.getElementById('files_' + id)) 
-		    nc.innerHTML += ' <nobr><div id="files_' + id + '" class="fd" onClick="show_files(' + id + ')">[' + fc + ' files]</div></nobr>';
-		
 		if (!(i % 2)) row.style.cssText = 'background-color: #eeeeee';
 	}
 }
