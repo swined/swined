@@ -48,20 +48,8 @@ function onLoad() {
 	var torrents = document.getElementById('torrents');
 	for (var i in torrents.rows) {
 		var row = torrents.rows.item(i);
-		var id = row.getAttribute('wt:id');
-		var fc = row.getAttribute('wt:fc');
-		var mr = row.getAttribute('wt:mr');
 		
 		if (!id) continue;
-		
-		var ic = row.cells.item(0);
-		for (var j in ic.getElementsByTagName('a')) {
-			var c = ic.getElementsByTagName('a').item(j);
-			if (!c) continue;
-			if (c.getAttribute('class') == 'delete') c.setAttribute('href', '/webtornado/delete/' + id);
-			if (c.getAttribute('class') == 'green') c.setAttribute('href', '/webtornado/stop/' + id);
-			if (c.getAttribute('class') == 'black') c.setAttribute('href', '/webtornado/start/' + id);
-		}
 		
 		if (!(i % 2)) row.style.cssText = 'background-color: #eeeeee';
 	}
