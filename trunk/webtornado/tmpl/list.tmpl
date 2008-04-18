@@ -21,12 +21,12 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <thead><tr><th>&nbsp;</th><th>name</th><th>size</th><th>up</th><th>down</th><th>peers</th><th>ratio</th><th>speed</th><th>status</th></tr></thead>
 <tbody>
 <tmpl_loop torrents>
-<tr wt:id='%id%' wt:mr='%maxratio%' wt:fc='%files_count%'>
+<tr wt:id='%id%'>
 <td>
     <nobr>
 	<tmpl_if active>
 	    <tmpl_if pid>
-		<a class=green></a>
+		<a href=/webtornado/stop/%id%><img src=/webtornado/img/green.gif></a>
 	    <tmpl_else>
 		<img src=/webtornado/img/yellow.gif>
 	    </tmpl_if>
@@ -34,13 +34,13 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 	    <tmpl_if pid>
 		<img src=/webtornado/img/yellow.gif>
 	    <tmpl_else>
-		<a class=black></a>
+		<a href=/webtornado/start/%id%><img src=/webtornado/img/black.gif></a>
 	    </tmpl_if>
 	</tmpl_if>
 	<tmpl_if done>
-	    <a href="<tmpl_if files_count>/webtornado/%id%.tar<tmpl_else>/webtornado-users/%user%/output/%ue_name%</tmpl_if>" class=tar></a>
+	    <a href="<tmpl_if files_count>/webtornado/%id%.tar<tmpl_else>/webtornado-users/%user%/output/%ue_name%</tmpl_if>"><img src=/webtornado/img/tar_down.gif></a>
 	</tmpl_if>
-	<a class=delete></a>
+	<a href=/webtornado/delete/%id%><img src=/webtornado/img/delete.png></a>
     </nobr>
 </td>
 <td style='text-align: left'>
