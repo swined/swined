@@ -1,2 +1,0 @@
-|| *TMS* || *feature* || *comments* ||
-|| || Unauthenticated file downloads || requires redesign of file layout and modrewrite rules ||
