@@ -59,7 +59,7 @@ sub getTorrentInfo {
 	push @{$r->{'files'}}, { 'size' => $i->{'length'}, 
 		'name' => $i->{'name'} } unless defined $i->{'files'};
 	foreach (@{$i->{'files'}}) {
-		$_->{'path'} = $_->{'path'}->[0] if 'ARRAY' eq ref $_->{'path'};
+		$_->{'path'} = join '/', @{$_->{'path'}} if 'ARRAY' eq ref $_->{'path'};
 		push @{$r->{'files'}}, {
 			'name' => "$i->{name}/$_->{path}",
 			'size' => $_->{'length'},
@@ -71,6 +71,7 @@ sub getTorrentInfo {
 
 sub syncdb {
     my $dbh = shift->dbh;
+    $dbh->do('CREATE TABLE IF NOT EXISTS torrents(id int primary key not null auto_increment)');
     my $cur_table = new_odbc DBIx::DBSchema::Table($dbh, 'torrents');
     my $req_table = new DBIx::DBSchema::Table({
 	name => 'torrents', 
