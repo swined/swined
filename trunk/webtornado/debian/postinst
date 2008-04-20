@@ -3,4 +3,5 @@
 chown -R www-data:www-data /var/cache/webtornado
 chown root:www-data /etc/webtornado.auth
 chmod 640 /etc/webtornado.auth
+a2enmod rewrite
 apache2ctl restart
