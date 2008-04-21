@@ -35,7 +35,7 @@ sub progressbar {
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
 	center(
-	    ($e ? 'eta ' . duration($e, 1) : '') . 
+	    ($e ? '<nobr>eta ' . duration($e, 1) . '</nobr>' : '') . 
 	    "<div" . ($w ? " style='width: $w'" : "") . " class='pb'><div style='width: ${p}%'></div></div>"
 	);
 }
