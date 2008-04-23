@@ -52,7 +52,7 @@ sub files {
 
 
 if (my $id = param('files')) {
-        my $r = $wt->dbh->selectrow_hashref('SELECT * FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
+        my $r = $wt->dbh->selectrow_hashref('SELECT *,sha1(torrent) AS metahash FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
 	$ses->param("show_files_$id", !$ses->param("show_files_$id")) if param('toggle');
 	print "content-type: text/html\n\n\n" . files($r);
 	exit;
