@@ -40,12 +40,21 @@ sub progressbar {
 	);
 }
 
+sub files {
+    my $r = shift;
+    my $b = eval { alarm 0; $metacache->get($r->{metahash}) };
+    my $c = scalar @{$b->{files}};
+    return '' if $c < 2;
+    return "[$c files]" unless $ses->param("show_files_$r->{id}");
+    my $p = "/webtornado-users/$ENV{REMOTE_USER}/output";
+    join('', map { "<br>[" . fmsz($_->{size}) . "] <a href='$p/$_->{name}'>$_->{name}</a>" } @{$b->{files}});
+}
+
+
 if (my $id = param('files')) {
-        my $r = $wt->dbh->selectrow_hashref('SELECT sha1(torrent) AS metahash FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
-        my $b = eval { alarm 0; $metacache->get($r->{metahash}) };
-	my $p = "/webtornado-users/$ENV{REMOTE_USER}/output";
-	print "content-type: text/html\n\n<br>\n";
-	print "[" . fmsz($_->{size}) . "] <a href='$p/$_->{name}'>$_->{name}</a><br>\n" for @{$b->{files}};
+        my $r = $wt->dbh->selectrow_hashref('SELECT * FROM torrents WHERE owner = ? AND id = ?', undef, $ENV{REMOTE_USER}, $id);
+	$ses->param("show_files_$id", !$ses->param("show_files_$id")) if param('toggle');
+	print "content-type: text/html\n\n\n" . files($r);
 	exit;
 }
 
@@ -96,6 +105,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		ue_name => uri_escape($bt->{name}),
 		overseed => ($r->{maxratio} and ($r->{ratio} > $r->{maxratio})),
 		files_count => ($fc > 1) ? $fc : 0,
+		files => files($r),
 		peers => peers($r),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),

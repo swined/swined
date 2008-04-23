@@ -46,7 +46,7 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <td style='text-align: left'>
     %name%
     <tmpl_if files_count>
-	<nobr><div id="files_%id%" class="fd" onClick="show_files(%id%)">[%files_count% files]</div></nobr>
+	<tmpl_if files><nobr><div id="files_%id%" class="fd" onClick="toggle_files(%id%)">%files%</div></nobr></tmpl_if>
     </tmpl_if>
     <tmpl_if active>
 	<tmpl_if pid>
