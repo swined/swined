@@ -10,16 +10,15 @@ function set_maxratio(id, maxratio) {
 	div.setAttribute('onClick', '');
 }
 
-function show_files(id) {
+function toggle_files(id) {
 	var div = document.getElementById('files_' + id);
-	var xhr = get_xhr('/webtornado?files=' + id);
+	var xhr = get_xhr('/webtornado?toggle=1&files=' + id);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState != 4) { return }
 		if (xhr.status != 200) { return }
 		div.innerHTML = xhr.responseText;
 	};
 	div.innerHTML = '<img src=/webtornado/img/loading.gif>';
-	div.setAttribute('onClick', '');
 	xhr.send(null);			 
 }
 
