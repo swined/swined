@@ -48,15 +48,17 @@ class HeadlessDisplayer:
 	self.dbup('downrate', int(dict.get('downRate') or 0))
         self.dbup('uprate', int(dict.get('upRate') or 0))
 	upTotal = float(dict.get('upTotal') or 0)
-	if upTotal > self.upTotal:
-	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
-	    self.upTotal = upTotal
-	    self.dbup('error', '')
+	self.dbup('up', self.upTotal + upTotal)
+#	if upTotal > self.upTotal:
+#	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
+#	    self.upTotal = upTotal
+#	    self.dbup('error', '')
 	downTotal = float(dict.get('downTotal') or 0)
-	if downTotal > self.downTotal:
-	    self.cr.execute('UPDATE torrents SET down = down + %s WHERE id = %s', (downTotal - self.downTotal, self.torrentId))
-	    self.downTotal = downTotal
-	    self.dbup('error', '')
+	self.dbup('down', self.downTotal + downTotal)
+#	if downTotal > self.downTotal:
+#	    self.cr.execute('UPDATE torrents SET down = down + %s WHERE id = %s', (downTotal - self.downTotal, self.torrentId))
+#	    self.downTotal = downTotal
+#	    self.dbup('error', '')
 	if dict.has_key('spew'):
 		spew = dict['spew']
 		c = 0
@@ -82,9 +84,9 @@ class HeadlessDisplayer:
 
 def run(p):
     h = HeadlessDisplayer(p[0], p[1], p[2], p[3], p[4])
-    h.cr.execute('SELECT pid,outdir,torrent FROM torrents WHERE id = %s', (h.torrentId))
+    h.cr.execute('SELECT pid,outdir,torrent,up,down FROM torrents WHERE id = %s', (h.torrentId))
     r = h.cr.fetchone()
-    fn = '/tmp/webtornado.' + str(os.getpid()) + '.torrent'
+    fn = '/tmp/webtornado.' + str(r[0]) + '.torrent'
     f = open(fn, 'w')
     f.write(unquote(r[2]))
     f.close()
@@ -99,6 +101,8 @@ def run(p):
 	return
     h.cr.execute('UPDATE torrents SET pid = %s, error = "" WHERE id = %s', (os.getpid(), h.torrentId));
     os.chdir(r[1])
+    h.upTotal = r[3]
+    h.downTotal = r[4]
     del p[0:5]
     download(p, h.chooseFile, h.display, h.finished, h.error, Event(), 80, h.newpath)
     h.cr.close
