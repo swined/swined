@@ -48,13 +48,13 @@ class HeadlessDisplayer:
 	self.dbup('downrate', int(dict.get('downRate') or 0))
         self.dbup('uprate', int(dict.get('upRate') or 0))
 	upTotal = float(dict.get('upTotal') or 0)
-	self.dbup('up', self.upTotal + upTotal)
+	if upTotal: self.dbup('up', self.upTotal + upTotal)
 #	if upTotal > self.upTotal:
 #	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
 #	    self.upTotal = upTotal
 #	    self.dbup('error', '')
 	downTotal = float(dict.get('downTotal') or 0)
-	self.dbup('down', self.downTotal + downTotal)
+	if downTotal: self.dbup('down', self.downTotal + downTotal)
 #	if downTotal > self.downTotal:
 #	    self.cr.execute('UPDATE torrents SET down = down + %s WHERE id = %s', (downTotal - self.downTotal, self.torrentId))
 #	    self.downTotal = downTotal
