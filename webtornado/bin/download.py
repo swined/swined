@@ -30,7 +30,6 @@ class HeadlessDisplayer:
 	    self.cr.execute('UPDATE torrents SET ' + k + ' = %s WHERE id = %s',
 		(v, self.torrentId))
 	    self.dict[k] = v
-	    print 'dbup: %s => %s' % (k, v)
 
     def error(self, msg):
 	self.dbup('error', msg)
@@ -39,26 +38,18 @@ class HeadlessDisplayer:
 	self.dbup('progress', 100)
 
     def display(self, dict):
-	if time() - self.lastUpdate < 15:
-	    return
+	if time() - self.lastUpdate < 15: return
 	self.lastUpdate = time()
-	if dict.has_key('fractionDone'):
-	    self.dbup('progress', int(dict.get('fractionDone') * 100))
+	if dict.has_key('fractionDone'): self.dbup('progress', int(dict.get('fractionDone') * 100))
 	self.dbup('eta', int(dict.get('timeEst') or 0))
 	self.dbup('downrate', int(dict.get('downRate') or 0))
         self.dbup('uprate', int(dict.get('upRate') or 0))
+	if int(dict.get('upRate') or 0) or int(dict.get('downRate') or 0):
+		self.dbup('error', '')
 	upTotal = float(dict.get('upTotal') or 0)
 	if upTotal: self.dbup('up', self.upTotal + upTotal)
-#	if upTotal > self.upTotal:
-#	    self.cr.execute('UPDATE torrents SET up = up + %s WHERE id = %s', (upTotal - self.upTotal, self.torrentId))
-#	    self.upTotal = upTotal
-#	    self.dbup('error', '')
 	downTotal = float(dict.get('downTotal') or 0)
 	if downTotal: self.dbup('down', self.downTotal + downTotal)
-#	if downTotal > self.downTotal:
-#	    self.cr.execute('UPDATE torrents SET down = down + %s WHERE id = %s', (downTotal - self.downTotal, self.torrentId))
-#	    self.downTotal = downTotal
-#	    self.dbup('error', '')
 	if dict.has_key('spew'):
 		spew = dict['spew']
 		c = 0
