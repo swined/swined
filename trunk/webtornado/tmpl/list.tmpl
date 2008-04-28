@@ -93,8 +93,8 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <br>
 
 <tmpl_if torrents><a href='/webtornado/start/all'>start all</a> | <a href='/webtornado/stop/all'>stop all</a> |</tmpl_if>
-add new torrent: <form method='post' action='/webtornado/upload' enctype='multipart/form-data'>
-<input type='file' name='file' />&nbsp;<input type='submit' name='.submit' /></form>
+add new torrent: <form id='form' method='post' action='/webtornado/upload' enctype='multipart/form-data'>
+<input type='file' name='file' onchange='document.getElementById("form").submit()'/><!--&nbsp;<input type='submit' name='.submit' />--></form>
 <font color=gray>webtornado %version% &copy; swined<br>generation time: %gtime%s</font>
 
     </center></body>
