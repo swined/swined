@@ -1,6 +1,6 @@
-#labels javascript,code-snippet
+#labels javascript,snippet
 {{{
-function get_xhr(url) {
+function xhr(url) {
   var xmlhttp;
   try { 
     xmlhttp = new ActiveXObject("Msxml2.XMLHTTP") 
