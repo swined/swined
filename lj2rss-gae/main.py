@@ -55,13 +55,15 @@ class FriendsPage(Page):
   def get(self):
     self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
     if not self.login(): return self.w('shit happened')
+    c = 0
     for url in self.list(): 
       entry = self.entry(url)
       if not entry: return self.w('no entry: ' + url)
-#      self.w(entry['content'])
-      self.w(entry['url'])
+      self.w(entry['content'])
+#      self.w(entry['url'])
       self.w('<br>')
-      if not entry['cached']: return
+      if not entry['cached']: c = c + 1
+      if c == 5: return
     self.w('# done')
 
 class MainPage(Page):
