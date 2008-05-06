@@ -7,7 +7,11 @@ from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.api.urlfetch import fetch, GET, POST
 from google.appengine.ext import db
 
-cache = {}
+class Entry(db.Model):
+  url = db.StringProperty(required=True)
+  title = db.StringProperty(required=True)
+  content = db.TextProperty(required=True)
+  created = db.DateProperty()
 
 class UserAgent:
   cookies = {}
@@ -43,21 +47,22 @@ class FriendsPage(Page):
     if not res: return
     return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
   def entry(self, url):
-    if cache.has_key(url): return cache[url]
+    for e in Entry.all().filter('url = ', url).fetch(1): return { 'url' : e.url, 'title' : e.title, 'content' : e.content, 'cached' : 1 }
     res = self.ua.get(url + '?format=light')
     if not res: return
-    res = { 'content' : res, 'title' : '--' }
-    cache[url] = res
-    self.w(url)
-    self.redirect('/friends.rss?login=' + self.p('login') + '&hash=' + self.p('hash') + '&rand=' + datetime.time)
-    return
+    Entry(url = url, title = '--', content = db.Text(res, encoding = 'utf-8')).put()
+    return { 'url' : url, 'content' : res, 'title' : '--', 'cached' : 0 }
   def get(self):
     self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
     if not self.login(): return self.w('shit happened')
     for url in self.list(): 
       entry = self.entry(url)
       if not entry: return self.w('no entry: ' + url)
-      self.w(entry['content'])
+#      self.w(entry['content'])
+      self.w(entry['url'])
+      self.w('<br>')
+      if not entry['cached']: return
+    self.w('# done')
 
 class MainPage(Page):
   def get(self):
