@@ -1,18 +1,18 @@
-from wsgiref import handlers
-from google.appengine.ext import webapp
+from wsgiref.handlers import CGIHandler
+from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 
-class UploadPage(webapp.RequestHandler):
+class UploadPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write('youmbox/upload')
 
-class MainPage(webapp.RequestHandler):
+class MainPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write('youmbox')
 
 def main():
-	handlers.CGIHandler().run(webapp.WSGIApplication([
+	CGIHandler().run(WSGIApplication([
 		('/youmbox', MainPage),
 		('/youmbox/upload', UploadPage),
 	]))
