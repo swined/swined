@@ -5,7 +5,8 @@ from google.appengine.api.urlfetch import fetch
 class YouTube:
 	def getFlvLink(self, url):
 		res = fetch(url)
-		if res.status_code == 200: return res.content
+		if res.status_code != 200: return 
+		return res.content
 
 class UploadPage(RequestHandler):
 	def get(self):
