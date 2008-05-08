@@ -1,4 +1,4 @@
-import wsgiref.handlers
+from wsgiref import handlers
 from google.appengine.ext import webapp
 
 class UploadPage(webapp.RequestHandler):
@@ -12,10 +12,9 @@ class MainPage(webapp.RequestHandler):
 		self.response.out.write('youmbox')
 
 def main():
-	application = webapp.WSGIApplication([
+	handlers.CGIHandler().run(webapp.WSGIApplication([
 		('/youmbox', MainPage),
 		('/youmbox/upload', UploadPage),
-	])
-	wsgiref.handlers.CGIHandler().run(application)
+	]))
 
 if __name__ == '__main__': main()
