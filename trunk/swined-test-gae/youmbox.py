@@ -10,7 +10,7 @@ class YouTube:
 class UploadPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		youTube = YouTube
+		youTube = YouTube()
 		flvLink = youTube.getFlvLink(self.request.get('url'))
 		if not flvLink: return self.response.out.write('shit happened')
 		self.response.out.write(flvLink)
