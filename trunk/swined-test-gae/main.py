@@ -4,7 +4,7 @@ from google.appengine.ext import webapp
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write('hell o world')
+		self.response.out.write('hellow')
 
 def main():
 	application = webapp.WSGIApplication([
