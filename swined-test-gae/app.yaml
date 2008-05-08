@@ -6,7 +6,6 @@ api_version: 1
 handlers:
 - url: /
   script: main.py
-
-- url: /youmbox(|/.*)
+- url: /youmbox
   script: youmbox.py
   login: admin
