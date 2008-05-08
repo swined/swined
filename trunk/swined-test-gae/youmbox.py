@@ -15,7 +15,7 @@ class UploadPage(RequestHandler):
 class MainPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write('<a href=upload>upload</a>')
+		self.response.out.write('<a href=/youmbox/upload>upload</a>')
 
 def main():
 	CGIHandler().run(WSGIApplication([
