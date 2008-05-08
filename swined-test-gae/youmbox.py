@@ -8,7 +8,7 @@ class MainPage(webapp.RequestHandler):
 
 def main():
 	application = webapp.WSGIApplication([
-		('/youmbox/', MainPage),
+		('/youmbox', MainPage),
 	])
 	wsgiref.handlers.CGIHandler().run(application)
 
