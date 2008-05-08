@@ -1,15 +1,14 @@
-import wsgiref.handlers
-from google.appengine.ext import webapp
+from wsgiref.handlers import CGIHandler
+from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 
-class MainPage(webapp.RequestHandler):
+class MainPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write('hellow')
 
 def main():
-	application = webapp.WSGIApplication([
+	CGIHandler().run(WSGIApplication([
 		('/', MainPage),
-	])
-	wsgiref.handlers.CGIHandler().run(application)
+	]))
 
 if __name__ == '__main__': main()
