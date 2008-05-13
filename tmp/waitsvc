@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+
+my ($timeout, $svc, $srv, $wf) = 600;
+
+while (my $t = shift) {
+	if ($t eq '--service') {
+		$svc = shift or die "service name expected\n";
+		next;
+	}
+	if ($t eq '--host') {
+		$srv = shift or die "host name expected\n";
+		next;
+	}
+	if ($t eq '--timeout') {
+		$timeout = shift or die "timeout expected\n";
+		next;
+	}
+	if ($t eq '--start') {
+		$wf = "start";
+		next;
+	}
+	if ($t eq '--stop') {
+		$wf = "stop";
+		next;
+	}
+	die "unexpected parameter: $t\n";
+}
+
+die "--service is required\n" unless $svc;
+die "--host is required\n" unless $srv;
+die "--start or --stop is required\n" unless $wf;
+
+print `ssk root:,fypfq\@$srv`;
+
+print "waiting for '$svc' to $wf on '$srv' (timeout: ${timeout}s)\n";
+
+my $_wf = ($wf eq 'start') ? '!' : '=';
+my $_cmd = "sleep 1s && (ps aux | grep \\\\\\\"${svc}\\\\\\\" | grep -cv grep)";
+my $cmd = "ssh root\@$srv perl -e \"\\\"my \\\\\\\$t=time; while (time-\\\\\\\$t<$timeout) { exit 0 if \\\\\\`${_cmd}\\\\\\` ${_wf}~ /^0/s } exit 1\\\"\"";
+
+`$cmd`, $? ? (print "FAILED\n" and exit 1) : print "OK\n";
