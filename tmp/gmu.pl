@@ -14,6 +14,7 @@ my $g = new Mail::IMAPClient(Socket => $s, User => $l, Password => $p) or die 'c
 die 'auth failed' unless $g->IsAuthenticated;
 opendir D, '.';
 while (my $f = readdir D) {
+    next if -d $f;
     print $f;
     open F, '<', $f;
     $g->append('INBOX', join("", <F>)) or die 'append() failed';
