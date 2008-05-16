@@ -114,6 +114,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		status => progressbar($r->{progress}, $r->{eta}),
 		hc_size => $ses->param('hc_size'),
 		hc_down => $ses->param('hc_down'),
+		hc_status => $ses->param('hc_status'),
 	};
 }
 
@@ -133,5 +134,6 @@ $tmpl->param({
 	gtime => int((time()-$tm)*1000)/1000,
 	hc_size => $ses->param('hc_size'),
 	hc_down => $ses->param('hc_down'),	
+	hc_status => $ses->param('hc_status'),
 });
 print $ses->header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
