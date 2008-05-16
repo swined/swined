@@ -81,8 +81,8 @@ if (my $id = param('peers')) {
 	exit;
 }
 
-if (my $cn = param('hc')) $ses->param("hc_$cn", 1);
-if (my $cn = param('sc')) $ses->param("hc_$cn", 0);
+if (my $cn = param('hc')) { $ses->param("hc_$cn", 1); }
+if (my $cn = param('sc')) { $ses->param("hc_$cn", 0); }
 
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ? AND del = 0', 'id', undef, $ENV{REMOTE_USER}));
 foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
