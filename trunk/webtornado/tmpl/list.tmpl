@@ -88,7 +88,7 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 </tmpl_loop>
 
 </tbody>
-<thead><tr><th><nobr><tmpl_if total_active>%total_active% / </tmpl_if>%total_count%</nobr></th><th>total</th><tmpl_unless hc_size><th>%total_size%</th></tmpl_if><th>%total_up%</th><tmpl_unless hc_down><th>%total_down%</th></tmpl_unless><th><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></th><th>%total_ratio%</th><th><tmpl_if total_uprate><tmpl_if total_downrate>%total_downrate% / </tmpl_if>%total_uprate%<tmpl_else><tmpl_if total_downrate>%total_downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if></th><th>%total_status%</th></tr></thead>
+<thead><tr><th><nobr><tmpl_if total_active>%total_active% / </tmpl_if>%total_count%</nobr></th><th>total</th><tmpl_unless hc_size><th>%total_size%</th></tmpl_unless><th>%total_up%</th><tmpl_unless hc_down><th>%total_down%</th></tmpl_unless><th><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></th><th>%total_ratio%</th><th><tmpl_if total_uprate><tmpl_if total_downrate>%total_downrate% / </tmpl_if>%total_uprate%<tmpl_else><tmpl_if total_downrate>%total_downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if></th><th>%total_status%</th></tr></thead>
 </table>
 </tmpl_if>
 
