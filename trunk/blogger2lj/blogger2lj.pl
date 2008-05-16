@@ -11,7 +11,7 @@ use Net::Netrc;
 my $c;
 eval `cat ~/.blogger2lj.conf.pl`;
 mkdir $c->{cache};
-die 'failed to initialize cache' unless -e $c->{cache};
+die 'failed to initialize cache' unless -d $c->{cache};
 my $lj = Net::Netrc->lookup('livejournal.com') || die "LJ credentials not found\n";
 my $feed = new XML::Atom::Feed(new URI($c->{url}));
 foreach my $entry (reverse $feed->entries) {
