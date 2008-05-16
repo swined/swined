@@ -6,13 +6,13 @@ use LWP::UserAgent;
 use Digest::MD5 qw/md5_hex/;
 use URI::Escape qw/uri_escape_utf8/;
 use HTTP::Request;
+use Net::Netrc;
 
 my $c;
 eval `cat ~/.blogger2lj.conf.pl`;
-
 mkdir $c->{cache};
 die 'failed to initialize cache' unless -e $c->{cache};
-
+my $lj = Net::Netrc->lookup('livejournal.com') || die "LJ credentials not found\n";
 my $feed = new XML::Atom::Feed(new URI($c->{url}));
 foreach my $entry (reverse $feed->entries) {
     my $cache = "$c->{cache}/" . md5_hex $entry->link->href;
@@ -23,8 +23,8 @@ foreach my $entry (reverse $feed->entries) {
     my $data = {
 	ver => 1,
 	mode => postevent, 
-	user => $c->{ljuser}, 
-	hpassword => md5_hex($c->{ljpass}),
+	user => $lj->login, 
+	hpassword => md5_hex($lj->password),
 	event => $content,
 	prop_opt_nocomments => 1,
 	year => $t[5] + 1900,
