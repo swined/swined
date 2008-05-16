@@ -19,8 +19,9 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <tmpl_if torrents>
 <tmpl_if hc_size><a href='?sc=size'>+size</a></tmpl_if>
 <tmpl_if hc_down><a href='?sc=down'>+down</a></tmpl_if>
+<tmpl_if hc_status><a href='?sc=status'>+status</a></tmpl_if>
 <table>
-<thead><tr><th>&nbsp;</th><th>name</th><tmpl_unless hc_size><th><a href='?hc=size'>size</a></th></tmpl_unless><th>up</th><tmpl_unless hc_down><th><a href='?hc=down'>down</a></th></tmpl_unless><th>peers</th><th>ratio</th><th>speed</th><th>status</th></tr></thead>
+<thead><tr><th>&nbsp;</th><th>name</th><tmpl_unless hc_size><th><a href='?hc=size'>size</a></th></tmpl_unless><th>up</th><tmpl_unless hc_down><th><a href='?hc=down'>down</a></th></tmpl_unless><th>peers</th><th>ratio</th><th>speed</th><tmpl_unless hc_status><th>status</th></tmpl_unless></tr></thead>
 <tbody>
 <tmpl_loop torrents>
 <tr wt:id='%id%'<tmpl_unless __odd__> style='background-color: #eeeeee'</tmpl_unless>>
@@ -83,12 +84,12 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     </tmpl_if>
 </td>
 <td><tmpl_if active><tmpl_if uprate><tmpl_if downrate>%downrate% / </tmpl_if>%uprate%<tmpl_else><tmpl_if downrate>%downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if><tmpl_else>--</tmpl_if></td>
-<td><tmpl_if done><tmpl_if active>seeding %seedstatus%<tmpl_else>done</tmpl_if><tmpl_else>%status%</tmpl_if></td>
+<tmpl_unless hc_status><td><tmpl_if done><tmpl_if active>seeding %seedstatus%<tmpl_else>done</tmpl_if><tmpl_else>%status%</tmpl_if></td></tmpl_unless>
 </tr>
 </tmpl_loop>
 
 </tbody>
-<thead><tr><th><nobr><tmpl_if total_active>%total_active% / </tmpl_if>%total_count%</nobr></th><th>total</th><tmpl_unless hc_size><th>%total_size%</th></tmpl_unless><th>%total_up%</th><tmpl_unless hc_down><th>%total_down%</th></tmpl_unless><th><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></th><th>%total_ratio%</th><th><tmpl_if total_uprate><tmpl_if total_downrate>%total_downrate% / </tmpl_if>%total_uprate%<tmpl_else><tmpl_if total_downrate>%total_downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if></th><th>%total_status%</th></tr></thead>
+<thead><tr><th><nobr><tmpl_if total_active>%total_active% / </tmpl_if>%total_count%</nobr></th><th>total</th><tmpl_unless hc_size><th>%total_size%</th></tmpl_unless><th>%total_up%</th><tmpl_unless hc_down><th>%total_down%</th></tmpl_unless><th><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></th><th>%total_ratio%</th><th><tmpl_if total_uprate><tmpl_if total_downrate>%total_downrate% / </tmpl_if>%total_uprate%<tmpl_else><tmpl_if total_downrate>%total_downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if></th><tmpl_unless hc_status><th>%total_status%</th></tmpl_unless></tr></thead>
 </table>
 </tmpl_if>
 
