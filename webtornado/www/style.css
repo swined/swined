@@ -5,6 +5,9 @@ TD {
 TH {
 	background-color: #CCCCCC;
 }
+A {
+	color: black;
+}
 IMG {
 	border: 0px;
 }
