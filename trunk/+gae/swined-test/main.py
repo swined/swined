@@ -19,7 +19,7 @@ class MainPage(RequestHandler):
 			if n: return self.set_ljsession(ljsession)
 			if ljsession == 'ljsession': n = 1
 	def list(self):
-		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip'))
+		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + self.request.get('skip'))
 		if not res: return
 		return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
 	def get(self, text):
