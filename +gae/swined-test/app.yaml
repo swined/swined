@@ -4,14 +4,5 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /
+- url: /.*
   script: main.py
-- url: /test.html
-  script: main.py
-
-- url: /youmbox
-  script: youmbox.py
-  login: admin
-- url: /youmbox/upload
-  script: youmbox.py
-  login: admin
