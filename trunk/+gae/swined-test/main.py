@@ -3,12 +3,12 @@ from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from xml.sax.saxutils import XMLGenerator
 
 class TestPage(RequestHandler):
-	def get(self):
+	def get(self, text):
 		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 		xml = XMLGenerator(self.response.out, 'utf-8')
 		xml.startDocument()
 		xml.startElement('rss', {})
-		xml.characters('test')
+		xml.characters(text)
 		xml.endElement('rss')
 		xml.endDocument()
 
@@ -20,7 +20,7 @@ class MainPage(RequestHandler):
 def main():
 	CGIHandler().run(WSGIApplication([
 		('/', MainPage),
-		('/test.html', TestPage),
+		('/test.html/.*', TestPage),
 	], debug = True))
 
 if __name__ == '__main__': main()
