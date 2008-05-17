@@ -6,21 +6,34 @@ from logging import debug
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.api.urlfetch import fetch, GET, POST
 from google.appengine.ext import db
+from Cookie import SimpleCookie
 
 class Entry(db.Model):
-  url = db.StringProperty(required=True)
-  title = db.StringProperty(required=True)
-  content = db.TextProperty(required=True)
-  created = db.DateProperty()
+    url = db.StringProperty(required=True)
+    title = db.StringProperty(required=True)
+    content = db.TextProperty(required=True)
+    created = db.DateProperty()
 
 class UserAgent:
-  cookies = {}
-  def cookie_string(self): return '; '.join(['%s=%s' % (k, v) for k, v in self.cookies.items()])
-  def get(self, url): return self.request(url)
-  def post(self, url, data): return self.request(url, data, POST)
-  def request(self, url, data = None, method = GET):
-    res = fetch(url, data, method, { 'Cookie' : self.cookie_string() })
-    if res.status_code == 200: return res.content
+    cookies = {}
+    def cookie_string(self): 
+	return '; '.join(['%s=%s' % (k, v) for k, v in self.cookies.items()])
+    def parseCookies(self, cookie):
+	if cookie == '': return
+	c = SimpleCookie()
+	c.load(cookie)
+	for k in c.keys(): 
+	    self.cookies[k] = c.get(k).value
+    def get(self, url): 
+	return self.request(url)
+    def post(self, url, data): 
+	return self.request(url, data, POST)
+    def request(self, url, data = None, method = GET):
+	res = fetch(url, data, method, { 'Cookie' : self.cookie_string() })
+	if res.headers.has_key('Set-Cookie'): 
+	    self.parseCookies(res.headers['Set-Cookie'])
+	if res.status_code == 200: 
+	    return res.content
 
 class Page(RequestHandler):
   def w(self, text): self.response.out.write(text)
@@ -59,8 +72,8 @@ class FriendsPage(Page):
     for url in self.list(): 
       entry = self.entry(url)
       if not entry: return self.w('no entry: ' + url)
-      self.w(entry['content'])
-#      self.w(entry['url'])
+#      self.w(entry['content'])
+      self.w(entry['url'])
       self.w('<br>')
       if not entry['cached']: c = c + 1
       if c == 5: return
