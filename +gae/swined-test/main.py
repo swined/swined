@@ -8,7 +8,7 @@ class TestPage(RequestHandler):
 		xml = XMLGenerator()
 		xml.startDocument()
 		xml.startElement('rss')
-		xml.characters(u'хуй')
+		xml.characters('test')
 		xml.endElement('rss')
 		xml.endDocument()
 		self.response.out.write(xml.output())
