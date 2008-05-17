@@ -11,7 +11,6 @@ class TestPage(RequestHandler):
 		xml.characters('test')
 		xml.endElement('rss')
 		xml.endDocument()
-		xml.close()
 
 class MainPage(RequestHandler):
 	def get(self):
