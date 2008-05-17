@@ -1,26 +1,14 @@
 from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
-from xml.sax.saxutils import XMLGenerator
-
-class TestPage(RequestHandler):
-	def get(self, text):
-		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
-		xml = XMLGenerator(self.response.out, 'utf-8')
-		xml.startDocument()
-		xml.startElement('rss', {})
-		xml.characters(text)
-		xml.endElement('rss')
-		xml.endDocument()
 
 class MainPage(RequestHandler):
-	def get(self):
+	def get(self, text):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write('hellow')
+		self.response.out.write('hellow: ' + text)
 
 def main():
 	CGIHandler().run(WSGIApplication([
-		('/', MainPage),
-		('/test.html/(.*)', TestPage),
+		('/(.*)', MainPage),
 	], debug = True))
 
 if __name__ == '__main__': main()
