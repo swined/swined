@@ -5,14 +5,13 @@ from xml.sax.saxutils import XMLGenerator
 class TestPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
-		xml = XMLGenerator()
+		xml = XMLGenerator(self.response.out, 'utf-8')
 		xml.startDocument()
 		xml.startElement('rss', {})
 		xml.characters('test')
 		xml.endElement('rss')
 		xml.endDocument()
-		self.response.out.write(xml.generate())
-		
+		xml.close()
 
 class MainPage(RequestHandler):
 	def get(self):
