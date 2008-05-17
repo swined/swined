@@ -20,7 +20,7 @@ class MainPage(RequestHandler):
 def main():
 	CGIHandler().run(WSGIApplication([
 		('/', MainPage),
-		('/test.html/.*', TestPage),
+		('/test.html/(.*)', TestPage),
 	], debug = True))
 
 if __name__ == '__main__': main()
