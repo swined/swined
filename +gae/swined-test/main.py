@@ -6,7 +6,7 @@ class MainPage(RequestHandler):
 	ua = UserAgent()
 	def set_ljsession(self, ljsession):
 		if not ljsession: return
-			t = ljsession.split(':')
+		t = ljsession.split(':')
 		self.ua.cookies['ljsession'] = ljsession
 		self.ua.cookies['ljloggedin'] = ':'.join(t[1:2])
 		return 1
