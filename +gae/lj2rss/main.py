@@ -72,8 +72,8 @@ class FriendsPage(Page):
     for url in self.list(): 
       entry = self.entry(url)
       if not entry: return self.w('no entry: ' + url)
-#      self.w(entry['content'])
-      self.w(entry['url'])
+      self.w(entry['content'])
+#      self.w(entry['url'])
       self.w('<br>')
       if not entry['cached']: c = c + 1
       if c == 5: return
