@@ -11,7 +11,7 @@ class MainPage(RequestHandler):
 		self.ua.cookies['ljloggedin'] = ':'.join(t[1:2])
 		return 1
 	def login(self):
-		data = 'mode=sessiongenerate&expiration=short&user=' + self.p('login') + '&hpassword=' + self.p('hash')
+		data = 'mode=sessiongenerate&expiration=short&user=' + self.request.get('login') + '&hpassword=' + self.request.get('hash')
 		res = self.ua.post('http://www.livejournal.com/interface/flat', data)
 		if not res: return
 		n = 0
