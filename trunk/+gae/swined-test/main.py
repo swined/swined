@@ -7,7 +7,7 @@ class TestPage(RequestHandler):
 		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 		xml = XMLGenerator()
 		xml.startDocument()
-		xml.startElement('rss')
+		xml.startElement('rss', {})
 		xml.characters('test')
 		xml.endElement('rss')
 		xml.endDocument()
