@@ -6,7 +6,7 @@ class MainPage(RequestHandler):
 	def get(self, text):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write('hellow: ' + text)
-		send_mail("swined@gmail.com", "null@x29.ru", "test", text)
+#		send_mail("swined@gmail.com", "null@x29.ru", "test", text)
 
 def main():
 	CGIHandler().run(WSGIApplication([
