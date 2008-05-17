@@ -11,7 +11,7 @@ class TestPage(RequestHandler):
 		xml.characters('test')
 		xml.endElement('rss')
 		xml.endDocument()
-		self.response.out.write(xml.output())
+		self.response.out.write(xml.generate())
 		
 
 class MainPage(RequestHandler):
