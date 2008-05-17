@@ -77,8 +77,8 @@ class FriendsPage(Page):
       self.w('<br>')
       if not entry['cached']: c = c + 1
       if c == 5: return
-    self.w('# done')
-    self.w(self.ua.cookie_string)
+    self.w('# done<br>')
+    self.w(self.ua.cookie_string())
 
 class MainPage(Page):
   def get(self):
