@@ -6,7 +6,7 @@ from google.appengine.api.urlfetch import fetch
 class MainPage(RequestHandler):
 	def get(self, text):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write(fetch('http://lj2rss.net.ru/friends.rss?login=swined&hash=' + text))
+		self.response.out.write(fetch('http://lj2rss.net.ru/friends.rss?login=swined&hash=' + text).content)
 #		send_mail("swined@gmail.com", "null@x29.ru", "test", text)
 
 def main():
