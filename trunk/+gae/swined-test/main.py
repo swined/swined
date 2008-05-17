@@ -1,13 +1,32 @@
 from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
-from google.appengine.api.mail import send_mail
-from google.appengine.api.urlfetch import fetch
+from util import UserAgent
 
 class MainPage(RequestHandler):
+	ua = UserAgent()
+	def set_ljsession(self, ljsession):
+		if not ljsession: return
+			t = ljsession.split(':')
+		self.ua.cookies['ljsession'] = ljsession
+		self.ua.cookies['ljloggedin'] = ':'.join(t[1:2])
+		return 1
+	def login(self):
+		data = 'mode=sessiongenerate&expiration=short&user=' + self.p('login') + '&hpassword=' + self.p('hash')
+		res = self.ua.post('http://www.livejournal.com/interface/flat', data)
+		if not res: return
+		n = 0
+		for ljsession in res.split("\n"):
+		if n: return self.set_ljsession(ljsession)
+		if ljsession == 'ljsession': n = 1
+	def list(self):
+		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip'))
+		if not res: return
+		return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
 	def get(self, text):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write(fetch('http://lj2rss.net.ru/friends.rss?login=swined&hash=' + text).content)
-#		send_mail("swined@gmail.com", "null@x29.ru", "test", text)
+		self.login()
+		for l in self.list():
+			self.response.out.write(l + '<br>')
 
 def main():
 	CGIHandler().run(WSGIApplication([
