@@ -16,8 +16,8 @@ class MainPage(RequestHandler):
 		if not res: return
 		n = 0
 		for ljsession in res.split("\n"):
-		if n: return self.set_ljsession(ljsession)
-		if ljsession == 'ljsession': n = 1
+			if n: return self.set_ljsession(ljsession)
+			if ljsession == 'ljsession': n = 1
 	def list(self):
 		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + self.p('skip'))
 		if not res: return
