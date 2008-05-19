@@ -19,19 +19,22 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 <tmpl_if torrents>
 <tmpl_if hc_name><a href='?sc=name'>+name</a></tmpl_if>
 <tmpl_if hc_size><a href='?sc=size'>+size</a></tmpl_if>
+<tmpl_if hc_up><a href='?sc=up'>+up</a></tmpl_if>
 <tmpl_if hc_down><a href='?sc=down'>+down</a></tmpl_if>
 <tmpl_if hc_peers><a href='?sc=peers'>+peers</a></tmpl_if>
+<tmpl_if hc_ratio><a href='?sc=ratio'>+ratio</a></tmpl_if>
+<tmpl_if hc_speed><a href='?sc=speed'>+speed</a></tmpl_if>
 <tmpl_if hc_status><a href='?sc=status'>+status</a></tmpl_if>
 <table>
 <thead><tr>
     <th>&nbsp;</th>
     <tmpl_unless hc_name><th><a href='?hc=name'>name</a></th></tmpl_unless>
     <tmpl_unless hc_size><th><a href='?hc=size'>size</a></th></tmpl_unless>
-    <tmpl_unless hc_up><th>up</th></tmpl_unless>
+    <tmpl_unless hc_up><th><a href='?hc=up'>up</a></th></tmpl_unless>
     <tmpl_unless hc_down><th><a href='?hc=down'>down</a></th></tmpl_unless>
     <tmpl_unless hc_peers><th><a href='?hc=peers'>peers</a></th></tmpl_unless>
-    <tmpl_unless hc_ratio><th>ratio</th></tmpl_unless>
-    <tmpl_unless hc_speed><th>speed</th></tmpl_unless>
+    <tmpl_unless hc_ratio><th><a href='?hc=ratio'>ratio</a></th></tmpl_unless>
+    <tmpl_unless hc_speed><th><a href='?hc=speed'>speed</a></th></tmpl_unless>
     <tmpl_unless hc_status><th><a href='?hc=status'>status</a></th></tmpl_unless>
 </tr></thead>
 <tbody>
