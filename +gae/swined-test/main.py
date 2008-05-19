@@ -11,8 +11,8 @@ class MainPage(RequestHandler):
 		self.ua.cookies['ljsession'] = ljsession
 		self.ua.cookies['ljloggedin'] = ':'.join(t[1:2])
 		return 1
-	def login(self):
-		data = 'mode=sessiongenerate&expiration=short&user=' + self.request.get('login') + '&hpassword=' + self.request.get('hash')
+	def login(self, login, hash):
+		data = 'mode=sessiongenerate&expiration=short&user=' + login + '&hpassword=' + hash
 		res = self.ua.post('http://www.livejournal.com/interface/flat', data)
 		if not res: return
 		n = 0
@@ -25,12 +25,12 @@ class MainPage(RequestHandler):
 		return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		if not self.login():
+		if not self.login(self.request.get('login'), self.request.get('hash')):
 			self.response.out.write('shit happened')
 			return
-		self.response.out.write(self.ua.get('http://elbonia.livejournal.com/1530986.html?auth=digest'))
-		#for l in self.list():
-		#	self.response.out.write(l + '<br>')
+#		self.response.out.write(self.ua.get('http://elbonia.livejournal.com/1530986.html?auth=digest'))
+		for l in self.list():
+			self.response.out.write(l + '<br>')
 
 def main():
 	CGIHandler().run(WSGIApplication([
