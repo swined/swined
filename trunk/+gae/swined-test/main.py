@@ -23,15 +23,17 @@ class MainPage(RequestHandler):
 		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + self.request.get('skip'))
 		if not res: return
 		return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
-	def get(self, text):
+	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.login()
+		if not self.login():
+			self.response.out.write('shit happened')
+			return
 		for l in self.list():
 			self.response.out.write(l + '<br>')
 
 def main():
 	CGIHandler().run(WSGIApplication([
-		('/(.*)', MainPage),
+		('/', MainPage),
 	], debug = True))
 
 if __name__ == '__main__': main()
