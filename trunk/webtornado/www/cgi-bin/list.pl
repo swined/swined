@@ -84,6 +84,8 @@ if (my $id = param('peers')) {
 if (my $cn = param('hc')) { $ses->param("hc_$cn", 1); }
 if (my $cn = param('sc')) { $ses->param("hc_$cn", 0); }
 
+my %hc = map { ("hc_$_" => $ses->param("hc_$_")) } 'name', 'size', 'down', 'status';
+
 my ($t, $q, @torrents) = ({}, $wt->dbh->selectall_hashref('SELECT *,up/down AS ratio,sha1(torrent) AS metahash,"" AS torrent FROM torrents WHERE owner = ? AND del = 0', 'id', undef, $ENV{REMOTE_USER}));
 foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} *= 1 << 20 for 'up', 'down';
@@ -102,7 +104,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
 	$r->{$_} = r10($r->{$_}) for 'ratio', 'maxratio';
 	push @torrents, {
-		%$r,
+		%$r, %hc,
 		user => $ENV{REMOTE_USER},
 		name => $bt->{name},
 		ue_name => uri_escape($bt->{name}),
@@ -112,16 +114,13 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		peers => peers($r),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
-		hc_size => $ses->param('hc_size'),
-		hc_down => $ses->param('hc_down'),
-		hc_status => $ses->param('hc_status'),
 	};
 }
 
 my @pb = statvfs '/var/cache/webtornado/users';
 my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1, loop_context_vars => 1);
 $tmpl->param({
-	%$t,
+	%$t, %hc,
 	(map { ("total_$_" => $t->{$_}) } keys %$t),
 	(map { ("total_$_" => fmsz($t->{$_})) } 'size', 'up', 'down', 'uprate', 'downrate'),
 	disk_free => fmsz($pb[0]*$pb[3]),
@@ -132,8 +131,5 @@ $tmpl->param({
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 	gtime => int((time()-$tm)*1000)/1000,
-	hc_size => $ses->param('hc_size'),
-	hc_down => $ses->param('hc_down'),	
-	hc_status => $ses->param('hc_status'),
 });
 print $ses->header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
