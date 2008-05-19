@@ -28,8 +28,9 @@ class MainPage(RequestHandler):
 		if not self.login():
 			self.response.out.write('shit happened')
 			return
-		for l in self.list():
-			self.response.out.write(l + '<br>')
+		self.response.out.write(self.ua.get('http://elbonia.livejournal.com/1530986.html'))
+		#for l in self.list():
+		#	self.response.out.write(l + '<br>')
 
 def main():
 	CGIHandler().run(WSGIApplication([
