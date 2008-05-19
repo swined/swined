@@ -27,11 +27,11 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     <th>&nbsp;</th>
     <tmpl_unless hc_name><th><a href='?hc=name'>name</a></th></tmpl_unless>
     <tmpl_unless hc_size><th><a href='?hc=size'>size</a></th></tmpl_unless>
-    <th>up</th>
+    <tmpl_unless hc_up><th>up</th></tmpl_unless>
     <tmpl_unless hc_down><th><a href='?hc=down'>down</a></th></tmpl_unless>
     <tmpl_unless hc_peers><th><a href='?hc=peers'>peers</a></th></tmpl_unless>
-    <th>ratio</th>
-    <th>speed</th>
+    <tmpl_unless hc_ratio><th>ratio</th></tmpl_unless>
+    <tmpl_unless hc_speed><th>speed</th></tmpl_unless>
     <tmpl_unless hc_status><th><a href='?hc=status'>status</a></th></tmpl_unless>
 </tr></thead>
 <tbody>
@@ -73,10 +73,10 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     </tmpl_if>
 </td></tmpl_unless>
 <tmpl_unless hc_size><td>%size%</td></tmpl_unless>
-<td>%up%</td>
+<tmpl_unless hc_up><td>%up%</td></tmpl_unless>
 <tmpl_unless hc_down><td>%down%</td></tmpl_unless>
 <tmpl_unless hc_peers><td id='peers_%id%' onClick='toggle_peers(%id%)'>%peers%</td></tmpl_unless>
-<td id='set_maxratio_%id%' onClick='set_maxratio(%id%, %maxratio%)'>
+<tmpl_unless hc_ratio><td id='set_maxratio_%id%' onClick='set_maxratio(%id%, %maxratio%)'>
     <tmpl_if overseed>
 	<div style='color: red'>
 	<b>
@@ -94,8 +94,8 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     <tmpl_if overseed>
 	</b>
     </tmpl_if>
-</td>
-<td><tmpl_if active><tmpl_if uprate><tmpl_if downrate>%downrate% / </tmpl_if>%uprate%<tmpl_else><tmpl_if downrate>%downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if><tmpl_else>--</tmpl_if></td>
+</td></tmpl_unless>
+<tmpl_unless hc_speed><td><tmpl_if active><tmpl_if uprate><tmpl_if downrate>%downrate% / </tmpl_if>%uprate%<tmpl_else><tmpl_if downrate>%downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if><tmpl_else>--</tmpl_if></td></tmpl_unless>
 <tmpl_unless hc_status><td><tmpl_if done><tmpl_if active>seeding %seedstatus%<tmpl_else>done</tmpl_if><tmpl_else>%status%</tmpl_if></td></tmpl_unless>
 </tr>
 </tmpl_loop>
@@ -105,11 +105,11 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     <th><nobr><tmpl_if total_active>%total_active% / </tmpl_if>%total_count%</nobr></th>
     <tmpl_unless hc_name><th>total</th></tmpl_unless>
     <tmpl_unless hc_size><th>%total_size%</th></tmpl_unless>
-    <th>%total_up%</th>
+    <tmpl_unless hc_up><th>%total_up%</th></tmpl_unless>
     <tmpl_unless hc_down><th>%total_down%</th></tmpl_unless>
     <tmpl_unless hc_peers><th><tmpl_if total_peers>%total_peers%<tmpl_else>none</tmpl_if></th></tmpl_unless>
-    <th>%total_ratio%</th>
-    <th><tmpl_if total_uprate><tmpl_if total_downrate>%total_downrate% / </tmpl_if>%total_uprate%<tmpl_else><tmpl_if total_downrate>%total_downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if></th>
+    <tmpl_unless hc_ratio><th>%total_ratio%</th></tmpl_unless>
+    <tmpl_unless hc_speed><th><tmpl_if total_uprate><tmpl_if total_downrate>%total_downrate% / </tmpl_if>%total_uprate%<tmpl_else><tmpl_if total_downrate>%total_downrate% / 0b<tmpl_else>stalled</tmpl_if></tmpl_if></th></tmpl_unless>
     <tmpl_unless hc_status><th>%total_status%</th></tmpl_unless>
 </tr></thead>
 </table>
