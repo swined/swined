@@ -81,7 +81,7 @@ if (my $id = param('peers')) {
 	exit;
 }
 
-$ses->param('sap', param('sap')) if param('sap');
+$ses->param('sap', param('sap')) if defined param('sap');
 if (my $cn = param('hc')) { $ses->param("hc_$cn", 1); }
 if (my $cn = param('sc')) { $ses->param("hc_$cn", 0); }
 my %hc = map { ("hc_$_" => $ses->param("hc_$_")) } 'name', 'size', 'up', 'down', 'peers', 'ratio', 'speed', 'status';
