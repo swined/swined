@@ -62,7 +62,7 @@ sub peers {
 	my $r = shift;
 	return '--' unless $r->{active} and $r->{pid};
 	return 'none' unless $r->{peers};
-	return $r->{peers} unless $ses->param("show_peers_$r->{id}");
+	return $r->{peers} unless $ses->param("show_peers_$r->{id}") || $ses->param('sap');
 	my $ic = new IP::Country::Fast;
 	'<div style="text-align: left">' . join('<br>', map { 
 	    my @p = split ':';
@@ -81,6 +81,7 @@ if (my $id = param('peers')) {
 	exit;
 }
 
+$ses->param('sap', param('sap')) if param('sap');
 if (my $cn = param('hc')) { $ses->param("hc_$cn", 1); }
 if (my $cn = param('sc')) { $ses->param("hc_$cn", 0); }
 my %hc = map { ("hc_$_" => $ses->param("hc_$_")) } 'name', 'size', 'up', 'down', 'peers', 'ratio', 'speed', 'status';
