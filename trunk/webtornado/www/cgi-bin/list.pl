@@ -121,6 +121,7 @@ my @pb = statvfs '/var/cache/webtornado/users';
 my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1, loop_context_vars => 1);
 $tmpl->param({
 	%$t, %hc,
+	sap => $ses->param('sap'),
 	(map { ("total_$_" => $t->{$_}) } keys %$t),
 	(map { ("total_$_" => fmsz($t->{$_})) } 'size', 'up', 'down', 'uprate', 'downrate'),
 	disk_free => fmsz($pb[0]*$pb[3]),
