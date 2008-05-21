@@ -64,7 +64,8 @@ class CommentsPage(RequestHandler):
 	for l in self.list():
 	    self.response.out.write(l + "<br>")
 	self.response.out.write(self.ua.cookieString())
-	self.response.out.write(self.ua.get(self.request.get('url') + "?format=light"))
+	self.ua.get(self.request.get('url') + "?format=light")
+	self.response.out.write('<hr>' + self.ua.cookieString())
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
