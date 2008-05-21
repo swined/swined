@@ -10,7 +10,5 @@ handlers:
 - url: /friends.rss
   script: main.py
   login: admin
-- url: /comments.info
-  script: comments.py
 - url: /comments.svg
   script: comments.py
