@@ -11,11 +11,14 @@ class CommentsPage(RequestHandler):
 	for ljsession in res.content.split("\n"):
 	    if n: return ljsession
 	    if ljsession == 'ljsession': n = 1
+    def ljloggedin(self, ljsession):
+	t = ljsession.split(':')
+	return ':'.join(t[1:2])
     def get(self):
 	self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 	ljsession = self.ljsession(self.request.get('login'), self.request.get('hash'))
 	if not ljsession: return self.response.out.write('shit happened')
-	self.response.out.write(ljsession)
+	self.response.out.write(ljsession + '<br>' + self.ljloggedin(ljsession))
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)]))
 if __name__ == '__main__': main()
