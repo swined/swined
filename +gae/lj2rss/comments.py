@@ -2,6 +2,7 @@ from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.api.urlfetch import fetch, GET, POST
 from Cookie import SimpleCookie
+import re
 
 class UserAgent:
     cookies = {}
