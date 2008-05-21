@@ -29,7 +29,7 @@ class HttpError(Exception):
     pass
 
 class CommentsPage(RequestHandler):
-    ua = UserAgent
+    ua = UserAgent()
     def ljsession(self, login, hash):
 	data = 'mode=sessiongenerate&expiration=short&user=' + login + '&hpassword=' + hash
 	res = self.ua.post('http://www.livejournal.com/interface/flat', data)
