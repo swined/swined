@@ -24,7 +24,7 @@ class CommentsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 	ljsession = self.ljsession(self.request.get('login'), self.request.get('hash'))
 	if not ljsession: return self.response.out.write('shit happened')
-	self.response.out.write(fetch(self.request.get('url')))
+	self.response.out.write(fetch(self.request.get('url')).content)
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
