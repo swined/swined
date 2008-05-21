@@ -6,6 +6,8 @@ def fetch(url, payload=None, method=urlfetch.GET, headers={}, allow_truncated=Fa
     res = urlfetch.fetch(url, payload, method, headers, allow_truncated)
     if res.status_code != 200: 
 	raise HttpError("http error " + str(res.status_code) + " (" + url + ")")
+    if res.headers.has_key('Location'):
+	raise HttpError("http redirect: " + res.headers['Location'])
     return res
     
 class HttpError(Exception): 
