@@ -107,6 +107,54 @@ def fetch(url, payload=None, method=GET, headers={}, allow_truncated=False):
 
   return result
 
+def afetch(url, payload=None, method=GET, headers={}, allow_truncated=False, callback=None):
+  request = urlfetch_service_pb.URLFetchRequest()
+  response = urlfetch_service_pb.URLFetchResponse()
+  request.set_url(url)
+
+  if method == GET:
+    request.set_method(urlfetch_service_pb.URLFetchRequest.GET)
+  elif method == POST:
+    request.set_method(urlfetch_service_pb.URLFetchRequest.POST)
+  elif method == HEAD:
+    request.set_method(urlfetch_service_pb.URLFetchRequest.HEAD)
+  elif method == PUT:
+    request.set_method(urlfetch_service_pb.URLFetchRequest.PUT)
+  elif method == DELETE:
+    request.set_method(urlfetch_service_pb.URLFetchRequest.DELETE)
+
+  if payload and (method == POST or method == PUT):
+    request.set_payload(payload)
+
+  for key, value in headers.iteritems():
+    header_proto = request.add_header()
+    header_proto.set_key(key)
+    header_proto.set_value(value)
+
+  try:
+    apiproxy_stub_map.MakeCall('urlfetch', 'Fetch', request, response, callback)
+  except apiproxy_errors.ApplicationError, e:
+    if (e.application_error ==
+        urlfetch_service_pb.URLFetchServiceError.INVALID_URL):
+      raise InvalidURLError()
+    if (e.application_error ==
+        urlfetch_service_pb.URLFetchServiceError.UNSPECIFIED_ERROR):
+      raise DownloadError()
+    if (e.application_error ==
+        urlfetch_service_pb.URLFetchServiceError.FETCH_ERROR):
+      raise DownloadError()
+    if (e.application_error ==
+        urlfetch_service_pb.URLFetchServiceError.RESPONSE_TOO_LARGE):
+      raise ResponseTooLargeError(None)
+    raise e
+  result = _URLFetchResult(response)
+
+  if not allow_truncated and response.contentwastruncated():
+    raise ResponseTooLargeError(result)
+
+  return result
+
+
 Fetch = fetch
 
 
