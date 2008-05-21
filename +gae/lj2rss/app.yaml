@@ -13,6 +13,3 @@ handlers:
 - url: /comments.info
   script: comments.py
   login: admin
-- url: /test.html
-  script: test.py
-  login: admin
