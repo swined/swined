@@ -27,7 +27,7 @@ class CommentsPage(RequestHandler):
 	ljsession = self.ljsession(self.request.get('login'), self.request.get('hash'))
 	if not ljsession: return self.response.out.write('shit happened')
 	cookie = "ljloggedin=" + self.ljloggedin(ljsession) + "; ljsession=" + ljsession + "; ljmastersession=" + ljsession
-	self.response.out.write(fetch(self.request.get('url'), headers = { 'Cookie' : cookie }).content)
+	self.response.out.write(fetch(self.request.get('url') + "?format=light", headers = { 'Cookie' : cookie }).content)
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
