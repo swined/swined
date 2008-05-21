@@ -12,7 +12,7 @@ class HttpError(Exception): pass
 class CommentsPage(RequestHandler):
     def ljsession(self, login, hash):
 	data = 'mode=sessiongenerate&expiration=short&user=' + login + '&hpassword=' + hash
-	res = fetch('http://www.livejournal.com/interface/flat', data, urlfetch.POST)
+	res = fetch('http://www.livejournal.com/interfacex/flat', data, urlfetch.POST)
 	n = 0
 	for ljsession in res.content.split("\n"):
 	    if n: return ljsession
