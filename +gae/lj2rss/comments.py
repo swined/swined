@@ -21,6 +21,8 @@ class UserAgent:
 	res = fetch(url, data, method, { 'Cookie' : self.cookieString() })
 	if res.headers.has_key('Set-Cookie'): 
 	    self.parseCookies(res.headers['Set-Cookie'])
+	if res.headers.has_key('Location'): 
+	    raise HttpError("http redirect " + res.headers['Location'])
 	if res.status_code != 200: 
 	    raise HttpError("http error " + str(res.status_code) + " (" + url + ")")
 	return res.content
