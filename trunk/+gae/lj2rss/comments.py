@@ -22,7 +22,7 @@ class CommentsPage(RequestHandler):
 	    self.response.out.write('no comments')
 	else:
 	    self.response.out.write('%s comments' % (cc))
-	self.response.out.write('" }')
+	self.response.out.write('" } ')
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)]))
 if __name__ == '__main__': main()
