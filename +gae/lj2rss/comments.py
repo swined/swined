@@ -1,6 +1,6 @@
 from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
-from google.appengine.api import urlfetch 
+from google.appengine.api import urlfetch
 
 def fetch(url, payload=None, method=urlfetch.GET, headers={}, allow_truncated=False):
     res = urlfetch.fetch(url, payload, method, headers, allow_truncated)
@@ -24,7 +24,7 @@ class CommentsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 	ljsession = self.ljsession(self.request.get('login'), self.request.get('hash'))
 	if not ljsession: return self.response.out.write('shit happened')
-	self.response.out.write(ljsession + '<br>' + self.ljloggedin(ljsession))
+	self.response.out.write(fetch(self.request.get('url')))
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
