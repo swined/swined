@@ -12,4 +12,3 @@ handlers:
   login: admin
 - url: /comments.info
   script: comments.py
-  login: admin

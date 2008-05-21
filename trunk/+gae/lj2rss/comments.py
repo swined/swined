@@ -20,5 +20,5 @@ class CommentsPage(RequestHandler):
 	else:
 	    self.response.out.write('%s comments' % (cc))
 
-def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
+def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)]))
 if __name__ == '__main__': main()
