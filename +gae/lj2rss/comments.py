@@ -20,5 +20,5 @@ class CommentsPage(RequestHandler):
 	if not ljsession: return self.response.out.write('shit happened')
 	self.response.out.write(ljsession + '<br>' + self.ljloggedin(ljsession))
 
-def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)]), debug = True)
+def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
