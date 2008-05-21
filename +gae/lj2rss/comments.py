@@ -8,6 +8,8 @@ def fetch(url, payload=None, method=urlfetch.GET, headers={}, allow_truncated=Fa
 	raise HttpError("http error " + str(res.status_code) + " (" + url + ")")
     if res.headers.has_key('Location'):
 	raise HttpError("http redirect: " + res.headers['Location'])
+    if res.headers.has_key('Set-Cookie'):
+	raise HttpError("http cookie: " + res.headers['Set-Cookie'])
     return res
     
 class HttpError(Exception): 
