@@ -35,7 +35,7 @@ class CommentsSvgPage(RequestHandler):
 	    return rm.group(1) + 'comments'
 	return 'no comments'
     def get(self):
-	self.response.headers['Content-Type'] = 'text/css; charset=utf-8'
+	self.response.headers['Content-Type'] = 'image/svg+xml'
 	u = self.request.get('user')
 	i = self.request.get('itemid')
 	c = 'unknown'
