@@ -53,7 +53,7 @@ class CommentsPage(RequestHandler):
 	self.ua.cookies['ljloggedin'] = self.ljloggedin(ljsession)
 	return True
     def list(self, skip = 0):
-	res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + skip)
+	res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip))
 	if not res: return
 	return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
     def get(self):
