@@ -28,7 +28,7 @@ class CommentsSvgPage(RequestHandler):
     def comments(self, user, itemid):
 	res = fetch('http://m.lj.ru/read/user/%s/%s' % (user, itemid))
 	if res.status_code != 200: 
-	    return 'shit happened'
+	    return ''
 	rx = re.compile('<a href="/read/user/%s/%s/comments#comments">\S+? \((\d+)\)</a>' % (user, itemid))
 	rm = rx.search(res.content)
 	if rm: 
@@ -42,7 +42,7 @@ class CommentsSvgPage(RequestHandler):
 	try:
 	    c = self.comments(u, i)
 	except Exception:
-	    c = 'shit happened'
+	    c = ''
 	self.response.out.write(
 """<?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
