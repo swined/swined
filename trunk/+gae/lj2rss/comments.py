@@ -13,12 +13,16 @@ class CommentsPage(RequestHandler):
 	if rm: 
 	    return rm.group(1)
     def get(self):
-	self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-	cc = self.comments(self.request.get('user'), self.request.get('itemid'))
+	self.response.headers['Content-Type'] = 'text/css; charset=utf-8'
+	u = self.request.get('user')
+	i = self.request.get('itemid')
+	cc = self.comments(u, i)
+	self.response.out.write('#cc_%s_%s:before { content: "' % (u, i))
 	if not cc:
 	    self.response.out.write('no comments')
 	else:
 	    self.response.out.write('%s comments' % (cc))
+	self.response.out.write('" }')
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)]))
 if __name__ == '__main__': main()
