@@ -20,7 +20,7 @@ class UserAgent:
     def post(self, url, data): 
 	return self.request(url, data, POST)
     def request(self, url, data = None, method = GET):
-	res = fetch(url, data, method, { 'Cookie' : self.cookieString(), 'X-LJ-Auth' : 'cookie' })
+	res = fetch(url, data, method, { 'Cookie' : self.cookieString() })
 	if res.headers.has_key('Set-Cookie'): 
 	    self.parseCookies(res.headers['Set-Cookie'])
 	if res.headers.has_key('Location'): 
