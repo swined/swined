@@ -4,7 +4,7 @@ from google.appengine.api import urlfetch
 
 def fetch(url, payload=None, method=urlfetch.GET, headers={}, allow_truncated=False):
     res = urlfetch.fetch(url, payload, method, headers, allow_truncated)
-    if res.status_code != 200: raise HttpError("http error " + str(res.status_code))
+    if res.status_code != 200: raise HttpError("http error " + str(res.status_code) + " (" + url + ")")
     return res
     
 class HttpError(Exception): pass
