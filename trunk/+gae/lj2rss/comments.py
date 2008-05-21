@@ -8,7 +8,8 @@ class UserAgent:
     def cookieString(self): 
 	return '; '.join(['%s=%s' % (k, v) for k, v in self.cookies.items()])
     def parseCookies(self, cookie):
-	if cookie == '': return
+	if cookie == '': 
+	    return
 	c = SimpleCookie()
 	c.load(cookie)
 	for k in c.keys(): 
@@ -51,11 +52,17 @@ class CommentsPage(RequestHandler):
 	self.ua.cookies['ljsession'] = ljsession
 	self.ua.cookies['ljloggedin'] = self.ljloggedin(ljsession)
 	return True
+    def list(self, skip = 0):
+	res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + skip)
+	if not res: return
+	return [l.group(1) for l in re.compile(": <a href='(.*?)\?.*?'>").finditer(res)]
     def get(self):
 	self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 	if not self.login(self.request.get('login'), self.request.get('hash')):
 	    return self.response.out.write('shit happened')
-	self.response.out.write(self.ua.get(self.request.get('url') + "?format=light"))
+	for l in self.list():
+	    self.response.out.write(l + "<br>")
+#	self.response.out.write(self.ua.get(self.request.get('url') + "?format=light"))
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
