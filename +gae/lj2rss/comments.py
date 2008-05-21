@@ -13,7 +13,7 @@ class CommentsPage(RequestHandler):
 	    if ljsession == 'ljsession': n = 1
     def ljloggedin(self, ljsession):
 	t = ljsession.split(':')
-	return ':'.join(t[1], t[2])
+	return ':'.join([t[1], t[2]])
     def get(self):
 	self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 	ljsession = self.ljsession(self.request.get('login'), self.request.get('hash'))
