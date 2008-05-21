@@ -43,11 +43,10 @@ class CommentsSvgPage(RequestHandler):
 	    c = self.comments(u, i)
 	except Exception:
 	    c = 'shit happened'
-	    #width="150px" height="20px" 
 	self.response.out.write(
 """<?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="150px" height="20px" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <text x="3" y="16" font-family="Verdana" font-size="16" fill="blue">%s</text>
 </svg>""" % (c))
 
