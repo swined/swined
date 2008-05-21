@@ -17,9 +17,11 @@ class CommentsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/css; charset=utf-8'
 	u = self.request.get('user')
 	i = self.request.get('itemid')
-	c = 'shit happened'
+	c = 'unknown'
 	try:
 	    c = self.comments(u, i)
+	except Exception:
+	    c = 'shit happened'
 	self.response.out.write('#cc_%s_%s:before { content: "%s" }' % (u, i, c))
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)]))
