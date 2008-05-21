@@ -16,7 +16,7 @@ class Entry(db.Model):
 
 class UserAgent:
     cookies = {}
-    def cookie_string(self): 
+    def cookieString(self): 
 	return '; '.join(['%s=%s' % (k, v) for k, v in self.cookies.items()])
     def parseCookies(self, cookie):
 	if cookie == '': return
@@ -29,7 +29,7 @@ class UserAgent:
     def post(self, url, data): 
 	return self.request(url, data, POST)
     def request(self, url, data = None, method = GET):
-	res = fetch(url, data, method, { 'Cookie' : self.cookie_string() })
+	res = fetch(url, data, method, { 'Cookie' : self.cookieString() })
 	if res.headers.has_key('Set-Cookie'): 
 	    self.parseCookies(res.headers['Set-Cookie'])
 	if res.status_code == 200: 
@@ -78,7 +78,7 @@ class FriendsPage(Page):
       if not entry['cached']: c = c + 1
       if c == 5: return
     self.w('# done<br>')
-    self.w(self.ua.cookie_string())
+    self.w(self.ua.cookieString())
 
 class MainPage(Page):
   def get(self):
