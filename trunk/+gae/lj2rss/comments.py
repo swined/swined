@@ -20,7 +20,7 @@ class UserAgent:
     def post(self, url, data): 
 	return self.request(url, data, POST)
     def request(self, url, data = None, method = GET):
-	res = fetch(url, data, method, { 'Cookie' : self.cookieString() })
+	res = fetch(url, data, method, { 'Cookie' : self.cookieString(), 'X-LJ-Auth' : 'cookie' })
 	if res.headers.has_key('Set-Cookie'): 
 	    self.parseCookies(res.headers['Set-Cookie'])
 	if res.headers.has_key('Location'): 
@@ -64,7 +64,7 @@ class CommentsPage(RequestHandler):
 	for l in self.list():
 	    self.response.out.write(l + "<br>")
 	self.response.out.write(self.ua.cookieString())
-#	self.response.out.write(self.ua.get(self.request.get('url') + "?format=light"))
+	self.response.out.write(self.ua.get(self.request.get('url') + "?format=light"))
 
 def main(): CGIHandler().run(WSGIApplication([('/comments.info', CommentsPage)], debug = True))
 if __name__ == '__main__': main()
