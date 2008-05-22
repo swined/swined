@@ -10,7 +10,7 @@ print header(-content_type => 'text/html; charset=utf-8');
 print "<?xml version='1.0' encoding='UTF-8'?>\n";
 print "<?xml-stylesheet type='text/xsl' href='/webtornado/list.xsl'?>\n";
 print "<torrents>\n";
-foreach my $r = (map { $q->{$_} } keys %$q) {
+foreach my $r (map { $q->{$_} } keys %$q) {
     undef $r->{torrent};
     print "<torrent ";
     print "$_='$r->{$_}' " for keys %$r;
