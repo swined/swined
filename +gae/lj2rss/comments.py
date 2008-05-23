@@ -11,8 +11,8 @@ class TextImage:
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
     def __init__(self, text):
-	f = self.fc()
 	c = PNGCanvas(self.fw * len(text), self.fh)
+	f = self.fc()
 	for i in range(1, len(text)):
 	    x = self.sc(text[i])
 	    f.copyRect(x, 0, x + fw, fh, 0, 0, c)
