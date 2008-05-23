@@ -6,7 +6,7 @@ from png import PNGCanvas
 
 class TextImage:
     fw = 8
-    fh = 16
+    fh = 12
     ff = 'font.png'
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
