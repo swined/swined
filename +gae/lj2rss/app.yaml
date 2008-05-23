@@ -12,3 +12,5 @@ handlers:
   login: admin
 - url: /comments.svg
   script: comments.py
+- url: /comments.png
+  script: comments.py
