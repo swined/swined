@@ -15,7 +15,7 @@ class TextImage:
 	f = self.fc()
 	for i in range(0, len(text) - 1):
 	    x = 5 + self.sc(text[i])
-	    f.copyRect(x, 5, x + self.fw, 5 + self.fh, 0, 3, c)
+	    f.copyRect(x, 5, x + self.fw, 5 + self.fh, 5 + self.fw * i, 3, c)
 	self.rc = c
     def fc(self):
 	f = open(self.ff, 'rb')
