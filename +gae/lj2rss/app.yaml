@@ -4,13 +4,5 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /
-  script: main.py
-  login: admin
-- url: /friends.rss
-  script: main.py
-  login: admin
-- url: /comments.svg
-  script: comments.py
 - url: /comments.png
   script: comments.py
