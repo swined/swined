@@ -27,7 +27,7 @@ class TextImage:
     def sc(self, s):
 	r = self.fs.rfind(s)
 	if r == -1: return self.fw * 10
-	return self.fw * (r - 1)
+	return self.fw * r
     def dump(self, stream):
 	stream.write(self.rc.dump())
 
