@@ -5,18 +5,18 @@ import re
 from png import PNGCanvas
 
 class TextImage:
-    fw = 4
-    fh = 10
+    fw = 8
+    fh = 16
     ff = 'font.png'
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
     def __init__(self, text):
 	c = PNGCanvas(self.fw * len(text), self.fh)
 	f = self.fc()
-#	for i in range(1, len(text)):
-#	    x = self.sc(text[i])
-#	    f.copyRect(x, 1, x + self.fw, self.fh, 1, 1, c)
-	self.rc = f
+	for i in range(1, len(text)):
+	    x = self.sc(text[i])
+	    f.copyRect(x, 1, x + self.fw, self.fh, 1, 1, c)
+	self.rc = c
     def fc(self):
 	f = open(self.ff, 'rb')
 	c = PNGCanvas(self.fw * len(self.fs), self.fh)
