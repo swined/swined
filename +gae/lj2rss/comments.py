@@ -60,5 +60,5 @@ def main():
     CGIHandler().run(WSGIApplication([
 	('/comments.svg', CommentsSvgPage),
 	('/comments.png', CommentsPngPage),
-    ]))
+    ], debug = True))
 if __name__ == '__main__': main()
