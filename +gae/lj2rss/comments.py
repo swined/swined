@@ -2,7 +2,7 @@ from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.api.urlfetch import fetch
 import re
-import png
+from png import PNGCanvas
 
 class CommentsPngPage(RequestHandler):
     def get(self):
