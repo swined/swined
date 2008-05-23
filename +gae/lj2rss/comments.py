@@ -38,7 +38,7 @@ class CommentsPngPage(RequestHandler):
 	if res.status_code != 200: return ''
 	rx = re.compile('<a href="/read/user/%s/%s/comments#comments">\S+? \((\d+)\)</a>' % (user, itemid))
 	rm = rx.search(res.content)
-	if rm: return rm.group(1) + 'comments'
+	if rm: return rm.group(1) + ' comments'
 	else: return 'no comments'
     def get(self):
 	self.response.headers['Content-Type'] = 'image/png'
