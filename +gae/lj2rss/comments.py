@@ -33,7 +33,7 @@ class TextImage:
 class CommentsPngPage(RequestHandler):
     def get(self):
 	self.response.headers['Content-Type'] = 'image/png'
-	TextImage('27t12379t712342').dump(self.response.out)
+	TextImage('121221212212112').dump(self.response.out)
 
 class CommentsSvgPage(RequestHandler):
     def comments(self, user, itemid):
