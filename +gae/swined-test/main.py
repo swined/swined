@@ -2,7 +2,6 @@ from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from util import UserAgent
 import re
-import Image
 
 class MainPage(RequestHandler):
 	ua = UserAgent()
