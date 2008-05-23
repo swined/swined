@@ -11,7 +11,7 @@ class TextImage:
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
     def __init__(self, text):
-	c = PNGCanvas(self.fw * len(text), self.fh)
+	c = PNGCanvas(self.fw * (len(text) + 2), self.fh * 2)
 	f = self.fc()
 #	for i in range(1, len(text)):
 #	    x = self.sc(text[i])
