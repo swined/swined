@@ -6,7 +6,7 @@ from png import PNGCanvas
 
 class TextImage:
     fw = 8
-    fh = 12
+    fh = 8
     ff = 'font.png'
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
@@ -15,7 +15,7 @@ class TextImage:
 	f = self.fc()
 #	for i in range(1, len(text)):
 #	    x = self.sc(text[i])
-	f.copyRect(0, 5, 10, 5 + self.fh, 0, 0, c)
+	f.copyRect(0, 5, 0 + self.fw, 5 + self.fh, 0, 0, c)
 #	    f.copyRect(x, 1, x + self.fw, self.fh, self.fw * (i - 1) + 1, 1, c)
 	self.rc = c
     def fc(self):
