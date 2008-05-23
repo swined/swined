@@ -31,9 +31,20 @@ class TextImage:
 	stream.write(self.rc.dump())
 
 class CommentsPngPage(RequestHandler):
+    def comments(self, user, itemid):
+	res = None
+	try: res = fetch('http://m.lj.ru/read/user/%s/%s' % (user, itemid))
+	except: return ''
+	if res.status_code != 200: return ''
+	rx = re.compile('<a href="/read/user/%s/%s/comments#comments">\S+? \((\d+)\)</a>' % (user, itemid))
+	rm = rx.search(res.content)
+	if rm: return rm.group(1) + 'comments'
+	else: return 'no comments'
     def get(self):
 	self.response.headers['Content-Type'] = 'image/png'
-	TextImage('shit happened').dump(self.response.out)
+	u = self.request.get('user')
+	i = self.request.get('itemid')
+	TextImage(self.comments(u, i)).dump(self.response.out)
 
 class CommentsSvgPage(RequestHandler):
     def comments(self, user, itemid):
