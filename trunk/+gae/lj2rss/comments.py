@@ -7,7 +7,7 @@ from png import PNGCanvas
 class TextImage:
     fw = 8
     fh = 16
-    ff = 'xfont.png'
+    ff = 'font.png'
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
     def __init__(self, text):
