@@ -4,21 +4,36 @@ from google.appengine.api.urlfetch import fetch
 import re
 from png import PNGCanvas
 
+class TextImage:
+    fw = 8
+    fh = 16
+    ff = 'font.png'
+    fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
+    rc = None
+    def __init__(self, text):
+	f = self.fc()
+	c = PNGCanvas(fw * len(text), fh)
+	for i in range(1, len(text)):
+	    x = self.sc(text[i])
+	    f.copyRect(x, 0, x + fw, fh, 0, 0, c)
+	self.rc = c
+    def fc(self):
+	f = open(ff, 'rb')
+	c = PNGCanvas(fw * len(fs), fh)
+	c.load(f)
+	f.close()
+	return c
+    def sc(self, s):
+	r = fs.rfind(s)
+	if r == -1: return fw * 10
+	return fw * (r - 1)
+    def dump(self, stream):
+	stream.write(self.rc.dump())
+
 class CommentsPngPage(RequestHandler):
     def get(self):
 	self.response.headers['Content-Type'] = 'image/png'
-	width, height = 150, 20
-	c = PNGCanvas(width,height)
-	c.color = [0xff,0,0,0xff]
-	c.rectangle(0,0,width-1,height-1)
-	c.verticalGradient(1,1,width-2, height-2,[0xff,0,0,0xff],[0x20,0,0xff,0x80])
-        c.color = [0,0,0,0xff]
-	c.line(0,0,width-1,height-1)
-	c.line(0,0,width/2,height-1)
-	c.line(0,0,width-1,height/2)
-	c.copyRect(1,1,width/2-1,height/2-1,0,height/2,c)
-	c.blendRect(1,1,width/2-1,height/2-1,width/2,0,c)
-	self.response.out.write(c.dump())
+	TextImage('27t12379t712342').dump(self.response.out)
 
 class CommentsSvgPage(RequestHandler):
     def comments(self, user, itemid):
