@@ -12,21 +12,21 @@ class TextImage:
     rc = None
     def __init__(self, text):
 	f = self.fc()
-	c = PNGCanvas(fw * len(text), fh)
+	c = PNGCanvas(self.fw * len(text), self.fh)
 	for i in range(1, len(text)):
 	    x = self.sc(text[i])
 	    f.copyRect(x, 0, x + fw, fh, 0, 0, c)
 	self.rc = c
     def fc(self):
-	f = open(ff, 'rb')
-	c = PNGCanvas(fw * len(fs), fh)
+	f = open(self.ff, 'rb')
+	c = PNGCanvas(self.fw * len(self.fs), self.fh)
 	c.load(f)
 	f.close()
 	return c
     def sc(self, s):
-	r = fs.rfind(s)
-	if r == -1: return fw * 10
-	return fw * (r - 1)
+	r = self.fs.rfind(s)
+	if r == -1: return self.fw * 10
+	return self.fw * (r - 1)
     def dump(self, stream):
 	stream.write(self.rc.dump())
 
