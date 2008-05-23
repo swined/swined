@@ -5,8 +5,8 @@ import re
 from png import PNGCanvas
 
 class TextImage:
-    fw = 8
-    fh = 16
+    fw = 4
+    fh = 10
     ff = 'font.png'
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
