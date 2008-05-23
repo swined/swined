@@ -241,6 +241,6 @@ class PNGCanvas:
         crc = struct.unpack("!i",f.read(4))[0]
       except:
         return
-      if zlib.crc32(tag + data) != crc:
-        raise IOError('bad crc')
+#      if zlib.crc32(tag + data) != crc:
+#        raise IOError('bad crc')
       yield [tag,data]
