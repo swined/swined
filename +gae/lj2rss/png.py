@@ -242,5 +242,5 @@ class PNGCanvas:
       except:
         return
       if zlib.crc32(tag + data) != crc:
-        raise IOError
+        raise IOError('bad crc')
       yield [tag,data]
