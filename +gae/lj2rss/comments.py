@@ -13,10 +13,10 @@ class TextImage:
     def __init__(self, text):
 	c = PNGCanvas(self.fw * len(text), self.fh)
 	f = self.fc()
-	for i in range(1, len(text)):
-	    x = self.sc(text[i])
-	    f.copyRect(x, 1, x + self.fw, self.fh, 1, 1, c)
-	self.rc = c
+#	for i in range(1, len(text)):
+#	    x = self.sc(text[i])
+#	    f.copyRect(x, 1, x + self.fw, self.fh, 1, 1, c)
+	self.rc = f
     def fc(self):
 	f = open(self.ff, 'rb')
 	c = PNGCanvas(self.fw * len(self.fs), self.fh)
