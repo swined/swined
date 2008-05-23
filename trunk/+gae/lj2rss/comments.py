@@ -14,8 +14,8 @@ class TextImage:
 	c = PNGCanvas(self.fw * (len(text) + 2), self.fh * 2)
 	f = self.fc()
 	for i in range(0, len(text) - 1):
-	    raise Exception(text[i])
 	    x = self.sc(text[i])
+	raise Exception(x)
 	    f.copyRect(x, 5, x + self.fw, 5 + self.fh, 0, 3, c)
 	self.rc = c
     def fc(self):
