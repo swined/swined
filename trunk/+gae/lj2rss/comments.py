@@ -15,6 +15,7 @@ class TextImage:
 	f = self.fc()
 	for i in range(1, len(text)):
 	    x = self.sc(text[i])
+	    raise Exception(str(x))
 	    f.copyRect(x, 1, x + self.fw, self.fh, x, 1, c)
 	self.rc = c
     def fc(self):
