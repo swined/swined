@@ -41,7 +41,7 @@ sub getJName {
 	('^http://(.*?)\.livejournal\.com/[0-9]*\.html',
 	'^http://users\.livejournal\.com/(.*?)/[0-9]*\.html',
 	'^http://community\.livejournal\.com/(.*?)/[0-9]*\.html');
-    return '***';
+    return undef;
 }
 
 sub addEntry {
@@ -64,7 +64,15 @@ $xml->dataElement('link', "http://www.livejournal.com/~$ll/friends");
 if (login) {
     foreach (links) {
 	my $et = eval { alarm 0; $cache->get($_); } or next;
-	addEntry($xml, $_, ($et->{subject} or getJName($_) . ': untitled'), $et->{content});	
+	my $jn = getJName($_);
+       	m|/(\d+)\.html$|;
+	my $id = $1;
+	if ($jn && $id) {
+		my $u = "http://g.lj2rss.net.ru/comments.png?user=${jn}&itemid=${id}";
+		$et->{content} .= "<br><a href='${_}'><img src='${u}'></a>";
+	}
+	$jn |= '***';
+	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
     }
 } else {
     addEntry($xml, "http://$ENV{HTTP_HOST}/?rand=" . rand, 'error', 
