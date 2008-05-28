@@ -69,7 +69,13 @@ class CommentsPngPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'image/png'
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
 
-app = WSGIApplication([('/comments.png', CommentsPngPage)])
+class StatsPage(RequestHandler):
+    def get(self):
+        Request(service = 'stats.html').put()
+	self.response.headers['Content-Type'] = 'text/html'
+	self.response.out.write('stats')
+
+app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
 
 def main(): 
     global app
