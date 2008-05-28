@@ -91,11 +91,7 @@ class StatsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/html'
 	s = self.stats()
 	m = self.max(s)
-	xl = 'x:-23'
-	for i in range(2, 23):
-	    xl = xl + '|-' + str(23 - i)
-	xl = xl + '|now'
-	c = 'cht=lc&chs=320x120&chg=10,25&chxt=x,y&chxl=' + xl + '&chds=0,' + str(m) + '&chd=t:' + ','.join(s)
+	c = 'cht=lc&chs=320x120&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(s)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
