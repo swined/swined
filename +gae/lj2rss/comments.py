@@ -22,28 +22,25 @@ font = Font(12, 12, 'font.png', '0123456789 abcdefghijklmnopqrstuvwxyz')
 imc = {}
 
 class TextImage:
-    fw = 12
-    fh = 12
-    ff = 'font.png'
-    fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
     def __init__(self, text):
 	global imc
+	global font
 	if imc.has_key(text):
 	    self.rc = imc[text]
 	else:
-	    global font
-	    c = PNGCanvas(self.fw * (len(text) + 1), self.fh + 5)
+	    c = PNGCanvas(font.width * (len(text) + 1), font.height + 5)
 	    for i in range(0, len(text)):
 		x = 2 + self.sc(text[i])
-	        font.canvas.copyRect(x, 5, x + self.fw, 5 + self.fh, 5 + self.fw * i, 3, c)
+	        font.canvas.copyRect(x, 5, x + font.width, 5 + font.height, 5 + font.width * i, 3, c)
 	    imc[text] = c
 	    self.rc = c
     def sc(self, s):
-	r = self.fs.rfind(s)
+	global font
+	r = font.chars.rfind(s)
 	if r == -1: 
-	    return self.fw * 10
-	return self.fw * r
+	    return font.width * 10
+	return font.width * r
     def dump(self, stream):
 	stream.write(self.rc.dump())
 
