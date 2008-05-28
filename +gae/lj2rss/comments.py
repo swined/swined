@@ -4,6 +4,8 @@ from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
 import re
 
+font = None
+
 class TextImage:
     fw = 12
     fh = 12
@@ -18,11 +20,12 @@ class TextImage:
 	    f.copyRect(x, 5, x + self.fw, 5 + self.fh, 5 + self.fw * i, 3, c)
 	self.rc = c
     def fc(self):
-	f = open(self.ff, 'rb')
-	c = PNGCanvas(self.fw * len(self.fs), self.fh)
-	c.load(f)
-	f.close()
-	return c
+	if not font: 
+	    f = open(self.ff, 'rb')	
+	    font = PNGCanvas(self.fw * len(self.fs), self.fh)
+	    font.load(f)
+	    f.close()
+	return font
     def sc(self, s):
 	r = self.fs.rfind(s)
 	if r == -1: 
