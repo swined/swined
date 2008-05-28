@@ -79,12 +79,19 @@ class StatsPage(RequestHandler):
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
 	    r.append(q.count())
 	return r
+    def max(self, a):
+	m = 0
+	for e in a:
+	    if e > m:
+		m = e
+	return m
     def get(self):
         Request(service = 'stats.html').put()
 	self.response.headers['Content-Type'] = 'text/html'
-	self.response.out.write('stats<br>')
-	for i in self.stats():
-	    self.response.out.write(str(i) + '<br>')
+	s = self.stats()
+	m = self.max(s)
+	c = 'cht=p3&chs=320x240&chd=t:' + ','.join(s)
+	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
 
