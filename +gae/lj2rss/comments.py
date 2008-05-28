@@ -64,12 +64,10 @@ class CommentsPngPage(RequestHandler):
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
 
 app = WSGIApplication([('/comments.png', CommentsPngPage)])
-cgi = CGIHandler()
 
 def main(): 
     global app
-    global cgi
-    cgi.run(app)
+    CGIHandler().run(app)
 
 if __name__ == '__main__': 
     main()
