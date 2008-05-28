@@ -71,16 +71,19 @@ class CommentsPngPage(RequestHandler):
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
 
 class StatsPage(RequestHandler):
+    def stats(self):
+	r = []
+    	for i in range(1, 24):
+	    q = db.Query(Request)
+	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
+	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
+	    r.append(q.count())
     def get(self):
         Request(service = 'stats.html').put()
 	self.response.headers['Content-Type'] = 'text/html'
 	self.response.out.write('stats<br>')
-	for i in range(1, 60):
-	    self.response.out.write(str(i) + ': ')
-	    q = db.Query(Request)
-	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(minutes = i))
-	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(minutes = i - 1))
-	    self.response.out.write(str(q.count()) + '<br>')
+	for i in self.stats():
+	    self.response.out.write(str(i) + '<br>')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
 
