@@ -93,7 +93,7 @@ class StatsPage(RequestHandler):
 	m = self.max(s)
 	xl = 'x:-23'
 	for i in range(2, 23):
-	    xl = xl + '|' + str(24 - i)
+	    xl = xl + '|-' + str(23 - i)
 	xl = xl + '|now'
 	c = 'cht=lc&chs=320x120&chg=10,50&chxl=' + xl + '&chd=t:' + ','.join(s)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
