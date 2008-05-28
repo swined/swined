@@ -79,7 +79,7 @@ class StatsPage(RequestHandler):
 	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
 	    r.append(str(q.count()))
-	return r
+	return r.reverse()
     def max(self, a):
 	m = 0
 	for e in a:
