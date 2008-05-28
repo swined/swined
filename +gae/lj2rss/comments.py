@@ -90,7 +90,7 @@ class StatsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/html'
 	s = self.stats()
 	m = self.max(s)
-	c = 'cht=p3&chs=320x240&chd=t:' + ','.join(s)
+	c = 'cht=ls&chs=320x240&chd=t:' + ','.join(s)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
