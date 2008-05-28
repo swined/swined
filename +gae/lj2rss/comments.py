@@ -65,7 +65,7 @@ class CommentsPngPage(RequestHandler):
 	else: 	
 	    return 'no comments'
     def get(self):
-        Request(service = 'comments.png').Put()
+        Request(service = 'comments.png').put()
 	self.response.headers['Content-Type'] = 'image/png'
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
 
