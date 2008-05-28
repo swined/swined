@@ -77,13 +77,13 @@ class StatsPage(RequestHandler):
 	    q = db.Query(Request)
 	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
-	    r.append(q.count())
+	    r.append(str(q.count()))
 	return r
     def max(self, a):
 	m = 0
 	for e in a:
-	    if e > m:
-		m = e
+	    if int(e) > m:
+		m = int(e)
 	return m
     def get(self):
         Request(service = 'stats.html').put()
