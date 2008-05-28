@@ -95,7 +95,7 @@ class StatsPage(RequestHandler):
 	for i in range(2, 23):
 	    xl = xl + '|-' + str(23 - i)
 	xl = xl + '|now'
-	c = 'cht=lc&chs=320x120&chg=10,25&chxt=x,y&chxl=' + xl + '&chds=0,' + m + '&chd=t:' + ','.join(s)
+	c = 'cht=lc&chs=320x120&chg=10,25&chxt=x,y&chxl=' + xl + '&chds=0,' + str(m) + '&chd=t:' + ','.join(s)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
