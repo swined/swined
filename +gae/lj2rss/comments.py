@@ -74,7 +74,6 @@ class StatsPage(RequestHandler):
     def stats(self):
 	r = []
     	for i in range(1, 24):
-#    	    i = 25 - j
 	    q = db.Query(Request)
 	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
@@ -96,7 +95,7 @@ class StatsPage(RequestHandler):
 	for i in range(2, 23):
 	    xl = xl + '|-' + str(23 - i)
 	xl = xl + '|now'
-	c = 'cht=lc&chs=320x120&chg=10,25&chxt=x,y&chxl=' + xl + '&chd=t:' + ','.join(s)
+	c = 'cht=lc&chs=320x120&chg=10,25&chxt=x,y&chxl=' + xl + '&chds=0,' + m + '&chd=t:' + ','.join(s)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
