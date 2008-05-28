@@ -4,7 +4,7 @@ from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
 import re
 
-class TextImage:
+class TextImage0:
     fw = 12
     fh = 12
     ff = 'font.png'
@@ -29,6 +29,9 @@ class TextImage:
 	return self.fw * r
     def dump(self, stream):
 	stream.write(self.rc.dump())
+
+class TextImage(TextImage1):
+    pass
 
 class CommentsPngPage(RequestHandler):
     def comments(self, user, itemid):
