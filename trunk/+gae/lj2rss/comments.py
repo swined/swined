@@ -4,7 +4,7 @@ from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
 import re
 
-class TextImage0:
+class TextImage:
     fw = 12
     fh = 12
     ff = 'font.png'
@@ -30,7 +30,7 @@ class TextImage0:
     def dump(self, stream):
 	stream.write(self.rc.dump())
 
-class TextImage:
+class TextImage0:
     data = None
     def __init__(self, text):
 	self.data = fetch('http://chart.apis.google.com/chart?cht=ls&chs=150x20&chtt=%s' % (text)).content
