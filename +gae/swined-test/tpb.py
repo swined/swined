@@ -6,7 +6,7 @@ class RssPage(RequestHandler):
 	def fetch(self, url):
 		res = fetch(url)
 		if res.status_code != 200: 
-		    raise Exception('http error ' + str(res.status_code))
+		        raise Exception('http error ' + str(res.status_code))
 		return res.content
 	def get(self, ct, qw):
 		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
