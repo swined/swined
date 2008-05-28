@@ -78,6 +78,7 @@ class StatsPage(RequestHandler):
 	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
 	    r.append(q.count())
+	return r
     def get(self):
         Request(service = 'stats.html').put()
 	self.response.headers['Content-Type'] = 'text/html'
