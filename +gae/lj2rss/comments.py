@@ -25,33 +25,33 @@ class TextImage:
 	return c
     def sc(self, s):
 	r = self.fs.rfind(s)
-	if r == -1: return self.fw * 10
+	if r == -1: 
+	    return self.fw * 10
 	return self.fw * r
     def dump(self, stream):
 	stream.write(self.rc.dump())
 
-class TextImage0:
-    data = None
-    def __init__(self, text):
-	self.data = fetch('http://chart.apis.google.com/chart?cht=ls&chs=150x20&chtt=%s' % (text)).content
-    def dump(self, stream):
-	stream.write(self.data)
-
 class CommentsPngPage(RequestHandler):
     def comments(self, user, itemid):
 	res = None
-	try: res = fetch('http://m.lj.ru/read/user/%s/%s' % (user, itemid))
-	except: return ''
-	if res.status_code != 200: return ''
+	try: 
+	    res = fetch('http://m.lj.ru/read/user/%s/%s' % (user, itemid))
+	except: 
+	    return 'shit happened'
+	if res.status_code != 200: 
+	    return 'error ' + str(res.status_code)
 	rx = re.compile('<a href="/read/user/%s/%s/comments#comments">\S+? \((\d+)\)</a>' % (user, itemid))
 	rm = rx.search(res.content)
-	if rm: return rm.group(1) + ' comments'
-	else: return 'no comments'
+	if rm: 
+	    return rm.group(1) + ' comments'
+	else: 	
+	    return 'no comments'
     def get(self):
 	self.response.headers['Content-Type'] = 'image/png'
-	u = self.request.get('user')
-	i = self.request.get('itemid')
-	TextImage(self.comments(u, i)).dump(self.response.out)
+	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
 
-def main(): CGIHandler().run(WSGIApplication([('/comments.png', CommentsPngPage)]))
-if __name__ == '__main__': main()
+def main(): 
+    CGIHandler().run(WSGIApplication([('/comments.png', CommentsPngPage)]))
+
+if __name__ == '__main__': 
+    main()
