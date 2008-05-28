@@ -5,6 +5,7 @@ from png import PNGCanvas
 import re
 
 font = None
+imc = {}
 
 class TextImage:
     fw = 12
@@ -13,12 +14,17 @@ class TextImage:
     fs = '0123456789 abcdefghijklmnopqrstuvwxyz'
     rc = None
     def __init__(self, text):
-	c = PNGCanvas(self.fw * (len(text) + 1), self.fh + 5)
-	f = self.fc()
-	for i in range(0, len(text)):
-	    x = 2 + self.sc(text[i])
-	    f.copyRect(x, 5, x + self.fw, 5 + self.fh, 5 + self.fw * i, 3, c)
-	self.rc = c
+	global imc
+	if imc.has_key(text):
+	    self.rc = imc[text]
+	else:
+	    c = PNGCanvas(self.fw * (len(text) + 1), self.fh + 5)
+	    f = self.fc()
+	    for i in range(0, len(text)):
+		x = 2 + self.sc(text[i])
+	        f.copyRect(x, 5, x + self.fw, 5 + self.fh, 5 + self.fw * i, 3, c)
+	    imc[text] = c
+	    self.rc = c
     def fc(self):
 	global font
 	if not font: 
