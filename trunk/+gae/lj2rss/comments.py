@@ -78,8 +78,8 @@ class StatsPage(RequestHandler):
 	for i in range(1, 24):
 	    self.response.out.write(str(i) + '<br>')
 	    q = db.Query(Request)
-	    q.filter('time > ', datetime.now() - datetime.timedelta(hours = i))
-	    q.filter('time < ', datetime.now() - datetime.timedelta(hours = i - 1))
+	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
+	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
 	    self.response.out.write(str(q.count()) + '<br>')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
