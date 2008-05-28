@@ -3,6 +3,7 @@ from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.ext import db
 from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
+from datetime import datetime
 import re
 
 class Request(db.Model):
@@ -74,6 +75,12 @@ class StatsPage(RequestHandler):
         Request(service = 'stats.html').put()
 	self.response.headers['Content-Type'] = 'text/html'
 	self.response.out.write('stats')
+	for i in range(1, 24):
+	    self.response.out.write(str(i) + '<br>')
+	    q = db.Query(Request)
+	    q.filter('time > ', datetime.now() - datetime.timedelta(hours = i))
+	    q.filter('time < ', datetime.now() - datetime.timedelta(hours = i - 1))
+	    self.response.out.write(str(q.count()) + '<br>')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
 
