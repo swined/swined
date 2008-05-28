@@ -75,8 +75,8 @@ class StatsPage(RequestHandler):
 	r = []
     	for i in range(1, 24):
 	    q = db.Query(Request)
-	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
-	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
+	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = 23 - i))
+	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = 24 - i))
 	    r.append(str(q.count()))
 	return r
     def max(self, a):
