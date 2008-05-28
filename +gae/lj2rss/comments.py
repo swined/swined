@@ -3,7 +3,7 @@ from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.ext import db
 from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
-from datetime import datetime
+import datetime
 import re
 
 class Request(db.Model):
