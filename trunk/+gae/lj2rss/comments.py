@@ -33,7 +33,7 @@ class TextImage0:
 class TextImage:
     data = None
     def __init__(self, text):
-	data = fetch('http://chart.apis.google.com/chart?cht=ls&chs=150x20&chtt=%s' % (text)).content
+	self.data = fetch('http://chart.apis.google.com/chart?cht=ls&chs=150x20&chtt=%s' % (text)).content
     def dump(self, stream):
 	stream.write(self.data)
 
