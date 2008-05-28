@@ -74,9 +74,9 @@ class StatsPage(RequestHandler):
     def get(self):
         Request(service = 'stats.html').put()
 	self.response.headers['Content-Type'] = 'text/html'
-	self.response.out.write('stats')
+	self.response.out.write('stats<br>')
 	for i in range(1, 24):
-	    self.response.out.write(str(i) + '<br>')
+	    self.response.out.write(str(i) + ': ')
 	    q = db.Query(Request)
 	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
