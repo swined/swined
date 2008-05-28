@@ -13,7 +13,7 @@ class Font:
 	self.width = width
 	self.height = height
 	self.chars = chars
-	self.canvas = PNGCanvas(width * len(chars), height)
+	self.canvas = PNGCanvas(0, 0)
 	f = open(file, 'rb')	
 	self.canvas.load(f)
 	f.close()
