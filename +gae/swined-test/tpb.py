@@ -3,10 +3,14 @@ from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.api.urlfetch import fetch
 
 class RssPage(RequestHandler):
+	def fetch(self, url):
+		res = fetch(url)
+		if res.status_code != 200: 
+		    raise Exception('http error ' + str(res.status_code))
+		return res.content
 	def get(self, ct, qw):
 		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
-		res = fetch('http://rss.thepiratebay.org/' + ct)
-		self.response.out.write(res.content)
+		self.response.out.write(self.fetch('http://rss.thepiratebay.org/' + ct))
 
 def main():
 	CGIHandler().run(WSGIApplication([('/tpb/(.*)/(.*)', RssPage)], debug = True))
