@@ -1,8 +1,13 @@
 from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
+from google.appengine.ext import db
 from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
 import re
+
+class Request(db.Model):
+    time = db.DateTimeProperty(auto_now_add = True)
+    service = db.StringProperty()
 
 class Font:
     width = 0
@@ -60,6 +65,7 @@ class CommentsPngPage(RequestHandler):
 	else: 	
 	    return 'no comments'
     def get(self):
+        Request(service = 'comments.png').Put()
 	self.response.headers['Content-Type'] = 'image/png'
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
 
