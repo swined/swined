@@ -4,9 +4,6 @@ from google.appengine.api.urlfetch import fetch
 from png import PNGCanvas
 import re
 
-font = Font(12, 12, 'font.png', '0123456789 abcdefghijklmnopqrstuvwxyz')
-imc = {}
-
 class Font:
     width = 0
     height = 0
@@ -20,6 +17,9 @@ class Font:
 	f = open(file, 'rb')	
 	self.canvas.load(f)
 	f.close()
+
+font = Font(12, 12, 'font.png', '0123456789 abcdefghijklmnopqrstuvwxyz')
+imc = {}
 
 class TextImage:
     fw = 12
