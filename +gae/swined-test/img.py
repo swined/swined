@@ -21,13 +21,15 @@ class UserPage(webapp.RequestHandler):
 		for i in q:
 		    self.response.out.write('<img src="http://x29.ru/i/p/%s"><br>' % (i.id))
 		self.response.out.write("""
-<form action="/i/u" enctype="multipart/form-data" method="post">
+<form action="/i/upload" enctype="multipart/form-data" method="post">
     <div><label>Message:</label></div>
     <div><textarea name="comment" rows="3" cols="60"></textarea></div>
     <div><label>Image:</label></div>
     <div><input type="file" name="image"/></div>
     <div><input type="submit" value="Upload"></div>
 </form>""")
+
+class UploadPage(webapp.RequestHandler):
 	def post(self):
 		i = Image()
 		i.owner = users.get_current_user()
@@ -45,6 +47,7 @@ def main():
 	CGIHandler().run(webapp.WSGIApplication([
 		('/i', MainPage),
 		('/i/u', UserPage),
+		('/i/upload', UploadPage),		
 	], debug = True))
 
 if __name__ == '__main__': 
