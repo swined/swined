@@ -91,10 +91,8 @@ class StatsPage(RequestHandler):
     	for i in range(0, 60):
     	    k = 'requests_' + str(t - i)
     	    v = 1
-    	    try:
-    		v = memcache.get(k)
-    		if not v:
-    		    v = 2
+    	    try
+    		v = memcache.get(k) or 2
     	    except:
     		v = 3
 	    r.append(str(v))
