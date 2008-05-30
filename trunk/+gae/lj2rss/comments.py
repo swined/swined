@@ -90,6 +90,7 @@ class StatsPage(RequestHandler):
 	t = int(time() / 60)
     	for i in range(0, 60):
     	    k = 'requests_' + str(t - i)
+    	    raise Exception(k)
     	    v = memcache.get(k)
     	    if not v:
     		v = 0
