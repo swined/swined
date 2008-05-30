@@ -112,10 +112,10 @@ class StatsPage(RequestHandler):
 	    S.append(int(100 * m / i))
 	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(S)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
-	s = self.stats1()
-	m = self.max(s)
-	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(s)
-	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
+#	s = self.stats1()
+#	m = self.max(s)
+#	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(s)
+#	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)], debug = True)
 
