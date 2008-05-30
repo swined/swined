@@ -104,7 +104,7 @@ class StatsPage(RequestHandler):
 	return m
     def get(self):
 	self.response.headers['Content-Type'] = 'text/html'
-	s = self.stats1()
+	s = self.stats()
 	S = []
 	m = self.max(s) * 1.1
 	for i in s:
