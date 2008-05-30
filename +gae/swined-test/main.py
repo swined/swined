@@ -4,8 +4,8 @@ from google.appengine.api import memcache
 
 class MainPage(RequestHandler):
 	def get(self):
-#		if not memcache.incr('tv'):
-		memcache.set('tv', 'xxx')
+		if not memcache.incr('tv'):
+		    memcache.set('tv', '1')
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write('hellow (%s)' % (memcache.get('tv')))
 
