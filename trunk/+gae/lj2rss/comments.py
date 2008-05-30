@@ -114,7 +114,7 @@ class StatsPage(RequestHandler):
 	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(s)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
 
-app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
+app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)], debug = True)
 
 def main(): 
     global app
