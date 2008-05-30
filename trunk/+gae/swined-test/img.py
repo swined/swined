@@ -40,7 +40,7 @@ class PreviewPage(webapp.RequestHandler):
 	def get(self, key):
 		i = db.get(key)
 		self.response.headers['Content-Type'] = 'image/png'
-		self.response.out.write(images.Resize(i.image, 64, 64))
+		self.response.out.write(images.resize(i.image, 64, 64))
 
 class ImagePage(webapp.RequestHandler): 
 	def get(self, key):
