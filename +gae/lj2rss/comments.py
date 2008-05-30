@@ -70,7 +70,7 @@ class CommentsPngPage(RequestHandler):
     def get(self):
 	k = 'requests_' + str(int(time() / 60))
 	if not memcache.incr(k):
-	    memcache.set(k, 1, 60 * 60 * 48)
+	    memcache.set(k, '1', 60 * 60 * 48)
         Request(service = 'comments.png').put()
 	self.response.headers['Content-Type'] = 'image/png'
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
@@ -104,7 +104,7 @@ class StatsPage(RequestHandler):
 	return m
     def get(self):
 	self.response.headers['Content-Type'] = 'text/html'
-	s = self.stats()
+	s = self.stats1()
 	S = []
 	m = self.max(s) * 1.1
 	for i in s:
