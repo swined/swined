@@ -110,7 +110,7 @@ class StatsPage(RequestHandler):
 	m = int(self.max(s) * 1.25)
 	for i in s:
 	    S.append(str(int(100 * int(i) / m)))
-	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(S)
+	c = 'cht=lc&chs=480x160&chg=10,25chxt=y&chxr=1,0,' + str(m) + '&chd=t:' + ','.join(S)
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
 #	s = self.stats1()
 #	m = self.max(s)
