@@ -6,5 +6,3 @@ api_version: 1
 handlers:
 - url: /comments.png
   script: comments.py
-- url: /stats.html
-  script: comments.py
