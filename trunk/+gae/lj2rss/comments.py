@@ -106,7 +106,7 @@ class StatsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/html'
 	s = self.stats()
 	S = []
-	m = int(self.max(s))
+	m = int(self.max(s) * 1.1)
 	for i in s:
 	    S.append(str(int(100 * int(i) / m)))
 	c = 'cht=lc&chs=480x160&chg=4,25&chxt=y&chxr=0,0,' + str(m) + '&chd=t:' + ','.join(S)
