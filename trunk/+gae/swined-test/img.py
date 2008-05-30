@@ -45,12 +45,12 @@ class PreviewPage(webapp.RequestHandler):
 class ImagePage(webapp.RequestHandler): 
 	def get(self, key):
 		i = db.get(key)
+		self.response.headers['Content-Type'] = 'image/png'
+		self.response.out.write(i.image)
 		if not i.requests:
 		    i.requests = 0
 		i.requests = i.requests + 1
 		i.put()
-		self.response.headers['Content-Type'] = 'image/png'
-		self.response.out.write(i.image)
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
