@@ -8,5 +8,8 @@ handlers:
   script: main.py
 - url: /i
   script: img.py
-- url: /i/*
+- url: /i/u
+  script: img.py
+  login: required
+- url: /i/[0-9]+
   script: img.py
