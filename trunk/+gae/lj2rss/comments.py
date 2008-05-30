@@ -2,7 +2,9 @@ from wsgiref.handlers import CGIHandler
 from google.appengine.ext.webapp import RequestHandler, WSGIApplication
 from google.appengine.ext import db
 from google.appengine.api.urlfetch import fetch
+from google.appengine.api import memcache
 from png import PNGCanvas
+from time import time
 import datetime
 import re
 
@@ -66,6 +68,9 @@ class CommentsPngPage(RequestHandler):
 	else: 	
 	    return 'no comments'
     def get(self):
+	k = 'requests_' + str(int(time() / 60))
+	if not memcache.incr(k):
+	    memcache.set(k, 1, 60 * 60 * 48)
         Request(service = 'comments.png').put()
 	self.response.headers['Content-Type'] = 'image/png'
 	TextImage(self.comments(self.request.get('user'), self.request.get('itemid'))).dump(self.response.out)
