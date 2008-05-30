@@ -33,7 +33,7 @@ class UploadPage(webapp.RequestHandler):
 	def post(self):
 		i = Image()
 		i.owner = users.get_current_user()
-		i.image = self.request.get('image')
+		i.image = db.Blob(self.request.get('image'))
 		i.comment = self.request.get('comment')
 		i.put()
 		self.redirect('/i/u')
