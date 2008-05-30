@@ -78,14 +78,10 @@ class CommentsPngPage(RequestHandler):
 class StatsPage(RequestHandler):
     def stats(self):
 	r = []
-    	for i in range(1, 24):
+    	for i in range(1, 24 * 60):
 	    q = db.Query(Request)
-	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i))
-	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1) - datetime.timedelta(minutes = 30))
-	    r.append(str(q.count()))
-	    q = db.Query(Request)
-	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(hours = i) + datetime.timedelta(minutes = 30))
-	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(hours = i - 1))
+	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(minutes = i))
+	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(minutes = i - 1))
 	    r.append(str(q.count()))
 	r.reverse()
 	return r
