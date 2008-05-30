@@ -46,7 +46,7 @@ class ImagePage(webapp.RequestHandler):
 	def get(self, key):
 		i = db.get(key)
 		if not i.requests:
-		    i.request = 0
+		    i.requests = 0
 		i.requests = i.requests + 1
 		i.put()
 		self.response.headers['Content-Type'] = 'image/png'
