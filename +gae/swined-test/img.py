@@ -45,7 +45,7 @@ class PreviewPage(webapp.RequestHandler):
 class ImagePage(webapp.RequestHandler): 
 	def get(self, key):
 		i = db.get(key)
-		i.requests++
+		i.requests = i.requests + 1
 		i.put()
 		self.response.headers['Content-Type'] = 'image/png'
 		self.response.out.write(i.image)
