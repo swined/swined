@@ -40,6 +40,12 @@ class PreviewPage(webapp.RequestHandler):
 	def get(self, key):
 		i = db.get(key)
 		self.response.headers['Content-Type'] = 'image/png'
+		self.response.out.write(images.Resize(i.image, 64, 64))
+
+class ImagePage(webapp.RequestHandler): 
+	def get(self, key):
+		i = db.get(key)
+		self.response.headers['Content-Type'] = 'image/png'
 		self.response.out.write(i.image)
 
 class MainPage(webapp.RequestHandler):
@@ -51,7 +57,8 @@ def main():
 	CGIHandler().run(webapp.WSGIApplication([
 		('/i', MainPage),
 		('/i/u', UserPage),
-		('/i/p/(.*)', PreviewPage),		
+		('/i/p/(.*)', PreviewPage),
+		('/i/i/(.*)', ImagePage),
 	], debug = True))
 
 if __name__ == '__main__': 
