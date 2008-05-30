@@ -19,7 +19,7 @@ class UserPage(webapp.RequestHandler):
 		q = Image.all()
 		q.filter('owner = ', users.get_current_user())
 		for i in q:
-		    self.response.out.write('<img src="http://x29.ru/i/p/%s"><br>' % (i.id))
+		    self.response.out.write('<img src="http://x29.ru/i/p/%s"><br>' % (i.key()))
 		self.response.out.write("""
 <form action="/i/upload" enctype="multipart/form-data" method="post">
     <div><label>Message:</label></div>
