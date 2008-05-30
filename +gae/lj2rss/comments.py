@@ -80,8 +80,8 @@ class StatsPage(RequestHandler):
 	r = []
     	for i in range(1, 4 * 60):
 	    q = db.Query(Request)
-	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(minutes = i))
-	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(minutes = i - 1))
+	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(minutes = i * 8))
+	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(minutes = (i - 1) * 8))
 	    r.append(str(q.count()))
 	r.reverse()
 	return r
