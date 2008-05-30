@@ -103,7 +103,6 @@ class StatsPage(RequestHandler):
 		m = int(e)
 	return m
     def get(self):
-        Request(service = 'stats.html').put()
 	self.response.headers['Content-Type'] = 'text/html'
 	s = self.stats()
 	S = []
