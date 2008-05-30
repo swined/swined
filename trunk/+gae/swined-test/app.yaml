@@ -6,3 +6,7 @@ api_version: 1
 handlers:
 - url: /
   script: main.py
+- url: /i
+  script: img.py
+- url: /i/*
+  script: img.py
