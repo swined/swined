@@ -68,6 +68,7 @@ class CommentsPngPage(RequestHandler):
 	else: 	
 	    return 'no comments'
     def get(self):
+	memcache.flush_all()
 	k = 'requests_' + str(int(time() / 60))
 	if not memcache.incr(k):
 	    memcache.set(k, '1', 60 * 60 * 48)
