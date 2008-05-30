@@ -82,7 +82,7 @@ class StatsPage(RequestHandler):
 	    q = db.Query(Request)
 	    q.filter('time > ', datetime.datetime.now() - datetime.timedelta(minutes = i * 8))
 	    q.filter('time < ', datetime.datetime.now() - datetime.timedelta(minutes = (i - 1) * 8))
-	    r.append(str(q.count()))
+	    r.append(str(q.count() / 8))
 	r.reverse()
 	return r
     def stats1(self):
