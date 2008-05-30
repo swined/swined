@@ -85,6 +85,17 @@ class StatsPage(RequestHandler):
 	    r.append(str(q.count()))
 	r.reverse()
 	return r
+    def stats1(self):
+	r = []
+	t = int(time() / 60)
+    	for i in range(0, 60):
+    	    k = 'requests_' + str(t - i)
+    	    v = memcache.get(k)
+    	    if not v:
+    		v = 0
+	    r.append(str(v))
+	r.reverse()
+	return r	
     def max(self, a):
 	m = 0
 	for e in a:
@@ -97,7 +108,11 @@ class StatsPage(RequestHandler):
 	s = self.stats()
 	m = self.max(s)
 	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(s)
-	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '">')
+	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
+	s = self.stats1()
+	m = self.max(s)
+	c = 'cht=lc&chs=480x160&chg=10,25&chxt=x,y&chxt=x,y&chxr=0,0,24|1,0,' + str(m) + '&chd=t:' + ','.join(s)
+	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
 
 app = WSGIApplication([('/comments.png', CommentsPngPage), ('/stats.html', StatsPage)])
 
