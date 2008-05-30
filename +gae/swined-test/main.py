@@ -7,7 +7,7 @@ class MainPage(RequestHandler):
 		if not memcache.incr('tv'):
 		    memcache.set('tv', 1)
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write('hellow ()' % (memcache.get('tv')))
+		self.response.out.write('hellow (%s)' % (memcache.get('tv')))
 
 def main():
 	CGIHandler().run(WSGIApplication([
