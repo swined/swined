@@ -17,7 +17,7 @@ class UserPage(webapp.RequestHandler):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write('images')
 		q = Image.all()
-		q.filter('user = ', users.get_current_user())
+		q.filter('owner = ', users.get_current_user())
 		for i in q:
 		    self.response.out.write('<img src="http://x29.ru/i/p/%s"><br>' % (i.id))
 		self.response.out.write("""
