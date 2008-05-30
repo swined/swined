@@ -25,7 +25,7 @@ class UserPage(webapp.RequestHandler):
     <div><label>Message:</label></div>
     <div><textarea name="comment" rows="3" cols="60"></textarea></div>
     <div><label>Image:</label></div>
-    <div><input type="file" name="image"/><</div>
+    <div><input type="file" name="image"/></div>
     <div><input type="submit" value="Upload"></div>
 </form>""")
 	def post(self):
