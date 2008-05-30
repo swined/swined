@@ -30,7 +30,7 @@ class UserPage(webapp.RequestHandler):
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write('hellow (%s)' % (memcache.get('tv')))
+		self.response.out.write('hellow')
 
 def main():
 	CGIHandler().run(webapp.WSGIApplication([
