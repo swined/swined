@@ -106,10 +106,10 @@ class StatsPage(RequestHandler):
 	self.response.headers['Content-Type'] = 'text/html'
 	s = self.stats()
 	S = []
-	m = int(self.max(s) * 1.1)
+	m = self.max(s) * 1.1
 	for i in s:
 	    S.append(str(int(100 * int(i) / m)))
-	c = 'cht=lc&chs=480x160&chg=4,25&chxt=y&chxr=0,0,' + str(m) + '&chd=t:' + ','.join(S)
+	c = 'cht=lc&chs=480x160&chg=4,25&chxt=y&chxr=0,0,' + str(int(m)) + '&chd=t:' + ','.join(S)
 	self.response.out.write('<meta http-equiv="REFRESH" content="30;URL=/stats.html"></meta>')
 	self.response.out.write('<img src="http://chart.apis.google.com/chart?' + c + '"><br>')
 #	s = self.stats1()
