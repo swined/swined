@@ -11,8 +11,7 @@ handlers:
 - url: /i/u
   script: img.py
   login: required
-- url: /i/upload
+- url: /i/p/.*
   script: img.py
-  login: required
-- url: /i/[0-9]+
+- url: /i/i/.*
   script: img.py
