@@ -1,0 +1,6 @@
+#summary Encode/ConfigLocal.pm fix
+#labels wa,perl
+
+{{{
+enc2xs -C
+}}}
