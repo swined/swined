@@ -35,7 +35,7 @@ sub progressbar {
 	return 'unknown' unless $p;
 	return 'done' if $p >= 100;
 	center(
-	    ($e ? '<nobr>eta ' . duration($e, 1) . '</nobr>' : '') . 
+	    ($e ? '<nobr>eta ' . duration($e, 1) . '</nobr>' : '') .
 	    "<div" . ($w ? " style='width: $w'" : "") . " class='pb'><div style='width: ${p}%'></div></div>"
 	);
 }
@@ -64,13 +64,13 @@ sub peers {
 	return 'none' unless $r->{peers};
 	return $r->{peers} unless $ses->param("show_peers_$r->{id}") || $ses->param('sap');
 	my $ic = new IP::Country::Fast;
-	'<div style="text-align: left">' . join('<br>', map { 
+	'<div style="text-align: left">' . join('<br>', map {
 	    my @p = split ':';
 	    my $cc = lc $ic->inet_atocc($p[0]);
 	    $cc =~ s/^\*\*$/lan/;
-	    "<span style='" . ($p[1] !~ /r/ ? 'color: gray': '') .  "'><nobr>" 
-	    . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]") 
-	    . " $p[0]</nobr></span>";
+	    "<span style='" . ($p[1] !~ /r/ ? 'color: gray': '') .  "'><nobr>"
+	    . ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]")
+	    . " $p[0]" . ($p[2] ? 'u' . fmsz($p[2]) : '') . ($p[3] ? 'd' . fmsz($p[3]) : '') . "</nobr></span>";
 	} sort { Net::IP->new([split ':', $a]->[0])->intip <=> Net::IP->new([split ':', $b]->[0])->intip } split /\|/, $r->{peerlist}) . '</div>';
 }
 
