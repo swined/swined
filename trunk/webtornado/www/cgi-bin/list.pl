@@ -71,8 +71,9 @@ sub peers {
 		"<span style='" . ($p[1] !~ /r/ ? 'color: gray': '') .  "'><nobr>"
 		. ($cc =~ /^\w{2,3}$/ ? "<img src='/webtornado/img/cc/${cc}.png' alt='$cc'>" : "[$cc]")
 		. " $p[0]<font color=gray>"
-		. ($p[2] ? "<img src='/webtornado/img/up.gif'>" . fmsz($p[2]) : '')
-		. ($p[3] ? "<img src='/webtornado/img/down.gif'>" . fmsz($p[3]) : '') . "</font></nobr></span>";
+		. ($p[2] ? "<img src='/webtornado/img/up.gif'><sup>" . fmsz($p[2]) . "</sup>" : '')
+		. ($p[3] ? "<img src='/webtornado/img/down.gif'><sub>" . fmsz($p[3]) . "</sub>" : '')
+		. "</font></nobr></span>";
 	} sort { Net::IP->new([split ':', $a]->[0])->intip <=> Net::IP->new([split ':', $b]->[0])->intip } split /\|/, $r->{peerlist}) . '</div>';
 }
 
