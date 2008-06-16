@@ -117,6 +117,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 		peers => peers($r),
 		up => $up,
 		status => progressbar($r->{progress}, $r->{eta}),
+		announce => $bt->{announce},
 	};
 }
 

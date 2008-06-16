@@ -27,9 +27,14 @@ DIV.pb>DIV {
 	background-color: #00FF00;
 }
 DIV.fd {
-	color: #666666; 
+	color: #666666;
 	display: inline;
 }
 DIV.fd>A {
-	color: #666666; 
+	color: #666666;
+}
+DIV.announce {
+	color: #00cc00;
+	font-family: verdana, arial, sans-serif;
+	font-size: 70%;
 }
