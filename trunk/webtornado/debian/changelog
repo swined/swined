@@ -1,3 +1,9 @@
+webtornado (0.0.7+svn1156) unstable; urgency=low
+
+  * svn revision 1156
+
+ -- Alexey Alexandrov <swined@gmail.com>  Mon, 16 Jun 2008 18:39:25 +0700
+
 webtornado (0.0.7+svn1153) unstable; urgency=low
 
   * svn revision 1153
