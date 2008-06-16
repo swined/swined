@@ -13,7 +13,7 @@ sub new {
     $p{conffile} |= '/etc/webtornado.conf';
     $p{conf} = Config::File::read_config_file($p{conffile});
     my $dsn = "DBI:mysql:database=$p{conf}->{dbname}:host=$p{conf}->{dbhost}";
-    $p{dbh} = DBI->connect($dsn, $p{conf}->{dbuser}, $p{conf}->{dbpass}); 
+    $p{dbh} = DBI->connect($dsn, $p{conf}->{dbuser}, $p{conf}->{dbpass});
     $p{cgi} = new CGI;
     bless \%p;
 }
@@ -48,15 +48,16 @@ sub cat {
 	return $r;
 }
 
-sub shesc {  
+sub shesc {
     local $_ = shift, s/['\\]/\\$&/g; #'
     return "'$_'";
 }
 
 sub getTorrentInfo {
-	my $i = Bencode::bdecode(shift)->{'info'};
-	my $r = { 'name' => $i->{'name'}, 'files' => [] };
-	push @{$r->{'files'}}, { 'size' => $i->{'length'}, 
+	my $b = Bencode::bdecode(shift);
+	my $i = $b->{'info'};
+	my $r = { 'announce' => $b->{'announce'}, 'name' => $i->{'name'}, 'files' => [] };
+	push @{$r->{'files'}}, { 'size' => $i->{'length'},
 		'name' => $i->{'name'} } unless defined $i->{'files'};
 	foreach (@{$i->{'files'}}) {
 		$_->{'path'} = join '/', @{$_->{'path'}} if 'ARRAY' eq ref $_->{'path'};
@@ -74,16 +75,16 @@ sub syncdb {
     $dbh->do('CREATE TABLE IF NOT EXISTS torrents(id int primary key not null auto_increment)');
     my $cur_table = new_odbc DBIx::DBSchema::Table($dbh, 'torrents');
     my $req_table = new DBIx::DBSchema::Table({
-	name => 'torrents', 
-	columns => [ map { new DBIx::DBSchema::Column(@$_) } 
+	name => 'torrents',
+	columns => [ map { new DBIx::DBSchema::Column(@$_) }
 	    ['id', 'int', 0, 11, undef, 'auto_increment'],
 	    ['pid', 'int', 0],
 	    ['active', 'int', 1],
 	    ['del', 'int', 0],
-	    ['owner', 'text', 1], 
+	    ['owner', 'text', 1],
 	    ['outdir', 'text', 1],
-	    ['output', 'text', 1],  
-	    ['up', 'double', 0], 
+	    ['output', 'text', 1],
+	    ['up', 'double', 0],
 	    ['down', 'double', 0],
 	    ['error', 'text', 1],
 	    ['progress', 'int', 1],
@@ -91,7 +92,7 @@ sub syncdb {
 	    ['uprate', 'int', 1],
 	    ['eta', 'int', 1],
 	    ['maxratio', 'double', 1],
-	    ['torrent', 'longtext', 1], 
+	    ['torrent', 'longtext', 1],
 	    ['peers', 'int', 0],
 	    ['peerlist', 'text', 0],
 	],
