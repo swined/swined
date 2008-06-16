@@ -107,7 +107,8 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
 	$r->{$_} = r10($r->{$_}) for 'ratio', 'maxratio';
 	$bt->{announce} =~ s|^http://bt\.(torrents\.ru)/announce\.php\?.*$|$1|;
-	$bt->{announce} =~ s|^http://tpb.tracker\.(thepiratebay\.org)/announce$|$1|;
+	$bt->{announce} =~ s|^http://\w+\.tracker\.(thepiratebay\.org)/announce$|$1|;
+	$bt->{announce} =~ s|^http://bt\.(lostfilm\.tv)/tracker.php/\w+/announce$|$1|;
 	push @torrents, {
 		%$r, %hc,
 		user => $ENV{REMOTE_USER},
