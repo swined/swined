@@ -66,15 +66,8 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
     <tmpl_if files_count>
 	<tmpl_if files><nobr><div id="files_%id%" class="fd" onClick="toggle_files(%id%)">%files%</div></nobr></tmpl_if>
     </tmpl_if>
-    <tmpl_if active>
-	<tmpl_if pid>
-	    <tmpl_if error>
-		<br>
-		<font color=red>%error%</font>
-	    </tmpl_if>
-	</tmpl_if>
-    </tmpl_if>
 	<tmpl_if announce><div class='announce'>%announce%</div></tmpl_if>
+	<tmpl_if active><tmpl_if pid><tmpl_if error><div class='error'>%error%</div></tmpl_if></tmpl_if></tmpl_if>
 </td></tmpl_unless>
 <tmpl_unless hc_size><td>%size%</td></tmpl_unless>
 <tmpl_unless hc_up><td>%up%</td></tmpl_unless>

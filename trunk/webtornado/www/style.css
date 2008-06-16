@@ -38,3 +38,8 @@ DIV.announce {
 	font-family: verdana, arial, sans-serif;
 	font-size: 70%;
 }
+DIV.error {
+	color: #770000;
+	font-family: verdana, arial, sans-serif;
+	font-size: 70%;
+}
