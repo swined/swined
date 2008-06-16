@@ -106,7 +106,7 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	$r->{seedstatus} = progressbar(100 * $r->{ratio} / $r->{maxratio}, $r->{uprate} ? ($r->{down} * $r->{maxratio} - $r->{up}) / $r->{uprate} : 0) if $r->{progress} == 100 and $r->{ratio} < $r->{maxratio};
 	$r->{$_} = fmsz($r->{$_}) for 'size', 'down', 'uprate', 'downrate';
 	$r->{$_} = r10($r->{$_}) for 'ratio', 'maxratio';
-	$bt->{announce} =~ m|^https?://([^/]+)(?::\d+)?/.*$|i;
+	$bt->{announce} =~ m|^https?://([^/]+)(:\d+)?/.*$|i;
 	push @torrents, {
 		%$r, %hc,
 		user => $ENV{REMOTE_USER},
