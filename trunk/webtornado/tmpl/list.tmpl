@@ -72,9 +72,9 @@ diskspace: %disk_free% of %disk_total% free %disk_progressbar% <br>
 		<br>
 		<font color=red>%error%</font>
 	    </tmpl_if>
-		<tmpl_if announce><div class='announce'>%announce%</div></tmpl_if>
 	</tmpl_if>
     </tmpl_if>
+	<tmpl_if announce><div class='announce'>%announce%</div></tmpl_if>
 </td></tmpl_unless>
 <tmpl_unless hc_size><td>%size%</td></tmpl_unless>
 <tmpl_unless hc_up><td>%up%</td></tmpl_unless>
