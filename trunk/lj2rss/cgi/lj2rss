@@ -72,6 +72,7 @@ if (login) {
 		$et->{content} .= "<br><a href='${_}'><img src='${u}'></a>";
 	}
 	$jn |= '***';
+	$et->{content} =~ s{<iframe src="([^"]+)" [^>]+></iframe>}{<a href="$1" style="border: 1px dashed gray">embed</a>}g; #"
 	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
     }
 } else {
