@@ -20,7 +20,7 @@ $dbh->do('UPDATE torrents SET active = 0 WHERE del > 0');
 
 # kill
 my @t = map { $_->[0] } @{$wt->selectall_arrayref('SELECT pid FROM torrents WHERE active = 0 AND pid > 0')};
-kill(9, @t) and sleep 3 if @t;
+kill(15, @t) and sleep 3 if @t;
 
 # clean pid
 my $t = $wt->selectall_arrayref('SELECT id,pid FROM torrents WHERE pid > 0');
