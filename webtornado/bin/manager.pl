@@ -4,6 +4,7 @@ use lib '/usr/share/webtornado/pm';
 use WT;
 use URI::Escape;
 use MIME::Base64;
+use File::Path;
 
 my $wt = new WT;
 my $c = $wt->conf;
@@ -20,7 +21,7 @@ $dbh->do('UPDATE torrents SET active = 0 WHERE del > 0');
 
 # kill
 my @t = map { $_->[0] } @{$wt->selectall_arrayref('SELECT pid FROM torrents WHERE active = 0 AND pid > 0')};
-kill(15, @t) and sleep 3 if @t;
+kill(9, @t) and sleep 3 if @t;
 
 # clean pid
 my $t = $wt->selectall_arrayref('SELECT id,pid FROM torrents WHERE pid > 0');
@@ -30,13 +31,10 @@ $dbh->do('UPDATE torrents SET pid = 0 WHERE id = ?', undef, $_->[0]) for grep { 
 my $sth = $dbh->prepare('SELECT * FROM torrents WHERE active = 0 AND pid = 0 AND del > 0');
 $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
-    next if not $r->{owner} or $r->{owner} =~ /\W/;
-    if ($r->{output}) {
-	my $out = WT::shesc($r->{output});
-	`rm -rf $out`;
-    }
-    next if -e $r->{output};
-    $dbh->do('DELETE FROM torrents WHERE id = ?', undef, $r->{id});
+	next if not $r->{owner} or $r->{owner} =~ /\W/;
+	rmtree([$r->{output}], 1, 1) if $r->{output};
+	next if -e $r->{output};
+	$dbh->do('DELETE FROM torrents WHERE id = ?', undef, $r->{id});
 }
 
 # spawn
