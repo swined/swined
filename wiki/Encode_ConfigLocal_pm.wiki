@@ -1,5 +1,5 @@
 #summary Encode/ConfigLocal.pm fix
-#labels wa,perl
+#labels fix,perl
 
 {{{
 enc2xs -C
