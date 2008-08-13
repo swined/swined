@@ -28,5 +28,5 @@ function xhr(url, onSuccess) {
 usage:
 
 {{{
-	xhr(url, function(rq) { div.innerHTML = rq.responseText });
+xhr(url, function(rq) { div.innerHTML = rq.responseText });
 }}}
