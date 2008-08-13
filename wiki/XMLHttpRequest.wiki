@@ -1,4 +1,5 @@
 #labels javascript,snippet
+#summary Ajax example
 function:
 
 {{{
