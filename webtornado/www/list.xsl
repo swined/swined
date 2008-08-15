@@ -165,7 +165,7 @@
 				</xsl:choose>
 				<xsl:if test='@progress = 100'>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>/webtornado/<xsl:value-of select='@id' />.tar</xsl:attribute>
+						<xsl:attribute name='href'>/<xsl:value-of select='@id' />.tar</xsl:attribute>
 						<img src='/webtornado/img/tar_down.gif' />
 					</xsl:element>
 				</xsl:if>
@@ -188,12 +188,12 @@
 				<xsl:choose>
 					<xsl:when test='@maxratio > 0 and @maxratio >= $ratio'>
 						-<xsl:call-template name='sz'>
-							<xsl:with-param name='val' select='@up * (1 - $ratio div @maxratio)'/>
+							<xsl:with-param name='val' select='@maxratio * @down - @up'/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:when test='@maxratio > 0 and @maxratio &lt; $ratio'>
 						+<xsl:call-template name='sz'>
-							<xsl:with-param name='val' select='@up * ($ratio div @maxratio - 1)'/>
+							<xsl:with-param name='val' select='@up - @maxratio * @down'/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
