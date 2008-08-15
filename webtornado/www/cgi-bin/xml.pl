@@ -9,8 +9,6 @@ use URI::Escape;
 use Filesys::Statvfs;
 use Time::Duration;
 
-sub r10 { int(10 * shift or $_) / 10 }
-
 my $wt = new WT;
 my @torrents = sort { $b->{ratio} <=> $a->{ratio} } values %{$wt->dbh->selectall_hashref(
 	'SELECT *,up/down AS ratio FROM torrents WHERE owner = ? AND del = 0',
@@ -36,7 +34,7 @@ foreach my $torrent (@torrents) {
 	my %attr = (
 		'size' => $meta->{total_size},
 		($torrent->{eta} ? ('eta' => duration($torrent->{eta}, 1)) : ()),
-		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'progress', 'up', 'down'),
+		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'progress', 'up', 'down', 'id'),
 	);
 	$xml->startTag('torrent', %attr);
 	$xml->dataElement('name', $meta->{name});
