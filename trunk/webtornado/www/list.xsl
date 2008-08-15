@@ -2,6 +2,7 @@
 
 <xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>
 	<xsl:output method='html' version='1.0' encoding='UTF-8' indent='yes' />
+	<xsl:variable name='nf'>0.##</xsl:variable>
 	<xsl:template match='/webtornado'>
 		<html>
 			<head>
@@ -20,6 +21,9 @@
 					</xsl:if>
 					<xsl:if test='sum(torrents/torrent[@active * @pid > 0]/@peers) > 0'>
 						p:<xsl:value-of select='sum(torrents/torrent[@active * @pid > 0]/@peers)'/>
+					</xsl:if>
+					<xsl:if test='sum(torrents/torrent/@down) > 0'>
+						r:<xsl:value-of select='format-number(sum(torrents/torrent/@up) div sum(torrents/torrent/@down), $nf)' />
 					</xsl:if>
 				</title>
 				<style>
@@ -106,7 +110,7 @@
 					<xsl:value-of select='sum(torrent[@active > 0 and @pid > 0]/@peers)' />
 				</td>
 				<td>
-					<xsl:value-of select='format-number(sum(torrent/@up) div sum(torrent/@down), "0.##")' />
+					<xsl:value-of select='format-number(sum(torrent/@up) div sum(torrent/@down), $nf)' />
 				</td>
 				<td>speed</td>
 				<td>status</td>
@@ -208,7 +212,7 @@
 				<xsl:if test='$running = 0'>--</xsl:if>
 			</td>
 			<td>
-				<xsl:value-of select='format-number($ratio, "0.##")' />
+				<xsl:value-of select='format-number($ratio, $nf)' />
 				<xsl:if test='@maxratio > 0'>
 					<xsl:text> </xsl:text>
 					(<xsl:value-of select='@maxratio' />)
@@ -271,19 +275,19 @@
 		<xsl:param name='val' />
 		<xsl:choose>
 			<xsl:when test='$val > 1024 * 1024 * 1024 * 1024'>
-				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024 * 1024), "0.##")' />T
+				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024 * 1024), $nf)' />T
 			</xsl:when>
 			<xsl:when test='$val > 1024 * 1024 * 1024'>
-				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024), "0.##")' />G
+				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024), $nf)' />G
 			</xsl:when>
 			<xsl:when test='$val > 1024 * 1024'>
-				<xsl:value-of select='format-number($val div (1024 * 1024), "0.##")' />M
+				<xsl:value-of select='format-number($val div (1024 * 1024), $nf)' />M
 			</xsl:when>
 			<xsl:when test='$val > 1024'>
-				<xsl:value-of select='format-number($val div 1024, "0.##")' />k
+				<xsl:value-of select='format-number($val div 1024, $nf)' />k
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select='format-number($val, "0.##")' />b
+				<xsl:value-of select='format-number($val, $nf)' />b
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
