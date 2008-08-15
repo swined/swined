@@ -89,7 +89,13 @@
 			</tr>
 			<xsl:apply-templates select='torrent' />
 			<tr class='head'>
-				<td></td>
+				<td>
+					<nbsp>
+						<xsl:value-of select='count(torrent[@active > 0])' />
+						/
+						<xsl:value-of select='count(torrent)' />
+					</nbsp>
+				</td>
 				<td>total</td>
 				<td>
 					<xsl:call-template name='sz'>
