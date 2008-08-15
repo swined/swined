@@ -13,6 +13,9 @@
 					TABLE {
 						width: 100%;
 					}
+					IMG {
+						border: 0;
+					}
 					.head>TD {
 						background-color: #CCCCCC;
 						font-weight: bold;
@@ -54,6 +57,7 @@
 	<xsl:template match='torrents'>
 		<table>
 			<tr class='head'>
+				<td></td>
 				<td>name</td>
 				<td>size</td>
 				<td>up</td>
@@ -65,6 +69,7 @@
 			</tr>
 			<xsl:apply-templates select='torrent' />
 			<tr class='head'>
+				<td></td>
 				<td>total</td>
 				<td>
 					<xsl:call-template name='sz'>
@@ -84,7 +89,9 @@
 				<td>
 					<xsl:value-of select='sum(torrent[@active > 0 and @pid > 0]/@peers)' />
 				</td>
-				<td>ratio</td>
+				<td>
+					<xsl:value-of select='format-number(sum(torrent/@up) div sum(torrent/@down), "0.##")' />
+				</td>
 				<td>speed</td>
 				<td>status</td>
 			</tr>
@@ -102,12 +109,45 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name='running'>
-			<xsl:value-of select='@active * @pid > 0' />
+			<xsl:value-of select='@active * @pid' />
+		</xsl:variable>
+		<xsl:variable name='progress'>
+			<xsl:choose>
+				<xsl:when test='@progress = 100 and @maxratio > 0'>
+					<xsl:value-of select='100 * ($ratio div @maxratio)'/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select='@progress' />
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 		<xsl:element name='tr'>
 			<xsl:if test='position() mod 2 = 0'>
 				<xsl:attribute name='style'>background-color: #eeeeee</xsl:attribute>
 			</xsl:if>
+			<td>
+				<xsl:choose>
+					<xsl:when test='@active * @pid > 0'>
+						<xsl:element name='a'>
+							<xsl:attribute name='href'>?a=stop&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
+							<img src='/webtornado/img/green.gif' />
+						</xsl:element>
+					</xsl:when>
+					<xsl:when test='(@active + @pid) > 0'>
+						<img src='/webtornado/img/yellow.gif' />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:element name='a'>
+							<xsl:attribute name='href'>?a=start&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
+							<img src='/webtornado/img/black.gif' />
+						</xsl:element>
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:element name='a'>
+					<xsl:attribute name='href'>?a=delete&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
+					<img src='/webtornado/img/delete.png' />
+				</xsl:element>
+			</td>
 			<td class='name'>
 				<xsl:value-of select='name' />
 				<div class='announce'><xsl:value-of select='announce' /></div>
@@ -143,16 +183,16 @@
 				</xsl:call-template>
 			</td>
 			<td>
-				<xsl:if test='$running'>
+				<xsl:if test='$running > 0'>
 					<xsl:if test='@peers > 0'>
 						<xsl:value-of select='@peers' />
 					</xsl:if>
 					<xsl:if test='@peers = 0'>none</xsl:if>
 				</xsl:if>
-				<xsl:if test='not($running)'>--</xsl:if>
+				<xsl:if test='$running = 0'>--</xsl:if>
 			</td>
 			<td>
-				<xsl:value-of select='format-number($ratio, "0.#")' />
+				<xsl:value-of select='format-number($ratio, "0.##")' />
 				<xsl:if test='@maxratio > 0'>
 					<xsl:text> </xsl:text>
 					(<xsl:value-of select='@maxratio' />)
@@ -160,13 +200,12 @@
 			</td>
 			<xsl:apply-templates select='speed' />
 			<td>
-				<xsl:if test='@progress = 100 and $running'><div>seeding</div></xsl:if>
-				<xsl:if test='@progress = 100 and not($running)'><div>done</div></xsl:if>
-				<xsl:if test='@progress = 0 and not($running)'><div>unknown</div></xsl:if>
-				<xsl:if test='@eta and $running'><div>eta <xsl:value-of select='@eta' /></div></xsl:if>
-				<xsl:if test='@progress > 0 and @progress &lt; 100'>
+				<xsl:if test='@progress = 100'><div>seeding</div></xsl:if>
+				<xsl:if test='@progress = 0'><div>unknown</div></xsl:if>
+				<xsl:if test='@eta and $running > 0'><div>eta <xsl:value-of select='@eta' /></div></xsl:if>
+				<xsl:if test='$progress > 0 and $progress &lt; 100'>
 					<center><div style='width: 100px' class='pb'><xsl:element name='div'>
-					<xsl:attribute name='style'>width: <xsl:value-of select='@progress'/>%</xsl:attribute>
+					<xsl:attribute name='style'>width: <xsl:value-of select='$progress'/>%</xsl:attribute>
 					</xsl:element></div></center>
 				</xsl:if>
 			</td>
@@ -216,19 +255,19 @@
 		<xsl:param name='val' />
 		<xsl:choose>
 			<xsl:when test='$val > 1024 * 1024 * 1024 * 1024'>
-				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024 * 1024), "0.#")' />T
+				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024 * 1024), "0.##")' />T
 			</xsl:when>
 			<xsl:when test='$val > 1024 * 1024 * 1024'>
-				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024), "0.#")' />G
+				<xsl:value-of select='format-number($val div (1024 * 1024 * 1024), "0.##")' />G
 			</xsl:when>
 			<xsl:when test='$val > 1024 * 1024'>
-				<xsl:value-of select='format-number($val div (1024 * 1024), "0.#")' />M
+				<xsl:value-of select='format-number($val div (1024 * 1024), "0.##")' />M
 			</xsl:when>
 			<xsl:when test='$val > 1024'>
-				<xsl:value-of select='format-number($val div 1024, "0.#")' />k
+				<xsl:value-of select='format-number($val div 1024, "0.##")' />k
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select='format-number($val, "0.#")' />b
+				<xsl:value-of select='format-number($val, "0.##")' />b
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
