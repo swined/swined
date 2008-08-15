@@ -165,7 +165,7 @@
 				</xsl:choose>
 				<xsl:if test='@progress = 100'>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>/<xsl:value-of select='@id' />.tar</xsl:attribute>
+						<xsl:attribute name='href'>/webtornado/<xsl:value-of select='@id' />.tar</xsl:attribute>
 						<img src='/webtornado/img/tar_down.gif' />
 					</xsl:element>
 				</xsl:if>
