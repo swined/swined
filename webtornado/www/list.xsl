@@ -163,6 +163,12 @@
 						</xsl:element>
 					</xsl:otherwise>
 				</xsl:choose>
+				<xsl:if test='@progress = 100'>
+					<xsl:element name='a'>
+						<xsl:attribute name='href'>/<xsl:value-of select='@id' />.tar</xsl:attribute>
+						<img src='/webtornado/img/tar_down.gif' />
+					</xsl:element>
+				</xsl:if>
 				<xsl:element name='a'>
 					<xsl:attribute name='href'>?a=delete&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
 					<img src='/webtornado/img/delete.png' />
