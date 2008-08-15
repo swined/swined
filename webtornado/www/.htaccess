@@ -2,6 +2,7 @@ RewriteEngine	On
 RewriteBase	/
 
 RewriteRule	^$	webtornado/cgi-bin/list.pl
+RewriteRule	^x$	webtornado/cgi-bin/xml.pl
 RewriteRule	^login$	webtornado/cgi-bin/login.pl
 RewriteRule	^upload$	webtornado/cgi-bin/upload.pl
 
