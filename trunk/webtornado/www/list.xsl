@@ -6,6 +6,22 @@
 		<html>
 			<head>
 				<meta http-equiv='REFRESH' content='30;URL=?'></meta>
+				<title>
+					[wt]
+					<xsl:if test='sum(torrents/torrent[@active * @pid > 0]/speed/@down) > 0'>
+						d:<xsl:call-template name='sz'>
+							<xsl:with-param name='val' select='sum(torrents/torrent[@active * @pid > 0]/speed/@down)'/>
+						</xsl:call-template>
+					</xsl:if>
+					<xsl:if test='sum(torrents/torrent[@active * @pid > 0]/speed/@up) > 0'>
+						u:<xsl:call-template name='sz'>
+							<xsl:with-param name='val' select='sum(torrents/torrent[@active * @pid > 0]/speed/@up)'/>
+						</xsl:call-template>
+					</xsl:if>
+					<xsl:if test='sum(torrents/torrent[@active * @pid > 0]/@peers) > 0'>
+						p:<xsl:value-of select='sum(torrents/torrent[@active * @pid > 0]/@peers)'/>
+					</xsl:if>
+				</title>
 				<style>
 					BODY {
 						font-family: verdana;
