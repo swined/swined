@@ -15,8 +15,8 @@ class LJ:
 			raise Exception('http error' + str(res.status_code) + ' (' + url + ')')
 		return res
 	def getSession(self):
-		if session:
-			return session
+		if self.session:
+			return self.session
 		return self.fetch(
 		    'http://www.livejournal.com/interface/flat', 
 		    'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass + '&expiration=short',
