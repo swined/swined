@@ -186,13 +186,9 @@
 			<td class='name'>
 				<xsl:value-of select='name' />
 				<xsl:if test='@files > 1'>
-					<xsl:element name='a'>
-						<xsl:attribute name='href'>/webtornado-users/<xsl:value-of select='/webtornado/@user' />/output/<xsl:value-of select='@name' /></xsl:attribute>
-						<xsl:attribute name='style'>
-							color: gray; margin-left: 3px;
-						</xsl:attribute>
+					<span style='color: gray; margin-left: 3px'>
 						[<xsl:value-of select='@files' /> files]
-					</xsl:element>
+					</span>
 				</xsl:if>
 				<div class='announce'><xsl:value-of select='announce' /></div>
 				<xsl:if test='error'><div class='error'><xsl:value-of select='error' /></div></xsl:if>
