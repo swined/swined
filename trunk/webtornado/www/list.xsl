@@ -71,7 +71,9 @@
 				<xsl:apply-templates select='disk' />
 				<br />
 				<xsl:apply-templates select='torrents' />
-				<font color='gray'>webtornado <xsl:value-of select='@version' /> © swined</font>
+				<center>
+					<font color='gray'>webtornado <xsl:value-of select='@version' /> © swined</font>
+				</center>>
 			</body>
 		</html>
 	</xsl:template>
@@ -172,7 +174,7 @@
 				</xsl:choose>
 				<xsl:if test='@progress = 100'>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>/<xsl:value-of select='@id' />.tar</xsl:attribute>
+						<xsl:attribute name='href'>/webtornado<xsl:choose><xsl:when test='@files = 1'>-users/<xsl:value-of select='/webtornado/@user' />/output/<xsl:value-of select='@name' /></xsl:when><xsl:otherwise>/<xsl:value-of select='@id' />.tar</xsl:otherwise></xsl:choose></xsl:attribute>
 						<img src='/webtornado/img/tar_down.gif' />
 					</xsl:element>
 				</xsl:if>
@@ -184,7 +186,13 @@
 			<td class='name'>
 				<xsl:value-of select='name' />
 				<xsl:if test='@files > 1'>
-					<font color='gray'>[<xsl:value-of select='@files' /> files]</font>
+					<xsl:element name='a'>
+						<xsl:attribute name='href'>/webtornado-users/<xsl:value-of select='/webtornado/@user' />/output/<xsl:value-of select='@name' /></xsl:attribute>
+						<xsl:attribute name='style'>
+							color: gray; margin-left: 3px;
+						</xsl:attribute>
+						[<xsl:value-of select='@files' /> files]
+					</xsl:element>
 				</xsl:if>
 				<div class='announce'><xsl:value-of select='announce' /></div>
 				<xsl:if test='error'><div class='error'><xsl:value-of select='error' /></div></xsl:if>
