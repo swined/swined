@@ -25,9 +25,9 @@ class LJ:
 		k = None
 		for v in res.split("\n"):
 			if k:
-				if k = 'errmsg':
+				if k == 'errmsg':
 					raise Exception(v)
-				if k = 'ljsession':
+				if k == 'ljsession':
 					return v
 				k = None
 			else:
