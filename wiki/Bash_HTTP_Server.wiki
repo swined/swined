@@ -1,4 +1,6 @@
-#labels bash,httpserver,weird
+#summary Bash HTTP server
+#labels bash,http-server
+
 {{{
 :; while [ $? -eq 0 ]; do nc -vlp 8080 -c'(r=read; e=echo;$r a b c; z=$r; 
 while [ ${#z} -gt 2 ]; do $r z; done; f=`$e $b|sed 's/[^a-z0-9_.-]//gi'`; 
