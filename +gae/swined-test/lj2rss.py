@@ -22,7 +22,7 @@ class LJ:
 			return ses
 		res = self.fetch(
 			'http://www.livejournal.com/interface/flat', 
-			'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass,
+			'mode=sessiongenerate&expiration=short&user=' + self.login + '&hpassword=' + self.hpass,
 			urlfetch.POST,
 		).content
 		k = None
@@ -43,10 +43,15 @@ class LJ:
 		t = ses.split(':')
 		return t[1] + ':' + t[2]
 	def getList(self, skip = 0):
-		return self.fetch(
+		res = self.fetch(
 			'http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip),
 			headers = { 'Cookie' : 'ljsession=' + self.getSession() + '; ljloggedin=' + self.getLoggedIn() }
 		).content
+		
+		# You must <a href='login.bml'>log in</a> to read your friends page.
+		self.dropSession()
+		# getList()
+		return res
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
