@@ -2,6 +2,7 @@
 
 use lib '/usr/share/webtornado/pm';
 use WT;
+use VER;
 use CGI qw/:all/;
 use CGI::Debug;
 use XML::Writer;
@@ -37,7 +38,7 @@ print CGI::header(-content_type => 'text/xml; charset=UTF-8');
 my $xml = new XML::Writer(OUTPUT => *STDOUT, DATA_MODE => 1, DATA_INDENT => 4);
 $xml->xmlDecl('UTF-8');
 $xml->pi('xml-stylesheet', 'href="/webtornado/list.xsl" type="text/xsl"');
-$xml->startTag('webtornado');
+$xml->startTag('webtornado', version => $VER::VER);
 my @df = statvfs '/var/cache/webtornado/users';
 $xml->emptyTag('disk', 'free' => $df[0]*$df[3], 'total' => $df[0]*$df[2]);
 $xml->startTag('torrents');
@@ -49,6 +50,7 @@ foreach my $torrent (@torrents) {
 		if $torrent->{progress} == 100 and $torrent->{ratio} < $torrent->{maxratio} and $torrent->{uprate};
 	my %attr = (
 		'size' => $meta->{total_size},
+		'files' => scalar(@{$meta->{files}}),
 		($torrent->{eta} ? ('eta' => duration($torrent->{eta}, 1)) : ()),
 		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'progress', 'up', 'down', 'id'),
 	);

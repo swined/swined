@@ -71,6 +71,7 @@
 				<xsl:apply-templates select='disk' />
 				<br />
 				<xsl:apply-templates select='torrents' />
+				<font color='gray'>webtornado <xsl:value-of select='@version' /> &copy; swined</font>
 			</body>
 		</html>
 	</xsl:template>
@@ -182,6 +183,9 @@
 			</td>
 			<td class='name'>
 				<xsl:value-of select='name' />
+				<xsl:if test='@files > 1'>
+					<font color='gray'>[<xsl:value-of select='@files' /> files]</font>
+				</xsl:if>
 				<div class='announce'><xsl:value-of select='announce' /></div>
 				<xsl:if test='error'><div class='error'><xsl:value-of select='error' /></div></xsl:if>
 			</td>
