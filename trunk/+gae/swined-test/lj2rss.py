@@ -19,7 +19,7 @@ class LJ:
 	def getSession(self):
 		ses = memcache.get('session_' + self.uid())
 		if ses is not None:
-			return 'cached: ' + ses
+			return ses
 		res = self.fetch(
 			'http://www.livejournal.com/interface/flat', 
 			'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass + '&expiration=short',
@@ -38,12 +38,16 @@ class LJ:
 				k = v
 	def dropSession(self):
 		memcache.delete('session_' + self.uid())
+	def getLoggedIn(self):
+		ses = self.getSession()
+		t = ses.split(':')
+		return t[1] + ':' + t[2]
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
-		self.response.out.write(lj.getSession())
+		self.response.out.write(lj.getSession() + '<br>' + self.getLoggedIn())
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
