@@ -24,14 +24,14 @@ class LJ:
 		).content
 		k = None
 		for v in res.split("\n"):
-			if not k:
+			if k:
+				if k = 'errmsg':
+					raise Exception(v)
+				if k = 'ljsession':
+					return v
+				k = None
+			else:
 				k = v
-				continue
-			if k = 'errmsg':
-				raise Exception(v)
-			if k = 'ljsession':
-				return v
-			k = None
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
