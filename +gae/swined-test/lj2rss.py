@@ -15,7 +15,7 @@ class LJ:
 			raise Exception('http error' + str(res.status_code) + ' (' + url + ')')
 		return res
 	def uid(self):
-		self.login + self.hpass
+		return self.login + self.hpass
 	def getSession(self):
 		ses = memcache.get('session_' + self.uid()):
 		if ses is not None:
