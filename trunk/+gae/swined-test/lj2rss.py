@@ -17,11 +17,13 @@ class LJ:
 	def getSession(self):
 		if self.session:
 			return self.session
-		return self.fetch(
+		res = self.fetch(
 		    'http://www.livejournal.com/interface/flat', 
 		    'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass + '&expiration=short',
 		    urlfetch.POST,
 		).content
+		for (k, v) in res.split("\n"):
+			return k + ' = ' + v
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
