@@ -21,6 +21,11 @@ $wt->dbh->do(
 	undef, param('id'), $ENV{REMOTE_USER},
 ) if param('a') eq 'start';
 
+$wt->dbh->do(
+	'UPDATE torrents SET del = 1 WHERE id = ? AND owner = ?',
+	undef, param('id'), $ENV{REMOTE_USER},
+) if param('a') eq 'delete';
+
 my @torrents = sort { $b->{ratio} <=> $a->{ratio} } values %{$wt->dbh->selectall_hashref(
 	'SELECT *,up/down AS ratio FROM torrents WHERE owner = ? AND del = 0',
 	'id',
