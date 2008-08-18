@@ -22,8 +22,16 @@ class LJ:
 		    'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass + '&expiration=short',
 		    urlfetch.POST,
 		).content
-		for (k, v) in res.split("\n"):
-			return k + ' = ' + v
+		k = None
+		for v in res.split("\n"):
+			if not k:
+				k = v
+				continue
+			if k = 'errmsg':
+				raise Exception(v)
+			if k = 'ljsession':
+				return v
+			k = None
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
