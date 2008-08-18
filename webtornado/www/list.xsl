@@ -71,7 +71,7 @@
 				<xsl:apply-templates select='disk' />
 				<br />
 				<xsl:apply-templates select='torrents' />
-				<font color='gray'>webtornado <xsl:value-of select='@version' /> &copy; swined</font>
+				<font color='gray'>webtornado <xsl:value-of select='@version' /> © swined</font>
 			</body>
 		</html>
 	</xsl:template>
