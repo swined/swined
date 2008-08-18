@@ -9,12 +9,12 @@ class LJ:
 	def __init__(self, login, hpass):
 		self.login = login
 		self.hpass = hpass
-	def fetch(url, payload = None, method = urlfetch.GET, headers = {}, allow_truncated = False):
+	def fetch(self, url, payload = None, method = urlfetch.GET, headers = {}, allow_truncated = False):
 		res = urlfetch.fetch(url, payload, method, headers, allow_truncated)
 		if res.status_code != 200:
 			raise Exception('http error' + str(res.status_code) + ' (' + url + ')')
 		return res
-	def getSession():
+	def getSession(self):
 		if session:
 			return session
 		return self.fetch(
