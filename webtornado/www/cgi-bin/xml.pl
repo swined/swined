@@ -38,7 +38,7 @@ print CGI::header(-content_type => 'text/xml; charset=UTF-8');
 my $xml = new XML::Writer(OUTPUT => *STDOUT, DATA_MODE => 1, DATA_INDENT => 4);
 $xml->xmlDecl('UTF-8');
 $xml->pi('xml-stylesheet', 'href="/webtornado/list.xsl" type="text/xsl"');
-$xml->startTag('webtornado', version => $VER::VER);
+$xml->startTag('webtornado', version => $VER::VER, user => $ENV{REMOTE_USER});
 my @df = statvfs '/var/cache/webtornado/users';
 $xml->emptyTag('disk', 'free' => $df[0]*$df[3], 'total' => $df[0]*$df[2]);
 $xml->startTag('torrents');
