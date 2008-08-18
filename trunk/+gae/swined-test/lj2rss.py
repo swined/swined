@@ -17,7 +17,7 @@ class LJ:
 	def uid(self):
 		return self.login + self.hpass
 	def getSession(self):
-		ses = memcache.get('session_' + self.uid()):
+		ses = memcache.get('session_' + self.uid())
 		if ses is not None:
 			return 'cached: ' + ses
 		res = self.fetch(
