@@ -47,7 +47,7 @@ class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
-		self.response.out.write(lj.getSession() + '<br>' + self.getLoggedIn())
+		self.response.out.write(lj.getSession() + '<br>' + lj.getLoggedIn())
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
