@@ -223,13 +223,13 @@
 				</xsl:if>
 				<xsl:if test='$running = 0'>--</xsl:if>
 			</td>
-			<td>
+			<td><nobr>
 				<xsl:value-of select='format-number($ratio, $nf)' />
 				<xsl:if test='@maxratio > 0'>
 					<xsl:text> </xsl:text>
 					(<xsl:value-of select='@maxratio' />)
 				</xsl:if>
-			</td>
+			</nobr></td>
 			<xsl:apply-templates select='speed' />
 			<td>
 				<xsl:if test='@progress = 100'><div>seeding</div></xsl:if>
