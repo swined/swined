@@ -22,7 +22,7 @@ class LJ:
 			return ses
 		res = self.fetch(
 			'http://www.livejournal.com/interface/flat', 
-			'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass + '&expiration=short',
+			'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass,
 			urlfetch.POST,
 		).content
 		k = None
@@ -42,12 +42,17 @@ class LJ:
 		ses = self.getSession()
 		t = ses.split(':')
 		return t[1] + ':' + t[2]
+	def getList(self, skip = 0):
+		return self.fetch(
+			'http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip),
+			headers = { 'Cookie' : 'ljsession=' + self.getSession() + '; ljloggedin=' + self.getLoggedIn() }
+		).content
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
-		self.response.out.write(lj.getSession() + '<br>' + lj.getLoggedIn())
+		self.response.out.write(lj.getList())
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
