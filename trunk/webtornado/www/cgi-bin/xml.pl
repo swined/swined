@@ -40,7 +40,7 @@ $xml->xmlDecl('UTF-8');
 $xml->pi('xml-stylesheet', 'href="/webtornado/list.xsl" type="text/xsl"');
 $xml->startTag('webtornado', version => $VER::VER, user => $ENV{REMOTE_USER});
 my @df = statvfs '/var/cache/webtornado/users';
-$xml->emptyTag('disk', 'free' => $df[0]*$df[3], 'total' => $df[0]*$df[2]);
+$xml->emptyTag('disk', 'free' => $df[0]*$df[4], 'total' => $df[0]*$df[2]);
 $xml->startTag('torrents');
 foreach my $torrent (@torrents) {
 	$torrent->{$_} ||= 0 for 'ratio', 'progress';
