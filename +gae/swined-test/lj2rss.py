@@ -58,7 +58,7 @@ class MainPage(webapp.RequestHandler):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
 		for url in lj.getList():
-			self.response.out.write(self.getEntry(url) + '<br>')
+			self.response.out.write(lj.getEntry(url) + '<br>')
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
