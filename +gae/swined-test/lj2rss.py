@@ -51,7 +51,11 @@ class LJ:
 			rr.append(m.group(1))
 		return rr
 	def getEntry(self, url):
-		return self.fetch(url, headers = { 'Cookie' : self.getCookies() }).content
+		res = self.fetch(url, headers = { 'Cookie' : self.getCookies() })
+		r = ''
+		for (k, v) in res.headers:
+			r = r + k + ' = ' + v + '<br>'
+		return r
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
