@@ -59,6 +59,7 @@ class MainPage(webapp.RequestHandler):
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
 		for url in lj.getList():
 			self.response.out.write(lj.getEntry(url) + '<hr>')
+			return
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
