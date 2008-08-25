@@ -55,7 +55,7 @@ class LJ:
 		r = ''
 		for k in res.headers:
 			r = r + k + ' = ' + res.headers[k] + '<br>'
-		return r + '<hr><pre>' + res.content + '</pre><hr>'
+		return r + '<hr><textarea style="width: 100%; height: 400px">' + res.content + '</textarea><hr>'
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
