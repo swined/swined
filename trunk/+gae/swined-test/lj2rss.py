@@ -46,7 +46,7 @@ class LJ:
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = []
 		for m in rx.finditer(res):
-			rr.add(m.group(1))
+			rr.append(m.group(1))
 		return rr
 
 class MainPage(webapp.RequestHandler):
