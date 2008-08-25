@@ -1,6 +1,7 @@
 from wsgiref import handlers
 from google.appengine.ext import webapp
 from google.appengine.api import urlfetch
+import re
 
 class LJ:
 	login = None
@@ -42,7 +43,12 @@ class LJ:
 			'http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip),
 			headers = { 'Cookie' : 'ljsession=' + self.getSession() + '; ljloggedin=' + self.getLoggedIn() }
 		).content
-		return res
+		#: <a href='http://mermehon.livejournal.com/652466.html?format=light'>
+		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
+		rr = ''
+		for m in rx.finditer():
+			rr = rr + m.group(1) + '<br>'
+		return rr
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
