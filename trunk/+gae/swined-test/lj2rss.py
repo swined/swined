@@ -53,8 +53,8 @@ class LJ:
 	def getEntry(self, url):
 		res = self.fetch(url, headers = { 'Cookie' : self.getCookies() })
 		r = ''
-		for (k, v) in res.headers:
-			r = r + k + ' = ' + v + '<br>'
+		for k in res.headers:
+			r = r + k + '<br>'
 		return r
 
 class MainPage(webapp.RequestHandler):
