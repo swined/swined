@@ -1,11 +1,11 @@
 from wsgiref import handlers
 from google.appengine.ext import webapp
 from google.appengine.api import urlfetch
-from google.appengine.api import memcache
 
 class LJ:
 	login = None
 	hpass = None
+	session = None
 	def __init__(self, login, hpass):
 		self.login = login
 		self.hpass = hpass
@@ -14,15 +14,12 @@ class LJ:
 		if res.status_code != 200:
 			raise Exception('http error' + str(res.status_code) + ' (' + url + ')')
 		return res
-	def uid(self):
-		return self.login + self.hpass
 	def getSession(self):
-		ses = memcache.get('session_' + self.uid())
-		if ses is not None:
-			return ses
+		if self.session is not None:
+			return self.session
 		res = self.fetch(
 			'http://www.livejournal.com/interface/flat', 
-			'mode=sessiongenerate&user=' + self.login + '&hpassword=' + self.hpass,
+			'mode=sessiongenerate&expiration=short&user=' + self.login + '&hpassword=' + self.hpass,
 			urlfetch.POST,
 		).content
 		k = None
@@ -31,13 +28,11 @@ class LJ:
 				if k == 'errmsg':
 					raise Exception(v)
 				if k == 'ljsession':
-					memcache.set('session_' + self.uid(), v)
+					self.session = v
 					return v
 				k = None
 			else:
 				k = v
-	def dropSession(self):
-		memcache.delete('session_' + self.uid())
 	def getLoggedIn(self):
 		ses = self.getSession()
 		t = ses.split(':')
