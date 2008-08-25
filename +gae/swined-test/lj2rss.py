@@ -1,4 +1,5 @@
-from google.appengine.ext import webapp
+from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 from google.appengine.api import urlfetch
 import re
 
@@ -56,7 +57,7 @@ class LJ:
 			r = r + k + ' = ' + res.headers[k] + '<br>'
 		return r + '<hr><textarea style="width: 100%; height: 400px">' + res.content + '</textarea><hr>'
 
-class MainPage(webapp.RequestHandler):
+class MainPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
@@ -65,7 +66,7 @@ class MainPage(webapp.RequestHandler):
 			return
 
 def main():
-	webapp.util.run_wsgi_app(webapp.WSGIApplication([
+	run_wsgi_app(WSGIApplication([
 		('/lj2rss', MainPage),
 	], debug = True))
 
