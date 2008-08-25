@@ -54,7 +54,7 @@ class LJ:
 		res = self.fetch(url, headers = { 'Cookie' : self.getCookies() })
 		r = ''
 		for k in res.headers:
-			r = r + k + '<br>'
+			r = r + k + ' = ' + res.headers[k] + '<br>'
 		return r
 
 class MainPage(webapp.RequestHandler):
