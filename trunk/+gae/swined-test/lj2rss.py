@@ -46,7 +46,7 @@ class LJ:
 		#: <a href='http://mermehon.livejournal.com/652466.html?format=light'>
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = ''
-		for m in rx.finditer():
+		for m in rx.finditer(res):
 			rr = rr + m.group(1) + '<br>'
 		return rr
 
