@@ -43,18 +43,18 @@ class LJ:
 			'http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip),
 			headers = { 'Cookie' : 'ljsession=' + self.getSession() + '; ljloggedin=' + self.getLoggedIn() }
 		).content
-		#: <a href='http://mermehon.livejournal.com/652466.html?format=light'>
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
-		rr = ''
+		rr = []
 		for m in rx.finditer(res):
-			rr = rr + m.group(1) + '<br>'
+			rr.add(m.group(1))
 		return rr
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
-		self.response.out.write(lj.getList())
+		for url in lj.getList():
+			self.response.out.write(url + '<br>')
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
