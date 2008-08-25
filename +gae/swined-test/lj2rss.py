@@ -1,4 +1,3 @@
-from wsgiref import handlers
 from google.appengine.ext import webapp
 from google.appengine.api import urlfetch
 import re
@@ -66,7 +65,7 @@ class MainPage(webapp.RequestHandler):
 			return
 
 def main():
-	handlers.CGIHandler().run(webapp.WSGIApplication([
+	webapp.util.run_wsgi_app(webapp.WSGIApplication([
 		('/lj2rss', MainPage),
 	], debug = True))
 
