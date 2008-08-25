@@ -55,7 +55,7 @@ class LJ:
 		r = ''
 		for k in res.headers:
 			r = r + k + ' = ' + res.headers[k] + '<br>'
-		return r + '<hr>' + res.content + '<hr>'
+		return r + '<hr><pre>' + res.content + '</pre><hr>'
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
