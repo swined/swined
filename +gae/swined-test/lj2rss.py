@@ -51,14 +51,14 @@ class LJ:
 			rr.append(m.group(1))
 		return rr
 	def getEntry(self, url):
-		return url
+		return self.fetch(url, headers = { 'Cookie' : self.getCookies() }).content
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
 		for url in lj.getList():
-			self.response.out.write(lj.getEntry(url) + '<br>')
+			self.response.out.write(lj.getEntry(url) + '<hr>')
 
 def main():
 	handlers.CGIHandler().run(webapp.WSGIApplication([
