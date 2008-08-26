@@ -38,7 +38,6 @@ while (my $r = $sth->fetchrow_hashref) {
 }
 
 # count vmsize and vmrss
-my $t = $wt->selectall_arrayref('SELECT id,pid FROM torrents WHERE pid > 0');
 $dbh->do(
 	'UPDATE torrents SET vmsize = ?, vmrss = ? WHERE id = ?',
 	undef,
@@ -51,7 +50,7 @@ $dbh->do(
 	$r->{vmsize} = [grep s/^VmSize:\s+(\d+)\s+.*/$1/, <$f>]->[0];
 	$r->{vmrss} = [grep s/^VmRSS:\s+(\d+)\s+.*/$1/, <$f>]->[0];
 	close $f;
-} @$t;
+} @{$wt->selectall_arrayref('SELECT id,pid FROM torrents WHERE pid > 0')};
 
 # spawn
 my $sth = $dbh->prepare('SELECT * FROM torrents WHERE active > 0 AND pid = 0 AND del = 0');
