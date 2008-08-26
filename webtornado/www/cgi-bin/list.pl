@@ -141,7 +141,7 @@ $tmpl->param({
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 	gtime => int((time()-$tm)*1000)/1000,
-	vmsize => $vm->{vmsize},
-	vmrss => $vm->{vmrss},
+	vmsize => fmsz($vm->{vmsize} * 1024),
+	vmrss => fmsz($vm->{vmrss} * 1024),
 });
 print $ses->header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
