@@ -68,6 +68,9 @@
 				</style>
 			</head>
 			<body>
+				vmsize: <xsl:value-of select='sum(torrents/torrent[@pid > 0]/@vmsize)'/>,
+				vmrss: <xsl:value-of select='sum(torrents/torrent[@pid > 0]/@vmrss)'/>
+				<br /><br />
 				<xsl:apply-templates select='disk' />
 				<br />
 				<xsl:apply-templates select='torrents' />
