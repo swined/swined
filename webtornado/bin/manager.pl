@@ -47,9 +47,11 @@ $dbh->do(
 ) for map {
 	my $r = { id => $_->[0] };
 	open my $f, '<', '/proc/' . $_->[1] . '/status';
-	$r->{vmsize} = [grep s/^VmSize:\s+(\d+)\s+.*/$1/, <$f>]->[0];
-	$r->{vmrss} = [grep s/^VmRSS:\s+(\d+)\s+.*/$1/, <$f>]->[0];
+	my $s = <$f>;
 	close $f;
+	$r->{vmsize} = [grep s/^VmSize:\s+(\d+)\s+.*/$1/, $s]->[0];
+	$r->{vmrss} = [grep s/^VmRSS:\s+(\d+)\s+.*/$1/, $s]->[0];
+	$r;
 } @{$wt->selectall_arrayref('SELECT id,pid FROM torrents WHERE pid > 0')};
 
 # spawn
