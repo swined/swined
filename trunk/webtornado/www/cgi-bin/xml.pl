@@ -52,7 +52,7 @@ foreach my $torrent (@torrents) {
 		'size' => $meta->{total_size},
 		'files' => scalar(@{$meta->{files}}),
 		($torrent->{eta} ? ('eta' => duration($torrent->{eta}, 1)) : ()),
-		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'progress', 'up', 'down', 'id'),
+		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'progress', 'up', 'down', 'id', 'vmsize', 'vmrss'),
 	);
 	$xml->startTag('torrent', %attr);
 	$xml->dataElement('name', $meta->{name});
