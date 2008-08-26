@@ -76,7 +76,6 @@
 						<xsl:with-param name='val' select='sum(torrents/torrent[@pid > 0]/@vmrss) * 1024'/>
 					</xsl:call-template>
 				</center>
-				<br />
 				<xsl:apply-templates select='disk' />
 				<br />
 				<xsl:apply-templates select='torrents' />
