@@ -122,6 +122,10 @@ foreach my $r (sort { $b->{ratio} <=> $a->{ratio} } map { $q->{$_} } keys %$q) {
 	};
 }
 
+my $vm = $wt->dbh->selectrow_hashref(
+	'SELECT SUM(vmsize) AS vmsize, SUM(vmrss) AS vmrss FROM torrents WHERE pid > 0',
+);
+
 my @pb = statvfs '/var/cache/webtornado/users';
 my $tmpl = new HTML::Template(filename => '/usr/share/webtornado/tmpl/list.tmpl', die_on_bad_params => 0, vanguard_compatibility_mode => 1, loop_context_vars => 1);
 $tmpl->param({
@@ -137,5 +141,7 @@ $tmpl->param({
 	total_status => progressbar($t->{has_undone} ? int(100 * $t->{progress} / ($t->{size} or 1)) : 100),
 	version => $VER::VER,
 	gtime => int((time()-$tm)*1000)/1000,
+	vmsize => $vm->{vmsize},
+	vmrss => $vm->{vmrss},
 });
 print $ses->header(-content_type => 'text/html; charset=utf-8') . $tmpl->output;
