@@ -2,6 +2,7 @@
 
 use lib '/usr/share/webtornado/pm';
 use WT;
+use URI::Escape;
 
 my $wt = new WT;
 
