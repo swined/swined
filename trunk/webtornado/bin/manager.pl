@@ -37,6 +37,22 @@ while (my $r = $sth->fetchrow_hashref) {
 	$dbh->do('DELETE FROM torrents WHERE id = ?', undef, $r->{id});
 }
 
+# count vmsize and vmrss
+my $t = $wt->selectall_arrayref('SELECT id,pid FROM torrents WHERE pid > 0');
+$dbh->do(
+	'UPDATE torrents SET vmsize = ?, vmrss = ? WHERE id = ?',
+	undef,
+	$_->{vmsize},
+	$_->{vmrss},
+	$_->{id},
+) for map {
+	my $r = { id => $_->[0] };
+	open my $f, '<', '/proc/' . $_->[1] . '/status';
+	$r->{vmsize} = [grep s/^VmSize:\s+(\d+)\s+.*/$1/, <$f>]->[0];
+	$r->{vmrss} = [grep s/^VmRSS:\s+(\d+)\s+.*/$1/, <$f>]->[0];
+	close $f;
+} @$t;
+
 # spawn
 my $sth = $dbh->prepare('SELECT * FROM torrents WHERE active > 0 AND pid = 0 AND del = 0');
 $sth->execute;
