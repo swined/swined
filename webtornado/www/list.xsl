@@ -231,13 +231,20 @@
 				</xsl:call-template>
 			</td>
 			<td>
-				<xsl:if test='$running > 0'>
-					<xsl:if test='@peers > 0'>
+				<xsl:choose>
+					<xsl:when test='$running = 0'>
+						--
+					</xsl:when>
+					<xsl:when test='@peers > 0'>
 						<xsl:value-of select='@peers' />
-					</xsl:if>
-					<xsl:if test='@peers = 0'>none</xsl:if>
-				</xsl:if>
-				<xsl:if test='$running = 0'>--</xsl:if>
+					</xsl:when>
+					<xsl:when test='@peers = 0'>
+						none
+					</xsl:when>
+					<xsl:otherwise>
+						oops
+					</xsl:otherwise>
+				</xsl:choose>
 			</td>
 			<td><nobr>
 				<xsl:value-of select='format-number($ratio, $nf)' />
