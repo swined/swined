@@ -79,7 +79,7 @@ sub syncdb {
 	columns => [ map { new DBIx::DBSchema::Column(@$_) }
 		['id', 'int', 0, 11, undef, 'auto_increment'],
 		['pid', 'int', 0],
-		['active', 'int', 1],
+		['active', 'int', 0],
 		['del', 'int', 0],
 		['owner', 'text', 1],
 		['outdir', 'text', 1],
