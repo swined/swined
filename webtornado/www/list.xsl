@@ -131,10 +131,11 @@
 				</td>
 				<td>
 					<xsl:call-template name='sz'>
-						<xsl:with-param name='val' select='sum(torrents/torrent[@active * @pid > 0]/speed/@down)'/>
+						<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@down)'/>
 					</xsl:call-template>
+					/
 					<xsl:call-template name='sz'>
-						<xsl:with-param name='val' select='sum(torrents/torrent[@active * @pid > 0]/speed/@up)'/>
+						<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@up)'/>
 					</xsl:call-template>
 				</td>
 				<td>status</td>
