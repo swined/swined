@@ -93,7 +93,7 @@ sub syncdb {
 		['eta', 'int', 1],
 		['maxratio', 'double', 1],
 		['torrent', 'longtext', 1],
-		['peers', 'int', 1],
+		['peers', 'int', 0],
 		['peerlist', 'text', 0],
 		['vmsize', 'int', 0],
 		['vmrss', 'int', 0],
