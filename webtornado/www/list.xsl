@@ -66,7 +66,7 @@
 						background-color: #00FF00;
 					}
 				</style>
-				<script>
+				<script language='javascript'>
 					function set_maxratio(id, maxratio) {
 						div = document.getElementById("set_maxratio_" + id);
 						div.innerHTML +=
@@ -228,8 +228,6 @@
 				</xsl:call-template>
 			</td>
 			<xsl:element name='td'>
-				<xsl:attribute name='id'>set_maxratio_<xsl:value-of select='@id' /></xsl:attribute>
-				<xsl:attribute name='onClick'>set_maxratio(<xsl:value-of select='@id' />, <xsl:value-of select='@maxratio' />)</xsl:attribute>
 				<xsl:choose>
 					<xsl:when test='@maxratio > 0 and @maxratio >= $ratio'>
 						-<xsl:call-template name='sz'>
@@ -269,13 +267,17 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</td>
-			<td><nobr>
-				<xsl:value-of select='format-number($ratio, $nf)' />
-				<xsl:if test='@maxratio > 0'>
-					<xsl:text> </xsl:text>
-					(<xsl:value-of select='@maxratio' />)
-				</xsl:if>
-			</nobr></td>
+			<xsl:element name='td'>
+				<xsl:attribute name='id'>set_maxratio_<xsl:value-of select='@id' /></xsl:attribute>
+				<xsl:attribute name='onClick'>set_maxratio(<xsl:value-of select='@id' />, <xsl:value-of select='@maxratio' />)</xsl:attribute>
+				<nobr>
+					<xsl:value-of select='format-number($ratio, $nf)' />
+					<xsl:if test='@maxratio > 0'>
+						<xsl:text> </xsl:text>
+						(<xsl:value-of select='@maxratio' />)
+					</xsl:if>
+				</nobr>
+			</xsl:element>
 			<xsl:apply-templates select='speed' />
 			<td>
 				<xsl:if test='@progress = 100'><div>seeding</div></xsl:if>
