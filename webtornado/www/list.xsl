@@ -96,6 +96,8 @@
 				<br />
 				<xsl:apply-templates select='torrents' />
 				<center>
+					add new torrent: <form id='form' method='post' action='/webtornado/upload' enctype='multipart/form-data'>
+					<input type='file' name='file' onchange='document.getElementById("form").submit()'/></form>
 					<font color='gray'>webtornado <xsl:value-of select='@version' /> © swined</font>
 				</center>
 			</body>

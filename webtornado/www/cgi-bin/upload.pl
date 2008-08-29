@@ -9,7 +9,7 @@ $CGI::POST_MAX = 1 << 20;
 my ($u, $c, $wt) = ($ENV{REMOTE_USER}, "/var/cache/webtornado/users/$ENV{REMOTE_USER}/output", new WT);
 
 my $f = $wt->cgi->param('file') or die 'nothing uploaded';
-my $tor = join '', <$f>; 
+my $tor = join '', <$f>;
 my ($bt, $tor) = (WT::getTorrentInfo($tor), uri_escape $tor);
 my $nf = "$c/$bt->{name}";
 
@@ -19,4 +19,4 @@ if ($r->{id}) {
 } else {
     $wt->dbh->do('INSERT INTO torrents(owner, output, torrent) VALUES(?, ?, ?)', undef, $u, $nf, $tor);
 }
-print $wt->cgi->header(-location => '/webtornado', -status => 302);
+print $wt->cgi->header(-location => $ENV{HTTP_REFERER}, -status => 302);
