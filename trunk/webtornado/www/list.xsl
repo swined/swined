@@ -69,6 +69,7 @@
 				<script language='javascript'>
 					function set_maxratio(id, maxratio) {
 						div = document.getElementById("set_maxratio_" + id);
+						div.innerHTML = 'xxx';
 						div.innerHTML +=
 							"<br /><form method='get' action='?'>" +
 							"<input type='hidden' name='a' value='set_maxratio' />" +
