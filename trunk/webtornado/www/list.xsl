@@ -73,7 +73,7 @@
 						glt = gt + lt;
 						div = document.getElementById("set_maxratio_" + id);
 						div.innerHTML +=
-							lt + "br /" + glt + 'form method='get' action='?'" +
+							lt + "br /" + glt + "form method='get' action='?'" +
 							glt + "input type='hidden' name='a' value='set_maxratio' /"
 							+ glt + "input type='hidden' name='id' value=" + id + " /" + glt +
 							"input type='text' name='maxratio' value='" + maxratio + "' style='width: 50px' /" + glt +
