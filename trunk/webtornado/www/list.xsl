@@ -66,6 +66,19 @@
 						background-color: #00FF00;
 					}
 				</style>
+				<script>
+					function set_maxratio(id, maxratio) {
+						div = document.getElementById("set_maxratio_" + id);
+						div.innerHTML +=
+							"<br><form method='get' action='?'>" +
+							"<input type='hidden' name='a' value='set_maxratio'>" +
+							"<input type='hidden' name='id' value=" + id + ">" +
+							"<input type='text' name='maxratio' value='" + maxratio + "' style='width: 50px'>" +
+							"<input type='submit' style='width: 30px' value='OK'>" +
+							"</form>";
+						div.setAttribute('onClick', '');
+					}
+				</script>
 			</head>
 			<body>
 				<center>
@@ -129,7 +142,7 @@
 				<td>
 					<xsl:value-of select='format-number(sum(torrent/@up) div sum(torrent/@down), $nf)' />
 				</td>
-				<td>
+				<td><nobr>
 					<xsl:call-template name='sz'>
 						<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@down)'/>
 					</xsl:call-template>
@@ -137,7 +150,7 @@
 					<xsl:call-template name='sz'>
 						<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@up)'/>
 					</xsl:call-template>
-				</td>
+				</nobr></td>
 				<td>status</td>
 			</tr>
 		</table>
@@ -214,7 +227,9 @@
 					<xsl:with-param name='val' select='@size'/>
 				</xsl:call-template>
 			</td>
-			<td>
+			<xsl:element name='td'>
+				<xsl:attribute name='id'>set_maxratio_<xsl:value-of select='@id' /></xsl:attribute>
+				<xsl:attribute name='onClick'>set_maxratio(<xsl:value-of select='@id' />, <xsl:value-of select='@maxratio' />)</xsl:attribute>
 				<xsl:choose>
 					<xsl:when test='@maxratio > 0 and @maxratio >= $ratio'>
 						-<xsl:call-template name='sz'>
@@ -232,7 +247,7 @@
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
-			</td>
+			</xsl:element>
 			<td>
 				<xsl:call-template name='sz'>
 					<xsl:with-param name='val' select='@down'/>
