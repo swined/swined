@@ -13,6 +13,11 @@ use Time::Duration;
 my $wt = new WT;
 
 $wt->dbh->do(
+	'UPDATE torrents SET maxratio = ? WHERE id = ? AND owner = ?',
+	undef, abs(int param('maxratio')), param('id'), $ENV{REMOTE_USER},
+) if param('a') eq 'set_maxratio';
+
+$wt->dbh->do(
 	'UPDATE torrents SET active = 0 WHERE id = ? AND owner = ?',
 	undef, param('id'), $ENV{REMOTE_USER},
 ) if param('a') eq 'stop';
