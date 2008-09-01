@@ -119,11 +119,11 @@
 			<xsl:apply-templates select='torrent' />
 			<tr class='head'>
 				<td>
-					<nbsp>
+					<nobr>
 						<xsl:value-of select='count(torrent[@active > 0])' />
 						/
 						<xsl:value-of select='count(torrent)' />
-					</nbsp>
+					</nobr>
 				</td>
 				<td>total</td>
 				<td>
