@@ -221,7 +221,7 @@
 				<xsl:value-of select='name' />
 				<xsl:if test='@files > 1'>
 					<span style='color: gray; margin-left: 3px'>
-						[<xsl:value-of select='@files' /> files]
+						<nobr>[<xsl:value-of select='@files' /> files]</nobr>
 					</span>
 				</xsl:if>
 				<div class='announce'><xsl:value-of select='announce' /></div>
