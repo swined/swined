@@ -77,6 +77,7 @@ sub syncdb {
     my $req_table = new DBIx::DBSchema::Table({
 	name => 'torrents',
 	columns => [ map { new DBIx::DBSchema::Column(@$_) }
+		# name type nullable
 		['id', 'int', 0, 11, undef, 'auto_increment'],
 		['pid', 'int', 0],
 		['active', 'int', 0],
@@ -91,7 +92,7 @@ sub syncdb {
 		['downrate', 'int', 1],
 		['uprate', 'int', 1],
 		['eta', 'int', 1],
-		['maxratio', 'double', 1],
+		['maxratio', 'double', 0],
 		['torrent', 'longtext', 1],
 		['peers', 'int', 0],
 		['peerlist', 'text', 0],
