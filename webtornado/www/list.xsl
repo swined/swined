@@ -148,10 +148,12 @@
 					<xsl:value-of select='format-number(sum(torrent/@up) div sum(torrent/@down), $nf)' />
 				</td>
 				<td><nobr>
-					<xsl:call-template name='sz'>
-						<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@down)'/>
-					</xsl:call-template>
-					/
+					<xsl:if test='sum(torrent[@active * @pid > 0]/speed/@down) > 0'>
+						<xsl:call-template name='sz'>
+							<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@down)'/>
+						</xsl:call-template>
+						/
+					</xsl:if>
 					<xsl:call-template name='sz'>
 						<xsl:with-param name='val' select='sum(torrent[@active * @pid > 0]/speed/@up)'/>
 					</xsl:call-template>
