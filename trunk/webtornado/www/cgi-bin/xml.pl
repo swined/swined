@@ -9,6 +9,7 @@ use XML::Writer;
 use URI::Escape;
 use Filesys::Statvfs;
 use Time::Duration;
+use IP::Country::Fast;
 
 my $wt = new WT;
 
@@ -31,6 +32,11 @@ $wt->dbh->do(
 	'UPDATE torrents SET del = 1 WHERE id = ? AND owner = ?',
 	undef, param('id'), $ENV{REMOTE_USER},
 ) if param('a') eq 'delete';
+
+$wt->dbh->do(
+	'UPDATE torrents SET show_peers = ? WHERE id = ? AND owner = ?',
+	undef, param('v'), param('id'), $ENV{REMOTE_USER},
+) if param('a') eq 'show_peers';
 
 my @torrents = sort { $b->{ratio} <=> $a->{ratio} } values %{$wt->dbh->selectall_hashref(
 	'SELECT *,up/down AS ratio FROM torrents WHERE owner = ? AND del = 0',
@@ -57,12 +63,28 @@ foreach my $torrent (@torrents) {
 		'size' => $meta->{total_size},
 		'files' => scalar(@{$meta->{files}}),
 		($torrent->{eta} ? ('eta' => duration($torrent->{eta}, 1)) : ()),
-		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'progress', 'up', 'down', 'id', 'vmsize', 'vmrss'),
+		(map { ($_ => $torrent->{$_}) } 'active', 'pid', 'maxratio', 'peers', 'show_peers', 'progress', 'up', 'down', 'id', 'vmsize', 'vmrss'),
 	);
 	$xml->startTag('torrent', %attr);
 	$xml->dataElement('name', $meta->{name});
 	$xml->dataElement('announce', $1) if $meta->{announce} =~ m|^https?://([^/:]+)(?::\d+)?/.*$|i;
 	$xml->dataElement('error', $torrent->{error}) if $torrent->{error};
+	{
+		$xml->startTag('peers');	
+		my $ic = new IP::Country::Fast;
+		do {
+			my @p = split ':';
+			my $cc = lc $ic->inet_atocc($p[0]);
+			$cc =~ s/^\*\*$/lan/;
+			$xml->emptyTag('peer',
+				'ip' => $p[0],
+				'cc' => $cc,
+				'up' => $p[2],
+				'down' => $p[3],
+			);
+		} for sort { Net::IP->new([split ':', $a]->[0])->intip <=> Net::IP->new([split ':', $b]->[0])->intip } split /\|/, $r->{peerlist}) . '</div>';
+		$xml->endTag('peers');
+	}
 	$xml->emptyTag('speed', 'up' => $torrent->{uprate}, 'down' => $torrent->{downrate});
 	$xml->endTag('torrent');
 }
