@@ -82,9 +82,13 @@ foreach my $torrent (@torrents) {
 				'up' => $p[2],
 				'down' => $p[3],
 			);
-		} for sort { Net::IP->new([split ':', $a]->[0])->intip <=> Net::IP->new([split ':', $b]->[0])->intip } split /\|/, $r->{peerlist}) . '</div>';
+		} for sort { 
+			Net::IP->new([split ':', $a]->[0])->intip 
+			<=> 
+		        Net::IP->new([split ':', $b]->[0])->intip 
+		} split /\|/, $torrent->{peerlist};
 		$xml->endTag('peers');
-	}
+	};
 	$xml->emptyTag('speed', 'up' => $torrent->{uprate}, 'down' => $torrent->{downrate});
 	$xml->endTag('torrent');
 }
