@@ -96,6 +96,7 @@ sub syncdb {
 		['torrent', 'longtext', 1],
 		['peers', 'int', 0],
 		['peerlist', 'text', 0],
+		['show_peers', 'int', 0],
 		['vmsize', 'int', 0],
 		['vmrss', 'int', 0],
 	],
