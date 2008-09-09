@@ -266,7 +266,7 @@
 					<xsl:when test='@peers = 0'>
 						none
 					</xsl:when>
-					<xsl:when test='@show_peers'>
+					<xsl:when test='@show_peers > 0'>
 						<xsl:apply-templates select='peer' />
 					</xsl:when>
 					<xsl:otherwise>
