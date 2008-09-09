@@ -263,14 +263,14 @@
 					<xsl:when test='$running = 0'>
 						--
 					</xsl:when>
-					<xsl:when test='@peers > 0'>
-						<xsl:value-of select='@peers' />
-					</xsl:when>
 					<xsl:when test='@peers = 0'>
 						none
 					</xsl:when>
+					<xsl:when test='@show_peers'>
+						<xsl:apply-templates select='peer' />
+					</xsl:when>
 					<xsl:otherwise>
-						oops
+						<xsl:value-of select='@peers' />
 					</xsl:otherwise>
 				</xsl:choose>
 			</td>
@@ -297,6 +297,11 @@
 				</xsl:if>
 			</td>
 		</xsl:element>
+	</xsl:template>
+	<xsl:template match='peer'>
+		<div>
+			<xsl:value-of select='@ip' />
+		</div>
 	</xsl:template>
 	<xsl:template match='disk'>
 		<center>
