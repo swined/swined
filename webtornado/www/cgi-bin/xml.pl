@@ -69,26 +69,22 @@ foreach my $torrent (@torrents) {
 	$xml->dataElement('name', $meta->{name});
 	$xml->dataElement('announce', $1) if $meta->{announce} =~ m|^https?://([^/:]+)(?::\d+)?/.*$|i;
 	$xml->dataElement('error', $torrent->{error}) if $torrent->{error};
-	{
-		$xml->startTag('peers');	
-		my $ic = new IP::Country::Fast;
-		do {
-			my @p = split ':';
-			my $cc = lc $ic->inet_atocc($p[0]);
-			$cc =~ s/^\*\*$/lan/;
-			$xml->emptyTag('peer',
-				'ip' => $p[0],
-				'cc' => $cc,
-				'up' => $p[2],
-				'down' => $p[3],
-			);
-		} for sort { 
-			Net::IP->new([split ':', $a]->[0])->intip 
-			<=> 
-		        Net::IP->new([split ':', $b]->[0])->intip 
-		} split /\|/, $torrent->{peerlist};
-		$xml->endTag('peers');
-	};
+	my $ic = new IP::Country::Fast;
+	do {
+		my @p = split ':';
+		my $cc = lc $ic->inet_atocc($p[0]);
+		$cc =~ s/^\*\*$/lan/;
+		$xml->emptyTag('peer',
+			'ip' => $p[0],
+			'cc' => $cc,
+			'up' => $p[2],
+			'down' => $p[3],
+		);
+	} for sort { 
+		Net::IP->new([split ':', $a]->[0])->intip 
+		<=> 
+	        Net::IP->new([split ':', $b]->[0])->intip 
+	} split /\|/, $torrent->{peerlist};
 	$xml->emptyTag('speed', 'up' => $torrent->{uprate}, 'down' => $torrent->{downrate});
 	$xml->endTag('torrent');
 }
