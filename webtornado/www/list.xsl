@@ -272,6 +272,7 @@
 							<xsl:attribute name='style'>
 								text-decoration: none;
 								text-align: left;
+								color: black;
 							</xsl:attribute>
 							<xsl:apply-templates select='peer' />
 						</xsl:element>
@@ -317,7 +318,12 @@
 			<xsl:element name='img'>
 				<xsl:attribute name='src'>/webtornado/img/cc/<xsl:value-of select='@cc' />.png</xsl:attribute>
 			</xsl:element>
-			<xsl:value-of select='@ip' />
+			<xsl:element name='span'>
+				<xsl:attribute name='style'>
+					<xsl:if test='@up + @down = 0'>color: gray;</xsl:if>
+				</xsl:attribute>
+				<xsl:value-of select='@ip' />
+			</xsl:element>
 		</div>
 	</xsl:template>
 	<xsl:template match='disk'>
