@@ -300,6 +300,9 @@
 	</xsl:template>
 	<xsl:template match='peer'>
 		<div>
+			<xsl:element name='img'>
+				<xsl:attribute name='src'>/webtornado/img/cc/<xsl:value-of select='@cc' />.png</xsl:attribute>
+			</xsl:element>
 			<xsl:value-of select='@ip' />
 		</div>
 	</xsl:template>
