@@ -314,7 +314,7 @@
 		</xsl:element>
 	</xsl:template>
 	<xsl:template match='peer'>
-		<div>
+		<div><nobr>
 			<xsl:element name='img'>
 				<xsl:attribute name='src'>/webtornado/img/cc/<xsl:value-of select='@cc' />.png</xsl:attribute>
 			</xsl:element>
@@ -324,7 +324,7 @@
 				</xsl:attribute>
 				<xsl:value-of select='@ip' />
 			</xsl:element>
-		</div>
+		</nobr></div>
 	</xsl:template>
 	<xsl:template match='disk'>
 		<center>
