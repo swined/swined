@@ -7,6 +7,7 @@ use CGI qw/:all/;
 use CGI::Debug;
 use XML::Writer;
 use URI::Escape;
+use Net::IP;
 use Filesys::Statvfs;
 use Time::Duration;
 use IP::Country::Fast;
@@ -80,10 +81,10 @@ foreach my $torrent (@torrents) {
 			'up' => $p[2],
 			'down' => $p[3],
 		);
-	} for sort { 
-		Net::IP->new([split ':', $a]->[0])->intip 
-		<=> 
-	        Net::IP->new([split ':', $b]->[0])->intip 
+	} for sort {
+		Net::IP->new([split ':', $a]->[0])->intip
+		<=>
+	        Net::IP->new([split ':', $b]->[0])->intip
 	} split /\|/, $torrent->{peerlist};
 	$xml->emptyTag('speed', 'up' => $torrent->{uprate}, 'down' => $torrent->{downrate});
 	$xml->endTag('torrent');
