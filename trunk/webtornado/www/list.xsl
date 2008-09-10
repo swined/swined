@@ -267,10 +267,16 @@
 						none
 					</xsl:when>
 					<xsl:when test='@show_peers > 0'>
-						<xsl:apply-templates select='peer' />
+						<xsl:element name='a'>
+							<xsl:attribute name='href'>?a=show_peers&v=1&id=<xsl:value-of select='@id' /></xsl:attribute>
+							<xsl:apply-templates select='peer' />
+						</xsl:element>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:value-of select='@peers' />
+						<xsl:element name='a'>
+							<xsl:attribute name='href'>?a=show_peers&v=0&id=<xsl:value-of select='@id' /></xsl:attribute>
+							<xsl:value-of select='@peers' />
+						</xsl:element>
 					</xsl:otherwise>
 				</xsl:choose>
 			</td>
