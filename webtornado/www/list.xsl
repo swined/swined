@@ -42,6 +42,7 @@
 					}
 					TD {
 						text-align: center;
+						vertical-align: top;
 					}
 					TD.name {
 						text-align: left;
