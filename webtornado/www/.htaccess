@@ -1,16 +1,16 @@
 RewriteEngine	On
 RewriteBase	/
 
-RewriteRule	^$	webtornado/cgi-bin/list.pl
-RewriteRule	^x$	webtornado/cgi-bin/xml.pl
-RewriteRule	^login$	webtornado/cgi-bin/login.pl
+#RewriteRule	^$	webtornado/cgi-bin/list.pl
+RewriteRule	^$	webtornado/cgi-bin/xml.pl
+#RewriteRule	^login$	webtornado/cgi-bin/login.pl
 RewriteRule	^upload$	webtornado/cgi-bin/upload.pl
 
 RewriteRule	^(\d+).tar$	webtornado/cgi-bin/get.pl?id=$1
 
-RewriteRule	^stop/(\d+|all)$	webtornado/cgi-bin/action.pl?action=stop&id=$1
-RewriteRule	^start/(\d+|all)$	webtornado/cgi-bin/action.pl?action=start&id=$1
-RewriteRule	^delete/(\d+)$	webtornado/cgi-bin/action.pl?action=delete&id=$1
+#RewriteRule	^stop/(\d+|all)$	webtornado/cgi-bin/action.pl?action=stop&id=$1
+#RewriteRule	^start/(\d+|all)$	webtornado/cgi-bin/action.pl?action=start&id=$1
+#RewriteRule	^delete/(\d+)$	webtornado/cgi-bin/action.pl?action=delete&id=$1
 
 AuthType Basic
 AuthName "WebTornado"
