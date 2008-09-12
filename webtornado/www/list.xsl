@@ -228,7 +228,7 @@
 					</span>
 				</xsl:if>
 				<div class='announce'><xsl:value-of select='announce' /></div>
-				<xsl:if test='error'><div class='error'><xsl:value-of select='error' /></div></xsl:if>
+				<xsl:if test='error and $running > 0'><div class='error'><xsl:value-of select='error' /></div></xsl:if>
 			</td>
 			<td>
 				<xsl:call-template name='sz'>
