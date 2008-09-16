@@ -67,12 +67,6 @@ class LJ:
 		rx = re.compile('<blockquote>.+?</blockquote>')
 		rx.replace(res, '')
 		return res
-	if rm: 
-	    return rm.group(1) + ' comments'
-	else: 	
-	    return 'no comments'
-
-		return res
 
 class MainPage(RequestHandler):
 	def get(self):
