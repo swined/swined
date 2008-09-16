@@ -52,11 +52,21 @@ class LJ:
 		return rr
 	def getEntry(self, url):
 		cookies = self.getCookies()
-		res = urlfetch.fetch(url, headers = { 'Cookie' : cookies }, follow_redirects = False)
-		r = ''
-		for k in res.headers:
-			r = r + k + ' = ' + res.headers[k] + '<br>'
-		return r + '<hr><textarea style="width: 100%; height: 400px">' + res.content + '</textarea><hr>'
+		res = None
+		while True:
+			res = urlfetch.fetch(url, headers = { 'Cookie' : cookies }, follow_redirects = False)
+			if res.headers.has_key('Set-Cookie'):
+				t = res.headers['Set-Cookie'].split(';')
+				cookies = cookies + '; ' + t[0]
+			if not res.headers.has_key('Location'):
+				break
+			else:
+				url = res.headers['Location']
+#		r = ''
+#		for k in res.headers:
+#			r = r + k + ' = ' + res.headers[k] + '<br>'
+#		return r + '<hr><textarea style="width: 100%; height: 400px">' + res.content + '</textarea><hr>'
+		return res.content
 
 class MainPage(RequestHandler):
 	def get(self):
