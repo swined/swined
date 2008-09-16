@@ -64,7 +64,7 @@ class LJ:
 			else:
 				url = res.headers['Location']
 		res = res.content
-		rx = re.compile('<blockquote>.+?</blockquote>')
+		rx = re.compile('<blockquote>.+?</blockquote>', re.S)
 		rx.sub(res, '')
 		return res
 
