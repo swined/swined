@@ -1,12 +1,12 @@
-import google.appengine.ext.webapp.util
-import google.appengine.ext.webapp
-import google.appengine.api.urlfetch
+from google.appengine.ext.webapp import util
+from google.appengine.ext import webapp
+from google.appengine.api.urlfetch import fetch
 import re
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-		self.response.out.write(urlfetch.fetch('http://bash.org.ru/abyss').content)
+		self.response.out.write(fetch('http://bash.org.ru/abyss').content)
 
 def main():
 	webapp.run_wsgi_app(webapp.WSGIApplication([
