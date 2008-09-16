@@ -64,7 +64,10 @@ class LJ:
 			else:
 				url = res.headers['Location']
 		res = res.content
-		res = re.compile('<blockquote>.+?</blockquote>', re.S).sub('', res)
+		res = re.compile('^.*?<body >', re.S).sub('', res)
+		res = re.compile('<\/body>.*?$', re.S).sub('', res)
+		res = re.compile('^(.*?)<hr \/>.*?<hr \/> ', re.S).sub('\1', res)
+		res = re.compile('<br style=\'clear: both\' \/>.*?$', re.S).sub('', res)
 		return res
 
 class MainPage(RequestHandler):
