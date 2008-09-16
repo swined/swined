@@ -74,7 +74,7 @@ class MainPage(RequestHandler):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
 		for url in lj.getList():
-			self.response.out.write(lj.getEntry(url))
+			self.response.out.write(lj.getEntry('http://batuich.livejournal.com/346599.html'))
 			return
 
 def main():
