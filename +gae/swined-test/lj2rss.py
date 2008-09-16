@@ -70,7 +70,7 @@ class LJ:
 		res = re.compile('<\/body>.*?$', re.S).sub('', res)
 		res = re.compile('^(.*?)<hr \/>.*?<hr \/> ', re.S).sub('\1', res)
 		res = re.compile('<br style=\'clear: both\' \/>.*?$', re.S).sub('', res)
-		return '<title>' + title + '</title>' res
+		return '<title>' + title + '</title>' + res
 
 class MainPage(RequestHandler):
 	def get(self):
