@@ -1,6 +1,6 @@
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import WSGIApplication, RequestHandler
-from google.appengine.api.ulfetch import fetch
+from google.appengine.api.urlfetch import fetch
 import re
 
 class MainPage(RequestHandler):
