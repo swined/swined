@@ -64,7 +64,7 @@ class LJ:
 			else:
 				url = res.headers['Location']
 		res = res.content
-		title = re.search('<title>.*?</title>', res).group(1)
+		title = re.search('<title>(.*?)</title>', res).group(1)
 		res = re.compile('<blockquote>.*?</blockquote>', re.S).sub('', res)
 		res = re.compile('^.*?<body >', re.S).sub('', res)
 		res = re.compile('<\/body>.*?$', re.S).sub('', res)
