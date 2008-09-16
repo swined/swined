@@ -74,7 +74,7 @@ class LJ:
 			else:
 				url = res.headers['Location']
 		res = res.content
-		if not re.search('<blockquote>'):
+		if not re.search('<blockquote>', res):
 			return None
 		title = re.search('<title>(.*?)</title>', res).group(1)
 		res = re.compile('<blockquote>.*?</blockquote>', re.S).sub('', res)
