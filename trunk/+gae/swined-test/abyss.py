@@ -1,15 +1,15 @@
-from google.appengine.ext.webapp import util
-from google.appengine.ext import webapp
+from google.appengine.ext.webapp.util import *
+from google.appengine.ext.webapp import run_wsgi_app
 from google.appengine.api.urlfetch import fetch
 import re
 
-class MainPage(webapp.RequestHandler):
+class MainPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		self.response.out.write(fetch('http://bash.org.ru/abyss').content)
 
 def main():
-	webapp.run_wsgi_app(webapp.WSGIApplication([
+	run_wsgi_app(WSGIApplication([
 		('/abyss', MainPage),
 	], debug = True))
 
