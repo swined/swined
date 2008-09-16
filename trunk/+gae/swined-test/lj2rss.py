@@ -9,6 +9,7 @@ class LJ:
 	hpass = None
 	session = None
 	cmiss = 0
+	maxcmiss = 5
 	def __init__(self, login, hpass):
 		self.login = login
 		self.hpass = hpass
@@ -91,7 +92,6 @@ class MainPage(RequestHandler):
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
 		for url in lj.getList():
 			self.response.out.write(lj.getEntry(url) + '<hr>')
-			return
 
 def main():
 	run_wsgi_app(WSGIApplication([
