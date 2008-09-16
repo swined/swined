@@ -13,7 +13,7 @@ class LJ:
 	def fetch(self, url, payload = None, method = urlfetch.GET, headers = {}, allow_truncated = False, follow_redirects = False):
 		res = urlfetch.fetch(url, payload, method, headers, allow_truncated, follow_redirects)
 		if res.status_code != 200:
-			raise Exception('http error' + str(res.status_code) + ' (' + url + ')')
+			raise Exception('http error ' + str(res.status_code) + ' (' + url + ')')
 		return res
 	def getSession(self):
 		if self.session is not None:
