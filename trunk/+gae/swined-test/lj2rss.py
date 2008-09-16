@@ -63,11 +63,16 @@ class LJ:
 				break
 			else:
 				url = res.headers['Location']
-#		r = ''
-#		for k in res.headers:
-#			r = r + k + ' = ' + res.headers[k] + '<br>'
-#		return r + '<hr><textarea style="width: 100%; height: 400px">' + res.content + '</textarea><hr>'
-		return res.content
+		res = res.content
+		rx = re.compile('<blockquote>.+?</blockquote>')
+		rx.replace(res, '')
+		return res
+	if rm: 
+	    return rm.group(1) + ' comments'
+	else: 	
+	    return 'no comments'
+
+		return res
 
 class MainPage(RequestHandler):
 	def get(self):
