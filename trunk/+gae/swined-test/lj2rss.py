@@ -51,7 +51,8 @@ class LJ:
 			rr.append(m.group(1))
 		return rr
 	def getEntry(self, url):
-		res = self.fetch(url, headers = { 'Cookie' : self.getCookies() })
+		cookies = self.getCookies()
+		res = urlfetch.fetch(url, headers = { 'Cookie' : cookies }, follow_redirects = False)
 		r = ''
 		for k in res.headers:
 			r = r + k + ' = ' + res.headers[k] + '<br>'
