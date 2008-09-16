@@ -4,16 +4,5 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /
-  script: main.py
-- url: /lj2rss
-  script: lj2rss.py
-- url: /i
-  script: img.py
-- url: /i/u
-  script: img.py
-  login: required
-- url: /i/p/.*
-  script: img.py
-- url: /i/i/.*
-  script: img.py
+- url: /abyss
+  script: abyss.py
