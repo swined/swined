@@ -52,6 +52,7 @@ class LJ:
 		return rr
 	def getEntry(self, url):
 		cookies = self.getCookies()
+		url = url + '?format=light'
 		res = None
 		while True:
 			res = urlfetch.fetch(url, headers = { 'Cookie' : cookies }, follow_redirects = False)
