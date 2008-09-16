@@ -1,12 +1,14 @@
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 from google.appengine.api import urlfetch
+from google.appengine.api import memcache
 import re
 
 class LJ:
 	login = None
 	hpass = None
 	session = None
+	cmiss = 0
 	def __init__(self, login, hpass):
 		self.login = login
 		self.hpass = hpass
@@ -51,7 +53,14 @@ class LJ:
 			rr.append(m.group(1))
 		return rr
 	def getEntry(self, url):
+		mc = memcache.get(url)
+		if mc:
+			return mc
+		if self.cmiss >= self.maxcmiss:
+			return None
+		self.cmiss = self.cmiss + 1
 		cookies = self.getCookies()
+		ourl = url
 		url = url + '?format=light'
 		res = None
 		while True:
@@ -64,13 +73,17 @@ class LJ:
 			else:
 				url = res.headers['Location']
 		res = res.content
+		if not re.search('<blockquote>'):
+			return None
 		title = re.search('<title>(.*?)</title>', res).group(1)
 		res = re.compile('<blockquote>.*?</blockquote>', re.S).sub('', res)
 		res = re.compile('^.*?<body >', re.S).sub('', res)
 		res = re.compile('<\/body>.*?$', re.S).sub('', res)
 		res = re.compile('^(.*?)<hr \/>.*?<hr \/> ', re.S).sub('\1', res)
 		res = re.compile('<br style=\'clear: both\' \/>.*?$', re.S).sub('', res)
-		return '<title>' + title + '</title>' + res
+		res = '<title>' + title + '</title>' + res
+		memcache.add(ourl, res)
+		return res
 
 class MainPage(RequestHandler):
 	def get(self):

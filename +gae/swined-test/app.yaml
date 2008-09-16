@@ -4,7 +4,5 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /abyss
-  script: abyss.py
 - url: /lj2rss
   script: lj2rss.py
