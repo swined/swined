@@ -191,7 +191,7 @@
 			<xsl:if test='position() mod 2 = 0'>
 				<xsl:attribute name='style'>background-color: #eeeeee</xsl:attribute>
 			</xsl:if>
-			<td>
+			<td><nobr>
 				<xsl:choose>
 					<xsl:when test='@active * @pid > 0'>
 						<xsl:element name='a'>
@@ -219,7 +219,7 @@
 					<xsl:attribute name='href'>?a=delete&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
 					<img src='/webtornado/img/delete.png' />
 				</xsl:element>
-			</td>
+			</nobr></td>
 			<td class='name'>
 				<xsl:value-of select='name' />
 				<xsl:if test='@files > 1'>
