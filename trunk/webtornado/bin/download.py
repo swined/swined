@@ -78,7 +78,7 @@ def run(p):
     h = HeadlessDisplayer(p[0], p[1], p[2], p[3], p[4])
     h.cr.execute('SELECT pid,outdir,torrent,up,down FROM torrents WHERE id = %s', (h.torrentId))
     r = h.cr.fetchone()
-    fn = '/tmp/webtornado.' + str(r[0]) + '.torrent'
+    fn = '/tmp/webtornado.' + str(h.torrentId) + '.torrent'
     f = open(fn, 'w')
     f.write(unquote(r[2]))
     f.close()
