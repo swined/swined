@@ -95,7 +95,9 @@
 				</center>
 				<xsl:apply-templates select='disk' />
 				<br />
-				<xsl:apply-templates select='torrents' />
+				<xsl:if test='torrents/torrent'>
+					<xsl:apply-templates select='torrents' />
+				</xsl:if>
 				<center>
 					add new torrent: <form id='form' method='post' action='/webtornado/upload' enctype='multipart/form-data'>
 					<input type='file' name='file' onchange='document.getElementById("form").submit()'/></form>
