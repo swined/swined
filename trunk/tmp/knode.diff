@@ -1,0 +1,21 @@
+--- articlewidget.cpp.4.1	2008-08-27 21:49:55.000000000 +0700
++++ articlewidget.cpp	2008-08-27 15:03:25.000000000 +0700
+@@ -441,7 +441,17 @@
+ 
+   // body
+   QString html;
+-  KMime::Content *text = mArticle->textContent();
++  KMime::Content *text;
++  if (mShowHtml) {
++    foreach ( KMime::Content *var, mArticle->contents() ) {
++      if (var->contentType()->isHTMLText()) {
++        text = var;
++        break;
++      }
++    }
++  }
++  if (!text)
++    text = mArticle->textContent();
+ 
+   // check if codec is available
+   if ( text && !canDecodeText( text->contentType()->charset() ) ) {
