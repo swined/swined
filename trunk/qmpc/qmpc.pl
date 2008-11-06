@@ -8,8 +8,16 @@ my $a = Qt::Application([@ARGV]);
 $a->setMainWidget($m);
 my $mpd = new Audio::MPD;
 
-*MainWin::mpdNextAction_activated = sub {
+*MainWin::next = sub {
     $mpd->next;
+};
+
+*MainWin::prev = sub {
+    $mpd->prev;
+};
+
+*MainWin::play = sub {
+    $mpd->play;
 };
 
 exit $a->exec;
