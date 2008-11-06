@@ -8,47 +8,93 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
-            <height>480</height>
+            <width>202</width>
+            <height>153</height>
         </rect>
     </property>
     <property name="caption">
         <string>qmpc</string>
     </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>toolButton3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>49</y>
+                <width>20</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>|&gt;</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>toolButton5</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>90</x>
+                <y>50</y>
+                <width>20</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&gt;&gt;</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>toolButton4</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>50</y>
+                <width>20</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>&lt;&lt;</string>
+        </property>
+    </widget>
 </widget>
 <menubar>
     <property name="name">
-        <cstring>MenuBar</cstring>
+        <cstring>qt_dead_widget_MenuBar</cstring>
     </property>
-    <item text="MPD" name="MPD">
-        <action name="mpdNextAction"/>
-    </item>
 </menubar>
 <toolbars>
 </toolbars>
-<actions>
-    <action>
-        <property name="name">
-            <cstring>mpdNextAction</cstring>
-        </property>
-        <property name="text">
-            <string>Next</string>
-        </property>
-        <property name="menuText">
-            <string>Next</string>
-        </property>
-    </action>
-</actions>
 <connections>
     <connection>
-        <sender>mpdNextAction</sender>
-        <signal>activated()</signal>
+        <sender>toolButton3</sender>
+        <signal>clicked()</signal>
         <receiver>MainWin</receiver>
-        <slot>mpdNextAction_activated()</slot>
+        <slot>play()</slot>
+    </connection>
+    <connection>
+        <sender>toolButton4</sender>
+        <signal>clicked()</signal>
+        <receiver>MainWin</receiver>
+        <slot>prev()</slot>
+    </connection>
+    <connection>
+        <sender>toolButton5</sender>
+        <signal>clicked()</signal>
+        <receiver>MainWin</receiver>
+        <slot>next()</slot>
     </connection>
 </connections>
 <slots>
-    <slot>mpdNextAction_activated()</slot>
+    <slot>play()</slot>
+    <slot>prev()</slot>
+    <slot>next()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>
