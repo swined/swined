@@ -1,0 +1,7 @@
+## Interface: 30000
+## Title: SpellCheck 0.0.1
+## Author: swined
+## Version: 0.0.1
+## Notes: Checks for available heal/buff/cure spells on party members
+## DefaultState: enabled
+SpellCheck.xml
