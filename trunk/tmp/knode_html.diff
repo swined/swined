@@ -1,0 +1,60 @@
+diff -Nur kdepim-3.5.10-orig/knode/articlewidget.cpp kdepim-3.5.10-patched/knode/articlewidget.cpp
+--- kdepim-3.5.10-orig/knode/articlewidget.cpp	2006-10-02 00:30:30.000000000 +0700
++++ kdepim-3.5.10-patched/knode/articlewidget.cpp	2008-11-13 04:10:41.000000000 +0600
+@@ -103,7 +103,7 @@
+   mViewer->setJScriptEnabled( false );
+   mViewer->setJavaEnabled( false );
+   mViewer->setMetaRefreshEnabled( false );
+-  mViewer->setOnlyLocalReferences( true );
++  mViewer->setOnlyLocalReferences( false );
+   mViewer->view()->setFocusPolicy( QWidget::WheelFocus );
+   connect( mViewer->browserExtension(), SIGNAL(openURLRequestDelayed(const KURL&, const KParts::URLArgs&)),
+            SLOT(slotURLClicked(const KURL&)) );
+@@ -392,7 +392,11 @@
+ 
+   // body
+   QString html;
+-  KMime::Content *text = mArticle->textContent();
++  KMime::Content *text = 0;
++  if (mShowHtml)
++    text = mArticle->htmlContent();
++  if (!text)
++    text = mArticle->textContent();
+ 
+   // check if codec is available
+   if ( text && !canDecodeText( text->contentType()->charset() ) ) {
+diff -Nur kdepim-3.5.10-orig/libkmime/kmime_content.cpp kdepim-3.5.10-patched/libkmime/kmime_content.cpp
+--- kdepim-3.5.10-orig/libkmime/kmime_content.cpp	2007-01-15 17:28:42.000000000 +0600
++++ kdepim-3.5.10-patched/libkmime/kmime_content.cpp	2008-11-07 15:56:48.000000000 +0600
+@@ -492,6 +492,20 @@
+   return ret;
+ }
+ 
++Content* Content::htmlContent()
++{
++  Content *ret=0;
++
++  //return the first content with mimetype=text/*
++  if(contentType()->isHTMLText())
++    ret=this;
++  else if(c_ontents)
++    for(Content *c=c_ontents->first(); c; c=c_ontents->next())
++      if( (ret=c->htmlContent())!=0 )
++        break;
++
++  return ret;
++}
+ 
+ void Content::attachments(Content::List *dst, bool incAlternatives)
+ {
+diff -Nur kdepim-3.5.10-orig/libkmime/kmime_content.h kdepim-3.5.10-patched/libkmime/kmime_content.h
+--- kdepim-3.5.10-orig/libkmime/kmime_content.h	2005-09-10 15:23:52.000000000 +0700
++++ kdepim-3.5.10-patched/libkmime/kmime_content.h	2008-11-07 15:56:48.000000000 +0600
+@@ -104,6 +104,7 @@
+     void fromUnicodeString(const QString &s);
+ 
+     Content* textContent();
++    Content* htmlContent();    
+     void attachments(List *dst, bool incAlternatives=false);
+     void addContent(Content *c, bool prepend=false);
+     void removeContent(Content *c, bool del=false);
