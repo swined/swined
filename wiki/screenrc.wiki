@@ -1,0 +1,5 @@
+#labels .conf
+{{{
+hardstatus alwayslastline
+hardstatus string '%{= kw}%-w%{= BW}%n %t%{-}%+w %-= %d.%m - %c:%s [%H]'
+}}}
