@@ -1,0 +1,2 @@
+content nsutemp jar:chrome/nsutemp.jar!/content/
+overlay chrome://browser/content/browser.xul chrome://nsutemp/content/nsutemp.xul
