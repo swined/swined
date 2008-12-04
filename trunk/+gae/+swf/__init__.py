@@ -2,16 +2,18 @@ from google.appengine.api import urlfetch
 
 class UserAgent:
 	cookies = {}
+	response = None
 	def get(self, url):
 		return self.request(url)
 	def post(self, url, payload):
 		return self.request(url, urlfetch.POST, payload)
 	def request(self, url, method = urlfetch.GET, payload = None):
 		r = urlfetch.fetch(url, payload, method, { 'Cookie' : self.__cookieString() }, False, False)
-		if res.headers.has_key('Set-Cookie'):
-			for cookie in res.headers['Set-Cookie'].split(';'):
+		self.response = r
+		if r.headers.has_key('Set-Cookie'):
+			for cookie in r.headers['Set-Cookie'].split(';'):
 				k,v = cookie.split('=')
-				cookies[k] = v
+				self.cookies[k] = v
 		if r.headers.has_key('Location'):
 			return self.request(r.headers['Location'], method, payload)
 		if r.status_code != 200:
