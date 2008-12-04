@@ -1,4 +1,4 @@
-import logginng
+import logging
 from google.appengine.api import urlfetch
 
 class UserAgent:
