@@ -32,6 +32,7 @@ class LJ:
 	def getList(self, skip = 0):
 		self.getSession()
 		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip))
+		raise Exception(res)
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = []
 		for m in rx.finditer(res):
