@@ -4,5 +4,7 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /lj2rss
+- url: /friends.rss
   script: lj2rss.py
+- url: /test
+  script: test.py
