@@ -12,8 +12,9 @@ class UserAgent:
 		self.response = r
 		if r.headers.has_key('Set-Cookie'):
 			for cookie in r.headers['Set-Cookie'].split(';'):
-				k,v = cookie.split('=')
-				self.cookies[k] = v
+				p = cookie.split('=')
+				raise Exception('set cookie: %s=%s' % (p[0],p[1]))
+				self.cookies[p[0]] = p[1]
 		if r.headers.has_key('Location'):
 			return self.request(r.headers['Location'], method, payload)
 		if r.status_code != 200:
