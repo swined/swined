@@ -5,12 +5,13 @@ import re
 from swf import UserAgent
 
 class LJ:
-	ua = UserAgent()
+	ua = None
 	user = None
 	hpass = None
 	cmiss = 0
 	maxcmiss = 5
 	def __init__(self, user, hpass):
+		self.ua = UserAgent()
 		self.user = user
 		self.hpass = hpass
 	def login(self):
