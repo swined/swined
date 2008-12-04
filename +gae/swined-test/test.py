@@ -6,10 +6,10 @@ class MainPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		ua = UserAgent()
-		ua.get('http://academ.org/')
+		ua.get('http://livejournal.com/')
 		for k,v in ua.cookies:
 			self.response.out.write('%s=%s<br>' % (k,v))
-		self.response.out.write(ua.response.content)
+#		self.response.out.write(ua.response.content)
 
 def main():
 	run_wsgi_app(WSGIApplication([
