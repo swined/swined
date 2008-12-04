@@ -24,7 +24,9 @@ class LJ:
 					raise Exception(v)
 				if k == 'ljsession':
 					self.ua.cookies['ljsession'] = v
-					return v
+					t = v.split(':')
+					self.ua.cookies['ljloggedin'] = t[1] + ':' + t[2]
+					return
 				k = None
 			else:
 				k = v
