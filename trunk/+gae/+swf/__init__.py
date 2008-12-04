@@ -27,6 +27,6 @@ class UserAgent:
 		return self.response
 	def __cookieString(self):
 		r = ''
-		for k,v in self.cookies:
-			r = '%s=%s; %s' % (k, v, r)
+		for k in self.cookies:
+			r = '%s=%s; %s' % (k, self.cookies[k], r)
 		return r
