@@ -1,4 +1,4 @@
 #!/bin/sh
 
-~/google_appengine/appcfg.py update ~/svn/swined/+gae/swined-test
+~/google_appengine/appcfg.py update ~/gcode/+gae/swined-test
 svn commit -m 'auto commit'
