@@ -7,6 +7,9 @@ use LWP::Simple;
 use Digest::MD5;
 use XML::RSS::Parser::Lite;
 use HTML::Entities;
+use Fcntl qw/:flock/;
+
+open(SELF, '<', $0) and flock(SELF, LOCK_EX | LOCK_NB) or die;
 
 my $dbh = DBI->connect('DBI:mysql:database=lj2mail');
 
@@ -43,7 +46,7 @@ while (1) {
 	    my $title = encode_base64 $title;
 	    ($title = "=?utf-8?B?${title}?=") =~ s/[\r\n]//g;
 	    mail::send($user->{email}, $title, $msg) or next if $user->{updated};
-	    print "$msg\n";
+#	    print "$msg\n";
 	}
     }
     $dbh->do('UPDATE users SET updated = ? WHERE id = ?', undef, 
