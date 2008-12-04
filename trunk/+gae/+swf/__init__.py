@@ -17,7 +17,7 @@ class UserAgent:
 			logging.debug('set cookie: ' + self.response.headers['Set-Cookie'])
 			for cookie in self.response.headers['Set-Cookie'].split(';'):
 				p = cookie.split('=')
-				raise Exception('set cookie: %s=%s' % (p[0],p[1]))
+				logging.debug('set cookie: %s=%s' % (p[0],p[1]))
 				self.cookies[p[0]] = p[1]
 		if self.response.headers.has_key('Location'):
 			logging.debug('redirecting to ' + self.response.headers['Location'])
