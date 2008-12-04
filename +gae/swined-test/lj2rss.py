@@ -9,7 +9,7 @@ class LJ:
 	hpass = None
 	session = None
 	cmiss = 0
-	maxcmiss = 5
+	maxcmiss = 10
 	def __init__(self, login, hpass):
 		self.login = login
 		self.hpass = hpass
