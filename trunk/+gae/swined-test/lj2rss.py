@@ -6,17 +6,17 @@ from swf import UserAgent
 
 class LJ:
 	ua = UserAgent()
-	login = None
+	user = None
 	hpass = None
 	cmiss = 0
 	maxcmiss = 5
-	def __init__(self, login, hpass):
-		self.login = login
+	def __init__(self, user, hpass):
+		self.user = user
 		self.hpass = hpass
 	def login(self):
 		if self.ua.cookies.has_key('ljsession'):
 			return
-		res = self.ua.post('http://www.livejournal.com/interface/flat', 'mode=sessiongenerate&expiration=short&user=' + self.login + '&hpassword=' + self.hpass)
+		res = self.ua.post('http://www.livejournal.com/interface/flat', 'mode=sessiongenerate&expiration=short&user=' + self.user + '&hpassword=' + self.hpass)
 		k = None
 		for v in res.split("\n"):
 			if k:
