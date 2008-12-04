@@ -2,11 +2,11 @@ from google.appengine.api import urlfetch
 
 class UserAgent:
 	cookies = {}
-	def get(self, url):
+#	def get(self, url):
 		# 
-	def post(self, url, data):
+#	def post(self, url, data):
 		#
-	def request(self, url, data, method):
+#	def request(self, url, data, method):
 		#
 	def __cookieString(self):
 		r = ''
