@@ -10,7 +10,8 @@ class UserAgent:
 		return self.request(url, urlfetch.POST, payload)
 	def request(self, url, method, payload):
 		logging.debug('requesting: ' + url)
-		self.response = urlfetch.fetch(url, payload, method, { 'Cookie' : self.__cookieString() }, False, False)
+		logging.debug('cookies: ' + self.__cookies())
+		self.response = urlfetch.fetch(url, payload, method, { 'Cookie' : self.__cookies() }, False, False)
 		if self.response.headers.has_key('Set-Cookie'):
 			logging.debug('set cookie: ' + self.response.headers['Set-Cookie'])
 			c = self.response.headers['Set-Cookie'].split(';')
@@ -22,7 +23,7 @@ class UserAgent:
 		if self.response.status_code != 200:
 			raise Exception('http error ' + str(self.response.status_code) + ' at ' + url)
 		return self.response.content
-	def __cookieString(self):
+	def __cookies(self):
 		r = ''
 		for k in self.cookies:
 			r = '%s=%s; %s' % (k, self.cookies[k], r)
