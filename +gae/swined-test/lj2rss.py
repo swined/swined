@@ -17,10 +17,7 @@ class LJ:
 	def getSession(self):
 		if self.session is not None:
 			return self.session
-		res = self.ua.post(
-			'http://www.livejournal.com/interface/flat', 
-			'mode=sessiongenerate&expiration=short&user=' + self.login + '&hpassword=' + self.hpass,
-		)
+		res = self.ua.post('http://www.livejournal.com/interface/flat', 'mode=sessiongenerate&expiration=short&user=' + self.login + '&hpassword=' + self.hpass)
 		k = None
 		for v in res.split("\n"):
 			if k:
@@ -33,7 +30,7 @@ class LJ:
 			else:
 				k = v
 	def getList(self, skip = 0):
-		self.getSession()
+		raise Exception(self.getSession())
 		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip))
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = []
