@@ -33,15 +33,15 @@ class LJ:
 			else:
 				k = v
 	def getList(self, skip = 0):
-		res = self.ua.get(
-			'http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip),
-		)
+		self.getSession()
+		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip))
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = []
 		for m in rx.finditer(res):
 			rr.append(m.group(1))
 		return rr
 	def getEntry(self, url):
+		self.getSession()
 		mc = memcache.get(url)
 		if mc:
 			return mc
