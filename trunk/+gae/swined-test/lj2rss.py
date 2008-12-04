@@ -30,7 +30,7 @@ class LJ:
 			else:
 				k = v
 	def getList(self, skip = 0):
-		raise Exception(self.getSession())
+		self.getSession()
 		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip))
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = []
