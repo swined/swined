@@ -48,9 +48,7 @@ class LJ:
 		if self.cmiss >= self.maxcmiss:
 			return None
 		self.cmiss = self.cmiss + 1
-		ourl = url
-		url = url + '?format=light'
-		res = self.ua.get(url)
+		res = self.ua.get(url + '?format=light')
 		if not re.search('<blockquote>', res):
 			return None
 		title = re.search('<title>(.*?)</title>', res).group(1)
@@ -60,7 +58,7 @@ class LJ:
 		res = re.compile('^(.*?)<hr \/>.*?<hr \/> ', re.S).sub('\1', res)
 		res = re.compile('<br style=\'clear: both\' \/>.*?$', re.S).sub('', res)
 		res = '<title>' + title + '</title>' + res
-		memcache.add(ourl, res)
+		memcache.add(url, res)
 		return res
 
 class MainPage(RequestHandler):
@@ -68,7 +66,7 @@ class MainPage(RequestHandler):
 		self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		lj = LJ(self.request.get('login'), self.request.get('hash'))
 		for url in lj.getList():
-			self.response.out.write(lj.getEntry(url))
+			self.response.out.write(url)
 			self.response.out.write('<hr>')
 
 def main():
