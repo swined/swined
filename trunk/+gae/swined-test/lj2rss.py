@@ -96,7 +96,7 @@ class MainPage(RequestHandler):
 
 def main():
 	run_wsgi_app(WSGIApplication([
-		('/lj2rss', MainPage),
+		('/friends.rss', MainPage),
 	], debug = True))
 
 if __name__ == '__main__': 
