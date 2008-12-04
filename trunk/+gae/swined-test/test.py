@@ -9,7 +9,7 @@ class MainPage(RequestHandler):
 		ua.get('http://academ.org/')
 		for k,v in ua.cookies:
 			self.response.out.write('%s=%s<br>' % (k,v))
-#		self.response.out.write(ua.response.content)
+		self.response.out.write(ua.response.content)
 
 def main():
 	run_wsgi_app(WSGIApplication([
