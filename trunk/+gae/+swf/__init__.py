@@ -21,7 +21,7 @@ class UserAgent:
 			return self.request(self.response.headers['Location'], method, payload)
 		if self.response.status_code != 200:
 			raise Exception('http error ' + str(self.response.status_code) + ' at ' + url)
-		return self.response
+		return self.response.content
 	def __cookieString(self):
 		r = ''
 		for k in self.cookies:
