@@ -1,10 +1,11 @@
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import WSGIApplication, RequestHandler
-from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 import re
+from swf import UserAgent
 
 class LJ:
+	ua = UserAgent()
 	login = None
 	hpass = None
 	session = None
@@ -13,19 +14,13 @@ class LJ:
 	def __init__(self, login, hpass):
 		self.login = login
 		self.hpass = hpass
-	def fetch(self, url, payload = None, method = urlfetch.GET, headers = {}, allow_truncated = False, follow_redirects = False):
-		res = urlfetch.fetch(url, payload, method, headers, allow_truncated, follow_redirects)
-		if res.status_code != 200:
-			raise Exception('http error ' + str(res.status_code) + ' (' + url + ')')
-		return res
 	def getSession(self):
 		if self.session is not None:
 			return self.session
-		res = self.fetch(
+		res = self.ua.post(
 			'http://www.livejournal.com/interface/flat', 
 			'mode=sessiongenerate&expiration=short&user=' + self.login + '&hpassword=' + self.hpass,
-			urlfetch.POST,
-		).content
+		)
 		k = None
 		for v in res.split("\n"):
 			if k:
@@ -37,17 +32,10 @@ class LJ:
 				k = None
 			else:
 				k = v
-	def getLoggedIn(self):
-		ses = self.getSession()
-		t = ses.split(':')
-		return t[1] + ':' + t[2]
-	def getCookies(self):
-		return 'ljsession=' + self.getSession() + '; ljloggedin=' + self.getLoggedIn() + '; '
 	def getList(self, skip = 0):
-		res = self.fetch(
+		res = self.ua.get(
 			'http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip),
-			headers = { 'Cookie' : self.getCookies() }
-		).content
+		)
 		rx = re.compile(": <a href='(http://.*?/\d+\.html)\?format=light'>")
 		rr = []
 		for m in rx.finditer(res):
@@ -60,20 +48,9 @@ class LJ:
 		if self.cmiss >= self.maxcmiss:
 			return None
 		self.cmiss = self.cmiss + 1
-		cookies = self.getCookies()
 		ourl = url
 		url = url + '?format=light'
-		res = None
-		while True:
-			res = urlfetch.fetch(url, headers = { 'Cookie' : cookies }, follow_redirects = False)
-			if res.headers.has_key('Set-Cookie'):
-				t = res.headers['Set-Cookie'].split(';')
-				cookies = cookies + '; ' + t[0]
-			if not res.headers.has_key('Location'):
-				break
-			else:
-				url = res.headers['Location']
-		res = res.content
+		res = self.ua.get(url)
 		if not re.search('<blockquote>', res):
 			return None
 		title = re.search('<title>(.*?)</title>', res).group(1)
