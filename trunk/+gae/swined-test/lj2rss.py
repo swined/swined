@@ -30,6 +30,7 @@ class LJ:
 				k = None
 			else:
 				k = v
+		raise Exception('logon failed')
 	def getList(self, skip = 0):
 		self.login()
 		res = self.ua.get('http://www.livejournal.com/mobile/friends.bml?skip=' + str(skip))
