@@ -11,8 +11,8 @@ class UserAgent:
 	def request(self, url, method, payload):
 		logging.debug('requesting ' + url)
 		self.response = urlfetch.fetch(url, payload, method, { 'Cookie' : self.__cookieString() }, False, False)
-		for k in self.response.headers:
-			logging.debug('header: %s' % (k))
+#		for k in self.response.headers:
+#			logging.debug('header: %s' % (k))
 		if self.response.headers.has_key('Set-Cookie'):
 			logging.debug('set cookie: ' + self.response.headers['Set-Cookie'])
 			for cookie in self.response.headers['Set-Cookie'].split(';'):
