@@ -10,7 +10,7 @@ use HTTP::Request;
 use Net::Netrc;
 
 sub ljpost {
-    my ($rc, $ct) = @_;
+    my ($rc, $ct, $tt) = @_;
     my @t = localtime;    
     my $data = {
 	'ver' => 1,
@@ -18,6 +18,7 @@ sub ljpost {
 	'user' => $rc->login, 
 	'hpassword' => md5_hex($rc->password),
 	'event' => $ct,
+	'subject' => $tt,
 	'year' => $t[5] + 1900,
 	'mon' => $t[4] + 1,
 	'day' => $t[3],
@@ -38,12 +39,11 @@ die 'failed to initialize cache' unless -d $c->{cache};
 my $lj = Net::Netrc->lookup('livejournal.com') || die "LJ credentials not found\n";
 my $feed = new XML::Atom::Feed(new URI($c->{url}));
 foreach my $entry (reverse $feed->entries) {
-    my $tt = decode_utf8 $entry->title;
-    print sprintf "# %s\n", $tt;
     my $cache = "$c->{cache}/" . md5_hex $entry->link->href;
     next if -e $cache;
+    my $tt = decode_utf8 $entry->title;
     my $ct = $entry->content->body . "<br><br>[Crossposted from <a href='$c->{url}'>$c->{name}</a>] [<a href='" . $entry->link->href . "'>Comments</a>]";
-    ljpost $lj, $ct;
+    ljpost $lj, $ct, $tt;
     open(F, '>', $cache) and close(F);
 }
 
