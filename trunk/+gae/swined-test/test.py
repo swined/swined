@@ -15,7 +15,7 @@ class FetchPage(RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 		ua = UserAgent()
-		ua.get('http://lj2mail.net.ru/friends.rss?login=%s&hash=%s' % (self.request.get('login'), self.request.get('hash')))
+		ua.get('http://lj2rss.net.ru/friends.rss?login=%s&hash=%s' % (self.request.get('login'), self.request.get('hash')))
 		self.response.out.write(ua.response.content)
 
 
