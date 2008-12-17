@@ -8,3 +8,5 @@ handlers:
   script: lj2rss.py
 - url: /test
   script: test.py
+- url: /fetch
+  script: test.py
