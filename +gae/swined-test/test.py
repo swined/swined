@@ -22,7 +22,7 @@ class FetchPage(RequestHandler):
 def main():
 	run_wsgi_app(WSGIApplication([
 		('/test', MainPage),
-		('/fetch', MainPage),
+		('/fetch', FetchPage),
 	], debug = True))
 
 if __name__ == '__main__': 
