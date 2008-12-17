@@ -4,6 +4,9 @@ from google.appengine.api import urlfetch
 class UserAgent:
 	cookies = {}
 	response = None
+	def __init__(self):
+		self.cookies = {}
+		self.response = None
 	def get(self, url):
 		return self.request(url, urlfetch.GET, None)
 	def post(self, url, payload):
