@@ -30,7 +30,10 @@ while (1) {
     xprint "parsing xml\n";
     my $rss = new XML::RSS::Parser::Lite;
     {
-	local $SIG{__DIE__} = sub { die $rst };
+	local $SIG{__DIE__} = sub { 
+	    exit if $o->{quiet};
+	    die $rst;
+	};
 	$rss->parse($rst);
     };
     xprint "parsing entries\n";
