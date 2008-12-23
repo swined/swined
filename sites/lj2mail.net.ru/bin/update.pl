@@ -8,23 +8,32 @@ use Digest::MD5;
 use XML::RSS::Parser::Lite;
 use HTML::Entities;
 use Fcntl qw/:flock/;
+use Getopt::Long;
+
+my $o = {};
+GetOptions($o, 'quiet');
 
 open(SELF, '<', $0) and flock(SELF, LOCK_EX | LOCK_NB) or exit;
+
+sub xprint {
+	print @_ unless $o->{quiet};
+	1;
+}
 
 my $dbh = DBI->connect('DBI:mysql:database=lj2mail');
 
 while (1) {
     my $user = $dbh->selectrow_hashref('SELECT * FROM users WHERE updated < ? OR updated IS NULL ORDER BY updated ASC LIMIT 1', undef, time);
-    print("nothing to check, waiting\n") and sleep(15*60) and next unless $user;
-    print "checking $user->{login} (" . time . ")\n";
+    xprint("nothing to check, waiting\n") and sleep(15*60) and next unless $user;
+    xprint "checking $user->{login} (" . time . ")\n";
     my $rst = get "http://lj2rss.net.ru/friends.rss?login=$user->{login}&hash=$user->{hash}";
-    print "parsing xml\n";
+    xprint "parsing xml\n";
     my $rss = new XML::RSS::Parser::Lite;
     {
 	local $SIG{__DIE__} = sub { die $rst };
 	$rss->parse($rst);
     };
-    print "parsing entries\n";
+    xprint "parsing entries\n";
     for (my $i = 0; $i < $rss->count; $i++) {
 	my $e = $rss->get($i);
 	if (($e->get('url') =~ /http:\/\/lj2rss.net.ru\//) and
@@ -39,14 +48,11 @@ while (1) {
 	    print "sending $title\n";
 	    my $link = $e->get('url');
 	    my $msg = decode_entities $e->get('description');
-#	    $msg = "<div >$msg</div>" unless $msg =~ /^<div /;
-#	    $msg =~ s/^<div .*?>/$&<a href='$link'>Original entry<\/a> <a href='http:\/\/lj2mail.net.ru\/u$unsub'>Unsubscribe<\/a><hr \/>/s;
 	    $msg =~ s/^/$&<a href='$link'>Original entry<\/a> <a href='http:\/\/lj2mail.net.ru\/u$unsub'>Unsubscribe<\/a><hr \/>/s;
 	    $dbh->do('INSERT INTO entries(owner, hash, updated, unsubscribe) VALUES(?, ?, ?, ?)', undef, $user->{id}, $hash, time, $unsub);
 	    my $title = encode_base64 $title;
 	    ($title = "=?utf-8?B?${title}?=") =~ s/[\r\n]//g;
 	    mail::send($user->{email}, $title, $msg) or next if $user->{updated};
-#	    print "$msg\n";
 	}
     }
     $dbh->do('UPDATE users SET updated = ? WHERE id = ?', undef, 
