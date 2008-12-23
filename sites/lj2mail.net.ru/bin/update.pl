@@ -45,7 +45,7 @@ while (1) {
 	    next if $dbh->selectrow_hashref('SELECT COUNT(*) FROM entries WHERE owner = ? AND hash = ?', undef, $user->{id}, $hash)->{'COUNT(*)'};
 	    my $unsub = Digest::MD5::md5_hex $e->get('url') . rand() . time();	
 	    my $title = decode_entities $e->get('title');
-	    print "sending $title\n";
+	    xprint "sending $title\n";
 	    my $link = $e->get('url');
 	    my $msg = decode_entities $e->get('description');
 	    $msg =~ s/^/$&<a href='$link'>Original entry<\/a> <a href='http:\/\/lj2mail.net.ru\/u$unsub'>Unsubscribe<\/a><hr \/>/s;
