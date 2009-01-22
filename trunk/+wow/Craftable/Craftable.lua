@@ -48,7 +48,7 @@ local colors = {
 	medium = { r = 1.00, g = 1.00, b = 0.00 },
 	easy = { r = 0.25, g = 0.75, b = 0.25 },
 	trivial = { r = 0.50, g = 0.50, b = 0.50 },
-};
+}
 
 local frame = CreateFrame('FRAME');
 frame:RegisterEvent('TRADE_SKILL_SHOW');
