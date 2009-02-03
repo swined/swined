@@ -50,6 +50,16 @@ local colors = {
 	trivial = { r = 0.50, g = 0.50, b = 0.50 },
 }
 
+local function append(tooltip, item, prefix)
+	for skill,dump in pairs(Craftable_SkillDump or {}) do
+		for k,v in pairs(findSkills(dump, item)) do
+			local f = colors[ v[2] ];
+			tooltip:AddLine(prefix .. '[' .. v[1] .. ']', f['r'], f['g'], f['b']);
+			append(tooltip, v[1], prefix .. '   ');
+		end
+	end
+end
+
 local frame = CreateFrame('FRAME');
 frame:RegisterEvent('TRADE_SKILL_SHOW');
 frame:SetScript('OnEvent', function(self, ...)
@@ -60,13 +70,6 @@ local real_GameTooltipOnShow = GameTooltip:GetScript('OnShow')
 GameTooltip:SetScript('OnShow', function(self, ...)
 	if not self then self = GameTooltip; end
 	local item = self.GetItem and self:GetItem()
-	if item then
-		for skill,dump in pairs(Craftable_SkillDump or {}) do
-			for k,v in pairs(findSkills(dump, item)) do
-				local f = colors[ v[2] ];
-				self:AddLine('[' .. v[1] .. ']', f['r'], f['g'], f['b']);
-			end
-		end
-	end
+	if item then append(self, item, ''); end
 	if real_GameTooltipOnShow then return real_GameTooltipOnShow(self, ...); end
 end)
