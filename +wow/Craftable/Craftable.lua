@@ -50,14 +50,20 @@ local colors = {
 	trivial = { r = 0.50, g = 0.50, b = 0.50 },
 }
 
-local function append(tooltip, item, prefix)
+local function append(tooltip, item, prefix, seen)
+	if not seen then seen = {}; end
 	for skill,dump in pairs(Craftable_SkillDump or {}) do
 		for k,v in pairs(findSkills(dump, item)) do
-			local f = colors[ v[2] ];
-			tooltip:AddLine(prefix .. '[' .. v[1] .. ']', f['r'], f['g'], f['b']);
-			append(tooltip, v[1], prefix .. '   ');
+			local n = v[1];
+			if not seen[n] then
+				local f = colors[ v[2] ];
+				tooltip:AddLine(prefix .. '[' .. n .. ']', f['r'], f['g'], f['b']);
+				seen[n] = 1;
+				seen = append(tooltip, n, prefix .. '   ', seen);
+			end
 		end
 	end
+	return seen;
 end
 
 local frame = CreateFrame('FRAME');
