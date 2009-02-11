@@ -1,0 +1,4 @@
+#labels linux
+{{{
+sudo CONCURRENCY_LEVEL=3 make-kpkg bzImage
+}}}
