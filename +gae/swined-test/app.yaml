@@ -10,3 +10,5 @@ handlers:
   script: test.py
 - url: /fetch
   script: test.py
+- url: /nb/*
+  script: nb.py
