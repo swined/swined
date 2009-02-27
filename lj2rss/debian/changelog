@@ -1,3 +1,9 @@
+lj2rss (0.0.1+svn1502) unstable; urgency=low
+
+  * svn revision 1502
+
+ -- Alexey Alexandrov <swined@gmail.com>  Fri, 27 Feb 2009 16:07:35 +0600
+
 lj2rss (0.0.1) unstable; urgency=low
 
   * initial commit 
