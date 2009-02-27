@@ -1,3 +1,17 @@
-svn commit -m 'auto commit'
-svn-buildpackage -rfakeroot -us -uc
-sudo dpkg -i ../build-area/lj2rss_0.0.1_i386.deb
+#!/bin/sh
+
+die() {
+    echo $*
+    exit 1
+}
+
+svn up || die up failed
+svn commit -m 'auto commit' || die commit failed
+REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
+VER=0.0.1+svn$REV
+export DEBEMAIL='Alexey Alexandrov <swined@gmail.com>'
+svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
+rm ../lj2rss_${VER}_i386.changes
+for deb in ../*.deb; do sudo reprepro -b /var/web/deb.swined.net includedeb stable $deb && rm $deb; done
+sudo apt-get update
+sudo apt-get install -y --force-yes lj2rss
