@@ -4,6 +4,7 @@ Priority: extra
 Maintainer: Alexey Alexandrov <swined@gmail.com>
 Build-Depends: debhelper
 Standards-Version: 3.7.2
+Description: livejournal to rss
 
 Package: lj2rss
 Architecture: any
