@@ -15,8 +15,10 @@ class Notebook():
 		self.user = user
 #	def tags(self):
 		#
-#	def list(self, tags):
-		#
+	def list(self, tags):
+		query = Note.all().filter('user = ', self.user)
+		for tag in tags: query.filter('tags = ', tag)
+		query.order('mtime').fetch()
 	def add(self, text, tags):
 		note = Note(
 			user = [ self.user ],
@@ -39,6 +41,7 @@ class MainPage(RequestHandler):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
 		note = nb.add('test', ['1', '2', '3'])
+		for note in nb.list([]): self.response.out.write(note.text)
 		nb.delete(note.key())
 		self.response.out.write('test')
 		
