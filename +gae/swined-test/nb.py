@@ -5,7 +5,7 @@ from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 
 class Note(db.Model):
 	owner = db.ListProperty(users.User)
-	mtime = db.DateTimeProperty(auto_now = true)
+	mtime = db.DateTimeProperty(auto_now = True)
 	tags = db.StringListProperty()
 	text = db.TextProperty()
 
