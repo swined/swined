@@ -4,7 +4,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 
 class Note(db.Model):
-	owner = db.ListProperty(db.UserProperty)
+	owner = db.ListProperty(users.User)
 	mtime = db.DateTimeProperty(auto_now = true)
 	tags = db.StringListProperty()
 	text = db.TextProperty()
