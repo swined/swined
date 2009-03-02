@@ -59,19 +59,21 @@ def exml(text):
 def ftag(name, value):
 	return '<%s>%s</%s>' % (exml(name), exml(value), exml(name))
 
+def farr(name, values):
+	text = ''
+	for v in values:
+		text = text + ftag(name, v)
+	return text
+
 class MainPage(RequestHandler):
         def get(self):
-                self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
-		for note in nb.list(['1', '5', '>_<']):
-			self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
-			for tag in note.tags: self.response.out.write(' +' + tag)
-			self.response.out.write('<br>')
-		self.response.out.write('---<br>')
-		self.response.out.write('<tags>')
-		for tag in nb.tags():
-			self.response.out.write(ftag('tag', tag))
-		self.response.out.write('</tags>')
+                self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
+		self.response.out.write('<nb>')
+		for note in nb.list([]):
+			self.response.out.write('<note>' + ftag('text', note.text) + farr('tag', note.tags) + '</note>')
+		self.response.out.write('<tags>' + farr('tag', nb.tags) + '</tags>')
+		self.response.out.write('</nb>')
 
 
 def main():
