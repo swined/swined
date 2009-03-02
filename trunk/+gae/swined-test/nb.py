@@ -53,7 +53,7 @@ class MainPage(RequestHandler):
 		nb.set_tags(note.key(), ['1', '5', '6'])
 		for note in nb.list(['1', '5']):
 			self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
-			for tag in note.tags: self.response.out.write('+' + tag)
+			for tag in note.tags: self.response.out.write(' +' + tag)
 			self.response.out.write('<br>')
 		self.response.out.write('---')
 
