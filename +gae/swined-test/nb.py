@@ -57,26 +57,24 @@ def exml(text):
 	return text
 
 def tag(name, value):
-	return '<%s>%s</%s>' % (exml(name), value, exml(name))
+	return '<%s>%s</%s>' % (exml(name), exml(value), exml(name))
 
 class MainPage(RequestHandler):
         def get(self):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
-		#tag('nb',
-			#tag('tags'),
-		#)
 		note = nb.add('test', ['1', '2', '3'])
 		nb.set_text(note.key(), 'teZZd')
 		nb.set_tags(note.key(), ['1', '5', '6'])
-		for note in nb.list(['1', '5']):
+		for note in nb.list(['1', '5', 'ы']):
 			self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
 			for tag in note.tags: self.response.out.write(' +' + tag)
 			self.response.out.write('<br>')
 		self.response.out.write('---<br>')
+		self.response.out.write('<tags>')
 		for tag in nb.tags():
-			self.response.out.write(' +' + tag)
-			self.response.out.write('<br>')
+			self.response.out.write(tag('tag', tag))
+		self.response.out.write('</tags>')
 
 
 def main():
