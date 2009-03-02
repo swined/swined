@@ -19,9 +19,9 @@ class Notebook():
 		#
 	def add(self, text, tags):
 		Note(
-			owner = db.List(db.User(self.user)),
-			text = db.Text(text), 
-			tags = db.StringList(tags),
+			owner = [ self.user ],
+			text = text, 
+			tags = tags,
 		).put();
 #	def del(self, id):
 #		Note()
