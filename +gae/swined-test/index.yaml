@@ -3,6 +3,7 @@ indexes:
 - kind: Note
   properties:
   - name: tags
+  - name: tags
   - name: user
   - name: mtime
 
