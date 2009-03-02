@@ -4,7 +4,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 
 class Note(db.Model):
-	mtime = db.DateTimeProperty(auto_now = True)	
+	mtime = db.DateTimeProperty(auto_now = True)
 	user = db.ListProperty(users.User)
 	text = db.TextProperty()
 	tags = db.StringListProperty()
@@ -22,7 +22,7 @@ class Notebook():
 	def add(self, text, tags):
 		note = Note(
 			user = [ self.user ],
-			text = text, 
+			text = text,
 			tags = tags,
 		)
 		note.put()
@@ -33,8 +33,10 @@ class Notebook():
 		note = db.get(id)
 		note.text = text
 		note.put()
-#	def set_tags(self, id, tags):
-		#		
+	def set_tags(self, id, tags):
+		note = db.get(id)
+		note.tags = tags
+		note.put()
 #	def share(self, id, user):
 		#
 #	def unshare(self, id, user):
@@ -46,10 +48,13 @@ class MainPage(RequestHandler):
 		nb = Notebook(users.get_current_user())
 		note = nb.add('test', ['1', '2', '3'])
 		nb.set_text(note.key(), 'teZZd')
-		#nb.set_tags(note.key(), ['4', '5', '6'])
-		for note in nb.list([]): self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
+		nb.set_tags(note.key(), ['1', '5', '6'])
+		for note in nb.list(['1']):
+			self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
+			for tag in note.tags: self.response.out.write('+' + tag)
+			self.response.out.write('<br>')
 		self.response.out.write('---')
-		
+
 def main():
         run_wsgi_app(WSGIApplication([
                 ('/nb', MainPage),
