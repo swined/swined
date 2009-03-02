@@ -13,10 +13,12 @@ class Notebook():
 	user = None
 	def __init__(self, user):
 		self.user = user
+	def all(self):
+		return Note.all().filter('user = ', self.user)
 #	def tags(self):
 		#
 	def list(self, tags):
-		query = Note.all().filter('user = ', self.user)
+		query = self.all()
 		for tag in tags: query.filter('tags = ', tag)
 		return query.order('mtime')
 	def add(self, text, tags):
