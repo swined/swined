@@ -12,3 +12,4 @@ handlers:
   script: test.py
 - url: /nb/*
   script: nb.py
+  login: admin
