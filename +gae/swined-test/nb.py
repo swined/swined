@@ -1,3 +1,4 @@
+import re
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -19,7 +20,7 @@ class Notebook():
 		tags = []
 		for note in self.all():
 			for tag in note.tags:
-				if tags.count(tag) == 0:
+				if tag not in tags:
 					tags.append(tag)
 		return tags
 	def list(self, tags):
@@ -49,10 +50,22 @@ class Notebook():
 #	def unshare(self, id, user):
 		#
 
+def exml(text):
+	txt = re.compile('&', re.S).sub('&amp;', text)
+	txt = re.compile('<', re.S).sub('&lt;', txt)
+	txt = re.compile('>', re.S).sub('&gt;', txt)
+	return text
+
+def tag(name, value):
+	return '<%s>%s</%s>' % (exml(name), value, exml(name))
+
 class MainPage(RequestHandler):
         def get(self):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
+		#tag('nb',
+			#tag('tags'),
+		#)
 		note = nb.add('test', ['1', '2', '3'])
 		nb.set_text(note.key(), 'teZZd')
 		nb.set_tags(note.key(), ['1', '5', '6'])
