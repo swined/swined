@@ -30,9 +30,9 @@ class Notebook():
 	def delete(self, id):
 		db.get(id).delete()
 	def set_text(self, id, text):
-		for note in Note.all().filter('user = ', self.user).filter('key = ', id):
-			note.text = text
-			note.put()
+		note = db.get(id)
+		note.text = text
+		note.put()
 #	def set_tags(self, id, tags):
 		#		
 #	def share(self, id, user):
@@ -48,7 +48,7 @@ class MainPage(RequestHandler):
 		nb.set_text(note.key(), 'teZZd')
 		#nb.set_tags(note.key(), ['4', '5', '6'])
 		for note in nb.list([]): self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
-		self.response.out.write('test')
+		self.response.out.write('---')
 		
 def main():
         run_wsgi_app(WSGIApplication([
