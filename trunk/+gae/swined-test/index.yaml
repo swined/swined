@@ -4,6 +4,7 @@ indexes:
   properties:
   - name: tags
   - name: tags
+  - name: tags
   - name: user
   - name: mtime
     direction: desc
