@@ -18,7 +18,7 @@ class Notebook():
 	def list(self, tags):
 		query = Note.all().filter('user = ', self.user)
 		for tag in tags: query.filter('tags = ', tag)
-		query.order('mtime').fetch(100)
+		return query.order('mtime').fetch(100)
 	def add(self, text, tags):
 		note = Note(
 			user = [ self.user ],
