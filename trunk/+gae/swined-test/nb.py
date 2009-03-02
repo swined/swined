@@ -19,7 +19,7 @@ class Notebook():
 		#
 	def add(self, text, tags):
 		Note(
-			owner = self.user,
+			owner = ( self.user ),
 			text = text, 
 			tags = tags,
 		).put();
