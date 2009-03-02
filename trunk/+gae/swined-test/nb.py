@@ -41,7 +41,7 @@ class MainPage(RequestHandler):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
 		note = nb.add('test', ['1', '2', '3'])
-		for note in nb.list([]): self.response.out.write(note.key() + ': ' + note.text + '<br>')
+		for note in nb.list([]): self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
 		nb.delete(note.key())
 		self.response.out.write('test')
 		
