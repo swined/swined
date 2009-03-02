@@ -54,18 +54,15 @@ def exml(text):
 	txt = re.compile('&', re.S).sub('&amp;', text)
 	txt = re.compile('<', re.S).sub('&lt;', txt)
 	txt = re.compile('>', re.S).sub('&gt;', txt)
-	return text
+	return txt
 
-def tag(name, value):
+def ftag(name, value):
 	return '<%s>%s</%s>' % (exml(name), exml(value), exml(name))
 
 class MainPage(RequestHandler):
         def get(self):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
-		note = nb.add('test', ['1', '2', '3'])
-		nb.set_text(note.key(), 'teZZd')
-		nb.set_tags(note.key(), ['1', '5', '6'])
 		for note in nb.list(['1', '5', '>_<']):
 			self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
 			for tag in note.tags: self.response.out.write(' +' + tag)
@@ -73,7 +70,7 @@ class MainPage(RequestHandler):
 		self.response.out.write('---<br>')
 		self.response.out.write('<tags>')
 		for tag in nb.tags():
-			self.response.out.write(tag('tag', tag))
+			self.response.out.write(ftag('tag', tag))
 		self.response.out.write('</tags>')
 
 
