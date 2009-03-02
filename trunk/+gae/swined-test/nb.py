@@ -15,12 +15,15 @@ class Notebook():
 		self.user = user
 	def all(self):
 		return Note.all().filter('user', self.user)
-#	def tags(self):
-		#
+	def tags(self):
+		tags = []
+		for note in self.all(): for tag in note.tags:
+			if tags.count(tag) == 0: tags.append(tag)
+		return tags
 	def list(self, tags):
 		query = self.all()
 		for tag in tags: query.filter('tags', tag)
-		return query.order('mtime')
+		return query.order('-mtime')
 	def add(self, text, tags):
 		note = Note(
 			user = [ self.user ],
@@ -55,7 +58,11 @@ class MainPage(RequestHandler):
 			self.response.out.write(str(note.key()) + ': ' + note.text + '<br>')
 			for tag in note.tags: self.response.out.write(' +' + tag)
 			self.response.out.write('<br>')
-		self.response.out.write('---')
+		self.response.out.write('---<br>')
+		for tag in nb.tags():
+			self.response.out.write(' +' + tag)
+			self.response.out.write('<br>')
+
 
 def main():
         run_wsgi_app(WSGIApplication([
