@@ -4,10 +4,10 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 
 class Note(db.Model):
-	owner = db.ListProperty(users.User)
-	mtime = db.DateTimeProperty(auto_now = True)
-	tags = db.StringListProperty()
+	mtime = db.DateTimeProperty(auto_now = True)	
+	user = db.ListProperty(users.User)
 	text = db.TextProperty()
+	tags = db.StringListProperty()
 
 class Notebook():
 	user = None
@@ -18,13 +18,15 @@ class Notebook():
 #	def list(self, tags):
 		#
 	def add(self, text, tags):
-		Note(
-			owner = [ self.user ],
+		note = Note(
+			user = [ self.user ],
 			text = text, 
 			tags = tags,
-		).put();
-#	def del(self, id):
-#		Note()
+		)
+		note.put()
+		return note
+	def delete(self, id):
+		db.get(id).delete()
 #	def edit(self, id, text, tags):
 		#
 #	def share(self, id, user):
@@ -36,7 +38,8 @@ class MainPage(RequestHandler):
         def get(self):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
 		nb = Notebook(users.get_current_user())
-		nb.add('test', ['1', '2', '3'])
+		note = nb.add('test', ['1', '2', '3'])
+		nb.delete(note.key())
 		self.response.out.write('test')
 		
 def main():
