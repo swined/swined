@@ -17,8 +17,10 @@ class Notebook():
 		return Note.all().filter('user', self.user)
 	def tags(self):
 		tags = []
-		for note in self.all(): for tag in note.tags:
-			if tags.count(tag) == 0: tags.append(tag)
+		for note in self.all():
+			for tag in note.tags:
+				if tags.count(tag) == 0:
+					tags.append(tag)
 		return tags
 	def list(self, tags):
 		query = self.all()
