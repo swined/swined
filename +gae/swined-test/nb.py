@@ -12,9 +12,9 @@ class Notebook():
 	user = None
 	def __init__(self, user):
 		self.user = user
-	def tags(self):
+#	def tags(self):
 		#
-	def list(self, tags):
+#	def list(self, tags):
 		#
 	def add(self, text, tags):
 		Note(
@@ -22,13 +22,13 @@ class Notebook():
 			text = db.Text(text), 
 			tags = db.StringList(tags),
 		).put();
-	def del(self, id):
-		Note()
-	def edit(self, id, text, tags):
+#	def del(self, id):
+#		Note()
+#	def edit(self, id, text, tags):
 		#
-	def share(self, id, user):
+#	def share(self, id, user):
 		#
-	def unshare(self, id, user):
+#	def unshare(self, id, user):
 		#
 
 class MainPage(RequestHandler):
