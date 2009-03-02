@@ -4,7 +4,6 @@ from google.appengine.ext.webapp import WSGIApplication, RequestHandler
 class MainPage(RequestHandler):
         def get(self):
                 self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-                ua = UserAgent()
 		self.response.out.write('test')
 
 def main():
