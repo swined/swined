@@ -58,14 +58,14 @@ class ActionsPage(RequestHandler):
 
 
 class MainPage(RequestHandler):
-	def exml(text):
+	def exml(self, text):
 		txt = re.compile('&', re.S).sub('&amp;', text)
 		txt = re.compile('<', re.S).sub('&lt;', txt)
 		txt = re.compile('>', re.S).sub('&gt;', txt)
 		return txt
-	def ftag(name, value):
+	def ftag(self, name, value):
 		return '<%s>%s</%s>' % (self.exml(name), self.exml(value), self.exml(name))
-	def farr(name, value):
+	def farr(self, name, value):
 		text = ''
 		for v in value:
 			text = text + self.ftag(name, v)
