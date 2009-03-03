@@ -22,7 +22,7 @@
 					<xsl:apply-templates select='tag'/>
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>javascript:delete_note('<xsl:value-of select='id'/>')</xsl:attribute>
+						<xsl:attribute name='href'>/nb/delete/<xsl:value-of select='id'/></xsl:attribute>
 						<img src='/static/trash.png' />
 					</xsl:element>
 				</td>
@@ -34,14 +34,6 @@
 			<head>
 				<title>notes</title>
 				<link rel='stylesheet' href='/static/notes.css' />
-				<script src='/static/ajax.js' />
-				<script>
-					function delete_note(id) {
-						var note = document.getElementById('note_' + id);
-						note.parentNode.removeChild(note);
-						xhr('/nb/delete?id=' + id);
-					}
-				</script>
 			</head>
 			<body>
 				<table class='main'>
