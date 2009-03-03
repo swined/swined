@@ -59,9 +59,9 @@ def exml(text):
 def ftag(name, value):
 	return '<%s>%s</%s>' % (exml(name), exml(value), exml(name))
 
-def farr(name, values):
+def farr(name, value):
 	text = ''
-	for v in values:
+	for v in value:
 		text = text + ftag(name, v)
 	return text
 
