@@ -42,6 +42,7 @@
 				<link rel='stylesheet' href='/static/notes.css' />
 			</head>
 			<body>
+				<a href='/nb/create'>create new</a>
 				<xsl:apply-templates select='note' />
 			</body>
 		</html>
