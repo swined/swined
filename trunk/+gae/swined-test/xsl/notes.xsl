@@ -18,6 +18,7 @@
 					}
 					DIV.tags {
 						float: left;
+						min-width: 100px;
 					}
 				</style>
 			</head>
