@@ -70,7 +70,6 @@ class ActionsPage(RequestHandler):
 		nb = Notebook(users.get_current_user())
 		if action == 'delete':
 			nb.delete(key)
-			self.redirect('/nb')
 
 class MainPage(RequestHandler):
         def get(self):
