@@ -15,6 +15,6 @@ handlers:
 - url: /nb/*
   script: nb.py
   login: admin
-- url: /nb/*/*
+- url: /nb/.*/.*
   script: nb.py
   login: admin
