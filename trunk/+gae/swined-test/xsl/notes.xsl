@@ -13,26 +13,23 @@
 			<head>
 				<title>notes</title>
 				<style>
-					DIV {
-						border: 1px solid gray;
-					}
-					DIV.tags {
+					.tags {
 						float: left;
 						min-width: 100px;
-					}
-					DIV.notes {
-						float: right;
-						width: 100%;
 					}
 				</style>
 			</head>
 			<body>
-				<div class='tags'>
-					<xsl:apply-templates select='tags/tag' />
-				</div>
-				<div class='notes'>
-					<xsl:apply-templates select='note' />
-				</div>
+				<table>
+					<tr>
+						<td class='tags'>
+							<xsl:apply-templates select='tags/tag' />
+						</td>
+						<td>
+							<xsl:apply-templates select='note' />
+						</td>
+					</tr>
+				</table>
 			</body>
 		</html>
 	</xsl:template>
