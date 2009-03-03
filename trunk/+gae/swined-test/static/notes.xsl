@@ -22,7 +22,7 @@
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
 					<xsl:element name='a'>
 						<xsl:attribute name='href'>javascript:delete_note('<xsl:value-of select='id'/>')</xsl:attribute>
-						del
+						<img src='/static/trash.png' />
 					</xsl:element>
 				</td>
 			</tr>
