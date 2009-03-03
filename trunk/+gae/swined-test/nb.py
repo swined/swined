@@ -38,7 +38,9 @@ class Notebook():
 	def delete(self, id):
 		note = db.get(id)
 		if self.user in note.user:
-			note.delete()
+			if 'trash' not in note.tags:
+				note.tags.append('trash')
+			note.put()
 	def set_text(self, id, text):
 		note = db.get(id)
 		if self.user in note.user:
