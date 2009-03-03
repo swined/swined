@@ -36,16 +36,7 @@
 				<link rel='stylesheet' href='/static/notes.css' />
 			</head>
 			<body>
-				<table class='main'>
-					<tr>
-						<td class='tags'>
-							<xsl:apply-templates select='tags/tag' />
-						</td>
-						<td>
-							<xsl:apply-templates select='note' />
-						</td>
-					</tr>
-				</table>
+				<xsl:apply-templates select='note' />
 			</body>
 		</html>
 	</xsl:template>
