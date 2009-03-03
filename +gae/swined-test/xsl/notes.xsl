@@ -16,6 +16,9 @@
 					DIV {
 						border: 1px solid gray;
 					}
+					DIV.tags {
+						float: left;
+					}
 				</style>
 			</head>
 			<body>
