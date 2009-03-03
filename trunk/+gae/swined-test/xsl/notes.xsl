@@ -21,7 +21,7 @@
 						min-width: 100px;
 					}
 					DIV.notes {
-						float: left;
+						float: right;
 						clear: both;
 					}
 				</style>
