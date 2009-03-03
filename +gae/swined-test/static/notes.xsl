@@ -56,7 +56,7 @@
 				<script>
 					function delete_note(id) {
 						var note = document.getElementById('note_' + id);
-						note.parent.removeChild(note);
+						note.parentNode.removeChild(note);
 						xhr('/nb/delete/' + id);
 					}
 				</script>
