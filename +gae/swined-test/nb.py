@@ -67,6 +67,11 @@ class MainPage(RequestHandler):
 		for v in value:
 			text = text + self.ftag(name, v)
 		return text
+	def post(self, action):
+		nb = Notebook(users.get_current_user())
+		if action == 'edit':
+			nb.set_text(self.request.get('id'), self.request.get('text'))
+			self.redirect('/nb/list')
 	def get(self, action):
 		nb = Notebook(users.get_current_user())
 		if action == 'delete':
