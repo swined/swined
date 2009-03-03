@@ -19,7 +19,7 @@
 				<div class='tags'>
 				</div>
 				<div class='notes'>
-					<xsl:apply-templates match='note' />
+					<xsl:apply-templates select='note' />
 				</div>
 			</body>
 		</html>
