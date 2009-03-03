@@ -17,7 +17,7 @@
 							<xsl:attribute name='name'>id</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 						</xsl:element>
-						<textarea name='text'><xsl:value-of select='text'/></textarea>
+						<textarea name='text' class='notearea'><xsl:value-of select='text'/></textarea>
 						<input type='submit' value='save'/>
 					</form>
 				</td>
