@@ -1,6 +1,9 @@
 IMG {
 	border: 0px;
 }
+.main {
+	width: 100%;
+}
 .tags {
 	float: left;
 	min-width: 100px;

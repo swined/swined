@@ -44,7 +44,7 @@
 				</script>
 			</head>
 			<body>
-				<table>
+				<table class='main'>
 					<tr>
 						<td class='tags'>
 							<xsl:apply-templates select='tags/tag' />
