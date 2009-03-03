@@ -20,7 +20,7 @@
 					<xsl:apply-templates select='tag'/>
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
 					<xsl:element name='a'>
-						<xsl:atrribute name='href'>/nb/delete/<xsl:value-of select='id'></xsl:attribute>
+						<xsl:attribute name='href'>/nb/delete/<xsl:value-of select='id'></xsl:attribute>
 						del
 					</xsl:element>
 				</td>
