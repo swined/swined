@@ -26,13 +26,14 @@
 						float: left;
 						min-width: 100px;
 					}
-					.notetag {
+					.notefoot {
 						font-size: 70%;
+					}
+					.notetag {
 						color: green;
-						margin-right: 3px;
+						margin-right: 5px;
 					}
 					.notemtime {
-						font-size: 70%;
 						color: gray;
 					}
 				</style>
