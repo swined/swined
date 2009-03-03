@@ -89,7 +89,6 @@ class MainPage(RequestHandler):
 						self.ftag('mtime', str(note.mtime)) +
 					'</note>'
 				)
-			self.response.out.write('<tags>' + self.farr('tag', nb.tags()) + '</tags>')
 			self.response.out.write('</nb>')
 
 
