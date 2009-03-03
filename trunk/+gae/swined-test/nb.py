@@ -46,7 +46,7 @@ class Notebook():
 			note.put()
 	def set_tags(self, id, tags):
 		note = db.get(id)
-		if self.user in note.user: return
+		if self.user in note.user:
 			note.tags = tags
 			note.put()
 #	def share(self, id, user):
