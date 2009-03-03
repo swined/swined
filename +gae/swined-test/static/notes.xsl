@@ -21,7 +21,7 @@
 					<xsl:apply-templates select='tag'/>
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>javascript:delete_note(<xsl:value-of select='id'/>)</xsl:attribute>
+						<xsl:attribute name='href'>javascript:delete_note('<xsl:value-of select='id'/>')</xsl:attribute>
 						del
 					</xsl:element>
 				</td>
