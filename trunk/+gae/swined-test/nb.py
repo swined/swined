@@ -50,30 +50,29 @@ class Notebook():
 #	def unshare(self, id, user):
 		#
 
-def exml(text):
-	txt = re.compile('&', re.S).sub('&amp;', text)
-	txt = re.compile('<', re.S).sub('&lt;', txt)
-	txt = re.compile('>', re.S).sub('&gt;', txt)
-	return txt
-
-def ftag(name, value):
-	return '<%s>%s</%s>' % (exml(name), exml(value), exml(name))
-
-def farr(name, value):
-	text = ''
-	for v in value:
-		text = text + ftag(name, v)
-	return text
-
 class ActionsPage(RequestHandler):
 	def get(self, action, key):
 		nb = Notebook(users.get_current_user())
 		if action == 'delete':
 			nb.delete(key)
 
+
 class MainPage(RequestHandler):
+	def exml(text):
+		txt = re.compile('&', re.S).sub('&amp;', text)
+		txt = re.compile('<', re.S).sub('&lt;', txt)
+		txt = re.compile('>', re.S).sub('&gt;', txt)
+		return txt
+	def ftag(name, value):
+		return '<%s>%s</%s>' % (self.exml(name), self.exml(value), self.exml(name))
+	def farr(name, value):
+		text = ''
+		for v in value:
+			text = text + self.ftag(name, v)
+		return text
         def get(self):
 		nb = Notebook(users.get_current_user())
+		nb.add('test', ['x', 'y', 'z'])
                 self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 		self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
 		self.response.out.write('<?xml-stylesheet href="/static/notes.xsl" type="text/xsl"?>')
@@ -81,10 +80,10 @@ class MainPage(RequestHandler):
 		for note in nb.list([]):
 			self.response.out.write(
 				'<note>' +
-					ftag('id', str(note.key())) +
-					ftag('text', note.text) +
-					farr('tag', note.tags) +
-					ftag('mtime', str(note.mtime)) +
+					self.ftag('id', str(note.key())) +
+					self.ftag('text', note.text) +
+					self.farr('tag', note.tags) +
+					self.ftag('mtime', str(note.mtime)) +
 				'</note>'
 			)
 		self.response.out.write('<tags>' + farr('tag', nb.tags()) + '</tags>')
