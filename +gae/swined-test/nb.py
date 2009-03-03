@@ -67,7 +67,7 @@ class MainPage(RequestHandler):
 		nb = Notebook(users.get_current_user())
 		if action == 'delete':
 			nb.delete(self.request.get('id'))
-		if action in ['list', '']:
+		if action in ['']:
 			nb.add('test', ['x', 'y', 'z'])
 			self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 			self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
