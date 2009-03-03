@@ -66,10 +66,10 @@ def farr(name, value):
 	return text
 
 class ActionsPage(RequestHandler):
-        def get(self, action, id):
+        def get(self, action, key):
 		nb = Notebook(users.get_current_user())
 		if action == 'delete':
-			nb.delete(id)
+			nb.delete(key)
 			self.redirect('/nb')
 
 class MainPage(RequestHandler):
