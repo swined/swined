@@ -9,7 +9,8 @@
 		<span class='notetag'><xsl:value-of select='.'/></span>
 	</xsl:template>
 	<xsl:template match='/nb/note'>
-		<table>
+		<xsl:element name='table'>
+			<xsl:attribute name='id'>note_<xsl:value-of select='id'/></xsl:attribute>
 			<tr>
 				<td class='notetext'>
 					<xsl:value-of select='text'/>
@@ -20,12 +21,12 @@
 					<xsl:apply-templates select='tag'/>
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>/nb/delete/<xsl:value-of select='id'/></xsl:attribute>
+						<xsl:attribute name='href'>javascript:delete_note(<xsl:value-of select='id'/>)</xsl:attribute>
 						del
 					</xsl:element>
 				</td>
 			</tr>
-		</table>
+		</xsl:element>
 	</xsl:template>
 	<xsl:template match='/nb'>
 		<html>
@@ -51,6 +52,14 @@
 						color: gray;
 					}
 				</style>
+				<script src='/static/ajax.js' />
+				<script>
+					function delete_note(id) {
+						var note = document.getElementById('note_' + id);
+						note.parent.removeChild(note);
+						xhr('/nb/delete/' + id);
+					}
+				</script>
 			</head>
 			<body>
 				<table>
