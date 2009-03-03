@@ -1,5 +1,5 @@
 IMG {
-	border: 0px;
+	border: none;
 }
 .main {
 	width: 100%;
@@ -29,4 +29,8 @@ IMG {
 }
 .notemtime {
 	color: gray;
+}
+.notearea {
+	border: none;
+	width: 100%;
 }
