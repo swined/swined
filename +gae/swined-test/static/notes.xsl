@@ -18,7 +18,7 @@
 								<xsl:attribute name='name'>id</xsl:attribute>
 								<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 							</xsl:element>
-							<textarea name='text' class='notearea' onMouseOver='this.rows = 15'><xsl:value-of select='text'/></textarea>
+							<textarea name='text' class='notearea' onMouseOver='updheight(this)'><xsl:value-of select='text'/></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -40,6 +40,11 @@
 			<head>
 				<title>notes</title>
 				<link rel='stylesheet' href='/static/notes.css' />
+				<script>
+					function updheight(textarea) {
+						textarea.rows = textarea.value.split("\n").length + 1;
+					}
+				</script>
 			</head>
 			<body>
 				<a href='/nb/create'>create new</a>
