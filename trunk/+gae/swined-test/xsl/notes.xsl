@@ -27,11 +27,12 @@
 						min-width: 100px;
 					}
 					.notetag {
-						font-size: 50%;
+						font-size: 70%;
 						color: green;
+						margin-right: 3px;
 					}
 					.notemtime {
-						font-size: 50%;
+						font-size: 70%;
 						color: gray;
 					}
 				</style>
