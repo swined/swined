@@ -32,26 +32,7 @@
 		<html>
 			<head>
 				<title>notes</title>
-				<style>
-					.tags {
-						float: left;
-						min-width: 100px;
-					}
-					.notetext {
-						font-size: 70%;
-					}
-					.notefoot {
-						font-size: 70%;
-						background-color: #eeeeee;
-					}
-					.notetag {
-						color: green;
-						margin-right: 5px;
-					}
-					.notemtime {
-						color: gray;
-					}
-				</style>
+				<link rel='stylesheet' href='/static/notes.css' />
 				<script src='/static/ajax.js' />
 				<script>
 					function delete_note(id) {
