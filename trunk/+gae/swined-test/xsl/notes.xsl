@@ -22,6 +22,7 @@
 					}
 					DIV.notes {
 						float: right;
+						width: 100%;
 					}
 				</style>
 			</head>
