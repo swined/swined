@@ -65,8 +65,15 @@ def farr(name, value):
 		text = text + ftag(name, v)
 	return text
 
+class ActionsPage(RequestHandler):
+        def get(self, action, id):
+		nb = Notebook(users.get_current_user())
+		if action == 'delete':
+			nb.delete(id)
+			self.redirect('/nb')
+
 class MainPage(RequestHandler):
-        def get(self):
+        def get(self, action):
 		nb = Notebook(users.get_current_user())
                 self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 		self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
@@ -75,6 +82,7 @@ class MainPage(RequestHandler):
 		for note in nb.list([]):
 			self.response.out.write(
 				'<note>' +
+					ftag('id', str(note.key())) +
 					ftag('text', note.text) +
 					farr('tag', note.tags) +
 					ftag('mtime', str(note.mtime)) +
@@ -86,7 +94,8 @@ class MainPage(RequestHandler):
 
 def main():
         run_wsgi_app(WSGIApplication([
-                ('/nb', MainPage),
+		('/nb', MainPage),
+                ('/nb/(.*)/(.*)', ActionsPage),
         ], debug = True))
 
 if __name__ == '__main__':
