@@ -17,7 +17,7 @@
 							<xsl:attribute name='name'>id</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 						</xsl:element>
-						<textarea name='text' class='notearea' onChange='updheight(this)'><xsl:value-of select='text'/></textarea>
+						<textarea name='text' class='notearea' onKeyPress='updheight(this)'><xsl:value-of select='text'/></textarea>
 					</td>
 				</tr>
 				<tr>
