@@ -71,16 +71,16 @@ class MainPage(RequestHandler):
 		nb = Notebook(users.get_current_user())
 		if action == 'edit':
 			nb.set_text(self.request.get('id'), self.request.get('text'))
-			self.redirect('/nb/list')
+			self.redirect('/nb/')
 	def get(self, action):
 		nb = Notebook(users.get_current_user())
 		if action == 'delete':
 			nb.delete(self.request.get('id'))
-			self.redirect('/nb/list')
+			self.redirect('/nb/')
 		if action == 'create':
 			nb.add('', [])
-			self.redirect('/nb/list')
-		if action in ['', 'list']:
+			self.redirect('/nb/')
+		if action == '':
 			self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
 			self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
 			self.response.out.write('<?xml-stylesheet href="/static/notes.xsl" type="text/xsl"?>')
