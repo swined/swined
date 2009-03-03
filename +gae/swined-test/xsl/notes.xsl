@@ -20,6 +20,9 @@
 						float: left;
 						min-width: 100px;
 					}
+					DIV.notes {
+						clear: both;
+					}
 				</style>
 			</head>
 			<body>
