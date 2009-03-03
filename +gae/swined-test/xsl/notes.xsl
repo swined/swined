@@ -13,7 +13,7 @@
 			<xsl:value-of select='text'/>
 			<div class='notefoot'>
 				<xsl:apply-templates select='tag'/>
-				<span class='notemtime'><xsl:value-of select='.'/></span>
+				<span class='notemtime'><xsl:value-of select='mtime'/></span>
 			</div>
 		</div>
 	</xsl:template>
