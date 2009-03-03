@@ -5,6 +5,9 @@ IMG {
 	float: left;
 	min-width: 100px;
 }
+.note {
+	border-left: 3px solid blue;
+}
 .notetext {
 	font-size: 70%;
 }
