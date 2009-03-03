@@ -9,13 +9,17 @@
 		<span class='notetag'><xsl:value-of select='.'/></span>
 	</xsl:template>
 	<xsl:template match='/nb/note'>
-		<div class='note'>
-			<xsl:value-of select='text'/>
-			<div class='notefoot'>
-				<xsl:apply-templates select='tag'/>
-				<span class='notemtime'><xsl:value-of select='mtime'/></span>
-			</div>
-		</div>
+		<table>
+			<tr>
+				<td class='notetext'>
+					<xsl:value-of select='text'/>
+				</td>
+				<td class='notefoot'>
+					<xsl:apply-templates select='tag'/>
+					<span class='notemtime'><xsl:value-of select='mtime'/></span>
+				</td>
+			</tr>
+		</table>
 	</xsl:template>
 	<xsl:template match='/nb'>
 		<html>
@@ -26,8 +30,12 @@
 						float: left;
 						min-width: 100px;
 					}
+					.notetext {
+						font-size: 70%;
+					}
 					.notefoot {
 						font-size: 70%;
+						background-color: #eeeeee;
 					}
 					.notetag {
 						color: green;
