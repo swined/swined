@@ -14,6 +14,8 @@
 				<td class='notetext'>
 					<xsl:value-of select='text'/>
 				</td>
+			</tr>
+			<tr>
 				<td class='notefoot'>
 					<xsl:apply-templates select='tag'/>
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
