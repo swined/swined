@@ -37,18 +37,18 @@ class Notebook():
 		return note
 	def delete(self, id):
 		note = db.get(id)
-		if self.user not in note.user: return
-		note.delete()
+		if self.user in note.user:
+			note.delete()
 	def set_text(self, id, text):
 		note = db.get(id)
-		if self.user not in note.user: return
-		note.text = text
-		note.put()
+		if self.user in note.user:
+			note.text = text
+			note.put()
 	def set_tags(self, id, tags):
 		note = db.get(id)
-		if self.user not in note.user: return
-		note.tags = tags
-		note.put()
+		if self.user in note.user: return
+			note.tags = tags
+			note.put()
 #	def share(self, id, user):
 		#
 #	def unshare(self, id, user):
@@ -90,7 +90,6 @@ class MainPage(RequestHandler):
 					'</note>'
 				)
 			self.response.out.write('</nb>')
-
 
 def main():
         run_wsgi_app(WSGIApplication([
