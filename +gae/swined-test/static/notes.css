@@ -33,5 +33,5 @@ IMG {
 .notearea {
 	border: none;
 	width: 100%;
-	overflow: auto;
+	overflow: visible;
 }
