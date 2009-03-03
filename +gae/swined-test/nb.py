@@ -69,6 +69,8 @@ class MainPage(RequestHandler):
         def get(self):
 		nb = Notebook(users.get_current_user())
                 self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
+		self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>') .
+		self.response.out.write('<?xml-stylesheet href="/nb/notes.xsl" type="text/xsl"?>')
 		self.response.out.write('<nb>')
 		for note in nb.list([]):
 			self.response.out.write('<note>' + ftag('text', note.text) + farr('tag', note.tags) + '</note>')
