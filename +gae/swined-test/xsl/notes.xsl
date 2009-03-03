@@ -11,7 +11,10 @@
 	<xsl:template match='/nb/note'>
 		<div class='note'>
 			<xsl:value-of select='text'/>
-			<div class='notetags'><xsl:apply-templates select='tag'/></div>
+			<div class='notefoot'>
+				<xsl:apply-templates select='tag'/>
+				<span class='notemtime'><xsl:value-of select='.'/></span>
+			</div>
 		</div>
 	</xsl:template>
 	<xsl:template match='/nb'>
@@ -24,8 +27,12 @@
 						min-width: 100px;
 					}
 					.notetag {
-						float: left;
-						min-width: 100px;
+						font-size: 50%;
+						color: green;
+					}
+					.notemtime {
+						font-size: 50%;
+						color: gray;
 					}
 				</style>
 			</head>

@@ -73,7 +73,13 @@ class MainPage(RequestHandler):
 		self.response.out.write('<?xml-stylesheet href="/xsl/notes.xsl" type="text/xsl"?>')
 		self.response.out.write('<nb>')
 		for note in nb.list([]):
-			self.response.out.write('<note>' + ftag('text', note.text) + farr('tag', note.tags) + '</note>')
+			self.response.out.write(
+				'<note>' +
+					ftag('text', note.text) +
+					farr('tag', note.tags) +
+					ftag('mtime', str(note.mtime)) +
+				'</note>'
+			)
 		self.response.out.write('<tags>' + farr('tag', nb.tags()) + '</tags>')
 		self.response.out.write('</nb>')
 
