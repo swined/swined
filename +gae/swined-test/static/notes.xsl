@@ -11,7 +11,15 @@
 			<xsl:attribute name='class'>note</xsl:attribute>
 			<tr>
 				<td class='notetext'>
-					<xsl:value-of select='text'/>
+					<form action='/nb/edit' method='post'>
+						<xsl:element name='input'>
+							<xsl:attribute name='type'>hidden</xsl:attribute>
+							<xsl:attribute name='name'>id</xsl:attribute>
+							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
+						</xsl:element>
+						<textarea name='text'><xsl:value-of select='text'/></textarea>
+						<input type='submit' value='save'/>
+					</form>
 				</td>
 			</tr>
 			<tr>
@@ -19,7 +27,7 @@
 					<xsl:apply-templates select='tag'/>
 					<span class='notemtime'><xsl:value-of select='mtime'/></span>
 					<xsl:element name='a'>
-						<xsl:attribute name='href'>/nb/delete/<xsl:value-of select='id'/></xsl:attribute>
+						<xsl:attribute name='href'>/nb/delete?id=<xsl:value-of select='id'/></xsl:attribute>
 						<img src='/static/trash.png' />
 					</xsl:element>
 				</td>
