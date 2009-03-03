@@ -6,15 +6,6 @@ api_version: 1
 handlers:
 - url: /static
   static_dir: static
-- url: /friends.rss
-  script: lj2rss.py
-- url: /test
-  script: test.py
-- url: /fetch
-  script: test.py
 - url: /nb/*
   script: nb.py
-  login: admin
-- url: /nb/.*/.*
-  script: nb.py
-  login: admin
+  login: required

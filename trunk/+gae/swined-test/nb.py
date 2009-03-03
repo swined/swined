@@ -50,13 +50,6 @@ class Notebook():
 #	def unshare(self, id, user):
 		#
 
-class ActionsPage(RequestHandler):
-	def get(self, action, key):
-		nb = Notebook(users.get_current_user())
-		if action == 'delete':
-			nb.delete(key)
-
-
 class MainPage(RequestHandler):
 	def exml(self, text):
 		txt = re.compile('&', re.S).sub('&amp;', text)
@@ -70,30 +63,32 @@ class MainPage(RequestHandler):
 		for v in value:
 			text = text + self.ftag(name, v)
 		return text
-        def get(self):
+	def get(self, action):
 		nb = Notebook(users.get_current_user())
-		nb.add('test', ['x', 'y', 'z'])
-                self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
-		self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
-		self.response.out.write('<?xml-stylesheet href="/static/notes.xsl" type="text/xsl"?>')
-		self.response.out.write('<nb>')
-		for note in nb.list([]):
-			self.response.out.write(
-				'<note>' +
-					self.ftag('id', str(note.key())) +
-					self.ftag('text', note.text) +
-					self.farr('tag', note.tags) +
-					self.ftag('mtime', str(note.mtime)) +
-				'</note>'
-			)
-		self.response.out.write('<tags>' + self.farr('tag', nb.tags()) + '</tags>')
-		self.response.out.write('</nb>')
+		if action == 'delete':
+			nb.delete(self.request.get('id'))
+		if action == 'list':
+			nb.add('test', ['x', 'y', 'z'])
+			self.response.headers['Content-Type'] = 'text/xml; charset=utf-8'
+			self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
+			self.response.out.write('<?xml-stylesheet href="/static/notes.xsl" type="text/xsl"?>')
+			self.response.out.write('<nb>')
+			for note in nb.list([]):
+				self.response.out.write(
+					'<note>' +
+						self.ftag('id', str(note.key())) +
+						self.ftag('text', note.text) +
+						self.farr('tag', note.tags) +
+						self.ftag('mtime', str(note.mtime)) +
+					'</note>'
+				)
+			self.response.out.write('<tags>' + self.farr('tag', nb.tags()) + '</tags>')
+			self.response.out.write('</nb>')
 
 
 def main():
         run_wsgi_app(WSGIApplication([
-		('/nb', MainPage),
-                ('/nb/(.*)/(.*)', ActionsPage),
+                ('/nb/(.*)', ActionsPage),
         ], debug = True))
 
 if __name__ == '__main__':
