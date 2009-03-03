@@ -23,10 +23,9 @@ class Notebook():
 				if tag not in tags:
 					tags.append(tag)
 		return tags
-	def list(self, tags, excl):
+	def list(self, tags):
 		query = self.all()
 		for tag in tags: query.filter('tags', tag)
-		for tag in excl: query.filter('tags != ', tag)
 		return query.order('-mtime')
 	def add(self, text, tags):
 		note = Note(
@@ -39,9 +38,7 @@ class Notebook():
 	def delete(self, id):
 		note = db.get(id)
 		if self.user not in note.user: return
-		if 'trash' not in note.tags:
-			note.tags.append('trash')
-		note.put()
+		note.delete()
 	def set_text(self, id, text):
 		note = db.get(id)
 		if self.user not in note.user: return
@@ -80,7 +77,7 @@ class MainPage(RequestHandler):
 			self.response.out.write('<?xml version="1.0" encoding="UTF-8"?>')
 			self.response.out.write('<?xml-stylesheet href="/static/notes.xsl" type="text/xsl"?>')
 			self.response.out.write('<nb>')
-			for note in nb.list([], ['trash']):
+			for note in nb.list([]):
 				self.response.out.write(
 					'<note>' +
 						self.ftag('id', str(note.key())) +
