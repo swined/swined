@@ -11,6 +11,7 @@
 	<xsl:template match='/nb/note'>
 		<xsl:element name='table'>
 			<xsl:attribute name='id'>note_<xsl:value-of select='id'/></xsl:attribute>
+			<xsl:attribute name='class'>note</xsl:attribute>
 			<tr>
 				<td class='notetext'>
 					<xsl:value-of select='text'/>
