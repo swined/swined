@@ -88,7 +88,7 @@ class MainPage(RequestHandler):
 
 def main():
         run_wsgi_app(WSGIApplication([
-                ('/nb/(.*)', ActionsPage),
+                ('/nb/(.*)', MainPage),
         ], debug = True))
 
 if __name__ == '__main__':
