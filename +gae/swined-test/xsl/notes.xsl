@@ -22,7 +22,6 @@
 					}
 					DIV.notes {
 						float: right;
-						clear: both;
 					}
 				</style>
 			</head>
