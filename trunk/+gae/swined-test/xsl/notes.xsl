@@ -5,8 +5,14 @@
 	<xsl:template match='/nb/tags/tag'>
 		<xsl:value-of select='.'/><br/>
 	</xsl:template>
+	<xsl:template match='/nb/note/tag'>
+		<span class='notetag'><xsl:value-of select='.'/></span>
+	</xsl:template>
 	<xsl:template match='/nb/note'>
-		<div class='note'><xsl:value-of select='text'/></div>
+		<div class='note'>
+			<xsl:value-of select='text'/>
+			<div class='notetags'><xsl:apply-templates select='tag'/></div>
+		</div>
 	</xsl:template>
 	<xsl:template match='/nb'>
 		<html>
@@ -14,6 +20,10 @@
 				<title>notes</title>
 				<style>
 					.tags {
+						float: left;
+						min-width: 100px;
+					}
+					.notetag {
 						float: left;
 						min-width: 100px;
 					}
