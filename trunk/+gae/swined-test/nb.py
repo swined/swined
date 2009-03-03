@@ -37,16 +37,18 @@ class Notebook():
 		return note
 	def delete(self, id):
 		note = db.get(id)
-		if self.user not in note.users: return
-		note.delete()
+		if self.user not in note.user: return
+		if 'trash' not in note.tags:
+			note.tags.append('trash')
+		note.put()
 	def set_text(self, id, text):
 		note = db.get(id)
-		if self.user not in note.users: return
+		if self.user not in note.user: return
 		note.text = text
 		note.put()
 	def set_tags(self, id, tags):
 		note = db.get(id)
-		if self.user not in note.users: return
+		if self.user not in note.user: return
 		note.tags = tags
 		note.put()
 #	def share(self, id, user):
