@@ -17,7 +17,7 @@
 							<xsl:attribute name='name'>id</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 						</xsl:element>
-						<div onClick='make_editable(this)'><xsl:value-of select='text'/></div>
+						<div onClick='make_editable(this)'><pre><xsl:value-of select='text'/></pre></div>
 					</td>
 				</tr>
 				<tr>
