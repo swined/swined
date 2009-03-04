@@ -17,7 +17,11 @@
 							<xsl:attribute name='name'>id</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 						</xsl:element>
-						<div onClick='make_editable(this)'><pre><xsl:value-of select='text'/></pre></div>
+						<xsl:element name='div'>
+							<xsl:attribute name='onClick'>make_editable(this)</xsl:attribute>
+							<xsl:attribute name='value'><xsl:value-of select='text'/></xsl:attribute>
+							<pre><xsl:value-of select='text'/></pre>
+						</xsl:element>
 					</td>
 				</tr>
 				<tr>
@@ -45,7 +49,7 @@
 					}
 					function make_editable(div) {
 						var textarea = document.createElement('textarea');
-						textarea.value = div.innerHTML;
+						textarea.value = div.getAttribute('value');
 						textarea.setAttribute('name', 'text');
 						textarea.setAttribute('class', 'notearea');
 						textarea.setAttribute('onKeyPress', 'updheight(this)');
