@@ -17,7 +17,7 @@
 							<xsl:attribute name='name'>id</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 						</xsl:element>
-						<textarea name='text' class='notearea' onKeyPress='updheight(this)'><xsl:value-of select='text'/></textarea>
+						<div onClick='make_editable(this)'><xsl:value-of select='text'/></div>
 					</td>
 				</tr>
 				<tr>
@@ -42,6 +42,17 @@
 				<script>
 					function updheight(textarea) {
 						textarea.rows = textarea.value.split("\n").length;
+					}
+					function make_editable(div) {
+						var textarea = document.createElement('textarea');
+						textarea.value = div.innerHTML;
+						textarea.setAttribute('name', 'text');
+						textarea.setAttribute('class', 'notearea');
+						textarea.setAttribute('onKeyPress', 'updheight(this)');
+						updheight(textarea);
+						var parent = div.parentNode;
+						parent.removeChild(div);
+						parent.appendChild(textarea);
 					}
 				</script>
 			</head>
