@@ -11,13 +11,14 @@
 				<xsl:attribute name='id'>note_<xsl:value-of select='id'/></xsl:attribute>
 				<xsl:attribute name='class'>note</xsl:attribute>
 				<tr>
-					<td class='notetext'>
+					<td>
 						<xsl:element name='input'>
 							<xsl:attribute name='type'>hidden</xsl:attribute>
 							<xsl:attribute name='name'>id</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='id'/></xsl:attribute>
 						</xsl:element>
 						<xsl:element name='div'>
+							<xsl:attribute name='class'>notetext</xsl:attribute>
 							<xsl:attribute name='onClick'>make_editable(this)</xsl:attribute>
 							<xsl:attribute name='value'><xsl:value-of select='text'/></xsl:attribute>
 							<pre><xsl:value-of select='text'/></pre>
