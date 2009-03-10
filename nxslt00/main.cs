@@ -6,6 +6,6 @@ class MainClass {
 		XslTransform xslt = new XslTransform();
 		xslt.Load("style.xsl");
 		xslt.Transform("src.xml", "dst.xml");
-		return 1;
+		return 0;
 	}
 }
