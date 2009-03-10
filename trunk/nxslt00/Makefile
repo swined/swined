@@ -1,4 +1,6 @@
-build:
-	gmcs *.cs
+build: clean
+	gmcs main.cs
 clean:
-	rm *.exe dst.xml
+	rm main.exe dst.xml
+run: build
+	./main.exe
