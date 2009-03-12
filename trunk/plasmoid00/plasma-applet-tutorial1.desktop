@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Tutorial 1
+Comment=Plasma Tutorial 1
+Type=Service
+ServiceTypes=Plasma/Applet
+ 
+X-KDE-Library=plasma_applet_tutorial1
+X-KDE-PluginInfo-Author=Bas Grolleman
+X-KDE-PluginInfo-Email=bgrolleman@emendo-it.nl
+X-KDE-PluginInfo-Name=plasma_applet_tutorial1
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://plasma.kde.org/
+X-KDE-PluginInfo-Category=Examples
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
