@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Threading;
 
 class MainClass {
 
@@ -11,8 +12,10 @@ class MainClass {
 			while (true) {
 				Console.WriteLine("waiting for connection");
 				TcpClient client = server.AcceptTcpClient();
-				Console.WriteLine("connected");
-				client.Close();
+				new Thread(delegate() {
+					Console.WriteLine("connected");
+					client.Close();
+				}).Start();
 			}
 		} finally {
 			server.Stop();
