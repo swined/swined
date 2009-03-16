@@ -5,4 +5,4 @@ clean:
 run: build
 	./main.exe
 ci: clean
-	svn ci
+	svn ci -m' '
