@@ -3,6 +3,8 @@ build: clean
 clean:
 	rm -f main.exe
 run: build
-	./main.exe
+	mono main.exe
+trace: build
+	mono --trace=program main.exe
 ci: clean
 	svn ci -m' '
