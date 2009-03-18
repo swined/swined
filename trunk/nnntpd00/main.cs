@@ -49,7 +49,7 @@ class NntpClient {
 
 	public void Run() {
 		string cmd;
-		writer.WriteNntpResponse(200, "server ready -- posting allowed");
+		writer.WriteNntpResponse(200, "server ready - posting allowed");
 		while (null != (cmd = reader.ReadNntpCommand())) {
 			Console.WriteLine(cmd);
 		}
