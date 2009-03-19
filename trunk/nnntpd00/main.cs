@@ -48,9 +48,13 @@ class NntpClient {
 		this.writer = writer;
 	}
 
+	public void SendGreeting(bool postingAllowed, string text) {
+		writer.WriteNntpResponse(postingAllowed ? 200 : 201, text);
+	}
+
 	public void Run() {
 		string cmd;
-		writer.WriteNntpResponse(200, "server ready - posting allowed");
+		this.SendGreeting(false, "server ready - posting not allowed");
 		while (null != (cmd = reader.ReadNntpCommand())) {
 			Console.WriteLine(cmd);
 		}
