@@ -32,7 +32,8 @@ class NntpStreamWriter : StreamWriter {
 	}
 
 	public void WriteNntpResponse(int code, string response) {
-		this.Write(code.ToString() + " " + response + "\r\n");
+		this.WriteLine(code.ToString() + " " + response);
+		this.Flush();
 	}
 
 }
