@@ -8,8 +8,10 @@ using System.Collections.Generic;
 
 interface INntpDataProvider {
 	List<string> Groups();
-	string GetLastId(string group);
-	string GetFirstId(string group);
+	string GetName(string group);
+	int GetLastId(string group);
+	int GetFirstId(string group);
+	int EstimateCount(string group);
 	bool PostingAllowed(string group);
 }
 
@@ -19,12 +21,20 @@ class TestNntpDataProvider : INntpDataProvider {
 		return (new string[] {"test.group1", "test.group2", "test.group3.subgroup"}).ToList();
 	}
 
-	public string GetLastId(string group) {
-		return "0";
+	public string GetName(string group) {
+		return group;
 	}
 
-	public string GetFirstId(string group) {
-		return "0";
+	public int GetLastId(string group) {
+		return 2;
+	}
+
+	public int GetFirstId(string group) {
+		return 1;
+	}
+
+	public int EstimateCount(string group) {
+		return 2;
 	}
 
 	public bool PostingAllowed(string group) {
@@ -81,6 +91,7 @@ class NntpStreamWriter : StreamWriter {
 
 class NntpClient {
 
+	private string currentGroup;
 	private NntpStreamReader reader;
 	private NntpStreamWriter writer;
 	private INntpDataProvider dataProvider;
@@ -102,10 +113,10 @@ class NntpClient {
 			string[] c = cmd.Split(" ".ToCharArray(), 2);
 			string cn = c[0];
 			string cp = 2 == c.Length ? c[1] : null;
-			Console.WriteLine(cn + ": " + cp);
 			switch (cn.ToUpper()) {
 				case "MODE": this.MODE(cp); break;
 				case "LIST": this.LIST(cp); break;
+				case "GROUP": this.GROUP(cp); break;
 				default: writer.WriteNntpResponse(500, "unknown command"); break;
 			}
 		}
@@ -123,16 +134,32 @@ class NntpClient {
 		writer.WriteNntpResponse(215, "list of newsgroups follows");
 		foreach (string group in dataProvider.Groups()) {
 			StringBuilder sb = new StringBuilder();
-			sb.Append(group);
-			sb.Append(" ");
-			sb.Append(dataProvider.GetLastId(group));
-			sb.Append(" ");
-			sb.Append(dataProvider.GetFirstId(group));
-			sb.Append(" ");
-			sb.Append(dataProvider.PostingAllowed(group) ? "y" : "n");
+			sb.AppendFormat(
+				"{0} {1} {2} {3}",
+				group,
+				dataProvider.GetLastId(group),
+				dataProvider.GetFirstId(group),
+				dataProvider.PostingAllowed(group) ? "y" : "n"
+			);
 			writer.WriteNntpTextLine(sb.ToString());
 		}
 		writer.WriteNntpTextEnd();
+	}
+
+	public void GROUP(string param) {
+		if (!dataProvider.Groups().Contains(param)) {
+			writer.WriteNntpResponse(411, "no such news group");
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.AppendFormat(
+			"{0} {1} {2} {3} group selected",
+			dataProvider.EstimateCount(param),
+			dataProvider.GetFirstId(param),
+			dataProvider.GetLastId(param),
+			dataProvider.GetName(param)
+		);
+		writer.WriteNntpResponse(211, sb.ToString());
 	}
 
 }

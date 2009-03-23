@@ -18,6 +18,7 @@ int main(int argc, char **argv) {
 	socklen_t ss;
 	char buf[1024];
 	char greeting[] = "201 fake nntp server - no posting allowed\r\n\0";
+	char regroup[] = "211 2 2 0 test.group1 group selected\r\n\0";
 	struct sockaddr_in cliaddr;
 	if (-1 == (sock = socket(AF_INET, SOCK_STREAM, 0))) {
 		printf("socket() failed: ");
@@ -73,6 +74,8 @@ int main(int argc, char **argv) {
 	}
 	printf("connection accepted\n");
 	send(cli, &greeting, strlen(greeting), 0);
+	send(cli, &greeting, strlen(greeting), 0);
+	send(cli, &regroup, strlen(regroup), 0);
 	while (0 != (t = recv(cli, &buf, 1024, 0))) {
 		if (-1 == t) {
 			printf("shit happened\n");
