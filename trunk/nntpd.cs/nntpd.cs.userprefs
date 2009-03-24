@@ -1,4 +1,4 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/alex/nntpd.cs/nntpd.cs.mds">
+﻿<UserCombinePreferences version="1.0" filename="/home/alex/gcode/nntpd.cs/nntpd.cs.mds">
   <Files>
     <File name="Добро пожаловать" />
     <File name="nntpd/main.cs" line="186" column="24" />
@@ -7,7 +7,7 @@
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
         <Node name="nntpd" expanded="True">
-          <Node name="main.cs" selected="True" />
+          <Node name="References" expanded="True" selected="True" />
         </Node>
       </Node>
     </ViewMemento>
@@ -16,7 +16,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/alex/nntpd.cs/nntpd/main.cs" />
+    <Property key="ActiveWindow" value="/home/alex/gcode/nntpd.cs/nntpd/main.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
