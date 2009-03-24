@@ -14,15 +14,19 @@ public class FakeNntpDataProvider implements INntpDataProvider {
     }
 
     public int estimateCount(String group) {
-        return 2;
+        return 1;
     }
 
     public int getFirstId(String group) {
-        return 0;
+        return 1;
     }
 
     public int getLastId(String group) {
-        return 0;
+        return 1;
+    }
+
+    public String getMsgId(String group, int id) {
+        return "<" + id + "@" + group + ".fake>";
     }
 
 }
