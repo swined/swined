@@ -1,0 +1,16 @@
+<Combine name="nntpd.cs" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="nntpd" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="nntpd" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="nntpd" single="True">
+    <Execute type="None" entry="nntpd" />
+  </StartMode>
+  <Entries>
+    <Entry filename="nntpd/nntpd.mdp" />
+  </Entries>
+</Combine>
