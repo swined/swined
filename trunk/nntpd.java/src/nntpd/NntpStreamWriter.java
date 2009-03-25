@@ -10,9 +10,9 @@ public class NntpStreamWriter extends OutputStreamWriter {
         super(stream);
     }
 
-    public void writeNntpResponse(String text) throws IOException {
-        System.out.printf("S: %s\n", text);
-        this.write(text + "\n");
+    public void writeNntpResponse(int code, String text) throws IOException {
+        System.out.printf("S: %d %s\n", code, text);
+        this.write(code + " " + text + "\n");
         this.flush();
     }
 
