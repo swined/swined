@@ -25,19 +25,23 @@ public class NntpClient {
                 break;
             String[] c = line.split(" ", 2);
             try {
-                if ("MODE".equals(c[0])) {
-                    this.MODE(c[1]);
-                } else if ("GROUP".equals(c[0])) {
-                    this.GROUP(c[1]);
-                } else if ("STAT".equals(c[0])) {
-                    this.STAT(c[1]);
-                } else if ("NEXT".equals(c[0])) { 
-                    this.NEXT();
-                } else throw new NntpException(500, "unknown command");
+                executeNntpCommand(c[0], c[1]);
             } catch (NntpException e) {
                 writer.writeNntpResponse(e.code, e.response);
             }
         }
+    }
+
+    private void executeNntpCommand(String name, String param) throws IOException, NntpException {
+            if ("MODE".equals(name)) {
+                    this.MODE(param);
+            } else if ("GROUP".equals(name)) {
+                    this.GROUP(param);
+            } else if ("STAT".equals(name)) {
+                    this.STAT(param);
+            } else if ("NEXT".equals(name)) {
+                    this.NEXT();
+            } else throw new NntpException(500, "unknown command");
     }
 
     private void MODE(String mode) throws IOException, NntpException {
