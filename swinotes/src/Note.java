@@ -1,6 +1,7 @@
 
 import javax.jdo.annotations.Persistent;
 
+
 public class Note {
 
         @Persistent
