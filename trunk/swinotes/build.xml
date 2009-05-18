@@ -6,7 +6,7 @@
        value of appengine.sdk accordingly.  You may also want to use Ant's
        property file feature, allowing each developer to have their own
        local property file with the path to the SDK from that workspace. -->
-  <property name="appengine.sdk" location="/home/alex/appengine-java-sdk-1.2.0"/>
+  <property name="appengine.sdk" location="../../appengine-java-sdk-1.2.1"/>
 
   <!-- Check that the SDK value is set and seems sane, so we can give a nicer
        error if not.  -->
@@ -67,6 +67,9 @@
     <mkdir dir="${war.dir}/WEB-INF/lib"/>
     <javac srcdir="src" destdir="${war.dir}/WEB-INF/classes">
       <classpath>
+        <fileset dir="${appengine.sdk}/lib/user/orm">
+          <include name="*.jar"/>
+        </fileset>
         <fileset dir="${appengine.sdk}/lib/user">
           <include name="*.jar"/>
         </fileset>
