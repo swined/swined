@@ -40,7 +40,7 @@
                     <target>clean</target>
                 </action>
                 <action name="run">
-                    <target>dev_appserver</target>
+                    <target>update</target>
                 </action>
                 <action name="rebuild">
                     <target>clean</target>
@@ -104,7 +104,7 @@
                 <doc-root>.</doc-root>
                 <classpath/>
                 <context-path/>
-                <j2ee-spec-level>1.5</j2ee-spec-level>
+                <j2ee-spec-level>1.6</j2ee-spec-level>
                 <web-inf>src/WEB-INF</web-inf>
             </web-module>
         </web-data>
