@@ -13,10 +13,6 @@
 
   <import file="${appengine.sdk}/config/user/ant-macros.xml"/>
 
-  <property name="debug.port" value="5005"/>
-
-  <property name="http.port" value="8080"/>
-
   <property name="war.dir" location="www"/>
 
   <target name="war" depends="enhance" 
