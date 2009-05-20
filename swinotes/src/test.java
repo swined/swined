@@ -19,34 +19,31 @@ import javax.servlet.http.HttpServletResponse;
  * @author alex
  */
 public class test extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("transactions-optional");
         PersistenceManager pm = pmf.getPersistenceManager();
         try {
             Note note = new Note("test");
             pm.makePersistent(note);
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet test</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet test at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally { 
-            out.close();
+            out.println("hello, world");
+        } finally {
             pm.close();
+        }
+    }
+
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            processRequest(request, response, out);
+        } catch (Exception e) {
+            e.printStackTrace(out);
+        } finally {
+            out.close();
         }
     } 
 
