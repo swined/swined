@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.jdo.JDOHelper;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class test extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, PrintWriter out)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("transactions-optional");
         PersistenceManager pm = pmf.getPersistenceManager();
         try {
@@ -33,9 +32,8 @@ public class test extends HttpServlet {
         }
     }
 
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
@@ -45,7 +43,7 @@ public class test extends HttpServlet {
         } finally {
             out.close();
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -57,9 +55,9 @@ public class test extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -70,7 +68,7 @@ public class test extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -82,5 +80,4 @@ public class test extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
