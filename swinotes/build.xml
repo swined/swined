@@ -2,7 +2,9 @@
 
   <import file="build-gwt.xml"/>
 
-  <property name="appengine.sdk.dir" location="../.." />
+  <property name="appengine.sdk.dir" location="/home/alex/gaejdk" />
+  
+  <import file="${appengine.sdk.dir}/config/user/ant-macros.xml" />
 
   <path id="backend.classpath">
     <pathelement path="war/WEB-INF/classes" />
@@ -77,6 +79,16 @@
         fork="true" >
       <arg value="war" />
     </java>
+  </target>
+
+  <target name="update" depends="compile, update_indexes"
+      description="Uploads the application to App Engine.">
+    <appcfg action="update" war="war" />
+  </target>
+
+  <target name="update_indexes" depends="compile"
+      description="Uploads just the datastore index configuration to App Engine.">
+    <appcfg action="update_indexes" war="war" />
   </target>
 
   <target name="clean">
