@@ -1,4 +1,4 @@
-package guestbook;
+package swinotes;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;

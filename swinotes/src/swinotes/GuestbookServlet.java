@@ -1,4 +1,4 @@
-package guestbook;
+package swinotes;
 
 import java.io.IOException;
 import javax.servlet.http.*;
