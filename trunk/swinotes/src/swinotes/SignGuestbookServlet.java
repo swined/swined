@@ -1,4 +1,4 @@
-package guestbook;
+package swinotes;
 
 import java.io.IOException;
 import java.util.Date;
@@ -9,8 +9,8 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import guestbook.Greeting;
-import guestbook.PMF;
+import swinotes.Greeting;
+import swinotes.PMF;
 
 public class SignGuestbookServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(SignGuestbookServlet.class.getName());

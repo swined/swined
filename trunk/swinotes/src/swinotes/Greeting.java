@@ -1,4 +1,4 @@
-package guestbook;
+package swinotes;
 
 import java.util.Date;
 import javax.jdo.annotations.IdGeneratorStrategy;
