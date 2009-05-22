@@ -33,6 +33,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.users.User;
 
 /**
@@ -374,7 +375,7 @@ public class Store {
      * The text content of the note.
      */
     @Persistent
-    private String content;
+    private Text content;
 
     /**
      * The date of the last time this object was persisted.
@@ -438,7 +439,7 @@ public class Store {
      * @return unsafe text content
      */
     public String getContent() {
-      return content;
+      return content.getValue();
     }
 
     /**
@@ -513,7 +514,7 @@ public class Store {
      * @param content
      */
     public void setContent(String content) {
-      this.content = content;
+      this.content = new Text(content);
     }
 
     /**
