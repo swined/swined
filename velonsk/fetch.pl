@@ -69,7 +69,7 @@ sub fetch_forum {
 sub format_msg {
 	my ($id, $pr, $gn) = @_;
         my $msg = get_msg $id;
-        my $from = 'ХЗ кто <hzkto@valo.nsk.ru>';
+	my $from = 'hzkto <hzkto@velo.nsk.ru>';
         if ($msg =~ m|<a class=fmfr href=/biker\.php\?key=(.+?)>(.+?)</a>|si) {
                 $from = sprintf '%s <%s@velo.nsk.ru>', $2, $1;
         } elsif ($msg =~ m|<span class=fmfr>(.+?)</span>|si) {
@@ -99,18 +99,33 @@ sub format_msg {
 	return $m->as_string;
 }
 
+my %sent;
+
 sub update_forum {
 	my ($gn, $fn, $nn) = @_;
+	printf "updating %s\n", $gn;
 	fetch_forum $fn, sub {
 		my ($id, $pr) = @_;
-		if ($nn->ihave($id)) {
+		return if $sent{$id};
+		if ($nn->ihave(sprintf '<%s>', $id)) {
 			$nn->datasend(format_msg $id, $pr, $gn);
 		}
+		$sent{$id} = 1;
 	};
 }
 
 require Net::NNTP;
-my $nntp = new Net::NNTP('localhost:119', Debug => 1);
+my $nntp = new Net::NNTP('localhost:1119', Debug => 1);
 die unless $nntp;
-#update_forum 'velonsk.main', 'forum1', $nntp;
-update_forum 'velonsk.shops', 'ishops', $nntp;
+while (1) {
+	update_forum 'velonsk.main', 'forum1', $nntp;
+	update_forum 'velonsk.ishops', 'ishops', $nntp;
+	update_forum 'velonsk.ourbikes', 'ourbikes', $nntp;
+	update_forum 'velonsk.torg', 'torg', $nntp;
+	update_forum 'velonsk.trip', 'trip', $nntp;
+	update_forum 'velonsk.sport', 'sport', $nntp;
+	update_forum 'velonsk.tour', 'tour', $nntp;
+	update_forum 'velonsk.site', 'site', $nntp;
+	update_forum 'velonsk.offtopic', 'offtopic', $nntp;
+	sleep 60;
+}
