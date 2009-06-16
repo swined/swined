@@ -4,6 +4,7 @@ use warnings;
 use strict;
 use LWP::Simple;
 use Encode;
+use WWW::Mechanize;
 
 sub get {
 	my ($url) = @_;
@@ -97,11 +98,13 @@ sub format_msg {
 		'Type' => 'text/html; charset="utf-8"', 
 		'Data' => sprintf '<b>%s</b><br>%s', $subj, $body,
 	);
-	if ($m->content =~ m|<img class="relief" src="(.+?)" width="\d+" height="\d+">|si) {
-		my $i = LWP::Simple::get(sprintf 'http://velo.nsk.ru/%s', $1);
+	if ($body =~ m|<img class="relief" src="(.+?)" width="\d+" height="\d+">|si) {
+		my $ua = new WWW::Mechanize(autocheck => 1);
+		$ua->get(sprintf 'http://velo.nsk.ru/%s', $1);
 		$m->attach(
-			Path => $1,
-			Data => $i,
+			Type => $ua->ct,
+			Filename => $1,
+			Data => $ua->content,
 		);
 	}
 	return $m->as_string;
