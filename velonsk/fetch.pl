@@ -2,11 +2,11 @@
 
 use warnings;
 use strict;
+use LWP::Simple;
+use Encode;
 
 sub get {
 	my ($url) = @_;
-	require LWP::Simple;
-	require Encode;
 	return Encode::decode('cp1251', LWP::Simple::get($url));
 }
 
@@ -77,7 +77,8 @@ sub format_msg {
         }
         $msg =~ m|<div class=fms>(.+?)</div>|si;
         my $subj = $1;
-        $msg =~ m|<div class=fmm>(.+?)</div>|si;
+        $subj =~ s|<[^>]*>||gsi;
+        $msg =~ m|<div class=fmm>(.*?)</div>|si;
         my $body = $1;
         require MIME::Lite;
         my $m = new MIME::Lite(
@@ -94,38 +95,38 @@ sub format_msg {
         $m->add('References' => sprintf '<%s>', $pr) if $pr;
         $m->attach(
 		'Type' => 'text/html; charset="utf-8"', 
-		'Data' => $body,
+		'Data' => sprintf '<b>%s</b><br>%s', $subj, $body,
 	);
+	if ($m->content =~ m|<img class="relief" src="(.+?)" width="\d+" height="\d+">|si) {
+		my $i = LWP::Simple::get(sprintf 'http://velo.nsk.ru/%s', $1);
+		$m->attach(
+			Path => $1,
+			Data => $i,
+		);
+	}
 	return $m->as_string;
 }
-
-my %sent;
 
 sub update_forum {
 	my ($gn, $fn, $nn) = @_;
 	printf "updating %s\n", $gn;
 	fetch_forum $fn, sub {
 		my ($id, $pr) = @_;
-		return if $sent{$id};
 		if ($nn->ihave(sprintf '<%s>', $id)) {
 			$nn->datasend(format_msg $id, $pr, $gn);
 		}
-		$sent{$id} = 1;
 	};
 }
 
 require Net::NNTP;
 my $nntp = new Net::NNTP('localhost:1119', Debug => 1);
 die unless $nntp;
-while (1) {
-	update_forum 'velonsk.main', 'forum1', $nntp;
-	update_forum 'velonsk.ishops', 'ishops', $nntp;
-	update_forum 'velonsk.ourbikes', 'ourbikes', $nntp;
-	update_forum 'velonsk.torg', 'torg', $nntp;
-	update_forum 'velonsk.trip', 'trip', $nntp;
-	update_forum 'velonsk.sport', 'sport', $nntp;
-	update_forum 'velonsk.tour', 'tour', $nntp;
-	update_forum 'velonsk.site', 'site', $nntp;
-	update_forum 'velonsk.offtopic', 'offtopic', $nntp;
-	sleep 60;
-}
+update_forum 'velonsk.ourbikes', 'ourbikes', $nntp;
+update_forum 'velonsk.main', 'forum1', $nntp;
+update_forum 'velonsk.ishops', 'ishops', $nntp;
+update_forum 'velonsk.torg', 'torg', $nntp;
+update_forum 'velonsk.trip', 'trip', $nntp;
+update_forum 'velonsk.sport', 'sport', $nntp;
+update_forum 'velonsk.tour', 'tour', $nntp;
+update_forum 'velonsk.site', 'site', $nntp;
+update_forum 'velonsk.offtopic', 'offtopic', $nntp;
