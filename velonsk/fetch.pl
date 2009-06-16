@@ -94,19 +94,25 @@ sub format_msg {
         );
         $m->add('In-Reply-To' => sprintf '<%s>', $pr) if $pr;
         $m->add('References' => sprintf '<%s>', $pr) if $pr;
-        $m->attach(
+        my ($nf, $img, $ct);
+	if ($body =~ m|(<img class="relief" src=")(.+?)(" width="\d+" height="\d+">)|si) {
+		my ($bf, $fn, $af) = ($1, $2, $3);
+		($nf = $fn) =~ s|/|_|gsi;
+		$body = $bf . $nf . $af;
+		my $ua = new WWW::Mechanize(autocheck => 1);
+		$ua->get(sprintf 'http://velo.nsk.ru/%s', $fn);
+		$ct = $ua->ct;
+		$img = $ua->content;
+	}
+	$m->attach(
 		'Type' => 'text/html; charset="utf-8"', 
 		'Data' => sprintf '<b>%s</b><br>%s', $subj, $body,
 	);
-	if ($body =~ m|<img class="relief" src="(.+?)" width="\d+" height="\d+">|si) {
-		my $ua = new WWW::Mechanize(autocheck => 1);
-		$ua->get(sprintf 'http://velo.nsk.ru/%s', $1);
-		$m->attach(
-			Type => $ua->ct,
-			Filename => $1,
-			Data => $ua->content,
-		);
-	}
+	$m->attach(
+		Type => $ct,
+		Data => $img,
+		Filename => $nf,
+	) if $img;
 	return $m->as_string;
 }
 
