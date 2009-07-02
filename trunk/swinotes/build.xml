@@ -2,7 +2,7 @@
 
   <import file="build-gwt.xml"/>
 
-  <property name="appengine.sdk.dir" location="/home/alex/gaejdk" />
+  <property name="appengine.sdk.dir" location="/home/sw/gaejdk" />
   
   <import file="${appengine.sdk.dir}/config/user/ant-macros.xml" />
 
