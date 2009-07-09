@@ -105,28 +105,34 @@ public class VariableTest {
     public void testEquals1() {
         Variable v1 = new Variable("x");
         Variable v2 = new Variable("x");
-        assertEquals(v1, v2);
+        assertEquals(true, v1.equals(v2));
     }
 
     @Test
     public void testEquals2() {
         Variable v1 = new Variable("x");
         Variable v2 = new Variable("x", true);
-        assertNotSame(v1, v2);
+        assertEquals(false, v1.equals(v2));
     }
 
     @Test
     public void testEquals3() {
         Variable v1 = new Variable("x");
         Variable v2 = new Variable("y");
-        assertNotSame(v1, v2);
+        assertEquals(false, v1.equals(v2));
     }
 
     @Test
     public void testEquals4() {
         Variable v1 = new Variable("x");
         Variable v2 = new Variable("y", true);
-        assertNotSame(v1, v2);
+        assertEquals(false, v1.equals(v2));
+    }
+
+    @Test
+    public void testEquals5() {
+        Variable v = new Variable("x");
+        assertEquals(false, v.equals(""));
     }
 
 }
