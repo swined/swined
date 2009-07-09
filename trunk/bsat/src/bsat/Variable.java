@@ -45,4 +45,11 @@ public class Variable implements Expression {
         return conjunction;
     }
 
+    public boolean equals(Object object) {
+        if (!(object instanceof Variable))
+            return false;
+        Variable variable = (Variable)object;
+        return name.equals(variable.getName()) && (negative == variable.isNegative());
+    }
+
 }

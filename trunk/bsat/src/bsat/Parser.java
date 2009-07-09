@@ -17,17 +17,13 @@ public class Parser {
     private class ClosingBracket implements Token {
     }
 
-    private class Operator implements Token, NoBrackets {
+    private class NotOp implements Token, NoBrackets {
+    }
 
-        private String name;
+    private class AndOp implements Token, NoBrackets {
+    }
 
-        public Operator(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+    private class OrOp implements Token, NoBrackets {
     }
 
     private class Symbol implements Token, NoBrackets {
@@ -61,34 +57,30 @@ public class Parser {
         List<Token> tokens = new LinkedList();
         while (i < string.length()) {
             char c = string.charAt(i);
-            if (c == ' ') {
-                i++;
-                continue;
-            }
-            if (c == '(') {
-                i++;
-                tokens.add(new OpeningBracket());
-                continue;
-            }
-            if (c == ')') {
-                i++;
-                tokens.add(new ClosingBracket());
-                continue;
-            }
-            if (c == '!') {
-                i++;
-                tokens.add(new Operator("!"));
-                continue;
-            }
-            if (c == '&') {
-                i++;
-                tokens.add(new Operator("&"));
-                continue;
-            }
-            if (c == '|') {
-                i++;
-                tokens.add(new Operator("|"));
-                continue;
+            switch (c) {
+                case ' ':
+                    i++;
+                    continue;
+                case '(':
+                    i++;
+                    tokens.add(new OpeningBracket());
+                    continue;
+                case ')':
+                    i++;
+                    tokens.add(new ClosingBracket());
+                    continue;
+                case '!':
+                    i++;
+                    tokens.add(new NotOp());
+                    continue;
+                case '&':
+                    i++;
+                    tokens.add(new AndOp());
+                    continue;
+                case '|':
+                    i++;
+                    tokens.add(new OrOp());
+                    continue;
             }
             if (Character.isJavaIdentifierStart(c)) {
                 String s = new String();
@@ -122,45 +114,30 @@ public class Parser {
             }
         }
         for (NoBrackets token : tokens) {
-            if (token instanceof Operator) {
-                Operator operator = (Operator) token;
-                if (operator.getName().equals("|")) {
-                    int index = tokens.indexOf(token);
-                    if (index == 0) {
-                        throw new SyntaxErrorException("unexpected operator " + operator.getName());
-                    }
-                    if (index == tokens.size() - 1) {
-                        throw new SyntaxErrorException("unexpected operator " + operator.getName());
-                    }
-                    List<NoBrackets> part1 = tokens.subList(0, index);
-                    List<NoBrackets> part2 = tokens.subList(index + 1, tokens.size());
-                    return new OrOperator(parseBracketless(part1), parseBracketless(part2));
+            if (token instanceof OrOp) {
+                int index = tokens.indexOf(token);
+                if ((index == 0) | (index == tokens.size() - 1)) {
+                    throw new SyntaxErrorException("operator not expected");
                 }
+                List<NoBrackets> part1 = tokens.subList(0, index);
+                List<NoBrackets> part2 = tokens.subList(index + 1, tokens.size());
+                return new OrOperator(parseBracketless(part1), parseBracketless(part2));
             }
         }
         for (NoBrackets token : tokens) {
-            if (token instanceof Operator) {
-                Operator operator = (Operator) token;
-                if (operator.getName().equals("&")) {
-                    int index = tokens.indexOf(token);
-                    if (index == 0) {
-                        throw new SyntaxErrorException("unexpected operator " + operator.getName());
-                    }
-                    if (index == tokens.size() - 1) {
-                        throw new SyntaxErrorException("unexpected operator " + operator.getName());
-                    }
-                    List<NoBrackets> part1 = tokens.subList(0, index);
-                    List<NoBrackets> part2 = tokens.subList(index + 1, tokens.size());
-                    return new AndOperator(parseBracketless(part1), parseBracketless(part2));
+            if (token instanceof AndOp) {
+                int index = tokens.indexOf(token);
+                if ((index == 0) | (index == tokens.size() - 1)) {
+                    throw new SyntaxErrorException("operator not expected");
                 }
+                List<NoBrackets> part1 = tokens.subList(0, index);
+                List<NoBrackets> part2 = tokens.subList(index + 1, tokens.size());
+                return new AndOperator(parseBracketless(part1), parseBracketless(part2));
             }
         }
         NoBrackets token = tokens.get(0);
-        if (token instanceof Operator) {
-            Operator operator = (Operator) token;
-            if (operator.getName().equals("!")) {
-                return parseBracketless(tokens.subList(1, tokens.size())).negate();
-            }
+        if (token instanceof NotOp) {
+            return parseBracketless(tokens.subList(1, tokens.size())).negate();
         }
         throw new SyntaxErrorException("unexpected token");
     }
