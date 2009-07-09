@@ -38,14 +38,12 @@ public class ParserTest {
     }
 
     private void testParseOutput(String in, String out) throws Exception {
-        Parser p = new Parser();
-        assertEquals(p.parse(in).toString(), out);
+        assertEquals(Parser.parse(in).toString(), out);
     }
 
     private void testParseException(String in, String ex) throws Exception {
-        Parser p = new Parser();
         try {
-            p.parse(in);
+            Parser.parse(in);
         } catch (SyntaxErrorException e) {
             assertEquals(e.getMessage(), ex);
             return;

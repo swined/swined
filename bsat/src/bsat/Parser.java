@@ -142,7 +142,7 @@ public class Parser {
         throw new SyntaxErrorException("unexpected token");
     }
 
-    private Expression parse(List<Token> tokens) throws SyntaxErrorException {
+    private Expression parseTokens(List<Token> tokens) throws SyntaxErrorException {
         int b = 0;
         List<NoBrackets> result = new LinkedList<NoBrackets>();
         List<Token> inner = new LinkedList<Token>();
@@ -160,7 +160,7 @@ public class Parser {
                 }
                 b--;
                 if (b == 0) {
-                    result.add(new Expr(parse(inner)));
+                    result.add(new Expr(parseTokens(inner)));
                     inner.clear();
                 } else {
                     inner.add(t);
@@ -179,7 +179,12 @@ public class Parser {
         return parseBracketless(result);
     }
 
-    public Expression parse(String string) throws SyntaxErrorException {
-        return parse(tokenize(string));
+    private Expression parseString(String string) throws SyntaxErrorException {
+        return parseTokens(tokenize(string));
+    }
+
+    public static Expression parse(String string) throws SyntaxErrorException {
+        Parser p = new Parser();
+        return p.parseString(string);
     }
 }
