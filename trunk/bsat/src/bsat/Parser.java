@@ -162,6 +162,8 @@ public class Parser {
                 if (b == 0) {
                     result.add(new Expr(parse(inner)));
                     inner.clear();
+                } else {
+                    inner.add(t);
                 }
                 continue;
             }

@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Parser parser = new Parser();
-        Expression expr = parser.parse("!!!x&!(yx|z&c&!yx)|x&y&!yx&!!!x&!(yx|z&c&!yx)|x&y&!yx");
+        Expression expr = parser.parse("((x))");
         System.out.println(expr);
         List<List<Variable>> c = expr.disjunctionalForm();
         for (List<Variable> d : c) {
