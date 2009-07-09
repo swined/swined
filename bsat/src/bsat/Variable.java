@@ -49,7 +49,11 @@ public class Variable implements Expression {
         if (!(object instanceof Variable))
             return false;
         Variable variable = (Variable)object;
-        return name.equals(variable.getName()) && (negative == variable.isNegative());
+        if (!name.equals(variable.getName()))
+            return false;
+        if (negative != variable.isNegative())
+            return false;
+        return true;
     }
 
 }
