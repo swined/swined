@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<overlay id="NSUTempOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://nsutemp/content/nsutemp.js" />
+	<statusbar id="status-bar">
+		<statusbarpanel id="NT-statusbar-panel" onclick="getTemp()">
+			<label id="NT-statusbar-label" />
+		</statusbarpanel>
+	</statusbar>
+</overlay>
