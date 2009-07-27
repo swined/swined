@@ -65,8 +65,11 @@ $xml->startTag('rss', version => '2.0');
 $xml->startTag('channel');
 $xml->dataElement($_, "${ll}'s friends") for ('title', 'description');
 $xml->dataElement('link', "http://www.livejournal.com/~$ll/friends");
+warn 1;
 if (login) {
+    warn 2;
     foreach (links) {
+	warn 3;
 	my $et = eval { alarm 0; $cache->get($_); } or next;
 	my $jn = getJName($_);
        	m|/(\d+)\.html$|;
