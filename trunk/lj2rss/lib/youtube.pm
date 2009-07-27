@@ -12,7 +12,7 @@ sub replace {
 		my $embed = get $url;
 		next unless $embed =~ m|<param name="movie" value="http://www.youtube.com/v/([^&]+?)(?:&[^""]+?)">|si;
 		$text = sprintf 
-			'%s<a href="http://www.youtube.com/?v=%s"><img src="http://i1.ytimg.com/vi/%s/hqdefault.jpg" alt="youtube"/></a>%s', 
+			'%s<div><a href="http://www.youtube.com/?v=%s">youtube:<br/><img src="http://i1.ytimg.com/vi/%s/hqdefault.jpg" alt="youtube"/></a></div>%s', 
 			$before, 
 			$1, 
 			$1,
