@@ -32,6 +32,7 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 	cp -R www $(CURDIR)/debian/lj2rss/usr/share/lj2rss
+	cp -R lib $(CURDIR)/debian/lj2rss/usr/share/lj2rss
 	cp -R cgi/* $(CURDIR)/debian/lj2rss/usr/lib/cgi-bin
 	cp -R apache2.conf $(CURDIR)/debian/lj2rss/etc/apache2/conf.d/lj2rss
 
