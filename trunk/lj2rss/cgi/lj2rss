@@ -70,7 +70,11 @@ if (login) {
     warn 2;
     foreach (links) {
 	warn 3;
-	my $et = eval { alarm 0; $cache->get($_); } or next;
+	my $et = eval { alarm 0; $cache->get($_); };
+	if (my $e = $@) {
+		warn $e;
+		next;
+	}
 	warn 4;
 	my $jn = getJName($_);
        	m|/(\d+)\.html$|;
