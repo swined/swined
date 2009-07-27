@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use lib '/usr/share/lj2rss/lib';
+use youtube;
 use CGI qw/param/;
 use XML::Writer;
 use LWP::UserAgent;
@@ -72,7 +74,7 @@ if (login) {
 		$et->{content} .= "<br><a href='${_}'><img src='${u}'></a>";
 	}
 	$jn |= '***';
-	$et->{content} =~ s{<iframe src="([^"]+)" [^>]+></iframe>}{<a href="$1" style="border: 1px dashed gray">embed</a>}g; #"
+	$et->{content} = youtube::replace($et->{content});
 	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
     }
 } else {
