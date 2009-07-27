@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use warnings;
+use strict;
 use lib '/usr/share/lj2rss/lib';
 use youtube;
 use CGI qw/param/;
@@ -8,7 +10,7 @@ use LWP::UserAgent;
 use Cache::FastMmap;
 
 my $ua = new LWP::UserAgent(cookie_jar => {});
-my ($ll, $hp) = (param('login'), param('hash'));
+my ($ll, $hp) = (param('login') || '', param('hash') || '');
 
 my $cache = new Cache::FastMmap(
     share_file => '/var/cache/lj2rss/cache',
@@ -26,7 +28,7 @@ my $cache = new Cache::FastMmap(
 
 sub login {
     my $s = { split /\n/, $ua->post('http://www.livejournal.com/interface/flat', [
-	mode => sessiongenerate, user => $ll, hpassword => $hp, expiration => short
+	mode => 'sessiongenerate', user => $ll, hpassword => $hp, expiration => 'short'
 	])->content }->{ljsession};
     my $l = $s =~ /^.+?:(.+?:.+?):/ ? $1 : return;
     $ua->cookie_jar->set_cookie(0, 'ljsession', $s, '/', '.livejournal.com');
@@ -39,7 +41,7 @@ sub links {
 }
 
 sub getJName {
-    map { return $1 if @_[0] =~ $_ } 
+    map { return $1 if $_[0] =~ $_ } 
 	('^http://(.*?)\.livejournal\.com/[0-9]*\.html',
 	'^http://users\.livejournal\.com/(.*?)/[0-9]*\.html',
 	'^http://community\.livejournal\.com/(.*?)/[0-9]*\.html');
@@ -58,7 +60,7 @@ sub addEntry {
 
 print "content-type: text/xml; charset=utf-8\n\n";
 
-my $xml = new XML::Writer(OUTPUT => STDOUT);
+my $xml = new XML::Writer(OUTPUT => *STDOUT);
 $xml->startTag('rss', version => '2.0');
 $xml->startTag('channel');
 $xml->dataElement($_, "${ll}'s friends") for ('title', 'description');
