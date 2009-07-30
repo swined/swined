@@ -1,12 +1,12 @@
 <!-- This is a template Ant file for a very basic Google AppEngine project -->
 
-<project name="myproject" default="war">
+<project name="lj2rss" default="war">
 
   <!-- When you copy this template to your working directories, change the
        value of appengine.sdk accordingly.  You may also want to use Ant's
        property file feature, allowing each developer to have their own
        local property file with the path to the SDK from that workspace. -->
-  <property name="appengine.sdk" location="../.."/>
+  <property name="appengine.sdk" location="/home/alex/appengine-java-sdk-1.2.2"/>
 
   <!-- Check that the SDK value is set and seems sane, so we can give a nicer
        error if not.  -->
