@@ -27,12 +27,22 @@ my $cache = new Cache::FastMmap(
 );
 
 sub login {
-    my $s = { split /\n/, $ua->post('http://www.livejournal.com/interface/flat', [
-	mode => 'sessiongenerate', user => $ll, hpassword => $hp, expiration => 'short'
-	])->content }->{ljsession};
-    my $l = $s =~ /^.+?:(.+?:.+?):/ ? $1 : return;
+    my $post = $ua->post(
+	'http://www.livejournal.com/interface/flat', 
+	[
+	    mode => 'sessiongenerate',
+	    user => $ll,
+	    hpassword => $hp,
+	    expiration => 'short',
+	],
+    );
+    return $post->status_line unless $post->is_success;
+    my $s = { split /\n/, $post->content }->{ljsession};
+    return sprintf 'no session<br><br>', $post->{content} unless $s;
+    my $l = $s =~ /^.+?:(.+?:.+?):/ ? $1 : return sprintf 'bad session: %s', $s;
     $ua->cookie_jar->set_cookie(0, 'ljsession', $s, '/', '.livejournal.com');
     $ua->cookie_jar->set_cookie(0, 'ljloggedin', $l, '/', '.livejournal.com');
+    return;
 }
 
 sub links {
@@ -65,7 +75,10 @@ $xml->startTag('rss', version => '2.0');
 $xml->startTag('channel');
 $xml->dataElement($_, "${ll}'s friends") for ('title', 'description');
 $xml->dataElement('link', "http://www.livejournal.com/~$ll/friends");
-if (login) {
+if (my $e = login) {
+    addEntry($xml, "http://$ENV{HTTP_HOST}/?rand=" . rand, 'error', 
+	sprintf 'Could not log into your LJ account:<br>%s', $e);
+} else {
     foreach (links) {
 	my $et = eval { alarm 0; $cache->get($_); };
 	if (my $e = $@) {
@@ -82,9 +95,6 @@ if (login) {
 	$et->{content} = youtube::replace($et->{content});
 	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
     }
-} else {
-    addEntry($xml, "http://$ENV{HTTP_HOST}/?rand=" . rand, 'error', 
-	'Could not log into your LJ account.');
 }
 $xml->dataElement('debug', '', 'time' => time - $^T);
 $xml->endTag;
