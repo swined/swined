@@ -46,7 +46,14 @@ public class LJ {
         if (hcon.getResponseCode() != 200) {
             return "http err " + hcon.getResponseCode() + ": " + hcon.getResponseMessage();
         }
-        return new LJResponse(hcon.getInputStream()).toString();
+        StringBuilder b = new StringBuilder();
+        b.append(new LJResponse(hcon.getInputStream()).toString());
+        b.append("<br>");
+        for (String v : hcon.getHeaderFields().get("set-cookie")) {
+            b.append(v);
+            b.append("<br>");
+        }
+        return b.toString();
     }
 
 }
