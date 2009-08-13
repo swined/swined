@@ -28,7 +28,7 @@ public class SessiongenerateServlet extends HttpServlet {
             if (null == session) {
                 out.println("shit happened");
             } else {
-                out.println("ljsession=" + session);
+                out.println("ljsession:<br>" + session);
             }
         } finally {
             out.close();

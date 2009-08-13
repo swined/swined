@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package net.swined;
 
 import java.io.BufferedReader;
@@ -16,40 +11,40 @@ import java.net.URL;
 
 public class LJ {
 
-    public String login(String username, String hash) throws MalformedURLException, IOException {
-        String data = "mode=sessiongenerate&expiration=short&user=" + username + "&hpassword=" + hash;
-        int len = data.length();
-        URL u = new URL("http://livejournal.com/interface/flat");
+    public HttpURLConnection post(String url, String data) throws MalformedURLException, IOException {
+        URL u = new URL(url);
         HttpURLConnection hcon = (HttpURLConnection)u.openConnection();
         hcon.setDoOutput(true);
-        hcon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        hcon.setRequestProperty("Content-Length", ""+len);
         hcon.setRequestMethod("POST");
         hcon.connect();
-        String r = null;
         OutputStream os = hcon.getOutputStream();
         os.write(data.getBytes());
         os.flush();
         os.close();
-        InputStream is = hcon.getInputStream();
-        InputStreamReader reader = new InputStreamReader(is);
+        return hcon;
+    }
+
+    public String readAll(InputStream stream) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        String line;
+        InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader buffered = new BufferedReader(reader);
-        String line = "";
-        while (null != (line = buffered.readLine())) {
-            if ("ljsession".equals(line)) {
-                if (null != (line = buffered.readLine())) {
-                    r = line;
-                } else {
-                    return null;
-                }
-            }
-            if ("errmsg".equals(line)) {
-                return null;
-            }
+        while ((line = buffered.readLine()) != null) {
+            builder.append(line);
+            builder.append("\n");
         }
-        is.close();
-        hcon.disconnect();
-        return r;
+        return builder.toString();
+    }
+
+    public String login(String username, String hash) throws MalformedURLException, IOException {
+        RequestBulder request = new RequestBulder();
+        request.put("mode", "sessiongenerate");
+        request.put("expiration", "short");
+        request.put("user", username);
+        request.put("hpassword", hash);
+        return request.toString();
+        //HttpURLConnection hcon = post("http://livejournal.com/interface/flat", request.toString());
+        //return readAll(hcon.getInputStream());
     }
 
 }
