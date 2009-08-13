@@ -42,9 +42,11 @@ public class LJ {
         request.put("expiration", "short");
         request.put("user", username);
         request.put("hpassword", hash);
-        return request.toString();
-        //HttpURLConnection hcon = post("http://livejournal.com/interface/flat", request.toString());
-        //return readAll(hcon.getInputStream());
+        HttpURLConnection hcon = post("http://livejournal.com/interface/flat", request.toString());
+        if (hcon.getResponseCode() != 200) {
+            return "http err " + hcon.getResponseCode() + ": " + hcon.getResponseMessage();
+        }
+        return new LJResponse(hcon.getInputStream()).toString();
     }
 
 }
