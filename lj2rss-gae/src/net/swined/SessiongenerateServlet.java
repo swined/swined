@@ -30,6 +30,8 @@ public class SessiongenerateServlet extends HttpServlet {
             } else {
                 out.println("ljsession:<br>" + session);
             }
+        } catch (Exception e) {
+            e.printStackTrace(out);
         } finally {
             out.close();
         }
