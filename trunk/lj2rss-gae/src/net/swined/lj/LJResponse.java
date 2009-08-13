@@ -1,4 +1,4 @@
-package net.swined;
+package net.swined.lj;
 
 import java.io.BufferedReader;
 import java.io.IOException;
