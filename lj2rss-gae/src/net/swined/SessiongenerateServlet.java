@@ -5,6 +5,7 @@
 
 package net.swined;
 
+import net.swined.lj.LJ;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,10 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author alex
- */
 public class SessiongenerateServlet extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -29,8 +26,9 @@ public class SessiongenerateServlet extends HttpServlet {
                 out.println("empty session");
             } else {
                 out.println("links:");
-                for (String link : lj.links(session))
-                    out.println(link + "<br>");
+                for (String link : lj.links(session)) {
+                    out.println(link + "<br>" + lj.getEntry(session, link) + "<hr>");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace(out);

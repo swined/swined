@@ -1,4 +1,4 @@
-package net.swined;
+package net.swined.lj;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,10 @@ import java.util.List;
 
 public class LJ {
 
-    private HttpURLConnection post(String url, String data) throws MalformedURLException, IOException {
+    private HttpURLConnection post(String url, String data) throws MalformedURLException, IOException, LJException {
         URL u = new URL(url);
         HttpURLConnection hcon = (HttpURLConnection) u.openConnection();
+        hcon.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
         hcon.setDoOutput(true);
         hcon.setRequestMethod("POST");
         hcon.connect();
@@ -22,6 +23,9 @@ public class LJ {
         os.write(data.getBytes());
         os.flush();
         os.close();
+        if (hcon.getResponseCode() != 200) {
+            throw new LJException("http error " + hcon.getResponseCode() + ": " + hcon.getResponseMessage());
+        }
         return hcon;
     }
 
@@ -49,9 +53,6 @@ public class LJ {
     public String login(String username, String hash) throws MalformedURLException, IOException, LJException {
         final String request = buildSessiongenerateRequest(username, hash);
         HttpURLConnection con = post("http://livejournal.com/interface/flat", request);
-        if (con.getResponseCode() != 200) {
-            throw new LJException("http error " + con.getResponseCode() + ": " + con.getResponseMessage());
-        }
         LJResponse response = new LJResponse(con.getInputStream());
         if (null != response.get("errmsg")) {
             throw new LJException(response.get("errmsg"));
@@ -67,11 +68,15 @@ public class LJ {
         return "ljsession=" + session + "; " + uniq + ";";
     }
 
-    public List<String> links(String cookies) throws IOException {
-        URL url = new URL("http://www.livejournal.com/mobile/friends.bml");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    private String get(String cookies, String url) throws IOException, LJException {
+        URL u = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setRequestProperty("cookie", cookies);
+        conn.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
         conn.connect();
+        if (conn.getResponseCode() != 200) {
+            throw new LJException("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage() + " while getting " + url);
+        }
         String l;
         String r = "";
         InputStreamReader reader = new InputStreamReader(conn.getInputStream());
@@ -79,6 +84,11 @@ public class LJ {
         while (null != (l = buffered.readLine())) {
             r += l + "\n";
         }
+        return r;
+    }
+
+    public List<String> links(String cookies) throws IOException, LJException {
+        String r = get(cookies, "http://www.livejournal.com/mobile/friends.bml");
         List<String> links = new ArrayList<String>();
         for (String link : r.split(": <a href='")) {
             if (!link.startsWith("http://"))
@@ -88,6 +98,40 @@ public class LJ {
                 links.add(u[0]);
         }
         return links;
+    }
+
+    private String extractTitle(String html) {
+        String split[] = html.split("</?title>", 3);
+        if (split.length == 3) {
+            return split[1];
+        } else {
+            return "untitled";
+        }
+    }
+
+    private String extractBody(String html) {
+        String split[] = html.split("</?body ?>", 3);
+        if (split.length == 3) {
+            return split[1];
+        } else {
+            return "";
+        }
+    }
+
+    public String getEntry(String cookies, String url) throws IOException, LJException {
+        String r = get(cookies, url + "?format=light");
+        if (r.split("<blockquote>").length < 2)
+            return null;
+        String title = extractTitle(r);
+        String body = extractBody(r);
+        String split[] = body.split("<hr />", 3);
+        if (split.length == 3) {
+            body = split[0] + split[2];
+        }
+        split = body.split("<br style='clear: both' />", 2);
+        if (split.length == 2)
+            body = split[0];
+        return body;
     }
 
 }
