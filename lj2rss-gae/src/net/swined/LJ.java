@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LJ {
 
@@ -65,19 +67,27 @@ public class LJ {
         return "ljsession=" + session + "; " + uniq + ";";
     }
 
-    public String links(String cookies) throws IOException {
-        URL u = new URL("http://www.livejournal.com/mobile/friends.bml");
-        HttpURLConnection hcon = (HttpURLConnection) u.openConnection();
-        hcon.setRequestProperty("cookie", cookies);
-        hcon.connect();
+    public List<String> links(String cookies) throws IOException {
+        URL url = new URL("http://www.livejournal.com/mobile/friends.bml");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("cookie", cookies);
+        conn.connect();
         String l;
         String r = "";
-        InputStreamReader reader = new InputStreamReader(hcon.getInputStream());
+        InputStreamReader reader = new InputStreamReader(conn.getInputStream());
         BufferedReader buffered = new BufferedReader(reader);
         while (null != (l = buffered.readLine())) {
             r += l + "\n";
         }
-        return r;
+        List<String> links = new ArrayList<String>();
+        for (String link : r.split(": <a href='")) {
+            if (!link.startsWith("http://"))
+                continue;
+            String u[] = link.split("\\?");
+            if (u.length > 0)
+                links.add(u[0]);
+        }
+        return links;
     }
 
 }

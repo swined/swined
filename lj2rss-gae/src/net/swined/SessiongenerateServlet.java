@@ -28,8 +28,9 @@ public class SessiongenerateServlet extends HttpServlet {
             if (null == session) {
                 out.println("empty session");
             } else {
-                String links = lj.links(session);
-                out.println(links);
+                out.println("links:");
+                for (String link : lj.links(session))
+                    out.println(link + "<br>");
             }
         } catch (Exception e) {
             e.printStackTrace(out);
