@@ -26,9 +26,10 @@ public class SessiongenerateServlet extends HttpServlet {
             LJ lj = new LJ();
             String session = lj.login(request.getParameter("login"), request.getParameter("hash"));
             if (null == session) {
-                out.println("shit happened");
+                out.println("empty session");
             } else {
-                out.println("ljsession:<br>" + session);
+                String links = lj.links(session);
+                out.println(links);
             }
         } catch (Exception e) {
             e.printStackTrace(out);
