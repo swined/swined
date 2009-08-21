@@ -15,5 +15,5 @@ svn commit -m 'auto commit' || die commit failed
 svn-buildpackage -rfakeroot -us -uc -b --svn-move || die build failed
 rm ../lj2rss_${VER}_i386.changes
 for deb in ../*.deb; do sudo reprepro -b /var/web/deb.swined.net includedeb unstable $deb && rm $deb || die failed to add deb to repository; done
-sudo apt-get update
-sudo apt-get install -y --force-yes lj2rss
+#sudo apt-get update
+#sudo apt-get install -y --force-yes lj2rss
