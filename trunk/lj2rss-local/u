@@ -8,7 +8,7 @@ die() {
 svn up || die up failed
 svn commit -m 'auto commit' || die commit failed
 REV=$(svn info -r HEAD | grep ^Revision: | awk '{ print $2 }')
-VER=0.0.1+svn$REV
+VER=0.0.1+svn$REV+local
 export DEBEMAIL='Alexey Alexandrov <swined@gmail.com>'
 dch -v $VER "svn revision $REV" || die dch failed
 svn commit -m 'auto commit' || die commit failed
