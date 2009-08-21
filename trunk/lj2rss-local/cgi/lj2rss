@@ -10,11 +10,24 @@ use LWP::UserAgent;
 use Cache::FastMmap;
 
 my $ua = new LWP::UserAgent(cookie_jar => {});
+$ua->agent('http://lj2rss.net.ru/; swined@gmail.com');
 my ($ll, $hp) = (param('login') || '', param('hash') || '');
+
+use LWP::Protocol::http::SocksChain;
+LWP::Protocol::implementor( http => 'LWP::Protocol::http::SocksChain' );
+@LWP::Protocol::http::SocksChain::EXTRA_SOCK_OPTS = (
+	Chain_Len    => 1,
+	Debug        => 0,
+	Random_Chain => 1,
+	Chain_File_Data => ['127.0.0.1:9050:::5'],
+	Auto_Save    => 0,
+	Restore_Type => 0,
+);
 
 my $cache = new Cache::FastMmap(
     share_file => '/var/cache/lj2rss/cache',
-    expire_time => '1d',
+    expire_time => '7d',
+    cache_size => '1024m',
     unlink_on_exit => 0,
     read_cb => sub {
 	my $w = $ua->get($_[1] . '?format=light')->content;
@@ -36,7 +49,7 @@ sub login {
 	    expiration => 'short',
 	],
     );
-    return $post->status_line unless $post->is_success;
+    return 'api: ' . $post->status_line unless $post->is_success;
     my $s = { split /\n/, $post->content }->{ljsession};
     return sprintf 'no session<br><br>', $post->{content} unless $s;
     my $l = $s =~ /^.+?:(.+?:.+?):/ ? $1 : return sprintf 'bad session: %s', $s;
@@ -77,9 +90,10 @@ $xml->dataElement($_, "${ll}'s friends") for ('title', 'description');
 $xml->dataElement('link', "http://www.livejournal.com/~$ll/friends");
 if (my $e = login) {
     addEntry($xml, "http://$ENV{HTTP_HOST}/?rand=" . rand, 'error', 
-	sprintf 'Could not log into your LJ account:<br>%s', $e);
+	sprintf 'Could not log into your LJ account:<br>%s<br><br><a href="http://swined.livejournal.com/391329.html">http://swined.livejournal.com/391329.html</a>', $e);
 } else {
     foreach (links) {
+	$xml->dataElement('debug', '', 'link' => $_);
 	my $et = eval { alarm 0; $cache->get($_); };
 	if (my $e = $@) {
 		next;
