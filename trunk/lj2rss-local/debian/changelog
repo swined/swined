@@ -1,3 +1,9 @@
+lj2rss (0.0.1+svn1751+local) unstable; urgency=low
+
+  * svn revision 1751
+
+ -- Alexey Alexandrov <swined@gmail.com>  Fri, 21 Aug 2009 14:01:31 +0700
+
 lj2rss (0.0.1+svn1749) unstable; urgency=low
 
   * svn revision 1749
