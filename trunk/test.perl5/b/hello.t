@@ -2,39 +2,26 @@
 
 use B;
 use B::Generate;
-
-sub bar {
-	my ($x, $p) = @_;
-	printf "bar(%s)\n", join ', ', @$p;
-}
-
-sub foo {
-	bar(\@_, ['1', '2', '3']);
-	my ($x, $y, $z) = @_;
-	printf "hello, world\n";
-}
+use B::Concise;
 
 sub op_dump {
 	my ($op) = @_;
 	print "+++\n";
-	while ($op = $op->next and not $op->isa('B::NULL')) {
-		printf "%s: %s/%s (%s)\n", B::class($op), $op->name, $op->type, $op->desc;
+	while ($op and not $op->isa('B::NULL')) {
+		if ($op->isa('B::SVOP')) {
+			printf "%s: %s/%s (%s) sv=%s\n", B::class($op), $op->name, $op->type, $op->desc, $op->sv->sv;
+		} else {
+			printf "%s: %s/%s (%s)\n", B::class($op), $op->name, $op->type, $op->desc;
+		}
+		$op->dump;
+		$op = $op->next;
 	}
 	print "---\n";
 }
 
-{
-	my $b = B::svref_2object(\&foo);
-	my $op = $b->START;
-	my $r = new B::UNOP('entersub', 0, \&bar);
-	op_dump $op;
-	foo;
-	$r->next($op->next);
-	$op->next($r);
+sub foo {
+	29;
 }
-{
-	my $b = B::svref_2object(\&foo);
-	my $op = $b->START;
-	op_dump $op;
-	foo;
-}
+
+my $b = B::svref_2object(\&foo);
+B::Concise::concise_cv_obj('basic', $b);
