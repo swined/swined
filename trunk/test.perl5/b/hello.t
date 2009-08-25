@@ -3,6 +3,7 @@
 use B;
 use B::Generate;
 use B::Utils;
+use Data::Dumper;
 
 sub op_dump {
 	my ($op, $cv, $i) = @_;
@@ -40,17 +41,33 @@ sub bar {
 }
 
 sub foo {
-	my $x = 'bar';
-	bar 'baz';
+	my $x = 'baz';
+	bar 'qux';
 }
 
 my $b = B::svref_2object(\&foo);
+my $c = B::svref_2object(sub { die });
+$b->START->next($c->START->next);
+my $next = $b->START->next;
+my $op = $c->START;
+while ($op and not $op->isa('B::NULL') and not $op->next->isa('B::NULL')) {
+	printf "# %s\n", $op->name;
+	if ($op->next->name eq 'leavesub') {
+		print "fixing leavesub\n";
+		$op->next($next);
+		undef $op;
+	}
+	$op = $op->next if $op;
+}
 cv_dump $b;
 foo;
-op_insert 
-	$b->START->next,
-	new B::UNOP('entersub', 0, 0),
-	new B::OP('leavesub', 0),
-;
-cv_dump $b;
-foo;
+#exit;
+#cv_dump $b;
+#foo;
+#op_insert 
+#	$b->START->next,
+#	new B::UNOP('entersub', 0, 0),
+#	new B::OP('leavesub', 0),
+#;
+#cv_dump $b;
+#foo;
