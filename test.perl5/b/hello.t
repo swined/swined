@@ -47,10 +47,8 @@ sub foo {
 my $b = B::svref_2object(\&foo);
 cv_dump $b;
 foo;
-my $meth = B::SVOP->new('const', 0, 'sadf') || die;
 op_insert 
-	$b->START->next, 
-	$meth,
+	$b->START->next,
 	new B::UNOP('entersub', 0, 0),
 	new B::OP('leavesub', 0),
 ;
