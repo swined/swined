@@ -7,7 +7,7 @@ sub op_dump {
 	my ($op, $cv, $i) = @_;
 	printf "%s %s/%s\n", ('-' x $i), B::class($op), $op->name;
 	if ($op->isa('B::SVOP')) {
-		printf "sv=%s\n", $op->sv->sv;
+	#	printf "sv=%s\n", $op->sv->sv;
 	} elsif ($op->isa('B::PADOP')) {
 		printf "padval[%s]=%s\n", $op->padix, $op->padval($cv);
 	}
@@ -48,7 +48,11 @@ sub bar {
 sub foo {
 	print "foo()\n";
 	bar;
+	my $sub = sub { print "anon()\n" };
+	&$sub();
 }
+
+print \&baz;
 
 my $b = B::svref_2object(\&foo);
 cv_dump $b;
