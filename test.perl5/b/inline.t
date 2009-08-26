@@ -24,14 +24,19 @@ sub test {
 	my ($sub, $val) = @_;
 	_inject($sub, sub {
 		my ($p, $v) = @_;
+		if ($p % 2) {
+			print "even\n";
+		} else {
+			print "odd\n";
+		}
 		printf "inj(%s)\n", $p + $v + $val;
 	});
 }
 
-use bdump;
-
-bdump::sub_dump(\&test);
-test(-40);
+#use bdump;
+#bdump::sub_dump(\&test);
+test(\&foo, -40);
+foo 29, 42;
 
 __END__
 __C__
@@ -76,17 +81,12 @@ void _shift_padix(OP *op, int padshift) {
 	if (!op)
 		return;
 
-//	if (op->op_type == 9)
 	op->op_targ += padshift;
 
 	if (op->op_type == 7)
 		((PADOP*)op)->op_padix += padshift;
 
-//	if (op->op_type == 5)
-//		((SVOP*)op)->op_targ += padshift;
-
 	_shift_padix(op->op_next, padshift);
-	
 
 }
 
