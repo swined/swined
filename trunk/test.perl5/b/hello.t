@@ -2,8 +2,6 @@
 
 use B;
 use B::Generate;
-use B::Utils;
-use Data::Dumper;
 
 sub op_dump {
 	my ($op, $cv, $i) = @_;
@@ -11,9 +9,17 @@ sub op_dump {
 	if ($op->isa('B::SVOP')) {
 		printf "sv=%s\n", $op->sv->sv;
 	} elsif ($op->isa('B::PADOP')) {
-		printf "padix=%s\n", $op->padix;
+		printf "padval[%s]=%s\n", $op->padix, $op->padval($cv);
 	}
 	op_dump($op->next, $cv, $i) unless $op->next->isa('B::NULL');
+}
+
+sub B::PADOP::padval {
+        my ($self, $cv) = @_;
+        my ($names, $values) = $cv->PADLIST->ARRAY;
+        my @v = $values->ARRAY;
+	my $r = $v[$self->padix];
+        return $r->sv;
 }
 
 sub cv_dump {
@@ -32,42 +38,22 @@ sub op_insert {
 }
 
 sub baz {
-	printf "baz()\n";
+	print "baz()\n"; 
 }
 
 sub bar {
-	printf "bar(%s)\n", join ', ', @_;
-	return 29;
+	print "bar()\n";
 }
 
 sub foo {
-	my $x = 'baz';
-	bar 'qux';
+	print "foo()\n";
+	bar;
 }
 
 my $b = B::svref_2object(\&foo);
-my $c = B::svref_2object(sub { die });
-$b->START->next($c->START->next);
-my $next = $b->START->next;
-my $op = $c->START;
-while ($op and not $op->isa('B::NULL') and not $op->next->isa('B::NULL')) {
-	printf "# %s\n", $op->name;
-	if ($op->next->name eq 'leavesub') {
-		print "fixing leavesub\n";
-		$op->next($next);
-		undef $op;
-	}
-	$op = $op->next if $op;
-}
+cv_dump $b;
+my $gv = new B::PADOP('gv', 0);
+B::PADOP::padix($gv, 2);
+op_insert $b->START, $gv, new B::UNOP('entersub', 0, 0);
 cv_dump $b;
 foo;
-#exit;
-#cv_dump $b;
-#foo;
-#op_insert 
-#	$b->START->next,
-#	new B::UNOP('entersub', 0, 0),
-#	new B::OP('leavesub', 0),
-#;
-#cv_dump $b;
-#foo;
