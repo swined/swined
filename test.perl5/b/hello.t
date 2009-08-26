@@ -46,7 +46,7 @@ sub bar {
 }
 
 sub foo {
-	print "foo()\n";
+#	print "foo()\n";
 	bar;
 	my $sub = sub { print "anon()\n" };
 	&$sub();

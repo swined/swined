@@ -1,56 +1,114 @@
 #!/usr/bin/perl
 
 use Inline C;
-use B::Generate;
-
-sub op_insert {
-        my ($target, $op, @ops) = @_;
-        $op->next($target->next);
-        $target->next($op);
-        main::op_insert($op, @ops) if @ops;
-        return;
-}
 
 sub foo {
-	print "foo()\n";
+	my ($f, $g) = @_;
+	print "foo($f, $g)\n";
 }
 
 sub bar {
 	print "bar()\n";
 }
 
-sub baz {
-	print "baz()\n";
+_inject(\&foo, sub {
+	my ($x, $y) = @_;
+        print "injected($x, $y)\n";
+        print "!!111oneoneone\n";
+	bar();
+        bar();
+});
+foo 29, 42;
+
+sub test {
+	my ($sub, $val) = @_;
+	_inject($sub, sub {
+		my ($p, $v) = @_;
+		printf "inj(%s)\n", $p + $v + $val;
+	});
 }
 
-sub inject {
-	my ($sub, $code) = @_;
-	print "ins()\n";
-	my $b = B::svref_2object($sub);
-	my $gv = new B::PADOP('gv', 0);
-	B::PADOP::padix($gv, _pl_push($sub, $code));
-	main::op_insert($b->START, $gv, new B::UNOP('entersub', 0, 0));
-	return;
-}
+use bdump;
 
-inject \&foo, \&bar;
-inject \&bar, \&baz;
-inject \&foo, sub { print "anon()\n" };
-foo();
+bdump::sub_dump(\&test);
+test(-40);
 
 __END__
 __C__
 
-int _av_push(AV *av, SV *sv) {
-	SvREFCNT_inc(sv);
-	av_push(av, sv);
-	return av_len(av);
+void _av_copy_elem(AV *src, AV *dst, int ix) {
+
+	SvREFCNT_inc(AvARRAY(src)[ix]);
+	av_push(dst, AvARRAY(src)[ix]);
+
 }
 
-int _pl_push(CV *sub, SV *val) {
-	AV *pad = CvPADLIST(sub);
-	AV *keys = *av_fetch(pad, 0, 0);
-	AV *vals = *av_fetch(pad, 1, 0);
-	_av_push(keys, Nullsv);
-	return _av_push(vals, val);
+int _append_padlist(CV *t, CV *c) {
+
+	AV *keys_t = AvARRAY(CvPADLIST(t))[0];
+	AV *vals_t = AvARRAY(CvPADLIST(t))[1];
+
+        if (av_len(keys_t) != av_len(vals_t))
+                return -1;
+
+        AV *keys_c = AvARRAY(CvPADLIST(c))[0];
+        AV *vals_c = AvARRAY(CvPADLIST(c))[1];
+
+	if (av_len(keys_c) != av_len(vals_c))
+		return -1;
+
+	int count = av_len(keys_t) + 1;
+
+	int i;
+
+	for (i = 0; i <= av_len(keys_c); i++)	
+		_av_copy_elem(keys_c, keys_t, i);
+
+ 	for (i = 0; i <= av_len(vals_c); i++)
+                _av_copy_elem(vals_c, vals_t, i);
+
+	return count;
+
+}
+
+void _shift_padix(OP *op, int padshift) {
+
+	if (!op)
+		return;
+
+//	if (op->op_type == 9)
+	op->op_targ += padshift;
+
+	if (op->op_type == 7)
+		((PADOP*)op)->op_padix += padshift;
+
+//	if (op->op_type == 5)
+//		((SVOP*)op)->op_targ += padshift;
+
+	_shift_padix(op->op_next, padshift);
+	
+
+}
+
+void _fix_lastop(OP *op, OP *t) {
+
+	while (op->op_next) {
+
+		if (!op->op_next->op_next) {
+			op->op_next = t;
+			return;
+		}
+
+		op = op->op_next;
+
+	}
+
+}
+
+void _inject(CV *t, CV *c) {
+
+	_shift_padix(CvSTART(c), _append_padlist(t, c));
+	_fix_lastop(CvSTART(c), CvSTART(t)->op_next);	
+	CvSTART(t)->op_next = CvSTART(c);
+
 }
