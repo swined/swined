@@ -20,22 +20,60 @@ _inject(\&foo, sub {
 });
 foo 29, 42;
 
+sub check {
+	my ($x, $y) = @_;
+}
+
 sub test {
 	my ($sub, $val) = @_;
 	_inject($sub, sub {
-		my ($p, $v) = @_;
-		if ($p % 2) {
-			print "even\n";
-		} else {
-			print "odd\n";
-		}
-		printf "inj(%s)\n", $p + $v + $val;
+		
 	});
+}
+use Inline C;
+
+sub foo {
+        my ($f, $g) = @_;
+        print "foo($f, $g)\n";
+}
+
+sub bar {
+        print "bar()\n";
+}
+
+_inject(\&foo, sub {
+        my ($x, $y) = @_;
+        print "injected($x, $y)\n";
+        print "!!111oneoneone\n";
+        bar();
+        bar();
+});
+foo 29, 42;
+
+sub check {
+        my ($x, $y) = @_;
+}
+
+sub test {
+        my ($sub, $val) = @_;
+        _inject($sub, sub {
+
+        });
 }
 
 #use bdump;
 #bdump::sub_dump(\&test);
-test(\&foo, -40);
+#test(\&foo, -40);
+foo 29, 42;
+
+__END__
+__C__
+
+void _av_copy_elem(AV *src, AV *dst, int ix) {
+
+#use bdump;
+#bdump::sub_dump(\&test);
+#test(\&foo, -40);
 foo 29, 42;
 
 __END__
