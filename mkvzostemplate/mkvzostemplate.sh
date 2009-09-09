@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 die() {
     if [ -z "$*" ]; then
