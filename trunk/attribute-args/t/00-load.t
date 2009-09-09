@@ -1,9 +1,6 @@
-#!perl -T
+#!perl
 
+use strict;
 use Test::More tests => 1;
 
-BEGIN {
-	use_ok( 'Attribute::Args' );
-}
-
-diag( "Testing Attribute::Args $Attribute::Args::VERSION, Perl $], $^X" );
+use_ok('Attribute::Args');

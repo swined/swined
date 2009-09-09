@@ -1,6 +1,6 @@
 package Attribute::Args;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use warnings;
 use strict;
@@ -80,8 +80,13 @@ list or hash can only be the last param. whenever is is found it takes all remai
 
 =cut
 
+sub import {
+	my $caller = caller;
+	no strict 'refs';
+	push @{"${caller}::ISA"}, __PACKAGE__;
+}
 
-sub UNIVERSAL::ARGS :ATTR {
+sub ARGS :ATTR {
 	my ($package, $symbol, $ref, $attr, $data, $phase) = @_;
 	$data = [ $data || () ] unless 'ARRAY' eq ref $data;
 	no warnings;
@@ -100,8 +105,8 @@ sub wrapper {
 sub check {
 	my ($d, $p, $s) = @_;
 	unless ($s) {
-		my @caller = caller;
-		$s = sprintf '*%s::%s', $caller[0], $caller[3] || 'ANON';
+		my @caller = caller 1;
+		$s = sprintf '*%s::%s', $caller[0], $caller[3];
 	}
 	die sprintf
 		'expected %s(%s), but got %s(%s) instead',

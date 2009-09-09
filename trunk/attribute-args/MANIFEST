@@ -5,5 +5,8 @@ Makefile.PL
 README
 lib/Attribute/Args.pm
 t/00-load.t
+t/01-args.t
+t/10-strict.t
+t/11-cover.t
 t/boilerplate.t
 t/pod.t

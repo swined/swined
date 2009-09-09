@@ -9,6 +9,8 @@ use ExtUtils::MakeMaker;
 
 my $deps = {
 	'Attribute::Handlers' => 0,
+	'YAML' => 0,
+	'Test::Strict' => 0,
 };
 my $name = 'Attribute::Args';
 my $author = 'Alex Alexandrov <swined@cpan.org>';
