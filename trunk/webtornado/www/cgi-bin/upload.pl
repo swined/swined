@@ -17,6 +17,6 @@ my $r = $wt->dbh->selectrow_hashref('SELECT * FROM torrents WHERE owner = ? AND 
 if ($r->{id}) {
     $wt->dbh->do('UPDATE torrents SET active = 0, progress = 0, maxratio = 0, torrent = ? WHERE id = ?', undef, $tor, $r->{id});
 } else {
-    $wt->dbh->do('INSERT INTO torrents(owner, output, torrent) VALUES(?, ?, ?)', undef, $u, $nf, $tor);
+    $wt->dbh->do('INSERT INTO torrents(owner, output, torrent, pid, active, del, up, down, progress, maxratio, peers, peerlist) VALUES(?, ?, ?, 0, 0, 0, 0, 0, 0, 0, 0, "")', undef, $u, $nf, $tor);
 }
 print $wt->cgi->header(-location => $ENV{HTTP_REFERER}, -status => 302);

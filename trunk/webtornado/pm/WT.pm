@@ -14,7 +14,7 @@ sub new {
     $p{conf} = Config::File::read_config_file($p{conffile});
 #    my $dsn = "DBI:mysql:database=$p{conf}->{dbname}:host=$p{conf}->{dbhost}";
     my $dsn = "dbi:SQLite:dbname=/var/lib/webtornado/db.sqlite";
-    $p{dbh} = DBI->connect($dsn, $p{conf}->{dbuser}, $p{conf}->{dbpass});
+    $p{dbh} = DBI->connect($dsn, $p{conf}->{dbuser}, $p{conf}->{dbpass}, { RaiseError => 1 });
     $p{cgi} = new CGI;
     bless \%p;
 }
