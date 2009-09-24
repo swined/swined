@@ -1,1 +1,1 @@
-package VER; our $VER = '0.0.7+svn1781';
+package VER; our $VER = '0.0.7+svn1783';
