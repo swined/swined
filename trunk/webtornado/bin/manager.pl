@@ -11,7 +11,7 @@ my $c = $wt->conf;
 my $dbh = $wt->dbh;
 
 # syncdb
-$wt->syncdb;
+#$wt->syncdb;
 
 # delete overseeded
 $dbh->do('UPDATE torrents SET del = 1 WHERE maxratio > 0 AND up/down > maxratio AND progress = 100');
