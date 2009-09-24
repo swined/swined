@@ -73,7 +73,7 @@ sub getTorrentInfo {
 
 sub syncdb {
     my $dbh = shift->dbh;
-    $dbh->do('CREATE TABLE IF NOT EXISTS torrents(id int primary key not null auto_increment)');
+    $dbh->do('CREATE TABLE IF NOT EXISTS torrents(id int primary key)');
     my $cur_table = new_odbc DBIx::DBSchema::Table($dbh, 'torrents');
     my $req_table = new DBIx::DBSchema::Table({
 	name => 'torrents',
