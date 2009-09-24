@@ -13,7 +13,7 @@ export DEBEMAIL='Alexey Alexandrov <swined@gmail.com>'
 dch -v $VER "svn revision $REV" || die dch failed
 echo "package VER; our \$VER = '$VER';" > pm/VER.pm
 svn commit -m 'auto commit' || die commit failed
-svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
+svn-buildpackage -rfakeroot -us -uc -b --svn-move || die build failed
 rm ../webtornado_${VER}_i386.changes
 for deb in ../*.deb; do sudo reprepro -b /var/web/deb.swined.net.ru includedeb stable $deb && rm $deb; done
 #sudo apt-get update
