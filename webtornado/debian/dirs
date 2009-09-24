@@ -7,3 +7,4 @@ usr/share/webtornado/bin
 usr/share/webtornado/www/img
 usr/share/webtornado/www/cgi-bin
 var/cache/webtornado/users
+var/lib/webtornado
