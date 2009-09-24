@@ -16,5 +16,5 @@ svn commit -m 'auto commit' || die commit failed
 svn-buildpackage -rfakeroot -us -uc -b --svn-move --svn-rm-prev-dir || die build failed
 rm ../webtornado_${VER}_i386.changes
 for deb in ../*.deb; do sudo reprepro -b /var/web/deb.swined.net.ru includedeb stable $deb && rm $deb; done
-sudo apt-get update
-sudo apt-get install -y --force-yes webtornado
+#sudo apt-get update
+#sudo apt-get install -y --force-yes webtornado
