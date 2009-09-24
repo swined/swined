@@ -79,7 +79,7 @@ sub syncdb {
 	name => 'torrents',
 	columns => [ map { new DBIx::DBSchema::Column(@$_) }
 		# name type nullable
-		['id', 'int', 0, 11, undef, 'auto_increment'],
+		['id', 'int', 0, 11],#, undef, 'auto_increment'],
 		['pid', 'int', 0],
 		['active', 'int', 0],
 		['del', 'int', 0],
