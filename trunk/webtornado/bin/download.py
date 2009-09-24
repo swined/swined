@@ -10,6 +10,7 @@ from sys import argv, stdout
 from time import time
 
 import MySQLdb
+from pysqlite2 import dbapi2 as sqlite3
 import os
 from urllib import unquote
 
@@ -18,7 +19,8 @@ class HeadlessDisplayer:
     def __init__(self, torrentId, dbhost, dbuser, dbpass, dbname):
 	self.dict = {}
 	self.torrentId = torrentId;
-	self.db = MySQLdb.connect(host = dbhost, user = dbuser, passwd = dbpass, db = dbname)
+#	self.db = MySQLdb.connect(host = dbhost, user = dbuser, passwd = dbpass, db = dbname)
+	self.db = sqlite3.connect('/var/lib/webtornado/db.sqlite')
         self.cr = self.db.cursor()
 	self.upTotal = 0
 	self.downTotal = 0
