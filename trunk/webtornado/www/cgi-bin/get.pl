@@ -3,11 +3,12 @@
 use lib '/usr/share/webtornado/pm';
 use WT;
 use URI::Escape;
+use MIME::Base64;
 
 my $wt = new WT;
 
 my $tor = $wt->selectrow_hashref('SELECT * FROM torrents WHERE id = ?', undef, $wt->cgi->param('id'));
-my $bt = WT::getTorrentInfo(uri_unescape $tor->{torrent});
+my $bt = WT::getTorrentInfo(decode_base64 $tor->{torrent});
 my $ts = 0;
 $ts += 512 + $_->{size} + (($_->{size} % 512) ? (512 - $_->{size} % 512) : 0) for @{$bt->{files}};
 

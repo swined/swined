@@ -11,6 +11,7 @@ use Net::IP;
 use Filesys::Statvfs;
 use Time::Duration;
 use IP::Country::Fast;
+use MIME::Base64;
 
 my $wt = new WT;
 
@@ -57,7 +58,7 @@ $xml->startTag('torrents');
 foreach my $torrent (@torrents) {
 	$torrent->{$_} ||= 0 for 'ratio', 'progress';
 	$torrent->{$_} *= 1 << 20 for 'up', 'down';
-	my $meta = eval { WT::getTorrentInfo(uri_unescape $torrent->{torrent}) };
+	my $meta = eval { WT::getTorrentInfo(decode_base64 $torrent->{torrent}) };
 	$torrent->{eta} = ($torrent->{down} * $torrent->{maxratio} - $torrent->{up}) / $torrent->{uprate}
 		if $torrent->{progress} == 100 and $torrent->{ratio} < $torrent->{maxratio} and $torrent->{uprate};
 	my %attr = (
