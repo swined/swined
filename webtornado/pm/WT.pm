@@ -73,7 +73,7 @@ sub getTorrentInfo {
 
 sub syncdb {
     my $dbh = shift->dbh;
-    $dbh->do('CREATE TABLE IF NOT EXISTS torrents(id int primary key, pid int not null, active int not null, del int not null, owner text, outdir text, output text, up double not null, down double not null, error text, progress int not null, downrate int, uprate int, eta int, maxratio double not null, torrent text, peers int not null, peerlist text not null, show_peers int not null, vmsize int not null, vmrss int not null)');
+    $dbh->do('CREATE TABLE IF NOT EXISTS torrents(id integer primary key not null, pid int not null, active int not null, del int not null, owner text, outdir text, output text, up double not null, down double not null, error text, progress int not null, downrate int, uprate int, eta int, maxratio double not null, torrent text, peers int not null, peerlist text not null, show_peers int not null, vmsize int not null, vmrss int not null)');
 =cut
     my $cur_table = new_odbc DBIx::DBSchema::Table($dbh, 'torrents');
     my $req_table = new DBIx::DBSchema::Table({

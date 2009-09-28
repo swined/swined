@@ -8,33 +8,41 @@ from threading import Event
 from os.path import abspath
 from sys import argv, stdout
 from time import time
-
-import MySQLdb
 from pysqlite2 import dbapi2 as sqlite3
-import os
 from urllib import unquote
+import base64
+import os
+
+def quote(text):
+	if type(text) is int:
+		return text
+	return "'%s'" % (text.replace("'", "''"))
 
 class HeadlessDisplayer:
 
     def __init__(self, torrentId, dbhost, dbuser, dbpass, dbname):
 	self.dict = {}
 	self.torrentId = torrentId;
-#	self.db = MySQLdb.connect(host = dbhost, user = dbuser, passwd = dbpass, db = dbname)
-	self.db = sqlite3.connect('/var/lib/webtornado/db.sqlite')
-        self.cr = self.db.cursor()
 	self.upTotal = 0
 	self.downTotal = 0
 	self.lastUpdate = 0
 	self.peers = 0
 
     def dbup(self, k, v):
-	if self.dict.get(k) != v:
-	    self.cr.execute('UPDATE torrents SET ' + k + ' = %s WHERE id = %s',
-		(v, self.torrentId))
-	    self.dict[k] = v
+	if self.dict.get(k) == v: return
+	db = sqlite3.connect('/var/lib/webtornado/db.sqlite')
+	cr = db.cursor()
+	query = 'UPDATE torrents SET %s = %s WHERE id = %s' % (k, quote(v), quote(self.torrentId))
+	print query
+	cr.execute(query)
+	self.dict[k] = v
+	db.commit()
+        cr.close()
+        db.close()
 
     def error(self, msg):
 	self.dbup('error', msg)
+	print 'ERROR: %s' % (msg)
 
     def finished(self):
 	self.dbup('progress', 100)
@@ -69,8 +77,7 @@ class HeadlessDisplayer:
 		self.dbup('peerlist', '|'.join(pl))
 
     def chooseFile(self, default, size, saveas, dir):
-	self.cr.execute('UPDATE torrents SET output = %s WHERE id = %s',
-	    (abspath(default), self.torrentId))
+        self.dbup('output', abspath(default))
         return default
 
     def newpath(self, path):
@@ -78,29 +85,33 @@ class HeadlessDisplayer:
 
 def run(p):
     h = HeadlessDisplayer(p[0], p[1], p[2], p[3], p[4])
-    h.cr.execute('SELECT pid,outdir,torrent,up,down FROM torrents WHERE id = %s', (h.torrentId))
-    r = h.cr.fetchone()
+    db = sqlite3.connect('/var/lib/webtornado/db.sqlite')
+    cr = db.cursor()
+    cr.execute('SELECT pid,outdir,torrent,up,down FROM torrents WHERE id = %s' % (quote(h.torrentId)))
+    r = cr.fetchone()
     fn = '/tmp/webtornado.' + str(h.torrentId) + '.torrent'
-    f = open(fn, 'w')
-    f.write(unquote(r[2]))
+    f = open(fn, 'wb')
+    f.write(base64.b64decode(r[2]))
     f.close()
     p.append('--spew');
     p.append('1')
     p.append(fn)
     if not r:
-	print "no such torrent: %s" % (h.torrentId)
+	print 'no such torrent: %s' % (h.torrentId)
 	return
     if r[0] != 0:
-	print "download is already running: %s" % (r[0])
+	print 'download is already running: %s' % (r[0])
 	return
-    h.cr.execute('UPDATE torrents SET pid = %s, error = "" WHERE id = %s', (os.getpid(), h.torrentId));
+    h.dbup('pid', os.getpid())
+    h.dbup('error', '')
     os.chdir(r[1])
     h.upTotal = r[3]
     h.downTotal = r[4]
+    cr.close()
+    db.close()
     del p[0:5]
+    print "starting download"
     download(p, h.chooseFile, h.display, h.finished, h.error, Event(), 80, h.newpath)
-    h.cr.close
-    h.db.close
 
 if __name__ == '__main__':
     run(argv[1:])
