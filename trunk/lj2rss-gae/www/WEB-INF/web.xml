@@ -6,11 +6,11 @@
 
 
     <servlet>
-        <servlet-name>friends.rss</servlet-name>
+        <servlet-name>friends</servlet-name>
         <servlet-class>net.swined.FriendsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>friends.rss</servlet-name>
+        <servlet-name>friends</servlet-name>
         <url-pattern>/friends.rss</url-pattern>
     </servlet-mapping>
     </web-app>
