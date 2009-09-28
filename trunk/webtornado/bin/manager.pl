@@ -60,10 +60,12 @@ $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
 	my $p = join ' ', map { WT::shesc($_) } $r->{id}, $c->{dbhost}, $c->{dbuser}, $c->{dbpass}, $c->{dbname}, '--minport', ($c->{minport} or '49000'), '--maxport', ($c->{maxport} or '49999');
 	next if not $r->{owner} or $r->{owner} =~ /\W/;
+	next if $dbh->selectrow_hashref('SELECT * FROM torrents WHERE active > 0 AND pid > 0 AND progress < 100 AND owner = ? LIMIT 1', undef, $r->{owner});
 	mkdir my $userdir = "/var/cache/webtornado/users/$r->{owner}";
 	mkdir my $outdir = "$userdir/output";
 	next unless -e $outdir;
 	$dbh->do('UPDATE torrents SET outdir = ?, error = "", progress = 0, peers = 0, downrate = 0, uprate = 0, eta = 0 WHERE id = ?', undef, $outdir, $r->{id});
 	print my $cmd = "/usr/share/webtornado/bin/download.py $p < /dev/null > /dev/null 2>&1 &";
 	`$cmd`;
+	exit;
 }
