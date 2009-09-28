@@ -16,6 +16,8 @@ import os
 def quote(text):
 	if type(text) is int:
 		return text
+	if type(text) is float:
+		return text
 	return "'%s'" % (text.replace("'", "''"))
 
 class HeadlessDisplayer:
