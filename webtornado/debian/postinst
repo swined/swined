@@ -1,8 +1,8 @@
 #!/bin/sh
 
-chown -R www-data:www-data /var/cache/webtornado /var/lib/webtornado
 chown root:www-data /etc/webtornado.auth
 chmod 640 /etc/webtornado.auth
 a2enmod rewrite
 apache2ctl restart
-/usr/share/webtornado/bin/manager.pl
+/usr/share/webtornado/bin/syncdb.pl
+chown -R www-data:www-data /var/cache/webtornado /var/lib/webtornado
