@@ -119,7 +119,9 @@
 				<td>speed</td>
 				<td>status</td>
 			</tr>
-			<xsl:apply-templates select='torrent' />
+			<xsl:apply-templates select='torrent[@active * @pid = 0]' />
+			<xsl:apply-templates select='torrent[@active * @pid > 0][@progress &lt; 100]' />
+			<xsl:apply-templates select='torrent[@active * @pid > 0][@progress = 100]' />
 			<tr class='head'>
 				<td>
 					<nobr>
@@ -189,39 +191,11 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<xsl:element name='tr'>
+		<tr>
 			<xsl:if test='position() mod 2 = 0'>
 				<xsl:attribute name='style'>background-color: #eeeeee</xsl:attribute>
 			</xsl:if>
-			<td><nobr>
-				<xsl:choose>
-					<xsl:when test='@active * @pid > 0'>
-						<xsl:element name='a'>
-							<xsl:attribute name='href'>?a=stop&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
-							<img src='/webtornado/img/green.gif' />
-						</xsl:element>
-					</xsl:when>
-					<xsl:when test='(@active + @pid) > 0'>
-						<img src='/webtornado/img/yellow.gif' />
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:element name='a'>
-							<xsl:attribute name='href'>?a=start&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
-							<img src='/webtornado/img/black.gif' />
-						</xsl:element>
-					</xsl:otherwise>
-				</xsl:choose>
-				<xsl:if test='@progress = 100'>
-					<xsl:element name='a'>
-						<xsl:attribute name='href'>/webtornado<xsl:choose><xsl:when test='@files = 1'>-users/<xsl:value-of select='/webtornado/@user' />/output/<xsl:value-of select='name' /></xsl:when><xsl:otherwise>/<xsl:value-of select='@id' />.tar</xsl:otherwise></xsl:choose></xsl:attribute>
-						<img src='/webtornado/img/tar_down.gif' />
-					</xsl:element>
-				</xsl:if>
-				<xsl:element name='a'>
-					<xsl:attribute name='href'>?a=delete&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
-					<img src='/webtornado/img/delete.png' />
-				</xsl:element>
-			</nobr></td>
+			<xsl:call-template name='col_icon' />
 			<td class='name'>
 				<xsl:value-of select='name' />
 				<xsl:if test='@files > 1'>
@@ -237,7 +211,7 @@
 					<xsl:with-param name='val' select='@size'/>
 				</xsl:call-template>
 			</td>
-			<xsl:element name='td'>
+			<td>
 				<xsl:choose>
 					<xsl:when test='@maxratio > 0 and @maxratio >= $ratio'>
 						-<xsl:call-template name='sz'>
@@ -255,7 +229,7 @@
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:element>
+			</td>
 			<td>
 				<xsl:call-template name='sz'>
 					<xsl:with-param name='val' select='@down'/>
@@ -270,31 +244,18 @@
 						none
 					</xsl:when>
 					<xsl:when test='@show_peers > 0'>
-						<xsl:element name='a'>
-							<xsl:attribute name='href'>?a=show_peers&amp;v=0&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
-							<xsl:attribute name='style'>
-								text-decoration: none;
-								text-align: left;
-								color: black;
-							</xsl:attribute>
+						<a href='?a=show_peers&amp;v=0&amp;id={@id}' style='text-decoration: none; text-align: left; color: black'>
 							<xsl:apply-templates select='peer' />
-						</xsl:element>
+						</a>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:element name='a'>
-							<xsl:attribute name='href'>?a=show_peers&amp;v=1&amp;id=<xsl:value-of select='@id' /></xsl:attribute>
-							<xsl:attribute name='style'>
-								color: black;
-								text-decoration: none;
-							</xsl:attribute>
+						<a href='?a=show_peers&amp;v=1&amp;id={@id}' style='color: black; text-decoration: none'>
 							<xsl:value-of select='@peers' />
-						</xsl:element>
+						</a>
 					</xsl:otherwise>
 				</xsl:choose>
 			</td>
-			<xsl:element name='td'>
-				<xsl:attribute name='id'>set_maxratio_<xsl:value-of select='@id' /></xsl:attribute>
-				<xsl:attribute name='onClick'>set_maxratio(<xsl:value-of select='@id' />, <xsl:value-of select='@maxratio' />)</xsl:attribute>
+			<td id='set_maxratio_{@id}' onClick='set_maxratio({@id}, {@maxratio})'>
 				<nobr>
 					<xsl:value-of select='format-number($ratio, $nf)' />
 					<xsl:if test='@maxratio > 0'>
@@ -302,31 +263,51 @@
 						(<xsl:value-of select='@maxratio' />)
 					</xsl:if>
 				</nobr>
-			</xsl:element>
+			</td>
 			<xsl:apply-templates select='speed' />
 			<td>
 				<xsl:if test='@progress = 100'><div>seeding</div></xsl:if>
 				<xsl:if test='@progress = 0'><div>unknown</div></xsl:if>
 				<xsl:if test='@eta and $running > 0'><div>eta <xsl:value-of select='@eta' /></div></xsl:if>
 				<xsl:if test='$progress > 0 and $progress &lt; 100'>
-					<center><div style='width: 100px' class='pb'><xsl:element name='div'>
+					<center><div style='width: 100px' class='pb'><div>
 					<xsl:attribute name='style'>width: <xsl:value-of select='$progress'/>%</xsl:attribute>
-					</xsl:element></div></center>
+					</div></div></center>
 				</xsl:if>
 			</td>
-		</xsl:element>
+		</tr>
+	</xsl:template>
+	<xsl:template name='col_icon'>
+		<td><nobr>
+			<xsl:choose>
+				<xsl:when test='@active * @pid > 0'>
+					<a href='?a=stop&amp;id={@id}'><img src='/webtornado/img/green.gif' /></a>
+				</xsl:when>
+				<xsl:when test='(@active + @pid) > 0'>
+					<img src='/webtornado/img/yellow.gif' />
+				</xsl:when>
+				<xsl:otherwise>
+					<a href='?a=start&amp;id={@id}'><img src='/webtornado/img/black.gif' /></a>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:if test='@progress = 100'>
+				<a>
+					<xsl:attribute name='href'>/webtornado<xsl:choose><xsl:when test='@files = 1'>-users/<xsl:value-of select='/webtornado/@user' />/output/<xsl:value-of select='name' /></xsl:when><xsl:otherwise>/<xsl:value-of select='@id' />.tar</xsl:otherwise></xsl:choose></xsl:attribute>
+					<img src='/webtornado/img/tar_down.gif' />
+				</a>
+			</xsl:if>
+			<a href='?a=delete&amp;id={@id}'><img src='/webtornado/img/delete.png' /></a>
+		</nobr></td>
 	</xsl:template>
 	<xsl:template match='peer'>
 		<div><nobr>
-			<xsl:element name='img'>
-				<xsl:attribute name='src'>/webtornado/img/cc/<xsl:value-of select='@cc' />.png</xsl:attribute>
-			</xsl:element>
-			<xsl:element name='span'>
+			<img src='/webtornado/img/cc/{@cc}.png' />
+			<span>
 				<xsl:attribute name='style'>
 					<xsl:if test='@up + @down = 0'>color: gray;</xsl:if>
 				</xsl:attribute>
 				<xsl:value-of select='@ip' />
-			</xsl:element>
+			</span>
 		</nobr></div>
 	</xsl:template>
 	<xsl:template match='disk'>
@@ -340,33 +321,30 @@
 				<xsl:with-param name='val' select='@total'/>
 			</xsl:call-template>
 			free
-			<div style='width: 97%' class='pb'>
-				<xsl:element name='div'>
-					<xsl:attribute name='style'>
-						width:
-						<xsl:value-of select='100 * (1 - @free div @total)' />%
-					</xsl:attribute>
-				</xsl:element>
-			</div>
+			<div style='width: 97%' class='pb'><div style='width: {100 * (1 - @free div @total)}' /></div>
 		</center>
+	</xsl:template>
+	<xsl:template match='speed[@active * @pid = 0]'>
+		<td>
+			--
+		</td>
+	</xsl:template>
+	<xsl:template match='speed[@up + @down > 0]'>
+		<td>
+			<xsl:if test='@down != 0'>
+				<xsl:call-template name='sz'>
+					<xsl:with-param name='val' select='@down'/>
+				</xsl:call-template>
+				/
+			</xsl:if>
+			<xsl:call-template name='sz'>
+				<xsl:with-param name='val' select='@up'/>
+			</xsl:call-template>
+		</td>
 	</xsl:template>
 	<xsl:template match='speed'>
 		<td>
-			<xsl:choose>
-				<xsl:when test='not(../@active > 0 and ../@pid > 0)'>--</xsl:when>
-				<xsl:when test='@up > 0 or @down > 0'>
-					<xsl:if test='@down != 0'>
-						<xsl:call-template name='sz'>
-							<xsl:with-param name='val' select='@down'/>
-						</xsl:call-template>
-						/
-					</xsl:if>
-					<xsl:call-template name='sz'>
-						<xsl:with-param name='val' select='@up'/>
-					</xsl:call-template>
-				</xsl:when>
-				<xsl:otherwise>stalled</xsl:otherwise>
-			</xsl:choose>
+			stalled
 		</td>
 	</xsl:template>
 	<xsl:template name='sz'>
