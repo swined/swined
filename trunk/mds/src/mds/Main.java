@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Expression e = new And(new Variable("x", true, 17), new Const(29));
         System.out.println(e);
+        System.out.println(e.invert());
     }
 
 }

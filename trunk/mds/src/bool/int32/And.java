@@ -10,6 +10,10 @@ public class And implements Expression {
         this.b = b;
     }
 
+    public Expression invert() {
+        return new Or(a.invert(), b.invert());
+    }
+
     public String toString() {
         return a.toString() + " & " + b.toString();
     }

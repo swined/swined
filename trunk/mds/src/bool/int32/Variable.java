@@ -12,6 +12,22 @@ public class Variable implements Expression {
         this.shift = shift;
     }
 
+    public Expression invert() {
+        if (shift > 0) {
+            return new Or(
+                    new Variable(name, !negative, shift),
+                    new Const(0xFFFFFFFF >> (32 - shift))
+            );
+        }
+        if (shift < 0) {
+            return new Or(
+                    new Variable(name, !negative, shift),
+                    new Const(0xFFFFFFFF << (32 + shift))
+            );
+        }
+        return new Variable(name, !negative, 0);
+    }
+
     public String toString() {
         String basic = (negative ? "!" : "") + name;
         if (shift > 0)

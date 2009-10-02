@@ -8,6 +8,10 @@ public class Const implements Expression {
         this.value = value;
     }
 
+    public Expression invert() {
+        return new Const(value ^ 0xFFFFFFFF);
+    }
+
     public String toString() {
         return Integer.toHexString(value);
     }
