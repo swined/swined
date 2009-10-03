@@ -22,10 +22,6 @@ public class Main {
         return new And(x.rotate(s), new Const(0xFFFFFFFF >> (32 - s)));
     }
 
-    protected static Expression sum(Expression x, Expression y) {
-        
-    }
-
     public static void main(String[] args) {
         int[] r = {
             7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
