@@ -22,6 +22,10 @@ public class Main {
         return new And(x.rotate(s), new Const(0xFFFFFFFF >> (32 - s)));
     }
 
+    protected static Expression sum(Expression x, Expression y) {
+        
+    }
+
     public static void main(String[] args) {
         int[] r = {
             7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
@@ -44,7 +48,7 @@ public class Main {
         System.out.println(shift(t, 1).optimize());
         System.out.println(e.optimize());
         System.out.println(e.invert().optimize());
-        System.out.println(shift(xor(e, e.invert()).optimize(), 4).optimize().toSCNF());
+        System.out.println(shift(xor(e, e.invert()).optimize(), 4).optimize().toSCNF().optimize());
     }
 
 }
