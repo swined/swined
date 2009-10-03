@@ -20,13 +20,21 @@ public class SCNF {
         return new ArrayList(elements);
     }
 
+    public SCNF optimize() {
+        List<SimpleConjunction> r = new ArrayList();
+        for (SimpleConjunction i : elements) {
+            r.add(i.optimize());
+        }
+        return new SCNF(r);
+    }
+
     public String toString() {
         String r = "";
         for (SimpleConjunction e : elements) {
             if (r.isEmpty()) {
                 r = r + e.toString();
             } else {
-                r = r + " & " + e.toString();
+                r = r + " | " + e.toString();
             }
         }
         return r;

@@ -18,6 +18,18 @@ public class Variable implements Expression, VariableOrConst {
         this.rotate = rotate;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isNegative() {
+        return negative;
+    }
+
+    public int getRotate() {
+        return rotate;
+    }
+
     public SCNF toSCNF() {
         SimpleConjunction sc = new SimpleConjunction(this);
         return new SCNF(sc);
@@ -31,12 +43,21 @@ public class Variable implements Expression, VariableOrConst {
         return this;
     }
 
-    public Expression invert() {
+    public Variable invert() {
         return new Variable(name, !negative, rotate);
     }
 
     public String toString() {
         return (negative ? "!" : "") + name + (rotate == 0 ? "" : "<<" + Integer.toHexString(rotate));
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof Variable) {
+            Variable v = (Variable)o;
+            return name.equals(v.getName()) && negative == v.isNegative() && rotate == v.getRotate();
+        } else {
+            return false;
+        }
     }
 
 }

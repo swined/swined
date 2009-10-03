@@ -15,8 +15,8 @@ public class Or implements Expression {
 
     public SCNF toSCNF() {
         List<SimpleConjunction> sc = new ArrayList();
-        sc.addAll(a.toSCNF().items());
-        sc.addAll(b.toSCNF().items());
+        sc.addAll(a.toSCNF().optimize().items());
+        sc.addAll(b.toSCNF().optimize().items());
         return new SCNF(sc);
     }
 

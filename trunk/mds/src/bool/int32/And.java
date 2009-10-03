@@ -15,8 +15,8 @@ public class And implements Expression {
 
     public SCNF toSCNF() {
         List<SimpleConjunction> r = new ArrayList();
-        for (SimpleConjunction ca : a.toSCNF().items()) {
-            for (SimpleConjunction cb : b.toSCNF().items()) {
+        for (SimpleConjunction ca : a.toSCNF().optimize().items()) {
+            for (SimpleConjunction cb : b.toSCNF().optimize().items()) {
                 r.add(new SimpleConjunction(ca, cb));
             }
         }

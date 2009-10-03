@@ -25,7 +25,7 @@ public class Const implements Expression, VariableOrConst {
         return this;
     }
 
-    public Expression invert() {
+    public Const invert() {
         return new Const(value ^ 0xFFFFFFFF);
     }
 
