@@ -7,6 +7,22 @@ public class SCNF {
 
     private List<SimpleConjunction> elements;
 
+    public SCNF optimize() {
+        for (SimpleConjunction c1 : elements) {
+            for (SimpleConjunction c2 : elements) {
+                if (!c1.equals(c2) && c1.equalVars(c2)) {
+                    List<SimpleConjunction> scnf = new ArrayList();
+                    scnf.addAll(elements);
+                    scnf.remove(c1);
+                    scnf.remove(c2);
+                    scnf.add(new SimpleConjunction(c1, c2));
+                    return new SCNF(scnf).optimize();
+                }
+            }
+        }
+        return this;
+    }
+
     public SCNF(SimpleConjunction c) {
         elements = new ArrayList();
         elements.add(c);
@@ -18,14 +34,6 @@ public class SCNF {
 
     public List<SimpleConjunction> items() {
         return new ArrayList(elements);
-    }
-
-    public SCNF optimize() {
-        List<SimpleConjunction> r = new ArrayList();
-        for (SimpleConjunction i : elements) {
-            r.add(i);
-        }
-        return new SCNF(r);
     }
 
     @Override

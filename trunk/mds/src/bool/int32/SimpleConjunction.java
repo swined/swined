@@ -1,12 +1,18 @@
 package bool.int32;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class SimpleConjunction {
 
     private Const coef;
     private HashSet<Variable> vars;
+
+    public SCNF toSCNF() {
+        return new SCNF(this);
+    }
 
     public SimpleConjunction(Const c) {
         coef = new Const(c.getValue());
