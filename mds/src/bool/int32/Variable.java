@@ -35,7 +35,7 @@ public class Variable implements Expression {
         return new SCNF(sc);
     }
 
-    public Expression rotate(int rotate) {
+    public Variable rotate(int rotate) {
         return new Variable(name, negative, this.rotate + rotate);
     }
 

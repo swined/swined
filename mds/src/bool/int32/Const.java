@@ -17,7 +17,7 @@ public class Const implements Expression {
         return new SCNF(sc);
     }
 
-    public Expression rotate(int rotate) {
+    public Const rotate(int rotate) {
         return new Const(value << rotate | value >> (32 - rotate));
     }
 
