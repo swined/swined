@@ -1,6 +1,6 @@
 package bool.int32;
 
-public class Const implements Expression, VariableOrConst {
+public class Const implements Expression {
 
     private int value;
 

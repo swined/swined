@@ -1,6 +1,6 @@
 package bool.int32;
 
-public class Variable implements Expression, VariableOrConst {
+public class Variable implements Expression {
 
     private String name;
     private boolean negative;
@@ -47,10 +47,21 @@ public class Variable implements Expression, VariableOrConst {
         return new Variable(name, !negative, rotate);
     }
 
+    @Override
     public String toString() {
         return (negative ? "!" : "") + name + (rotate == 0 ? "" : "<<" + Integer.toHexString(rotate));
     }
 
+    @Override
+    public int hashCode() {
+        int code = rotate + (negative ? 1 : 0);
+        for (char c : name.toCharArray()) {
+            code += c;
+        }
+        return code;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Variable) {
             Variable v = (Variable)o;

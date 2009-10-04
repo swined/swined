@@ -1,75 +1,49 @@
 package bool.int32;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 
 public class SimpleConjunction {
 
-    private List<VariableOrConst> elements;
+    private Const coef;
+    private HashSet<Variable> vars;
 
-    public SimpleConjunction(VariableOrConst e) {
-        elements = new ArrayList<VariableOrConst>();
-        elements.add(e);
+    public SimpleConjunction(Const c) {
+        coef = new Const(c.getValue());
+        vars = new HashSet();
     }
 
-    public SimpleConjunction(List<VariableOrConst> e) {
-        elements = new ArrayList<VariableOrConst>();
-        elements.addAll(e);
-    }
-
-    public SimpleConjunction(VariableOrConst a, VariableOrConst b) {
-        elements = new ArrayList<VariableOrConst>();
-        elements.add(a);
-        elements.add(b);
+    public SimpleConjunction(Variable e) {
+        coef = new Const(0xFFFFFFFF);
+        vars = new HashSet();
+        vars.add(e);
     }
 
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
-        elements = new ArrayList<VariableOrConst>();
-        elements.addAll(a.items());
-        elements.addAll(b.items());
+        coef = new Const(a.getCoef().getValue() & b.getCoef().getValue());
+        vars = new HashSet();
+        vars.addAll(a.getVars());
+        vars.addAll(b.getVars());
     }
 
-    public List<VariableOrConst> items() {
-        return new ArrayList(elements);
+    public Const getCoef() {
+        return coef;
     }
 
-    public SimpleConjunction optimize() {
-        List<VariableOrConst> r = new ArrayList();
-        int c = 0xFFFFFFFF;
-        for (VariableOrConst i : elements) {
-            if (i instanceof Const) {
-                c = c & ((Const)i).getValue();
-            } else {
-                boolean found = false;
-                for (VariableOrConst v : r) {
-                    if (v.equals(i)) {
-                        found = true;
-                    }
-                    if (v.equals(i.invert()))
-                        return new SimpleConjunction(new Const(0));
-                }
-                if (!found)
-                    r.add(i);
-            }
-        }
-        if (c == 0) {
-            return new SimpleConjunction(new Const(0));
-        }
-        if (c != 0xFFFFFFFF) {
-            r.add(new Const(c));
-        }
-        return new SimpleConjunction(r);
+    public HashSet<Variable> getVars() {
+        return new HashSet(vars);
     }
 
+    public boolean equalVars(SimpleConjunction c) {
+        HashSet<Variable> cv = c.getVars();
+        return cv.containsAll(vars) && vars.containsAll(cv);
+    }
+
+    @Override
     public String toString() {
-        String r = "";
-        for (VariableOrConst e : elements) {
-            if (r.isEmpty()) {
-                r = r + e.toString();
-            } else {
-                r = r + " & " + e.toString();
-            }
+        String r = coef.toString();
+        for (Variable v : vars) {
+            r = r + " & " + v.toString();
         }
         return r;
     }
