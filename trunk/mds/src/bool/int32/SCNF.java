@@ -23,11 +23,12 @@ public class SCNF {
     public SCNF optimize() {
         List<SimpleConjunction> r = new ArrayList();
         for (SimpleConjunction i : elements) {
-            r.add(i.optimize());
+            r.add(i);
         }
         return new SCNF(r);
     }
 
+    @Override
     public String toString() {
         String r = "";
         for (SimpleConjunction e : elements) {
