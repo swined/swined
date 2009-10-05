@@ -21,10 +21,6 @@ public class Const implements Expression {
         return new Const(value << rotate | value >> (32 - rotate));
     }
 
-    public Expression optimize() {
-        return this;
-    }
-
     public Const invert() {
         return new Const(value ^ 0xFFFFFFFF);
     }
