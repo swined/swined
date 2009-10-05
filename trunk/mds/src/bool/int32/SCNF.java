@@ -8,7 +8,7 @@ public class SCNF implements Expression {
     private List<SimpleConjunction> elements;
 
     public Expression invert() {
-        SCNF r = new SCNF(new SimpleConjunction(new Const(1)));
+        SCNF r = new SCNF(new SimpleConjunction(new Const(0xFFFFFFFF)));
         for (SimpleConjunction c : elements) {
             r = r.multiply(c.invert());
         }
@@ -27,21 +27,32 @@ public class SCNF implements Expression {
         return this;
     }
 
-    public SCNF optimize() {
-        for (SimpleConjunction c1 : elements) {
-            for (SimpleConjunction c2 : elements) {
-                if (!c1.equals(c2) && c1.equalVars(c2)) {
-                    List<SimpleConjunction> scnf = new ArrayList();
-                    scnf.addAll(elements);
-                    scnf.remove(c1);
-                    scnf.remove(c2);
-                    scnf.add(new SimpleConjunction(c1, c2));
-                    return new SCNF(scnf).optimize();
+    public SCNF equalVarsOptimization() {
+        List<SimpleConjunction> e = new ArrayList(elements);
+        boolean optimized = true;
+        while (optimized) {
+            optimized = false;
+            for (SimpleConjunction c1 : e) {
+                for (SimpleConjunction c2 : e) {
+                    if (!c1.equals(c2) && c1.equalVars(c2)) {
+                        List<SimpleConjunction> scnf = new ArrayList();
+                        scnf.addAll(e);
+                        scnf.remove(c1);
+                        scnf.remove(c2);
+                        scnf.add(new SimpleConjunction(c1, c2));
+                        e = scnf;
+                        optimized = true;
+                    }
                 }
             }
         }
+        return new SCNF(e);
+    }
+
+    public SCNF optimize() {
+        List<SimpleConjunction> e = equalVarsOptimization().elements;
         List<SimpleConjunction> scnf = new ArrayList();
-        for (SimpleConjunction c : elements) {
+        for (SimpleConjunction c : e) {
             SimpleConjunction o = c.optimize();
             if (!o.isZero())
                 scnf.add(o);
@@ -64,6 +75,8 @@ public class SCNF implements Expression {
 
     @Override
     public String toString() {
+        if (isZero())
+            return "0";
         String r = "";
         for (SimpleConjunction e : elements) {
             if (r.isEmpty()) {
@@ -83,6 +96,10 @@ public class SCNF implements Expression {
             }
         }
         return new SCNF(r);
+    }
+
+    public boolean isZero() {
+        return this.optimize().items().isEmpty();
     }
 
 }
