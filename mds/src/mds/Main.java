@@ -22,27 +22,20 @@ public class Main {
         return new And(x.rotate(s), new Const(0xFFFFFFFF << s));
     }
 
-    protected static Expression rshift(Expression x, int s) {
-        if (s >= 32)
-            return new Const(0);
-        return new And(x.rotate(-s), new Const(0xFFFFFFFF >> s));
-    }
-
-    protected static Expression sum(Expression x, Expression y, int a, int b, int c, int d) {
+    protected static Expression sum(Expression x, Expression y) {
         x = x.toSCNF().optimize();
         y = y.toSCNF().optimize();
-        System.out.println(a + " " + b + " " + c + " " + d + " " + x + " + " + y);
-        if (a > b)
+        System.out.println(x + " + " + y);
+        if (x.toSCNF().isZero())
             return y;
-        if (c > d)
+        if (y.toSCNF().isZero())
             return x;
-        return sum(xor(x, y), shift(new And(x, y), 1), a, b, c + 1, d);
+        return sum(xor(x, y), shift(new And(x, y), 1));
     }
 
-    // a + b = a ^ b + (a & b) << 1
-
     public static void main(String[] args) {
-        Expression e = sum(new Variable("x"), new Variable("y"), 0, 31, 0, 31);
+        Expression e = sum(new Variable("x"), new Variable("y"));
+        System.out.println(e.toSCNF().optimize());
     }
 
 }
