@@ -1,5 +1,6 @@
 package bool.int32;
 
+import java.util.BitSet;
 import java.util.HashSet;
 
 public class SimpleDisjunction implements Expression {
@@ -22,7 +23,7 @@ public class SimpleDisjunction implements Expression {
     }
 
     public SimpleDisjunction(Variable e) {
-        coef = Const.create(0);
+        coef = Const.create(new BitSet());
         vars = new HashSet();
         vars.add(e);
     }
@@ -34,7 +35,7 @@ public class SimpleDisjunction implements Expression {
     }
 
     public SimpleDisjunction(SimpleDisjunction a, SimpleDisjunction b) {
-        coef = Const.create(a.getCoef().getValue() | b.getCoef().getValue());
+        coef = a.getCoef().or(b.getCoef());
         if (coef.isTrue()) {
             vars = new HashSet();
         } else {
@@ -52,11 +53,11 @@ public class SimpleDisjunction implements Expression {
     }
 
     public boolean isFalse() {
-        return coef.getValue() == 0 && vars.size() == 0;
+        return false;
     }
 
     public boolean isTrue() {
-        return coef.getValue() == -1;
+        return false;
     }
 
     @Override

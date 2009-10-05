@@ -46,7 +46,7 @@ public class Or implements Expression {
         if (ob.isFalse())
             return oa;
         if (oa instanceof Const && ob instanceof Const)
-            return Const.create(((Const)oa).getValue() | ((Const)ob).getValue());
+            return ((Const)oa).or((Const)ob);
         return new Or(oa, ob);
     }
 

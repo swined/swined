@@ -1,8 +1,6 @@
 package bool.int32;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.BitSet;
 
 public class And implements Expression {
 
@@ -47,15 +45,15 @@ public class And implements Expression {
         final Expression oa = a.optimize();
         final Expression ob = b.optimize();
         if (oa.isFalse())
-            return Const.create(0);
+            return Const.create(new BitSet());
         if (ob.isFalse())
-            return Const.create(0);
+            return Const.create(new BitSet());
         if (oa.isTrue())
             return ob;
         if (ob.isTrue())
             return oa;
         if (oa instanceof Const && ob instanceof Const)
-            return Const.create(((Const)oa).getValue() & ((Const)ob).getValue());
+            return ((Const)oa).and((Const)ob);
         if (oa instanceof Const && ob instanceof Variable)
             return new SimpleConjunction(new SimpleConjunction((Const)oa), new SimpleConjunction((Variable)ob));
         if (oa instanceof Variable && ob instanceof Const)

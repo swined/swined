@@ -22,7 +22,7 @@ public class SimpleConjunction implements Expression {
     }
 
     public SimpleConjunction(Variable e) {
-        coef = Const.create(0xFFFFFFFF);
+        coef = Const.create(Const.xFFFFFFFF());
         vars = new HashSet();
         vars.add(e);
     }
@@ -34,7 +34,7 @@ public class SimpleConjunction implements Expression {
     }
 
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
-        coef = Const.create(a.getCoef().getValue() & b.getCoef().getValue());
+        coef = a.getCoef().and(b.getCoef());
         if (coef.isFalse()) {
             vars = new HashSet();
         } else {
@@ -52,11 +52,11 @@ public class SimpleConjunction implements Expression {
     }
 
     public boolean isFalse() {
-        return coef.getValue() == 0;
+        return coef.isFalse();
     }
 
     public boolean isTrue() {
-        return coef.getValue() == -1 && vars.size() == 0;
+        return false;
     }
 
     @Override
