@@ -10,35 +10,58 @@ public class And implements Expression {
         this.b = b;
     }
 
-    public SCNF toSCNF() {
-        return a.toSCNF().multiply(b);
+    public Expression getA() {
+        return a;
     }
 
-    public boolean isZero() {
-        return a.isZero() || b.isZero();
+    public Expression getB() {
+        return b;
     }
 
-    public SCNF rotate(int rotate) {
-        return new And(a.rotate(rotate), b.rotate(rotate)).toSCNF();
+    public boolean isFalse() {
+        return a.isFalse() || b.isFalse();
+    }
+
+    public boolean isTrue() {
+        return a.isTrue() && b.isTrue();
+    }
+
+    public Expression rotate(int s) {
+        return new And(a.rotate(s), b.rotate(s));
+    }
+
+    @Override
+    public String toString() {
+        return "(" + a.toString() + " & " + b.toString() + ")";
     }
 
     public Expression invert() {
         return new Or(a.invert(), b.invert());
     }
 
-    @Override
-    public String toString() {
-        return a.toString() + " & " + b.toString();
-    }
-
     public Expression optimize() {
-        Expression oa = a.optimize();
-        Expression ob = b.optimize();
-        if (oa.isZero())
+        final Expression oa = a.optimize();
+        final Expression ob = b.optimize();
+        if (oa.isFalse())
             return new Const(0);
-        if (ob.isZero())
+        if (ob.isFalse())
             return new Const(0);
-        return this;
+        if (oa.isTrue())
+            return ob;
+        if (ob.isTrue())
+            return oa;
+        if (oa instanceof Variable && ob instanceof Const)
+            return new SimpleConjunction(new SimpleConjunction((Const)ob), new SimpleConjunction((Variable)oa));
+        if (oa instanceof Variable && ob instanceof Variable)
+            return new SimpleConjunction(new SimpleConjunction((Variable)ob), new SimpleConjunction((Variable)oa));
+        if (oa instanceof Variable && ob instanceof SimpleConjunction)
+            return new SimpleConjunction((SimpleConjunction)ob, new SimpleConjunction((Variable)oa));
+        if (oa instanceof SimpleConjunction && ob instanceof Const)
+            return new SimpleConjunction(new SimpleConjunction((Const)ob), (SimpleConjunction)oa);
+        if (oa instanceof SimpleConjunction && ob instanceof SimpleConjunction)
+            return new SimpleConjunction((SimpleConjunction)oa, (SimpleConjunction)ob);
+        return new And(oa, ob);
     }
+    
 
 }

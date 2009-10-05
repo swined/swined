@@ -13,15 +13,12 @@ public class Or implements Expression {
         this.b = b;
     }
 
-    public boolean isZero() {
-        return a.isZero() && b.isZero();
+    public boolean isFalse() {
+        return a.isFalse() && b.isFalse();
     }
 
-    public SCNF toSCNF() {
-        List<SimpleConjunction> sc = new ArrayList();
-        sc.addAll(a.optimize().toSCNF().items());
-        sc.addAll(b.optimize().toSCNF().items());
-        return new SCNF(sc);
+    public boolean isTrue() {
+        return a.isTrue() || b.isTrue();
     }
 
     public Expression rotate(int rotate) {
@@ -37,14 +34,26 @@ public class Or implements Expression {
         return "(" + a.toString() + " | " + b.toString() + ")";
     }
 
+    public Expression sum(Expression e) {
+        return new Or(this, e);
+    }
+
     public Expression optimize() {
         Expression oa = a.optimize();
         Expression ob = b.optimize();
-        if (oa.isZero())
+        if (oa.isFalse())
             return ob;
-        if (ob.isZero())
+        if (ob.isFalse())
             return oa;
-        return this;
+        return new Or(oa, ob);
+    }
+
+    public Expression getA() {
+        return a;
+    }
+
+    public Expression getB() {
+        return b;
     }
 
 }

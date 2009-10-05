@@ -2,10 +2,9 @@ package bool.int32;
 
 public interface Expression {
 
-    Expression invert();
     Expression rotate(int rotate);
+    Expression invert();
     Expression optimize();
-    SCNF toSCNF();
-    boolean isZero();
-
+    boolean isFalse();
+    boolean isTrue();
 }

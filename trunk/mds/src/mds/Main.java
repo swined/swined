@@ -8,8 +8,8 @@ import bool.int32.Variable;
 
 public class Main {
 
-    protected static Expression xor(Expression x, Expression y) {
-        return new Or(new And(x, y.invert()), new And(x.invert(), y));
+    protected static Expression xor(Expression a, Expression b) {
+        return new Or(new And(a, b.invert()), new And(a.invert(), b));
     }
 
     protected static Expression shift(Expression x, int s) {
@@ -22,9 +22,9 @@ public class Main {
         x = x.optimize();
         y = y.optimize();
         System.out.println(x + " + " + y);
-        if (x.isZero())
+        if (x.isFalse())
             return y;
-        if (y.isZero())
+        if (y.isFalse())
             return x;
         return sum(xor(x, y), shift(new And(x, y), 1));
     }
@@ -33,7 +33,7 @@ public class Main {
         Expression x = new Const(0x80000000);
         Expression y = new Variable("x");
         Expression e = sum(x, y);
-        System.out.println(e.toSCNF().optimize());
+        System.out.println(e);
     }
 
 }
