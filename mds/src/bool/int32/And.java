@@ -5,8 +5,8 @@ import java.util.List;
 
 public class And implements Expression {
 
-    private Expression a;
-    private Expression b;
+    private final Expression a;
+    private final Expression b;
 
     public And(Expression a, Expression b) {
         this.a = a;
@@ -20,7 +20,11 @@ public class And implements Expression {
                 r.add(new SimpleConjunction(ca, cb));
             }
         }
-        return new SCNF(r).optimize();
+        return new SCNF(r);
+    }
+
+    public boolean isZero() {
+        return a.isZero() || b.isZero();
     }
 
     public SCNF rotate(int rotate) {
@@ -31,6 +35,7 @@ public class And implements Expression {
         return new Or(new Not(a), new Not(b));
     }
 
+    @Override
     public String toString() {
         return a.toString() + " & " + b.toString();
     }

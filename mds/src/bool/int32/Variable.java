@@ -12,6 +12,10 @@ public class Variable implements Expression {
         this.rotate = 0;
     }
 
+    public boolean isZero() {
+        return false;
+    }
+
     public Variable(String name, boolean negative, int rotate) {
         this.name = name;
         this.negative = negative;

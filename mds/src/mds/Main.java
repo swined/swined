@@ -5,6 +5,7 @@ import bool.int32.Const;
 import bool.int32.Expression;
 import bool.int32.Not;
 import bool.int32.Or;
+import bool.int32.Variable;
 
 public class Main {
 
@@ -22,23 +23,17 @@ public class Main {
         x = x.toSCNF().optimize();
         y = y.toSCNF().optimize();
         System.out.println(x + " + " + y);
-        if (x.toSCNF().isZero())
+        if (x.isZero())
             return y;
-        if (y.toSCNF().isZero())
+        if (y.isZero())
             return x;
         return sum(xor(x, y), shift(new And(x, y), 1));
     }
 
     public static void main(String[] args) {
-        Expression x = new Const(0xF0);
-        Expression y = new Const(0x0F);
-        Expression e = xor(x, y);
-        Expression a = new And(x, new Not(y));
-        System.out.println(a.toSCNF().optimize());
-        Expression b = new And(new Not(x), y);
-        System.out.println(b.toSCNF().optimize());
-        Expression c = new Or(a, b);
-        System.out.println(c.toSCNF().optimize());
+        Expression x = new Const(0x80000000);
+        Expression y = new Variable("x");
+        Expression e = sum(x, y);
         System.out.println(e.toSCNF().optimize());
     }
 

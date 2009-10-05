@@ -8,6 +8,10 @@ public class Not implements Expression {
         this.expr = expr;
     }
 
+    public boolean isZero() {
+        return !expr.isZero();
+    }
+
     public SCNF toSCNF() {
         return expr.invert().toSCNF();
     }
