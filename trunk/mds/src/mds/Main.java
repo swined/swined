@@ -9,31 +9,28 @@ import bool.int32.Variable;
 public class Main {
 
     protected static Expression xor(Expression a, Expression b) {
-        return new Or(And.create(a, b.invert()), And.create(a.invert(), b));
+        return new Or(new And(a, b.invert()), new And(a.invert(), b));
     }
 
     protected static Expression shift(Expression x, int s) {
-        if (s >= 32)
-            return Const.create(0);
-        return And.create(x.rotate(s), Const.create(0xFFFFFFFF << s));
+        return new And(x.rotate(s), Const.create(0xFFFFFFFF << s));
     }
 
     protected static Expression sum(Expression x, Expression y) {
-        x = x.optimize();
-        y = y.optimize();
-        System.out.println(x + " + " + y);
-        if (x.isFalse())
-            return y;
-        if (y.isFalse())
-            return x;
-        return sum(xor(x, y), shift(And.create(x, y), 1));
+        Expression r = Const.create(0);
+        Expression b = Const.create(0xFFFFFFFF);
+        for (int i = 1; i < 32; i++) {
+                b = new And(b, shift(y, i));
+                r = new Or(r, new And(shift(x, i), b));
+        }
+        return xor(xor(x, y), r);
     }
 
     public static void main(String[] args) {
-        Expression x = Const.create(0x80000000);
-        Expression y = Variable.create("x");
+        Expression x = Const.create(0x00000001);
+        Expression y = Const.create(0xF0FF0001);
         Expression e = sum(x, y);
-        System.out.println(e);
+        System.out.println(e.optimize());
     }
 
 }

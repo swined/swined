@@ -75,8 +75,6 @@ public class SimpleConjunction implements Expression {
     public Expression optimize() {
         if (vars.size() == 0)
             return coef;
-        if (coef.isTrue() && vars.size() == 1)
-            return (Variable)vars.toArray()[0];
         return this;
     }
 

@@ -26,7 +26,7 @@ public class Or implements Expression {
     }
 
     public Expression invert() {
-        return And.create(a.invert(), b.invert());
+        return new And(a.invert(), b.invert());
     }
 
     @Override
@@ -45,6 +45,8 @@ public class Or implements Expression {
             return ob;
         if (ob.isFalse())
             return oa;
+        if (oa instanceof Const && ob instanceof Const)
+            return Const.create(((Const)oa).getValue() | ((Const)ob).getValue());
         return new Or(oa, ob);
     }
 
