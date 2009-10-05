@@ -30,7 +30,15 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Expression e = xor(new Const(0xFFFF), new Const(0xFFFF0000));
+        Expression x = new Const(0xF0);
+        Expression y = new Const(0x0F);
+        Expression e = xor(x, y);
+        Expression a = new And(x, new Not(y));
+        System.out.println(a.toSCNF().optimize());
+        Expression b = new And(new Not(x), y);
+        System.out.println(b.toSCNF().optimize());
+        Expression c = new Or(a, b);
+        System.out.println(c.toSCNF().optimize());
         System.out.println(e.toSCNF().optimize());
     }
 

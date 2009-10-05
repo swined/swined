@@ -15,12 +15,12 @@ public class And implements Expression {
 
     public SCNF toSCNF() {
         List<SimpleConjunction> r = new ArrayList();
-        for (SimpleConjunction ca : a.toSCNF().optimize().items()) {
-            for (SimpleConjunction cb : b.toSCNF().optimize().items()) {
+        for (SimpleConjunction ca : a.toSCNF().items()) {
+            for (SimpleConjunction cb : b.toSCNF().items()) {
                 r.add(new SimpleConjunction(ca, cb));
             }
         }
-        return new SCNF(r);
+        return new SCNF(r).optimize();
     }
 
     public SCNF rotate(int rotate) {

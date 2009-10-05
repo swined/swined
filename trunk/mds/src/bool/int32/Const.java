@@ -13,8 +13,7 @@ public class Const implements Expression {
     }
 
     public SCNF toSCNF() {
-        SimpleConjunction sc = new SimpleConjunction(this);
-        return new SCNF(sc);
+        return new SCNF(new SimpleConjunction(this));
     }
 
     public Const rotate(int rotate) {
