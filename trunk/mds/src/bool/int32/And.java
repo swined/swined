@@ -28,7 +28,7 @@ public class And implements Expression {
     }
 
     public Expression invert() {
-        return new Or(a.invert(), b.invert());
+        return new Or(new Not(a), new Not(b));
     }
 
     public String toString() {
