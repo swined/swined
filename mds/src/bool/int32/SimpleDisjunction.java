@@ -73,6 +73,8 @@ public class SimpleDisjunction implements Expression {
     }
 
     public Expression optimize() {
+        if (vars.size() == 0)
+            return coef;
         return this;
     }
 
