@@ -1,6 +1,7 @@
 package bool.int32;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class SCNF implements Expression {
@@ -39,7 +40,11 @@ public class SCNF implements Expression {
                         scnf.addAll(e);
                         scnf.remove(c1);
                         scnf.remove(c2);
-                        scnf.add(new SimpleConjunction(c1, c2));
+                        Const c = new Const(c1.getCoef().getValue() | c2.getCoef().getValue());
+                        HashSet<Variable> v = new HashSet();
+                        v.addAll(c1.getVars());
+                        v.addAll(c2.getVars());
+                        scnf.add(new SimpleConjunction(c, v));
                         e = scnf;
                         optimized = true;
                     }
@@ -50,7 +55,7 @@ public class SCNF implements Expression {
     }
 
     public SCNF optimize() {
-        List<SimpleConjunction> e = equalVarsOptimization().elements;
+        List<SimpleConjunction> e = equalVarsOptimization().items();
         List<SimpleConjunction> scnf = new ArrayList();
         for (SimpleConjunction c : e) {
             SimpleConjunction o = c.optimize();
