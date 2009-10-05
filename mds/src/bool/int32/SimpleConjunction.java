@@ -1,7 +1,6 @@
 package bool.int32;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -76,6 +75,8 @@ public class SimpleConjunction implements Expression {
 
     public boolean equalVars(SimpleConjunction c) {
         HashSet<Variable> cv = c.getVars();
+        if (cv.size() != vars.size())
+            return false;
         return cv.containsAll(vars) && vars.containsAll(cv);
     }
 
