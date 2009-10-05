@@ -51,6 +51,10 @@ public class Variable implements Expression {
         return (negative ? "!" : "") + name + (rotate == 0 ? "" : "<<" + Integer.toHexString(rotate));
     }
 
+    public Expression optimize() {
+        return this;
+    }
+
     @Override
     public int hashCode() {
         int code = rotate + (negative ? 1 : 0);

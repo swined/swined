@@ -1,8 +1,5 @@
 package bool.int32;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class And implements Expression {
 
     private final Expression a;
@@ -14,13 +11,7 @@ public class And implements Expression {
     }
 
     public SCNF toSCNF() {
-        List<SimpleConjunction> r = new ArrayList();
-        for (SimpleConjunction ca : a.toSCNF().items()) {
-            for (SimpleConjunction cb : b.toSCNF().items()) {
-                r.add(new SimpleConjunction(ca, cb));
-            }
-        }
-        return new SCNF(r);
+        return a.toSCNF().multiply(b);
     }
 
     public boolean isZero() {
@@ -32,12 +23,22 @@ public class And implements Expression {
     }
 
     public Expression invert() {
-        return new Or(new Not(a), new Not(b));
+        return new Or(a.invert(), b.invert());
     }
 
     @Override
     public String toString() {
         return a.toString() + " & " + b.toString();
+    }
+
+    public Expression optimize() {
+        Expression oa = a.optimize();
+        Expression ob = b.optimize();
+        if (oa.isZero())
+            return new Const(0);
+        if (ob.isZero())
+            return new Const(0);
+        return this;
     }
 
 }

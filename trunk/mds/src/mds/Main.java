@@ -3,14 +3,13 @@ package mds;
 import bool.int32.And;
 import bool.int32.Const;
 import bool.int32.Expression;
-import bool.int32.Not;
 import bool.int32.Or;
 import bool.int32.Variable;
 
 public class Main {
 
     protected static Expression xor(Expression x, Expression y) {
-        return new Or(new And(x, new Not(y)), new And(new Not(x), y));
+        return new Or(new And(x, y.invert()), new And(x.invert(), y));
     }
 
     protected static Expression shift(Expression x, int s) {
@@ -20,8 +19,8 @@ public class Main {
     }
 
     protected static Expression sum(Expression x, Expression y) {
-        x = x.toSCNF().optimize();
-        y = y.toSCNF().optimize();
+        x = x.optimize();
+        y = y.optimize();
         System.out.println(x + " + " + y);
         if (x.isZero())
             return y;
