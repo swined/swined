@@ -29,7 +29,7 @@ public class Or implements Expression {
     }
 
     public Expression invert() {
-        return new And(new Not(a), new Not(b));
+        return new And(a.invert(), b.invert());
     }
 
     @Override

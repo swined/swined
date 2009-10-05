@@ -1,6 +1,6 @@
 package bool.int32;
 
-public class Not implements Expression {
+public class Not {
 
     private Expression expr;
 
@@ -17,7 +17,7 @@ public class Not implements Expression {
     }
 
     public Expression rotate(int s) {
-        return new Not(expr.rotate(s));
+        return expr.rotate(s).invert();
     }
 
     public Expression invert() {
