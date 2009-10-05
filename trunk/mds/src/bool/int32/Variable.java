@@ -1,15 +1,27 @@
 package bool.int32;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Variable implements Expression {
 
-    private String name;
-    private boolean negative;
-    private int rotate;
+    private final String name;
+    private final boolean negative;
+    private final int rotate;
+    private static List<Variable> pool = new ArrayList();
 
-    public Variable(String name) {
-        this.name = name;
-        this.negative = false;
-        this.rotate = 0;
+    public static Variable create(String name) {
+        return create(name, false, 0);
+    }
+
+    public static Variable create(String name, boolean negative, int rotate) {
+        for (Variable v : pool) {
+            if (v.name.equals(name) && v.negative == negative && v.rotate == rotate)
+                return v;
+        }
+        Variable v = new Variable(name, negative, rotate);
+        pool.add(v);
+        return v;
     }
 
     public boolean isFalse() {
@@ -20,7 +32,7 @@ public class Variable implements Expression {
         return false;
     }
 
-    public Variable(String name, boolean negative, int rotate) {
+    private Variable(String name, boolean negative, int rotate) {
         this.name = name;
         this.negative = negative;
         this.rotate = rotate;
@@ -39,11 +51,11 @@ public class Variable implements Expression {
     }
 
     public Variable rotate(int rotate) {
-        return new Variable(name, negative, this.rotate + rotate);
+        return Variable.create(name, negative, this.rotate + rotate);
     }
 
     public Variable invert() {
-        return new Variable(name, !negative, rotate);
+        return Variable.create(name, !negative, rotate);
     }
 
     @Override
@@ -53,29 +65,6 @@ public class Variable implements Expression {
 
     public Expression optimize() {
         return this;
-    }
-
-    @Override
-    public int hashCode() {
-        int code = rotate + (negative ? 1 : 0);
-        for (char c : name.toCharArray()) {
-            code += c;
-        }
-        return code;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Variable) {
-            Variable v = (Variable)o;
-            if (!name.equals(v.getName()))
-                return false;
-            if (negative != v.isNegative())
-                return false;
-            return rotate == v.getRotate();
-        } else {
-            return false;
-        }
     }
 
 }

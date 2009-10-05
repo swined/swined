@@ -1,10 +1,24 @@
 package bool.int32;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Const implements Expression {
 
     private final int value;
+    private static List<Const> pool = new ArrayList();
 
-    public Const(int value) {
+    public static Const create(int value) {
+        for (Const c : pool) {
+            if (c.getValue() == value)
+                return c;
+        }
+        Const c = new Const(value);
+        pool.add(c);
+        return c;
+    }
+
+    private Const(int value) {
         this.value = value;
     }
 
@@ -21,11 +35,11 @@ public class Const implements Expression {
     }
 
     public Const invert() {
-        return new Const(value ^ 0xFFFFFFFF);
+        return Const.create(value ^ 0xFFFFFFFF);
     }
 
     public Const rotate(int rotate) {
-        return new Const(value << rotate | value >> (32 - rotate));
+        return Const.create(value << rotate | value >> (32 - rotate));
     }
 
     @Override

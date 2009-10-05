@@ -26,7 +26,7 @@ public class Or implements Expression {
     }
 
     public Expression invert() {
-        return new And(a.invert(), b.invert());
+        return And.create(a.invert(), b.invert());
     }
 
     @Override
