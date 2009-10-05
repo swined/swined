@@ -12,7 +12,11 @@ public class Variable implements Expression {
         this.rotate = 0;
     }
 
-    public boolean isZero() {
+    public boolean isFalse() {
+        return false;
+    }
+
+    public boolean isTrue() {
         return false;
     }
 
@@ -32,10 +36,6 @@ public class Variable implements Expression {
 
     public int getRotate() {
         return rotate;
-    }
-
-    public SCNF toSCNF() {
-        return new SCNF(new SimpleConjunction(this));
     }
 
     public Variable rotate(int rotate) {

@@ -12,20 +12,20 @@ public class Const implements Expression {
         return value;
     }
 
-    public SCNF toSCNF() {
-        return new SCNF(new SimpleConjunction(this));
-    }
-
-    public boolean isZero() {
+    public boolean isFalse() {
         return value == 0;
     }
 
-    public Const rotate(int rotate) {
-        return new Const(value << rotate | value >> (32 - rotate));
+    public boolean isTrue() {
+        return value == 0xFFFFFFFF;
     }
 
     public Const invert() {
         return new Const(value ^ 0xFFFFFFFF);
+    }
+
+    public Const rotate(int rotate) {
+        return new Const(value << rotate | value >> (32 - rotate));
     }
 
     @Override
