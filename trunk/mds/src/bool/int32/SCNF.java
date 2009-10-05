@@ -3,9 +3,29 @@ package bool.int32;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SCNF {
+public class SCNF implements Expression {
 
     private List<SimpleConjunction> elements;
+
+    public Expression invert() {
+        SCNF r = new SCNF(new SimpleConjunction(new Const(1)));
+        for (SimpleConjunction c : elements) {
+            r = r.multiply(c.invert());
+        }
+        return r;
+    }
+
+    public Expression rotate(int s) {
+        List<SimpleConjunction> scnf = new ArrayList();
+        for (SimpleConjunction c : elements) {
+            scnf.add(c.rotate(s));
+        }
+        return new SCNF(scnf);
+    }
+
+    public SCNF toSCNF() {
+        return this;
+    }
 
     public SCNF optimize() {
         for (SimpleConjunction c1 : elements) {
@@ -20,7 +40,13 @@ public class SCNF {
                 }
             }
         }
-        return this;
+        List<SimpleConjunction> scnf = new ArrayList();
+        for (SimpleConjunction c : elements) {
+            SimpleConjunction o = c.optimize();
+            if (!o.isZero())
+                scnf.add(o);
+        }
+        return new SCNF(scnf);
     }
 
     public SCNF(SimpleConjunction c) {
@@ -47,6 +73,16 @@ public class SCNF {
             }
         }
         return r;
+    }
+
+    public SCNF multiply(SCNF scnf) {
+        List<SimpleConjunction> r = new ArrayList();
+        for (SimpleConjunction c1 : elements) {
+            for (SimpleConjunction c2 : scnf.items()) {
+                r.add(new SimpleConjunction(c1, c2));
+            }
+        }
+        return new SCNF(r);
     }
 
 }

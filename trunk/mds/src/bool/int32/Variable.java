@@ -39,10 +39,6 @@ public class Variable implements Expression {
         return new Variable(name, negative, this.rotate + rotate);
     }
 
-    public Expression optimize() {
-        return this;
-    }
-
     public Variable invert() {
         return new Variable(name, !negative, rotate);
     }
@@ -65,7 +61,11 @@ public class Variable implements Expression {
     public boolean equals(Object o) {
         if (o instanceof Variable) {
             Variable v = (Variable)o;
-            return name.equals(v.getName()) && negative == v.isNegative() && rotate == v.getRotate();
+            if (!name.equals(v.getName()))
+                return false;
+            if (negative != v.isNegative())
+                return false;
+            return rotate == v.getRotate();
         } else {
             return false;
         }
