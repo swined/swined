@@ -33,4 +33,8 @@ public class Const implements Expression {
         return Integer.toHexString(value);
     }
 
+    public Expression optimize() {
+        return this;
+    }
+
 }

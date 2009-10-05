@@ -42,10 +42,7 @@ public class SCNF implements Expression {
                         e.remove(c1);
                         e.remove(c2);
                         Const c = new Const(c1.getCoef().getValue() | c2.getCoef().getValue());
-                        HashSet<Variable> v = new HashSet();
-                        v.addAll(c1.getVars());
-                        v.addAll(c2.getVars());
-                        e.add(new SimpleConjunction(c, v));
+                        e.add(new SimpleConjunction(c, new HashSet(c1.getVars())));
                         optimized = true;
                         break;
                     }
@@ -81,7 +78,8 @@ public class SCNF implements Expression {
     }
 
     public SCNF optimize() {
-        return equalVarsOptimization().zeroOptimization();
+        return this;
+        //return equalVarsOptimization().zeroOptimization();
     }
 
     public SCNF(SimpleConjunction c) {
@@ -113,10 +111,10 @@ public class SCNF implements Expression {
         return r;
     }
 
-    public SCNF multiply(SCNF scnf) {
+    public SCNF multiply(Expression expr) {
         List<SimpleConjunction> r = new ArrayList();
         for (SimpleConjunction c1 : elements) {
-            for (SimpleConjunction c2 : scnf.items()) {
+            for (SimpleConjunction c2 : expr.toSCNF().items()) {
                 r.add(new SimpleConjunction(c1, c2));
             }
         }

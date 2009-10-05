@@ -50,9 +50,10 @@ public class SimpleConjunction implements Expression {
 
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
         coef = new Const(a.getCoef().getValue() & b.getCoef().getValue());
-        vars = new HashSet();
-        if (!coef.isZero()) {
-            vars.addAll(a.getVars());
+        if (coef.isZero()) {
+            vars = new HashSet();
+        } else {
+            vars = new HashSet(a.getVars());
             vars.addAll(b.getVars());
         }
     }
