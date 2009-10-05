@@ -17,24 +17,24 @@ public class SimpleDisjunction implements Expression {
     }
 
     public SimpleDisjunction(Const c) {
-        coef = new Const(c.getValue());
+        coef = Const.create(c.getValue());
         vars = new HashSet();
     }
 
     public SimpleDisjunction(Variable e) {
-        coef = new Const(0);
+        coef = Const.create(0);
         vars = new HashSet();
         vars.add(e);
     }
 
     public SimpleDisjunction(Const c, HashSet<Variable> e) {
-        coef = new Const(c.getValue());
+        coef = Const.create(c.getValue());
         vars = new HashSet();
         vars.addAll(e);
     }
 
     public SimpleDisjunction(SimpleDisjunction a, SimpleDisjunction b) {
-        coef = new Const(a.getCoef().getValue() | b.getCoef().getValue());
+        coef = Const.create(a.getCoef().getValue() | b.getCoef().getValue());
         if (coef.isTrue()) {
             vars = new HashSet();
         } else {

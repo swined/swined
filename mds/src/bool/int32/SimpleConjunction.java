@@ -17,24 +17,24 @@ public class SimpleConjunction implements Expression {
     }
 
     public SimpleConjunction(Const c) {
-        coef = new Const(c.getValue());
+        coef = Const.create(c.getValue());
         vars = new HashSet();
     }
 
     public SimpleConjunction(Variable e) {
-        coef = new Const(0xFFFFFFFF);
+        coef = Const.create(0xFFFFFFFF);
         vars = new HashSet();
         vars.add(e);
     }
 
     public SimpleConjunction(Const c, HashSet<Variable> e) {
-        coef = new Const(c.getValue());
+        coef = Const.create(c.getValue());
         vars = new HashSet();
         vars.addAll(e);
     }
 
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
-        coef = new Const(a.getCoef().getValue() & b.getCoef().getValue());
+        coef = Const.create(a.getCoef().getValue() & b.getCoef().getValue());
         if (coef.isFalse()) {
             vars = new HashSet();
         } else {
@@ -73,6 +73,8 @@ public class SimpleConjunction implements Expression {
     }
 
     public Expression optimize() {
+        if (vars.size() == 0)
+            return coef;
         if (coef.isTrue() && vars.size() == 1)
             return (Variable)vars.toArray()[0];
         return this;
