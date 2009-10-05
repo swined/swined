@@ -5,5 +5,6 @@ public interface Expression {
     Expression invert();
     Expression rotate(int rotate);
     SCNF toSCNF();
+    boolean isZero();
 
 }

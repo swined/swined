@@ -1,6 +1,7 @@
 package bool.int32;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -51,8 +52,10 @@ public class SimpleConjunction implements Expression {
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
         coef = new Const(a.getCoef().getValue() & b.getCoef().getValue());
         vars = new HashSet();
-        vars.addAll(a.getVars());
-        vars.addAll(b.getVars());
+        if (!coef.isZero()) {
+            vars.addAll(a.getVars());
+            vars.addAll(b.getVars());
+        }
     }
 
     public SimpleConjunction optimize() {
@@ -68,7 +71,7 @@ public class SimpleConjunction implements Expression {
     }
 
     public HashSet<Variable> getVars() {
-        return new HashSet(vars);
+        return vars;
     }
 
     public boolean equalVars(SimpleConjunction c) {

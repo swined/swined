@@ -13,6 +13,10 @@ public class Or implements Expression {
         this.b = b;
     }
 
+    public boolean isZero() {
+        return a.isZero() && b.isZero();
+    }
+
     public SCNF toSCNF() {
         List<SimpleConjunction> sc = new ArrayList();
         sc.addAll(a.toSCNF().items());
@@ -28,6 +32,7 @@ public class Or implements Expression {
         return new And(new Not(a), new Not(b));
     }
 
+    @Override
     public String toString() {
         return "(" + a.toString() + " | " + b.toString() + ")";
     }

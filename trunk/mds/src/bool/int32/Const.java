@@ -2,7 +2,7 @@ package bool.int32;
 
 public class Const implements Expression {
 
-    private int value;
+    private final int value;
 
     public Const(int value) {
         this.value = value;
@@ -16,6 +16,10 @@ public class Const implements Expression {
         return new SCNF(new SimpleConjunction(this));
     }
 
+    public boolean isZero() {
+        return value == 0;
+    }
+
     public Const rotate(int rotate) {
         return new Const(value << rotate | value >> (32 - rotate));
     }
@@ -24,6 +28,7 @@ public class Const implements Expression {
         return new Const(value ^ 0xFFFFFFFF);
     }
 
+    @Override
     public String toString() {
         return Integer.toHexString(value);
     }
