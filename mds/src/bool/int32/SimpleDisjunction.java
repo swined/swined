@@ -57,7 +57,7 @@ public class SimpleDisjunction implements Expression {
     }
 
     public boolean isTrue() {
-        return false;
+        return coef.getValue().equals(Const.xFFFFFFFF());
     }
 
     @Override

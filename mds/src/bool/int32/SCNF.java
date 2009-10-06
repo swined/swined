@@ -37,8 +37,12 @@ public class SCNF implements Expression {
         return new SCNF(scnf);
     }
 
-    @Override
-    public String toString() {
+    public List<SimpleConjunction> getItems() {
+        return items;
+    }
+
+//    @Override
+    public String _toString() {
         String r = "";
         for (SimpleConjunction c : items) {
             if (r.isEmpty()) {
