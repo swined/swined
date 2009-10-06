@@ -41,8 +41,8 @@ public class SCNF implements Expression {
         return items;
     }
 
-//    @Override
-    public String _toString() {
+    @Override
+    public String toString() {
         String r = "";
         for (SimpleConjunction c : items) {
             if (r.isEmpty()) {
