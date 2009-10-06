@@ -105,5 +105,4 @@ public class And implements Expression {
         return new And(oa, ob);
     }
     
-
 }

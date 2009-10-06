@@ -52,7 +52,13 @@ public class SimpleConjunction implements Expression {
     }
 
     public boolean isFalse() {
-        return coef.isFalse();
+        if (coef.isFalse())
+            return true;
+        for (Variable v1 : vars)
+            for (Variable v2 : vars)
+                if (v1.invert().equals(v2))
+                    return true;
+        return false;
     }
 
     public boolean isTrue() {

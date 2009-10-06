@@ -54,8 +54,8 @@ public class SDNF implements Expression {
         return items;
     }
 
-    //@Override
-    public String _toString() {
+    @Override
+    public String toString() {
         String r = "";
         for (SimpleDisjunction c : items) {
             if (r.isEmpty()) {
