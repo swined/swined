@@ -47,6 +47,8 @@ public class Or implements Expression {
             return oa;
         if (oa instanceof Const && ob instanceof Const)
             return ((Const)oa).or((Const)ob);
+        if (oa instanceof SimpleDisjunction && ob instanceof Const)
+            return new SimpleDisjunction(new SimpleDisjunction((Const)ob), (SimpleDisjunction)oa);
         if (oa instanceof Const && ob instanceof SimpleDisjunction)
             return new SimpleDisjunction(new SimpleDisjunction((Const)oa), (SimpleDisjunction)ob);
         if (oa instanceof Variable && ob instanceof Const)
@@ -56,6 +58,11 @@ public class Or implements Expression {
         if (oa instanceof SimpleConjunction && ob instanceof SimpleConjunction) {
             List<SimpleConjunction> scnf = new ArrayList();
             scnf.add((SimpleConjunction)oa);
+            scnf.add((SimpleConjunction)ob);
+            return new SCNF(scnf);
+        }
+        if (oa instanceof SCNF && ob instanceof SimpleConjunction) {
+            List<SimpleConjunction> scnf = new ArrayList(((SCNF)oa).getItems());
             scnf.add((SimpleConjunction)ob);
             return new SCNF(scnf);
         }

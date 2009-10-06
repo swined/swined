@@ -15,6 +15,7 @@ public class Variable implements Expression {
     }
 
     public static Variable create(String name, boolean negative, int rotate) {
+        rotate = rotate % 32;
         for (Variable v : pool) {
             if (v.name.equals(name) && v.negative == negative && v.rotate == rotate)
                 return v;

@@ -1,22 +1,19 @@
 package bool.int32;
 
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
+import java.util.HashMap;
 
 public class Const implements Expression {
 
     private final BitSet value;
     private static BitSet defaultMask;
-    private static List<Const> pool = new ArrayList();
+    private static HashMap<BitSet, Const> pool = new HashMap();
 
     public static Const create(BitSet value) {
-        for (Const c : pool) {
-            if (c.getValue().equals(value))
-                return c;
-        }
+        if (pool.containsKey(value))
+            return pool.get(value);
         Const c = new Const(value);
-        pool.add(c);
+        pool.put(value, c);
         return c;
     }
 
