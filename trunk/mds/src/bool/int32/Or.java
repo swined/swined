@@ -53,6 +53,12 @@ public class Or implements Expression {
             return new SimpleDisjunction(new SimpleDisjunction((Const)ob), new SimpleDisjunction((Variable)oa));
         if (oa instanceof SimpleDisjunction && ob instanceof SimpleDisjunction)
             return new SimpleDisjunction((SimpleDisjunction)oa, (SimpleDisjunction)ob);
+        if (oa instanceof SimpleConjunction && ob instanceof SimpleConjunction) {
+            List<SimpleConjunction> scnf = new ArrayList();
+            scnf.add((SimpleConjunction)oa);
+            scnf.add((SimpleConjunction)ob);
+            return new SCNF(scnf);
+        }
         return new Or(oa, ob);
     }
 
