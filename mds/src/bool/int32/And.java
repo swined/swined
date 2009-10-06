@@ -1,6 +1,8 @@
 package bool.int32;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 public class And implements Expression {
 
@@ -66,6 +68,18 @@ public class And implements Expression {
             return new SimpleConjunction(new SimpleConjunction((Const)ob), (SimpleConjunction)oa);
         if (oa instanceof SimpleConjunction && ob instanceof SimpleConjunction)
             return new SimpleConjunction((SimpleConjunction)oa, (SimpleConjunction)ob);
+        if (oa instanceof SimpleDisjunction && ob instanceof SimpleDisjunction) {
+            List<SimpleDisjunction> sdnf = new ArrayList();
+            sdnf.add((SimpleDisjunction)oa);
+            sdnf.add((SimpleDisjunction)ob);
+            return new SDNF(sdnf);
+        }
+        if (oa instanceof SDNF && ob instanceof SimpleDisjunction) {
+            List<SimpleDisjunction> sdnf = new ArrayList();
+            sdnf.addAll(((SDNF)oa).getItems());
+            sdnf.add((SimpleDisjunction)ob);
+            return new SDNF(sdnf);
+        }
         return new And(oa, ob);
     }
     

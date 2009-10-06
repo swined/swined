@@ -34,9 +34,9 @@ public class Main {
         BitSet cy = new BitSet();
         for (int i = 16; i < 32; i++)
             cy.set(i, true);
-        Expression x = Const.create(cx);
+        Expression x = Variable.create("y");//Const.create(cx);
         Expression y = Variable.create("x");//Const.create(cy);
-        Expression e = sum(x, y);
+        Expression e = sum(sum(Variable.create("x"), Const.create(cx)), sum(Variable.create("y"), Const.create(cy)));
         System.out.println(e.optimize());
     }
 

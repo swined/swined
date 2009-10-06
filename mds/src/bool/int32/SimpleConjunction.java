@@ -78,7 +78,7 @@ public class SimpleConjunction implements Expression {
         return this;
     }
 
-    public Expression invert() {
+    public SimpleDisjunction invert() {
         HashSet<Variable> d = new HashSet();
         for (Variable v : vars)
             d.add(v.invert());
