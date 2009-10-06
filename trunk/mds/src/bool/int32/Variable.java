@@ -60,7 +60,7 @@ public class Variable implements Expression {
 
     @Override
     public String toString() {
-        return (negative ? "!" : "") + name + (rotate == 0 ? "" : "<<" + Integer.toHexString(rotate));
+        return (negative ? "!" : "") + name + (rotate == 0 ? "" : "<<" + Integer.toString(rotate));
     }
 
     public Expression optimize() {

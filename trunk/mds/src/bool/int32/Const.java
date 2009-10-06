@@ -22,7 +22,7 @@ public class Const implements Expression {
 
     private Const(BitSet value) {
         this.value = (BitSet)value.clone();
-        value.and(xFFFFFFFF());
+        this.value.and(xFFFFFFFF());
     }
 
     public static BitSet xFFFFFFFF() {
@@ -43,7 +43,7 @@ public class Const implements Expression {
     }
 
     public boolean isTrue() {
-        return false;
+        return value.cardinality() == 32;
     }
 
     public Const invert() {
@@ -53,16 +53,18 @@ public class Const implements Expression {
     }
 
     public Const rotate(int rotate) {
+        while (rotate < 0)
+            rotate += 32;
         BitSet r = new BitSet();
         for (int i = 0; i < 32; i++)
-            r.set(i, value.get((i + rotate) % 32));
+            r.set((i + rotate) % 32, value.get(i));
         return Const.create(r);
     }
 
     public Const shift(int shift) {
         BitSet r = new BitSet();
         for (int i = 0; i < 32; i++)
-            r.set(i, value.get(i + shift));
+            r.set(i + shift, value.get(i));
         return Const.create(r);
     }
 
@@ -80,7 +82,12 @@ public class Const implements Expression {
 
     @Override
     public String toString() {
-        return value.toString();
+        String r = "";
+        char c[] = "0123456789abcdef".toCharArray();
+        for (int i = 28; i >= 0; i-=4 ) {
+            r += c[(value.get(i) ? 1 : 0) + 2 * (value.get(i + 1) ? 1 : 0) + 4 * (value.get(i + 2) ? 1 : 0) + 8 * (value.get(i + 3) ? 1 : 0)];
+        }
+        return r;
     }
 
     public Expression optimize() {
