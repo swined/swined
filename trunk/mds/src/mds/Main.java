@@ -28,15 +28,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        BitSet cx = new BitSet();
-        for (int i = 0; i < 16; i++)
-            cx.set(i, true);
-        BitSet cy = new BitSet();
-        for (int i = 16; i < 32; i++)
-            cy.set(i, true);
-        Expression x = Variable.create("y");//Const.create(cx);
-        Expression y = Variable.create("x");//Const.create(cy);
-        Expression e = sum(sum(Variable.create("x"), Const.create(cx)), sum(Variable.create("y"), Const.create(cy)));
+        Expression x = Variable.create("x", false, 0);
+        Expression y = Variable.create("x", true, 0);
+        Expression e = sum(x, y);
         System.out.println(e.optimize());
     }
 
