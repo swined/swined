@@ -29,13 +29,13 @@ public class Main {
 
     public static void main(String[] args) {
         BitSet cx = new BitSet();
-        for (int i = 1; i < 16; i++)
+        for (int i = 0; i < 16; i++)
             cx.set(i, true);
         BitSet cy = new BitSet();
         for (int i = 16; i < 32; i++)
             cy.set(i, true);
         Expression x = Const.create(cx);
-        Expression y = Const.create(cy);
+        Expression y = Variable.create("x");//Const.create(cy);
         Expression e = sum(x, y);
         System.out.println(e.optimize());
     }
