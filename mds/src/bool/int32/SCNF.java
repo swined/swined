@@ -19,10 +19,6 @@ public class SCNF implements Expression {
         return false;
     }
 
-    public Expression optimize() {
-        return this;
-    }
-
     public SDNF invert() {
         List<SimpleDisjunction> sdnf = new ArrayList();
         for (SimpleConjunction c : items)
@@ -52,6 +48,10 @@ public class SCNF implements Expression {
             }
         }
         return "{" + r + "}";
+    }
+
+    public Expression optimize() {
+        return this;
     }
 
 }

@@ -6,7 +6,8 @@ import java.util.HashMap;
 public class Const implements Expression {
 
     private final BitSet value;
-    private static BitSet defaultMask;
+    private static Const TRUE;
+    private static Const FALSE;
     private static HashMap<BitSet, Const> pool = new HashMap();
 
     public static Const create(BitSet value) {
@@ -19,16 +20,22 @@ public class Const implements Expression {
 
     private Const(BitSet value) {
         this.value = (BitSet)value.clone();
-        this.value.and(xFFFFFFFF());
     }
 
-    public static BitSet xFFFFFFFF() {
-        if (defaultMask == null) {
-            defaultMask = new BitSet();
+    public static Const TRUE() {
+        if (TRUE == null) {
+            BitSet t = new BitSet();
             for (int i = 0; i < 32; i++)
-                defaultMask.set(i, true);
+                t.set(i, true);
+            TRUE = Const.create(t);
         }
-        return defaultMask;
+        return TRUE;
+    }
+
+    public static Const FALSE() {
+        if (FALSE == null)
+            FALSE = Const.create(new BitSet());
+        return FALSE;
     }
 
     public BitSet getValue() {
@@ -45,7 +52,7 @@ public class Const implements Expression {
 
     public Const invert() {
         BitSet n = (BitSet)value.clone();
-        n.xor(xFFFFFFFF());
+        n.xor(TRUE().getValue());
         return Const.create(n);
     }
 

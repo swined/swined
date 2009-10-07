@@ -79,17 +79,15 @@ public class SimpleDisjunction implements Expression {
         return "{" + r + "}";
     }
 
-    public Expression optimize() {
-        if (vars.size() == 0)
-            return coef;
-        return this;
-    }
-
     public SimpleConjunction invert() {
         HashSet<Variable> d = new HashSet();
         for (Variable v : vars)
             d.add(v.invert());
         return new SimpleConjunction(coef.invert(), d);
+    }
+
+    public Expression optimize() {
+        return this;
     }
 
 }

@@ -22,7 +22,7 @@ public class SimpleConjunction implements Expression {
     }
 
     public SimpleConjunction(Variable e) {
-        coef = Const.create(Const.xFFFFFFFF());
+        coef = Const.TRUE();
         vars = new HashSet();
         vars.add(e);
     }
@@ -78,17 +78,15 @@ public class SimpleConjunction implements Expression {
         return "[" + r + "]";
     }
 
-    public Expression optimize() {
-        if (vars.size() == 0)
-            return coef;
-        return this;
-    }
-
     public SimpleDisjunction invert() {
         HashSet<Variable> d = new HashSet();
         for (Variable v : vars)
             d.add(v.invert());
         return new SimpleDisjunction(coef.invert(), d);
+    }
+
+    public Expression optimize() {
+        return this;
     }
 
 }
