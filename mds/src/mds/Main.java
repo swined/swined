@@ -9,11 +9,11 @@ import bool.int32.Variable;
 public class Main {
 
     protected static Expression xor(Expression a, Expression b) {
-        return new Or(new And(a, b.invert()), new And(a.invert(), b));
+        return new Or(new And(a, b.invert()), new And(a.invert(), b)).optimize();
     }
 
     protected static Expression shift(Expression x, int s) {
-        return new And(x.rotate(s), Const.TRUE().shift(s));
+        return new And(x.rotate(s), Const.TRUE().shift(s)).optimize();
     }
 
     protected static Expression sum(Expression x, Expression y) {
@@ -27,9 +27,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Expression x = Variable.create("x", false, 0);
-        Expression y = Variable.create("x", true, 0);
-        Expression e = sum(x, y);
+        Expression x = Variable.create("x");
+        Expression y = Variable.create("y");
+        Expression e = sum(sum(x, y.invert()), sum(x.invert(), y));
         System.out.println(e.optimize());
     }
 

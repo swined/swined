@@ -1,8 +1,5 @@
 package bool.int32;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Or implements Expression {
 
     private Expression a;
@@ -47,7 +44,9 @@ public class Or implements Expression {
             return a;
         if (a instanceof Const) {
             Const c = (Const)a;
-            if (c.equals(Const.FALSE()))
+            if (c.isTrue())
+                return Const.TRUE();
+            if (c.isFalse())
                 return b;
             if (b instanceof Variable)
                 return new SimpleDisjunction(new SimpleDisjunction(c), new SimpleDisjunction((Variable)b));
