@@ -1,7 +1,6 @@
 package bool.int32;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 public class SDNF implements Expression {
@@ -18,22 +17,6 @@ public class SDNF implements Expression {
 
     public boolean isFalse() {
         return false;
-    }
-
-    public Expression optimize() {
-        List<SimpleDisjunction> sdnf = new ArrayList();
-        for (SimpleDisjunction d : items) {
-            if (d.isTrue()) {
-                continue;
-            }
-            if (d.isFalse()) {
-                return Const.create(new BitSet());
-            }
-            sdnf.add(d);
-        }
-        if (sdnf.isEmpty())
-            return Const.create(Const.xFFFFFFFF());
-        return this;
     }
 
     public SCNF invert() {
@@ -65,6 +48,10 @@ public class SDNF implements Expression {
             }
         }
         return "[" + r + "]";
+    }
+
+    public Expression optimize() {
+        return this;
     }
 
 }

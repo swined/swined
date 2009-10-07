@@ -7,4 +7,5 @@ public interface Expression {
     Expression optimize();
     boolean isFalse();
     boolean isTrue();
+
 }
