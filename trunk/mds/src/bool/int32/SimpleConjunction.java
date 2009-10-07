@@ -86,6 +86,10 @@ public class SimpleConjunction implements Expression {
     }
 
     public Expression optimize() {
+        for (Variable v1 : vars)
+            for (Variable v2 : vars)
+                if (v1.invert().equals(v2))
+                    return Const.FALSE();
         return this;
     }
 

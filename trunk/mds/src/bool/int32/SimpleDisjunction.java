@@ -87,6 +87,12 @@ public class SimpleDisjunction implements Expression {
     }
 
     public Expression optimize() {
+        if (vars.isEmpty())
+            return coef;
+        for (Variable v1 : vars)
+            for (Variable v2 : vars)
+                if (v1.invert().equals(v2))
+                    return Const.TRUE();
         return this;
     }
 

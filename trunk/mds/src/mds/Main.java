@@ -30,7 +30,7 @@ public class Main {
         Expression x = Variable.create("x", false, 0);
         Expression y = Variable.create("x", true, 0);
         Expression e = sum(x, y);
-        System.out.println(e);
+        System.out.println(e.optimize());
     }
 
 }
