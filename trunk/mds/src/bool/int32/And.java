@@ -46,10 +46,17 @@ public class And implements Expression {
             Const c = (Const)a;
             if (a.isFalse())
                 return Const.FALSE();
-            if (c.equals(Const.TRUE()))
+            if (c.isTrue())
                 return b;
             if (b instanceof Variable)
                 return new SimpleConjunction(new SimpleConjunction(c), new SimpleConjunction((Variable)b));
+        }
+        if (a instanceof Variable) {
+            Variable v = (Variable)a;
+            if (b instanceof Variable)
+                return new SimpleConjunction(new SimpleConjunction(v), new SimpleConjunction((Variable)b));
+            if (b instanceof SimpleConjunction)
+                return new SimpleConjunction(new SimpleConjunction(v), (SimpleConjunction)b);
         }
         if (a instanceof SimpleConjunction) {
             SimpleConjunction sc = (SimpleConjunction)a;

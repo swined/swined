@@ -17,7 +17,7 @@ public class SimpleConjunction implements Expression {
     }
 
     public SimpleConjunction(Const c) {
-        coef = Const.create(c.getValue());
+        coef = c;
         vars = new HashSet();
     }
 
@@ -28,7 +28,7 @@ public class SimpleConjunction implements Expression {
     }
 
     public SimpleConjunction(Const c, HashSet<Variable> e) {
-        coef = Const.create(c.getValue());
+        coef = c;
         vars = new HashSet();
         vars.addAll(e);
     }
@@ -86,10 +86,8 @@ public class SimpleConjunction implements Expression {
     }
 
     public Expression optimize() {
-        for (Variable v1 : vars)
-            for (Variable v2 : vars)
-                if (v1.invert().equals(v2))
-                    return Const.FALSE();
+        if (isFalse())
+            return Const.FALSE();
         return this;
     }
 
