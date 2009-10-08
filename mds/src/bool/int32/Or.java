@@ -2,12 +2,19 @@ package bool.int32;
 
 public class Or implements Expression {
 
-    private Expression a;
-    private Expression b;
+    private final Expression a;
+    private final Expression b;
+    private Expression invert = null;
 
     public Or(Expression a, Expression b) {
         this.a = a;
         this.b = b;
+    }
+
+    public Or(Expression a, Expression b, Expression invert) {
+        this.a = a;
+        this.b = b;
+        this.invert = invert;
     }
 
     public boolean isFalse() {
@@ -23,7 +30,9 @@ public class Or implements Expression {
     }
 
     public Expression invert() {
-        return new And(a.invert(), b.invert());
+        if (invert == null)
+            invert = new And(a.invert(), b.invert(), this);
+        return invert;
     }
 
     @Override
