@@ -9,7 +9,7 @@ public class SimpleConjunction implements Expression {
 
     public SimpleConjunction rotate(int s) {
         Const rc = coef.rotate(s);
-        HashSet<Variable> rv = new HashSet();
+        HashSet<Variable> rv = new HashSet(vars.size());
         for (Variable v : vars) {
             rv.add(v.rotate(s));
         }
@@ -29,8 +29,7 @@ public class SimpleConjunction implements Expression {
 
     public SimpleConjunction(Const c, HashSet<Variable> e) {
         coef = c;
-        vars = new HashSet();
-        vars.addAll(e);
+        vars = e;
     }
 
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
@@ -38,7 +37,8 @@ public class SimpleConjunction implements Expression {
         if (coef.isFalse()) {
             vars = new HashSet();
         } else {
-            vars = new HashSet(a.getVars());
+            vars = new HashSet(a.getVars().size() + b.getVars().size());
+            vars.addAll(a.getVars());
             vars.addAll(b.getVars());
         }
     }
@@ -55,9 +55,8 @@ public class SimpleConjunction implements Expression {
         if (coef.isFalse())
             return true;
         for (Variable v1 : vars)
-            for (Variable v2 : vars)
-                if (v1.invert().equals(v2))
-                    return true;
+            if (vars.contains(v1.invert()))
+                return true;
         return false;
     }
 

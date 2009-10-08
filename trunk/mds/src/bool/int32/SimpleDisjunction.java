@@ -30,8 +30,7 @@ public class SimpleDisjunction implements Expression {
 
     public SimpleDisjunction(Const c, HashSet<Variable> e) {
         coef = Const.create(c.getValue());
-        vars = new HashSet();
-        vars.addAll(e);
+        vars = e;
     }
 
     public SimpleDisjunction(SimpleDisjunction a, SimpleDisjunction b) {

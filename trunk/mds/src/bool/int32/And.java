@@ -4,10 +4,17 @@ public class And implements Expression {
 
     private final Expression a;
     private final Expression b;
+    private Expression invert;
 
     public And(Expression a, Expression b) {
         this.a = a;
         this.b = b;
+    }
+
+    public And(Expression a, Expression b, Expression invert) {
+        this.a = a;
+        this.b = b;
+        this.invert = invert;
     }
 
     public Expression getA() {
@@ -36,7 +43,9 @@ public class And implements Expression {
     }
 
     public Expression invert() {
-        return new Or(a.invert(), b.invert());
+        if (invert == null)
+            invert = new Or(a.invert(), b.invert(), this);
+        return invert;
     }
 
     private static Expression optimize(Expression a, Expression b) {

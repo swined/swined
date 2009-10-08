@@ -8,19 +8,25 @@ public class Variable implements Expression {
     private final String name;
     private final boolean negative;
     private final int rotate;
+    private Variable invert;
     private static List<Variable> pool = new ArrayList();
 
     public static Variable create(String name) {
-        return create(name, false, 0);
+        return create(name, false, 0, null);
     }
 
     public static Variable create(String name, boolean negative, int rotate) {
+        return create(name, negative, rotate, null);
+    }
+
+    public static Variable create(String name, boolean negative, int rotate, Variable invert) {
         rotate = rotate % 32;
-        for (Variable v : pool) {
+        for (int i = 0; i < pool.size(); i++) {
+            Variable v = pool.get(i);
             if (v.name.equals(name) && v.negative == negative && v.rotate == rotate)
                 return v;
         }
-        Variable v = new Variable(name, negative, rotate);
+        Variable v = new Variable(name, negative, rotate, invert);
         pool.add(v);
         return v;
     }
@@ -33,10 +39,11 @@ public class Variable implements Expression {
         return false;
     }
 
-    private Variable(String name, boolean negative, int rotate) {
+    private Variable(String name, boolean negative, int rotate, Variable invert) {
         this.name = name;
         this.negative = negative;
         this.rotate = rotate;
+        this.invert = invert;
     }
 
     public String getName() {
@@ -56,7 +63,9 @@ public class Variable implements Expression {
     }
 
     public Variable invert() {
-        return Variable.create(name, !negative, rotate);
+        if (invert == null)
+            invert = Variable.create(name, !negative, rotate, this);
+        return invert;
     }
 
     @Override
