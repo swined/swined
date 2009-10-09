@@ -1,58 +1,85 @@
 package bool.int32;
 
-import java.util.BitSet;
-import java.util.HashSet;
-
 public class SimpleDisjunction implements Expression {
 
     private Const coef;
-    private HashSet<Variable> vars;
+    private Variable[] vars;
 
     public SimpleDisjunction rotate(int s) {
         Const rc = coef.rotate(s);
-        HashSet<Variable> rv = new HashSet();
-        for (Variable v : vars) {
-            rv.add(v.rotate(s));
-        }
-        return new SimpleDisjunction(rc, rv);
+        Variable v[] = new Variable[vars.length];
+        for (int i = 0; i < vars.length; i++)
+            v[i] = vars[i].rotate(s);
+        return new SimpleDisjunction(rc, v);
     }
 
     public SimpleDisjunction(Const c) {
-        coef = Const.create(c.getValue());
-        vars = new HashSet();
+        coef = c;
+        vars = new Variable[0];
+        checkConst();
     }
 
     public SimpleDisjunction(Variable e) {
-        coef = Const.create(new BitSet());
-        vars = new HashSet();
-        vars.add(e);
+        coef = Const.FALSE();
+        vars = new Variable[1];
+        vars[0] = e;
+        checkConst();
     }
 
-    public SimpleDisjunction(Const c, HashSet<Variable> e) {
-        coef = Const.create(c.getValue());
+    public SimpleDisjunction(Const c, Variable e) {
+        coef = c;
+        vars = new Variable[1];
+        vars[0] = e;
+        checkConst();
+    }
+
+    public SimpleDisjunction(Variable v1, Variable v2) {
+        coef = Const.FALSE();
+        vars = new Variable[2];
+        vars[0] = v1;
+        vars[1] = v2;
+        checkConst();
+    }
+
+    public SimpleDisjunction(Const c, Variable e[]) {
+        coef = c;
         vars = e;
+        checkConst();
     }
 
     public SimpleDisjunction(SimpleDisjunction a, SimpleDisjunction b) {
         coef = a.getCoef().or(b.getCoef());
-        if (coef.isTrue()) {
-            vars = new HashSet();
-        } else {
-            vars = new HashSet(a.getVars());
-            vars.addAll(b.getVars());
-        }
+        Variable va[] = a.getVars();
+        Variable vb[] = b.getVars();
+        vars = new Variable[va.length + vb.length];
+        for (int i = 0; i < va.length; i++)
+            vars[i] = va[i];
+        for (int i = 0; i < vb.length; i++)
+            vars[i + va.length] = vb[i];
+        checkConst();
     }
 
     public Const getCoef() {
         return coef;
     }
 
-    public HashSet<Variable> getVars() {
+    public Variable[] getVars() {
         return vars;
     }
 
     public boolean isFalse() {
-        return false;
+        return vars.length == 0 && coef.isFalse();
+    }
+
+    public void checkConst() {
+        if (isFalse()) {
+            coef = Const.FALSE();
+            vars = new Variable[0];
+        }
+        if (isTrue()) {
+            coef = Const.TRUE();
+            vars = new Variable[0];
+        }
     }
 
     public boolean isTrue() {
@@ -67,31 +94,27 @@ public class SimpleDisjunction implements Expression {
 
     @Override
     public String toString() {
-        String r = coef.toString();
+        StringBuilder r = new StringBuilder();
+        r.append("{");
+        r.append(coef);
         for (Variable v : vars) {
-            if (r.isEmpty()) {
-                r += v.toString();
-            } else {
-                r += " | " + v.toString();
-            }
+            r.append(" | ");
+            r.append(v);
         }
-        return "{" + r + "}";
+        r.append("}");
+        return r.toString();
     }
 
     public SimpleConjunction invert() {
-        HashSet<Variable> d = new HashSet();
-        for (Variable v : vars)
-            d.add(v.invert());
-        return new SimpleConjunction(coef.invert(), d);
+        Variable v[] = new Variable[vars.length];
+        for (int i = 0; i < vars.length; i++)
+            v[i] = vars[i].invert();
+        return new SimpleConjunction(coef.invert(), v);
     }
 
     public Expression optimize() {
-        if (vars.isEmpty())
+        if (vars.length == 0)
             return coef;
-        for (Variable v1 : vars)
-            for (Variable v2 : vars)
-                if (v1.invert().equals(v2))
-                    return Const.TRUE();
         return this;
     }
 

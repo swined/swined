@@ -58,7 +58,7 @@ public class And implements Expression {
             if (c.isTrue())
                 return b;
             if (b instanceof Variable)
-                return new SimpleConjunction(new SimpleConjunction(c), new SimpleConjunction((Variable)b));
+                return new SimpleConjunction(c, (Variable)b);
         }
         if (a instanceof Variable) {
             Variable v = (Variable)a;

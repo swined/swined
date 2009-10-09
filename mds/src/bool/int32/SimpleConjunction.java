@@ -1,87 +1,113 @@
 package bool.int32;
 
-import java.util.HashSet;
-
 public class SimpleConjunction implements Expression {
 
     private Const coef;
-    private HashSet<Variable> vars;
+    private Variable vars[];
+    private Boolean isFalse;
 
     public SimpleConjunction rotate(int s) {
         Const rc = coef.rotate(s);
-        HashSet<Variable> rv = new HashSet(vars.size());
-        for (Variable v : vars) {
-            rv.add(v.rotate(s));
-        }
-        return new SimpleConjunction(rc, rv);
+        Variable v[] = new Variable[vars.length];
+        for (int i = 0; i < vars.length; i++)
+            v[i] = vars[i].rotate(s);
+        return new SimpleConjunction(rc, v);
     }
 
     public SimpleConjunction(Const c) {
         coef = c;
-        vars = new HashSet();
+        vars = new Variable[0];
+        checkConst();
     }
 
     public SimpleConjunction(Variable e) {
         coef = Const.TRUE();
-        vars = new HashSet();
-        vars.add(e);
+        vars = new Variable[1];
+        vars[0] = e;
+        checkConst();
     }
 
-    public SimpleConjunction(Const c, HashSet<Variable> e) {
+    public SimpleConjunction(Const c, Variable e) {
+        coef = c;
+        vars = new Variable[1];
+        vars[0] = e;
+        checkConst();
+    }
+
+    public SimpleConjunction(Const c, Variable[] e) {
         coef = c;
         vars = e;
+        checkConst();
     }
 
     public SimpleConjunction(SimpleConjunction a, SimpleConjunction b) {
         coef = a.getCoef().and(b.getCoef());
-        if (coef.isFalse()) {
-            vars = new HashSet();
-        } else {
-            vars = new HashSet(a.getVars().size() + b.getVars().size());
-            vars.addAll(a.getVars());
-            vars.addAll(b.getVars());
-        }
+        Variable va[] = a.getVars();
+        Variable vb[] = b.getVars();
+        vars = new Variable[va.length + vb.length];
+        for (int i = 0; i < va.length; i++)
+            vars[i] = va[i];
+        for (int i = 0; i < vb.length; i++)
+            vars[i + va.length] = vb[i];
+        checkConst();
     }
 
     public Const getCoef() {
         return coef;
     }
 
-    public HashSet<Variable> getVars() {
+    public Variable[] getVars() {
         return vars;
     }
 
+    public void checkConst() {
+        if (isFalse()) {
+            coef = Const.FALSE();
+            vars = new Variable[0];
+        }
+        if (isTrue()) {
+            coef = Const.TRUE();
+            vars = new Variable[0];
+        }
+    }
+
     public boolean isFalse() {
+        if (isFalse != null)
+            return isFalse;
         if (coef.isFalse())
             return true;
         for (Variable v1 : vars)
-            if (vars.contains(v1.invert()))
-                return true;
+            for (Variable v2 : vars)
+                if (v1.invert().equals(v2)) {
+                    isFalse = true;
+                    return true;
+                }
+        isFalse = false;
         return false;
     }
 
     public boolean isTrue() {
-        return false;
+        return vars.length == 0 && coef.isTrue();
     }
 
     @Override
     public String toString() {
-        String r = coef.toString();
+        StringBuilder b = new StringBuilder();
+        b.append("[");
+        b.append(coef);
         for (Variable v : vars) {
-            if (r.isEmpty()) {
-                r += v.toString();
-            } else {
-                r += " & " + v.toString();
-            }
+            b.append(" & ");
+            b.append(v);
         }
-        return "[" + r + "]";
+        b.append("]");
+        return b.toString();
     }
 
     public SimpleDisjunction invert() {
-        HashSet<Variable> d = new HashSet();
-        for (Variable v : vars)
-            d.add(v.invert());
-        return new SimpleDisjunction(coef.invert(), d);
+        Variable v[] = new Variable[vars.length];
+        for (int i = 0; i < v.length; i++)
+            v[i] = vars[i].invert();
+        return new SimpleDisjunction(coef.invert(), v);
     }
 
     public Expression optimize() {
