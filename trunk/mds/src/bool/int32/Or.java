@@ -58,14 +58,16 @@ public class Or implements Expression {
             if (c.isFalse())
                 return b;
             if (b instanceof Variable)
-                return new SimpleDisjunction(new SimpleDisjunction(c), new SimpleDisjunction((Variable)b));
+                return new SimpleDisjunction(c, (Variable)b);
             if (b instanceof SimpleDisjunction)
                 return new SimpleDisjunction(new SimpleDisjunction(c), (SimpleDisjunction)b);
         }
         if (a instanceof Variable) {
             Variable v = (Variable)a;
             if (b instanceof Variable)
-                return new SimpleDisjunction(new SimpleDisjunction(v), new SimpleDisjunction((Variable)b));
+                return new SimpleDisjunction(v, (Variable)b);
+            if (b instanceof SimpleDisjunction)
+                return new SimpleDisjunction(new SimpleDisjunction(v), (SimpleDisjunction)b);
         }
         if (a instanceof SimpleDisjunction) {
             SimpleDisjunction sd = (SimpleDisjunction)a;
