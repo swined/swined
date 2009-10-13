@@ -1,4 +1,4 @@
-package ln_s;
+package ln;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
