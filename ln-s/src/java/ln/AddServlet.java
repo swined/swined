@@ -9,7 +9,7 @@ public class AddServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
                 throws IOException {
         URL url = URL.create(req.getParameter("url"));
-        resp.setContentType("text/plain");
-        resp.getWriter().println("Hello, " + req.getServerName() + "/" + url.getKey() + " : " + url.getLink());
+        resp.setContentType("text/html");
+        resp.getWriter().println("http://" + req.getServerName() + "/" + url.getKey() + " -&gt; " + url.getLink());
     }
 }

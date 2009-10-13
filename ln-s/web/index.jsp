@@ -5,9 +5,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>.L</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="/add" method="get">
+            <input name="url" />
+            <input type="submit" value="shorter!"/>
+        </form>
     </body>
 </html>
