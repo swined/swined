@@ -1,4 +1,4 @@
-package guestbook;
+package ln_s;
 
 import java.io.IOException;
 import javax.servlet.http.*;
