@@ -1,0 +1,41 @@
+MIME-Version: 1.0
+Content-Transfer-Encoding: binary
+Content-Type: multipart/mixed; boundary="_----------=_1245154214253910"
+X-Mailer: MIME::Lite 3.024 (F2.76; T1.27; A2.04; B3.07_01; Q3.07)
+Date: Tue, 16 Jun 2009 19:10:14 +0700
+From: swined@gmail.com
+Subject: subj
+
+This is a multi-part message in MIME format.
+
+--_----------=_1245154214253910
+Content-Disposition: inline
+Content-Length: 19
+Content-Transfer-Encoding: binary
+Content-Type: text/html; charset="utf-8"
+
+<img src="cid:img">
+--_----------=_1245154214253910
+Content-Disposition: inline; filename="image.gif"
+Content-Id: <img>
+Content-Transfer-Encoding: base64
+Content-Type: image/gif; name="image.gif"
+
+R0lGODlhEAAQAOZ/AL6mgtjRqr2nd//6w6p3LPnXi9G5luPSeL+zlnttQMvJ
+t8awkO/cu+uuNGlUKMmjZ+LDlCQTB+PbsseFKLpzEfTnzca3k+rcjdnFmeHS
+tkwzHP780v/95M6yhO3cruDMojcgCqmYb6mETdGcRf/sq9bVyNLNo5qGVuq8
+Z//ko93Mqv//6ezgwaWLZHpeN5J5Wfrt04xQBsSjdI5zRv7z2hEFAfHhvot6
+WGZSMGdcMvDcwY5tPurRn8Svfe/UqppiF8TAqu/VptDBptTBn9CbS+XlxeXk
+z+/kzO/pwO/vzN+wW9TKqv//tP7uwc2eVaygfcbGn+XjvMW/qHVYL+bXt/Tt
+2NXPvPfrzP7nwv//98C2nLKhg8G4nerk0Mi8lv/PeNDEl93GlsaQOtG9jc3N
+p7abX8KxhZ2Kaci1i8i5is+nWdikTWlcP1ZCLsmoeei0Qc3NrLCUYOTRh7u2
+j/Tp0LatldTKs+bCWd3OssSwcdHGodfFpOrMof/9o9KYQeDh3iH5BAEAAH8A
+LAAAAAAQABAAAAfmgH+CgxNrBDGDiYIUIwhACgpcaoeDFBNKBVoVMDqbFQgo
+Yj9/fikkCCw2KgZDKjYsWiQoIH5fAAZULHpoXkssVAYCDSBEBQAdEHwtNzch
+QRAdPW8gTikWBhgQIi8zcTxhY2lmIA9SQnsfPjsODiceHxhgd+QbdhkMWDM4
+7U0eASYWQMjgYOUInjMucORIEEKCBBMHBK5Q0IXOExxscuR4gkQClIhusqwo
+UYXGloxzNkQhw+QCCBcLrozkQKNOyiRw+sgREeFPDQ0vhigYYKRIgAtlpoCo
+oShCmxYY8rhYqqhqBKZVAwEAOw==
+
+--_----------=_1245154214253910--
+
