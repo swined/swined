@@ -1,4 +1,4 @@
-package ln_s;
+package ln;
 
 import java.io.IOException;
 import javax.servlet.http.*;
