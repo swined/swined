@@ -1,4 +1,4 @@
-default: xpi
+default: clean xpi
 xpi:
 	mkdir build
 	cp chrome.manifest install.js install.rdf build
