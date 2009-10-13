@@ -26,7 +26,7 @@ $wt->dbh->do(
 ) if param('a') eq 'stop';
 
 $wt->dbh->do(
-	'UPDATE torrents SET active = 1 WHERE id = ? AND owner = ?',
+	'UPDATE torrents SET active = 1, progress = 0 WHERE id = ? AND owner = ?',
 	undef, param('id'), $ENV{REMOTE_USER},
 ) if param('a') eq 'start';
 

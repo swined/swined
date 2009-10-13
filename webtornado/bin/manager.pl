@@ -60,7 +60,6 @@ $sth->execute;
 while (my $r = $sth->fetchrow_hashref) {
 	my $p = join ' ', map { WT::shesc($_) } $r->{id}, $c->{dbhost}, $c->{dbuser}, $c->{dbpass}, $c->{dbname}, '--minport', ($c->{minport} or '49000'), '--maxport', ($c->{maxport} or '49999');
 	next if not $r->{owner} or $r->{owner} =~ /\W/;
-	next if $dbh->selectrow_hashref('SELECT * FROM torrents WHERE active > 0 AND pid > 0 AND progress < 100 AND owner = ? LIMIT 1', undef, $r->{owner});
 	mkdir my $userdir = "/var/cache/webtornado/users/$r->{owner}";
 	mkdir my $outdir = "$userdir/output";
 	next unless -e $outdir;

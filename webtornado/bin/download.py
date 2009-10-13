@@ -1,4 +1,5 @@
 #! /usr/bin/python
+# -*- coding: utf-8 -*-
 
 # Written by Bram Cohen
 # Modified by Alexey Alexandrov
@@ -79,8 +80,9 @@ class HeadlessDisplayer:
 		self.dbup('peerlist', '|'.join(pl))
 
     def chooseFile(self, default, size, saveas, dir):
-        self.dbup('output', abspath(default))
-        return default
+	filename = default
+        self.dbup('output', abspath(filename))
+        return filename
 
     def newpath(self, path):
 	print "newpath: %s" % (path)
