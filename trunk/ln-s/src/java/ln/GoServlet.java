@@ -10,7 +10,7 @@ public class GoServlet extends HttpServlet {
                 throws IOException {
         URL url = URL.load(req.getPathInfo().substring(1));
         if (url == null) {
-            resp.sendRedirect("/404.jsp");
+            resp.sendRedirect("/index.jsp");
         } else {
             resp.sendRedirect(url.getLink());
         }
