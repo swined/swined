@@ -1,4 +1,4 @@
-package guestbook;
+package ln_s;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;

@@ -1,4 +1,4 @@
-package guestbook;
+package ln_s;
 
 import java.util.List;
 import javax.jdo.PersistenceManager;
