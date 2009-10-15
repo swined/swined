@@ -13,6 +13,7 @@ public class TestServlet extends HttpServlet {
         UA ua = new UA();
         try {
             ua.get(new URL("http://google.com/"));
+            ua.get(new URL("http://google.com/"));
             response.getOutputStream().print(ua.toString());
         } catch (Exception e) {
             e.printStackTrace(response.getWriter());
