@@ -3,16 +3,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.CookieManager;
-import java.net.HttpCookie;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.text.ParseException;
 
 public class UA {
 
-    private MyCookieManager cookies = new MyCookieManager();
+    private CookieManager cookies = new CookieManager();
 
     private String readAll(InputStream stream) throws IOException {
         String l;
