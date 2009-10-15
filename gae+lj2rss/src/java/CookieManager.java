@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyCookieManager {
+public class CookieManager {
 
     private Map<String, HttpCookie> cookies = new HashMap();
 
-    public MyCookieManager() {
+    public CookieManager() {
         cookies = new HashMap();
     }
 
