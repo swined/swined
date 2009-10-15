@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
 
 public class CookieManager {
 
-    private Map store;
+    private Map<String, Map<String, Map<String, String>>> store;
 
     private static final String SET_COOKIE = "Set-Cookie";
     private static final String COOKIE_VALUE_DELIMITER = ";";
@@ -39,7 +39,7 @@ public class CookieManager {
 	String domain = getDomainFromHost(conn.getURL().getHost());
 	Map domainStore;
 	if (store.containsKey(domain)) {
-	    domainStore = (Map)store.get(domain);
+	    domainStore = store.get(domain);
 	} else {
 	    domainStore = new HashMap();
 	    store.put(domain, domainStore);
@@ -75,19 +75,17 @@ public class CookieManager {
 	String domain = getDomainFromHost(url.getHost());
 	String path = url.getPath();
 
-	Map domainStore = (Map)store.get(domain);
+	Map<String, Map<String, String>> domainStore = store.get(domain);
 	if (domainStore == null) return;
 	StringBuffer cookieStringBuffer = new StringBuffer();
 
-	Iterator cookieNames = domainStore.keySet().iterator();
-	while(cookieNames.hasNext()) {
-	    String cookieName = (String)cookieNames.next();
-	    Map cookie = (Map)domainStore.get(cookieName);
-	    if (comparePaths((String)cookie.get(PATH), path) && isNotExpired((String)cookie.get(EXPIRES))) {
+        for (String cookieName : domainStore.keySet()) {
+	    Map<String, String> cookie = domainStore.get(cookieName);
+	    if (comparePaths(cookie.get(PATH), path) && isNotExpired(cookie.get(EXPIRES))) {
 		cookieStringBuffer.append(cookieName);
 		cookieStringBuffer.append("=");
-		cookieStringBuffer.append((String)cookie.get(cookieName));
-		if (cookieNames.hasNext()) cookieStringBuffer.append(SET_COOKIE_SEPARATOR);
+		cookieStringBuffer.append(cookie.get(cookieName));
+		cookieStringBuffer.append(SET_COOKIE_SEPARATOR);
 	    }
 	}
         conn.setRequestProperty(COOKIE, cookieStringBuffer.toString());
