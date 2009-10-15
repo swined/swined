@@ -12,7 +12,7 @@ public class TestServlet extends HttpServlet {
     throws ServletException, IOException {
         UA ua = new UA();
         try {
-            ua.GET(new URL("http://swined.livejournal.com/"));
+            ua.get(new URL("http://google.com/"));
             response.getOutputStream().print(ua.toString());
         } catch (Exception e) {
             e.printStackTrace(response.getWriter());
