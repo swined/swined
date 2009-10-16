@@ -19,10 +19,10 @@ public class LJ {
         final String request = buildSessiongenerateRequest(username, hash);
         LJResponse response = new LJResponse(ua.post(new URL("http://livejournal.com/interface/flat"), request));
         if (null != response.get("errmsg"))
-            throw new LJException(response.get("errmsg"));
+            throw new Exception(response.get("errmsg"));
         String session = response.get("ljsession");
         if (null == session)
-            throw new LJException("ljsession not found");
+            throw new Exception("ljsession not found");
         ua.addCookie("ljsession", session);
     }
 
