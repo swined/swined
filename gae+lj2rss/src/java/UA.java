@@ -58,7 +58,7 @@ public class UA {
         os.close();
         cookies.save(conn);
         if (conn.getResponseCode() != 200) {
-            throw new LJException("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage());
+            throw new Exception("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage());
         }
         return readAll(conn.getInputStream());
     }
