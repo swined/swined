@@ -13,6 +13,10 @@ public class CookieManager {
         cookies = new HashMap();
     }
 
+    public void addCookie(HttpCookie cookie) {
+        cookies.put(cookie.getName(), cookie);
+    }
+
     public void save(URLConnection conn) {
         final List<String> cookieList = conn.getHeaderFields().get("set-cookie");
         if (cookieList == null)
@@ -20,7 +24,7 @@ public class CookieManager {
         for (String cookieString : cookieList) {
             try {
                 for (HttpCookie cookie : HttpCookie.parse(cookieString))
-                    cookies.put(cookie.getName(), cookie);
+                    addCookie(cookie);
             } catch (Exception e) {
             }
         }
