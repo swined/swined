@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.net.URL;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +10,16 @@ public class TestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        UA ua = new UA();
+        PrintWriter out = response.getWriter();
         try {
-            ua.get(new URL("http://google.com/"));
-            ua.get(new URL("http://google.com/"));
-            response.getOutputStream().print(ua.toString());
+            LJ lj = new LJ();
+            lj.login(request.getParameter("login"), request.getParameter("hash"));
+            out.println(lj.toString());
+            out.println("links:");
+            for (String link : lj.links())
+                out.println(link + "<br>" + lj.getEntry(link) + "<hr>");
         } catch (Exception e) {
-            e.printStackTrace(response.getWriter());
+            e.printStackTrace(out);
         }
     } 
 
