@@ -8,9 +8,11 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
+import org.apache.commons.httpclient.HttpClient;
 
 public class UA {
 
+    private HttpClient httpclient = new HttpClient();
     private CookieManager cookies = new CookieManager();
 
     public void addCookie(String name, String value) {
@@ -30,12 +32,13 @@ public class UA {
 
     private HttpURLConnection getConnection(URL url) throws IOException, ParseException {
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-//        conn.setInstanceFollowRedirects(false);
+        conn.setInstanceFollowRedirects(false);
         conn.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
         return conn;
     }
 
     public String get(URL url) throws Exception {
+        System.err.println("get(" + url + ")");
         HttpURLConnection conn = getConnection(url);
         cookies.load(conn);
         conn.connect();
@@ -46,8 +49,8 @@ public class UA {
     }
 
     public String post(URL url, String data) throws Exception {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
+        System.err.println("post(" + url + ")");
+        HttpURLConnection conn = getConnection(url);
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
         cookies.load(conn);

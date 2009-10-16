@@ -31,6 +31,14 @@ public class CookieManager {
     }
 
     public void load(URLConnection conn) {
+        String b = this.toString();
+        if (!b.isEmpty())
+            conn.setRequestProperty("cookie", b);
+        System.err.println(conn.getRequestProperty("cookie"));
+    }
+
+    @Override
+    public String toString() {
         StringBuilder b = new StringBuilder();
         for (HttpCookie cookie : cookies.values()) {
             b.append(cookie.getName());
@@ -38,13 +46,7 @@ public class CookieManager {
             b.append(cookie.getValue());
             b.append("; ");
         }
-        if (!b.toString().isEmpty())
-            conn.setRequestProperty("Cookie", b.toString());
-    }
-
-    @Override
-    public String toString() {
-        return cookies.toString();
+        return b.toString();
     }
 
 }
