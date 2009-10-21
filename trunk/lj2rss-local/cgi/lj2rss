@@ -8,6 +8,7 @@ use CGI qw/param/;
 use XML::Writer;
 use LWP::UserAgent;
 use Cache::Memcached;
+use Cache::FastMmap;
 use ua;
 use Data::Dumper;
 
@@ -16,11 +17,11 @@ ua::set_socks(9050);
 my ($ll, $hp) = (param('login') || '', param('hash') || '');
 
 my $cachemiss = 0;
-my $cache = new Cache::Memcached(
-#    share_file => '/var/cache/lj2rss/cache',
-#    expire_time => '7d',
-#    cache_size => '1024m',
-#    unlink_on_exit => 0,
+my $cache = new Cache::FastMmap(
+    share_file => '/var/cache/lj2rss/cache',
+    expire_time => '7d',
+    cache_size => '1024m',
+    unlink_on_exit => 0,
     read_cb => sub {
 	my (undef, $url) = @_;
 	return if time - $^T > 30;
@@ -30,7 +31,7 @@ my $cache = new Cache::Memcached(
 	my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
 	local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
 	    s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
-	Dumper { subject => $t, content => $_ };
+	{ subject => $t, content => $_ };
     },
 );
 
@@ -90,8 +91,6 @@ if (my $e = login) {
     foreach (links) {
 	$xml->dataElement('debug', '', 'link' => $_);
 	my $et = eval { alarm 0; $cache->get($_); };
-	my $VAR1;
-	$et = eval $et;
 	if (my $e = $@) {
 		next;
 	}
