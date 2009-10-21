@@ -7,7 +7,7 @@ use youtube;
 use CGI qw/param/;
 use XML::Writer;
 use LWP::UserAgent;
-use Cache::FastMmap;
+use Cache::Memcached;
 use ua;
 
 my $ua = new ua;
@@ -15,11 +15,11 @@ ua::set_socks(9050);
 my ($ll, $hp) = (param('login') || '', param('hash') || '');
 
 my $cachemiss = 0;
-my $cache = new Cache::FastMmap(
-    share_file => '/var/cache/lj2rss/cache',
-    expire_time => '7d',
-    cache_size => '1024m',
-    unlink_on_exit => 0,
+my $cache = new Cache::Memcached(
+#    share_file => '/var/cache/lj2rss/cache',
+#    expire_time => '7d',
+#    cache_size => '1024m',
+#    unlink_on_exit => 0,
     read_cb => sub {
 	my (undef, $url) = @_;
 	return if time - $^T > 30;
