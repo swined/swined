@@ -30,7 +30,9 @@ my $cache = new Cache::FastMmap(
     cache_size => '1024m',
     unlink_on_exit => 0,
     read_cb => sub {
-	my $w = $ua->get($_[1] . '?format=light')->content;
+	my (undef, $url) = @_;
+	return if time - $^T > 60;
+	my $w = $ua->get($url . '?format=light')->content;
 	return if $w !~ /<blockquote>/s;
 	my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
 	local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
