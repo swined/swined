@@ -7,14 +7,9 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 public class UA {
 
-    private HttpClient httpclient = new DefaultHttpClient();
     private CookieManager cookies = new CookieManager();
 
     public void addCookie(String name, String value) {
@@ -40,16 +35,6 @@ public class UA {
     }
 
     public String get(URL url) throws Exception {
-        HttpGet httpget = new HttpGet(url.toString());
-        HttpResponse response = httpclient.execute(httpget);
-//        GetMethod httpget = new GetMethod(url.toString());
-//        int code = httpclient.executeMethod(httpget);
-//        if (code != 200)
-            throw new Exception();
-//        return httpget.getResponseBodyAsString();
-    }
-
-    public String _get(URL url) throws Exception {
         System.err.println("get(" + url + ")");
         HttpURLConnection conn = getConnection(url);
         cookies.load(conn);
