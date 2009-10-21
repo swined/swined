@@ -8,21 +8,11 @@ use CGI qw/param/;
 use XML::Writer;
 use LWP::UserAgent;
 use Cache::FastMmap;
+use ua;
 
-my $ua = new LWP::UserAgent(cookie_jar => {});
-$ua->agent('http://lj2rss.net.ru/; swined@gmail.com');
+my $ua = new ua;
+ua::set_socks(9050);
 my ($ll, $hp) = (param('login') || '', param('hash') || '');
-
-use LWP::Protocol::http::SocksChain;
-LWP::Protocol::implementor( http => 'LWP::Protocol::http::SocksChain' );
-@LWP::Protocol::http::SocksChain::EXTRA_SOCK_OPTS = (
-	Chain_Len    => 1,
-	Debug        => 0,
-	Random_Chain => 1,
-	Chain_File_Data => ['127.0.0.1:9050:::5'],
-	Auto_Save    => 0,
-	Restore_Type => 0,
-);
 
 my $cachemiss = 0;
 my $cache = new Cache::FastMmap(
