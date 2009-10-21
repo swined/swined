@@ -24,6 +24,7 @@ LWP::Protocol::implementor( http => 'LWP::Protocol::http::SocksChain' );
 	Restore_Type => 0,
 );
 
+my $cachemiss = 0;
 my $cache = new Cache::FastMmap(
     share_file => '/var/cache/lj2rss/cache',
     expire_time => '7d',
@@ -31,7 +32,8 @@ my $cache = new Cache::FastMmap(
     unlink_on_exit => 0,
     read_cb => sub {
 	my (undef, $url) = @_;
-	return if time - $^T > 60;
+	return if time - $^T > 30;
+	$cachemiss++;
 	my $w = $ua->get($url . '?format=light')->content;
 	return if $w !~ /<blockquote>/s;
 	my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
@@ -112,7 +114,7 @@ if (my $e = login) {
 	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
     }
 }
-$xml->dataElement('debug', '', 'time' => time - $^T);
+$xml->dataElement('debug', '', 'time' => (time - $^T), 'cachemiss' => $cachemiss);
 $xml->endTag;
 $xml->endTag;
 $xml->end;
