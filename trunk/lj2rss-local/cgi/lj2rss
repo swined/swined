@@ -9,6 +9,7 @@ use XML::Writer;
 use LWP::UserAgent;
 use Cache::Memcached;
 use ua;
+use Data::Dumper;
 
 my $ua = new ua;
 ua::set_socks(9050);
@@ -29,7 +30,7 @@ my $cache = new Cache::Memcached(
 	my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
 	local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
 	    s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
-	{ subject => $t, content => $_ };
+	Dumper { subject => $t, content => $_ };
     },
 );
 
@@ -89,6 +90,8 @@ if (my $e = login) {
     foreach (links) {
 	$xml->dataElement('debug', '', 'link' => $_);
 	my $et = eval { alarm 0; $cache->get($_); };
+	my $VAR1;
+	$et = eval $et;
 	if (my $e = $@) {
 		next;
 	}
