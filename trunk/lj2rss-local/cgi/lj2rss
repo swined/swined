@@ -42,9 +42,10 @@ my $cache = new Cache::FastMmap(
 		s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
 	    return { subject => $t, content => $_ };
 	};
+	my $e = $@;
 	alarm 0;
 	status;
-	if (my $e = $@) {
+	if ($e) {
 	    $cf++;
 	    return;
 	}  else {
@@ -109,8 +110,16 @@ if (my $e = login) {
     foreach (links) {
 	$ep++;
 	$xml->dataElement('debug', '', 'link' => $_);
-	my $et = eval { alarm 0; $cache->get($_); };
-	if (my $e = $@) {
+	my $et = eval {
+	    local $SIG{ALRM} = sub { die "alarm\n" };
+	    alarm 10; 
+	    status 'cache->get()';
+	    $cache->get($_);
+	    status;
+	};
+	my $e = $@;
+	alarm 0;
+	if ($e) {
 		next;
 	}
 	my $jn = getJName($_);
