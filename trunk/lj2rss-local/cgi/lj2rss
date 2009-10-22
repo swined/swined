@@ -23,7 +23,7 @@ my $cache = new Cache::FastMmap(
     unlink_on_exit => 0,
     read_cb => sub {
 	my (undef, $url) = @_;
-	$0 = sprintf '[lj2rss] t=%s', time - $^T;
+	$0 = sprintf '[lj2rss] u=%s, t=%s', $ll, time - $^T;
 	my $r = eval {
 	    alarm 10;
 	    my $w = $ua->get($url . '?format=light')->content;
