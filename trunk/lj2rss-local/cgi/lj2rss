@@ -110,31 +110,36 @@ if (my $e = login) {
     addEntry($xml, "http://$ENV{HTTP_HOST}/?rand=" . rand, 'error', 
 	sprintf 'Could not log into your LJ account:<br>%s<br><br><a href="http://swined.livejournal.com/391329.html">http://swined.livejournal.com/391329.html</a>', $e);
 } else {
-    foreach (links) {
-	$ep++;
-	$xml->dataElement('debug', '', 'link' => $_);
-	my $et = eval {
-	    local $SIG{ALRM} = sub { die "alarm\n" };
-	    alarm 10; 
-	    status 'cache->get()';
-	    $cache->get($_);
-	    status;
+	eval {
+		foreach (links) {
+			$ep++;
+			$xml->dataElement('debug', '', 'link' => $_);
+			my $et = eval {
+				local $SIG{ALRM} = sub { die "alarm\n" };
+				alarm 10; 
+				status 'cache->get()';
+				$cache->get($_);
+				status;
+			};
+			my $e = $@;
+			alarm 0;
+			next if $e;
+			my $jn = getJName($_);
+			m|/(\d+)\.html$|;
+			my $id = $1;
+			if ($jn && $id) {
+				my $u = "http://lj2rss.swined.net/comments.png?user=${jn}&itemid=${id}";
+				$et->{content} .= "<br><a href='${_}'><img src='${u}'></a>";
+			}
+			$jn |= '***';
+			$et->{content} = youtube::replace($et->{content});
+			addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
+			status();
+		}
 	};
-	my $e = $@;
-	alarm 0;
-	next if $e;
-	my $jn = getJName($_);
-       	m|/(\d+)\.html$|;
-	my $id = $1;
-	if ($jn && $id) {
-		my $u = "http://lj2rss.swined.net/comments.png?user=${jn}&itemid=${id}";
-		$et->{content} .= "<br><a href='${_}'><img src='${u}'></a>";
+	if (my $e = $@) {
+		addEntry($xml, $e);
 	}
-	$jn |= '***';
-	$et->{content} = youtube::replace($et->{content});
-	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
-	status();
-    }
 }
 $xml->endTag;
 $xml->endTag;
