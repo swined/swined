@@ -16,7 +16,6 @@ my $ua = new ua;
 ua::set_socks(9050);
 my ($ll, $hp) = (param('login') || '', param('hash') || '');
 
-my $cachemiss = 0;
 my $cache = new Cache::FastMmap(
     share_file => '/var/cache/lj2rss/cache',
     expire_time => '7d',
@@ -24,14 +23,21 @@ my $cache = new Cache::FastMmap(
     unlink_on_exit => 0,
     read_cb => sub {
 	my (undef, $url) = @_;
-	return if time - $^T > 30;
-	$cachemiss++;
-	my $w = $ua->get($url . '?format=light')->content;
-	return if $w !~ /<blockquote>/s;
-	my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
-	local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
-	    s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
-	{ subject => $t, content => $_ };
+	$0 = sprintf '[lj2rss] t=%s', time - $^T;
+	my $r = eval {
+	    alarm 10;
+	    my $w = $ua->get($url . '?format=light')->content;
+	    return if $w !~ /<blockquote>/s;
+	    my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
+	    local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
+		s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
+	    { subject => $t, content => $_ };
+	};
+	if (my $e = $@) {
+	    return;
+	}  else {
+	    return $r;
+	}
     },
 );
 
@@ -106,7 +112,7 @@ if (my $e = login) {
 	addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
     }
 }
-$xml->dataElement('debug', '', 'time' => (time - $^T), 'cachemiss' => $cachemiss);
+$xml->dataElement('debug', '', 'time' => (time - $^T));
 $xml->endTag;
 $xml->endTag;
 $xml->end;
