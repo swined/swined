@@ -21,6 +21,7 @@ status();
 
 sub status {
     $0 = sprintf '[lj2rss] u=%s, t=%s, ep=%s, cm=%s, cf=%s %s', $ll, time - $^T, $ep, $cm, $cf, shift;
+    return;
 }
 
 my $cache = new Cache::FastMmap(
@@ -120,7 +121,6 @@ if (my $e = login) {
 				alarm 10; 
 				status 'cache->get()';
 				$cache->get($_);
-				status;
 			};
 			my $e = $@;
 			alarm 0;
