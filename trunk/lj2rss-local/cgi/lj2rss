@@ -77,6 +77,7 @@ sub links {
     status 'links()';
     my $rs = $ua->get('http://www.livejournal.com/mobile/friends.bml?skip=' . param('skip'));
     my @r = grep s/.*: <a href='(.*?)\?.*?'>.*/$1/, split '<b', $rs->content;
+    die $rs->content unless @r;
     status;
     return @r;
 }
