@@ -33,6 +33,7 @@ my $cache = new Cache::FastMmap(
 	$cm++;
 	status 'read_cb()';
 	my $r = eval {
+	    local $SIG{ALRM} = sub { die "alarm\n" };
 	    alarm 10;
 	    my $w = $ua->get($url . '?format=light')->content;
 	    die if $w !~ /<blockquote>/s;
@@ -41,6 +42,7 @@ my $cache = new Cache::FastMmap(
 		s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
 	    return { subject => $t, content => $_ };
 	};
+	alarm 0;
 	status;
 	if (my $e = $@) {
 	    $cf++;
