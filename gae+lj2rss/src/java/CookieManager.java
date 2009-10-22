@@ -26,6 +26,7 @@ public class CookieManager {
                 for (HttpCookie cookie : HttpCookie.parse(cookieString))
                     addCookie(cookie);
             } catch (Exception e) {
+                System.err.println("failed to parse cookies: " + cookieString);
             }
         }
     }
