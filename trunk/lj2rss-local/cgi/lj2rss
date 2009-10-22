@@ -74,8 +74,11 @@ sub login {
 }
 
 sub links {
+    status 'links()';
     my $rs = $ua->get('http://www.livejournal.com/mobile/friends.bml?skip=' . param('skip'));
-    grep s/.*: <a href='(.*?)\?.*?'>.*/$1/, split '<b', $rs->content;
+    my @r = grep s/.*: <a href='(.*?)\?.*?'>.*/$1/, split '<b', $rs->content;
+    status;
+    return @r;
 }
 
 sub getJName {
@@ -119,9 +122,7 @@ if (my $e = login) {
 	};
 	my $e = $@;
 	alarm 0;
-	if ($e) {
-		next;
-	}
+	next if $e;
 	my $jn = getJName($_);
        	m|/(\d+)\.html$|;
 	my $id = $1;
