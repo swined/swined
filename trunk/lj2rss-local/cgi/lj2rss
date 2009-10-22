@@ -20,7 +20,7 @@ my ($ep, $cm, $cf)= (0, 0, 0);
 status();
 
 sub status {
-    $0 = sprintf '[lj2rss] u=%s, t=%s, ep=%s, cm=%s, cf=%s', $ll, time - $^T, $ep, $cm, $cf;
+    $0 = sprintf '[lj2rss] u=%s, t=%s, ep=%s, cm=%s, cf=%s %s', $ll, time - $^T, $ep, $cm, $cf, shift;
 }
 
 my $cache = new Cache::FastMmap(
@@ -31,6 +31,7 @@ my $cache = new Cache::FastMmap(
     read_cb => sub {
 	my (undef, $url) = @_;
 	$cm++;
+	status 'read_cb()';
 	my $r = eval {
 	    alarm 10;
 	    my $w = $ua->get($url . '?format=light')->content;
@@ -40,6 +41,7 @@ my $cache = new Cache::FastMmap(
 		s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
 	    return { subject => $t, content => $_ };
 	};
+	status;
 	if (my $e = $@) {
 	    $cf++;
 	    return;
@@ -122,7 +124,6 @@ if (my $e = login) {
 	status();
     }
 }
-$xml->dataElement('debug', '', 'time' => (time - $^T));
 $xml->endTag;
 $xml->endTag;
 $xml->end;
