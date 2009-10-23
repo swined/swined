@@ -20,6 +20,12 @@ const Shape& bestShape(const Shape& shape, int depth) {
 }
 
 int main(int argc, char** argv) {
+    const Shape& s1 = Shape::create();
+    const Shape& s2 = Shape::create();
+    s1.print();
+    s2.print();
+    s1.print();
+    return EXIT_SUCCESS;
     int c;
     cout << "enter shape count\n";
     cin >> c;
