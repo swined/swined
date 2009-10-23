@@ -1,11 +1,7 @@
 #ifndef _SQUARE_H
 #define	_SQUARE_H
 
-#include <iostream>
 #include "Shape.h"
-
-using std::cin;
-using std::cout;
 
 class Square: public Shape {
 
