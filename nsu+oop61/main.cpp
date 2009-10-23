@@ -9,10 +9,13 @@ const Shape& bestShape(const Shape& shape, int depth) {
     if (depth <= 0)
         return shape;
     const Shape& shape2 = Shape::create();
+    cout << "comparing shapes:\n";
+    shape2.print();
+    shape.print();
     if (shape.area() > shape2.area()) {
-        return shape;
+        return bestShape(shape, depth - 1);
     } else {
-        return shape2;
+        return bestShape(shape2, depth - 1);
     }
 }
 

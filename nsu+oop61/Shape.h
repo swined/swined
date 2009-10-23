@@ -1,10 +1,3 @@
-/* 
- * File:   Shape.h
- * Author: sw
- *
- * Created on October 23, 2009, 5:59 PM
- */
-
 #ifndef _SHAPE_H
 #define	_SHAPE_H
 
