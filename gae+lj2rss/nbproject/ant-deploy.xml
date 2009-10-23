@@ -20,7 +20,7 @@
 
     <!-- Data Nucleus JPA Enhancer -->
     <target name="datanucleusenhance" description="Performs JDO enhancement on compiled data classes." depends="copyjars">
-        <!-- <enhance_war war="${build.web.dir}" />-->
+        <enhance_war war="${build.web.dir}" />
     </target>
 
     <!-- Start Google App Engine Development Server -->
