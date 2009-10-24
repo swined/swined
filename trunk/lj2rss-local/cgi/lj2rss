@@ -38,7 +38,7 @@ sub fetch_entry {
 	status 'read_cb()';
 	my $r = eval {
 	    local $SIG{ALRM} = sub { die "alarm\n" };
-	    alarm 10;
+	    alarm 60;
 	    my $w = $ua->get($url . '?format=light')->content;
 	    die if $w !~ /<blockquote>/s;
 	    my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
