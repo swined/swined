@@ -1,9 +1,9 @@
-#ifndef _SQUARE_H
-#define	_SQUARE_H
+#ifndef _CIRCLE_H
+#define	_CIRCLE_H
 
 #include "Shape.h"
 
-class Square: public Shape {
+class Circle : public Shape {
 
 public:
     static Shape* create();
@@ -11,10 +11,10 @@ public:
     virtual double area() const;
 
 private:
-    const double m_a;
-    Square(double a);
+    const double m_r;
+    Circle(double r);
 
 };
 
-#endif	/* _SQUARE_H */
+#endif	/* _CIRCLE_H */
 

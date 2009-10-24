@@ -16,7 +16,7 @@ CC=gcc
 CCC=g++
 CXX=g++
 FC=
-AS=
+AS=as
 
 # Macros
 CND_PLATFORM=GNU-Linux-x86
@@ -32,8 +32,10 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Square.o \
-	${OBJECTDIR}/Shape.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/Rectangle.o \
+	${OBJECTDIR}/Circle.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/Shape.o
 
 # C Compiler Flags
 CFLAGS=
@@ -64,15 +66,25 @@ ${OBJECTDIR}/Square.o: nbproject/Makefile-${CND_CONF}.mk Square.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Square.o Square.cpp
 
-${OBJECTDIR}/Shape.o: nbproject/Makefile-${CND_CONF}.mk Shape.cpp 
+${OBJECTDIR}/Rectangle.o: nbproject/Makefile-${CND_CONF}.mk Rectangle.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Shape.o Shape.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Rectangle.o Rectangle.cpp
+
+${OBJECTDIR}/Circle.o: nbproject/Makefile-${CND_CONF}.mk Circle.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Circle.o Circle.cpp
 
 ${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/Shape.o: nbproject/Makefile-${CND_CONF}.mk Shape.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Shape.o Shape.cpp
 
 # Subprojects
 .build-subprojects:

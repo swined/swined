@@ -12,6 +12,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Circle.cpp</itemPath>
+      <itemPath>Circle.h</itemPath>
+      <itemPath>Rectangle.cpp</itemPath>
+      <itemPath>Rectangle.h</itemPath>
       <itemPath>Shape.cpp</itemPath>
       <itemPath>Shape.h</itemPath>
       <itemPath>Square.cpp</itemPath>
