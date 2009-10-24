@@ -71,6 +71,8 @@ public class Or implements Expression {
         }
         if (a instanceof SimpleDisjunction) {
             SimpleDisjunction sd = (SimpleDisjunction)a;
+            if (b instanceof Variable)
+                return new SimpleDisjunction(sd, new SimpleDisjunction((Variable)b));
             if (b instanceof SimpleDisjunction)
                 return new SimpleDisjunction(sd, (SimpleDisjunction)b);
         }
