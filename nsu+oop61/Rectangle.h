@@ -1,9 +1,9 @@
-#ifndef _SQUARE_H
-#define	_SQUARE_H
+#ifndef _RECTANGLE_H
+#define	_RECTANGLE_H
 
 #include "Shape.h"
 
-class Square: public Shape {
+class Rectangle : public Shape {
 
 public:
     static Shape* create();
@@ -12,9 +12,10 @@ public:
 
 private:
     const double m_a;
-    Square(double a);
+    const double m_b;
+    Rectangle(double a, double b);
 
 };
 
-#endif	/* _SQUARE_H */
+#endif	/* _RECTANGLE_H */
 
