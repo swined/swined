@@ -29,7 +29,10 @@ my $cache = new Cache::FastMmap(
     expire_time => '7d',
     cache_size => '1024m',
     unlink_on_exit => 0,
-    read_cb => sub {
+    read_cb => \&fetch_entry,
+);
+
+sub fetch_entry {
 	my (undef, $url) = @_;
 	$cm++;
 	status 'read_cb()';
@@ -52,8 +55,7 @@ my $cache = new Cache::FastMmap(
 	}  else {
 	    return $r;
 	}
-    },
-);
+}
 
 sub login {
     my $post = $ua->post(
@@ -116,15 +118,16 @@ if (my $e = login) {
 		foreach (links) {
 			$ep++;
 			$xml->dataElement('debug', '', 'link' => $_);
-			my $et = eval {
-				local $SIG{ALRM} = sub { die "alarm\n" };
-				alarm 10; 
-				status 'cache->get()';
-				$cache->get($_);
-			};
-			my $e = $@;
-			alarm 0;
-			next if $e;
+#			my $et = eval {
+#				local $SIG{ALRM} = sub { die "alarm\n" };
+#				alarm 10; 
+#				status 'cache->get()';
+#				$cache->get($_);
+#			};
+#			my $e = $@;
+#			alarm 0;
+#			next if $e;
+			my $et = fetch_entry(undef, $_) || next;
 			my $jn = getJName($_);
 			m|/(\d+)\.html$|;
 			my $id = $1;
