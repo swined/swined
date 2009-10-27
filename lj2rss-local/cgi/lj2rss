@@ -31,7 +31,7 @@ die 'cache is readonly' if $cache->{readonly};
 sub fetch_entry {
 	my ($url) = @_;
 	$cm++;
-	status 'fetch_entry()';
+	status sprintf 'fetch_entry(%s)', $url;
 	my $r = eval {
 	    local $SIG{ALRM} = sub { die "alarm\n" };
 	    alarm 60;
@@ -55,7 +55,7 @@ sub fetch_entry {
 
 sub get_entry {
 	my ($url) = @_;
-	status 'get_entry()';
+	status sprintf 'get_entry(%s)', $url;
 	if (my $res = $cache->get($url)) {
 		return $res;
 	} else {
