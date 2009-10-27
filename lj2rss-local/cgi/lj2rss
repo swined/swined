@@ -134,6 +134,7 @@ if (my $e = login) {
 			$ep++;
 			$xml->dataElement('debug', '', 'link' => $_);
 			my $et = get_entry($_) || next;
+			status 'postprocess()';
 			my $jn = getJName($_);
 			m|/(\d+)\.html$|;
 			my $id = $1;
@@ -142,7 +143,8 @@ if (my $e = login) {
 				$et->{content} .= "<br><a href='${_}'><img src='${u}'></a>";
 			}
 			$jn |= '***';
-			$et->{content} = youtube::replace($et->{content});
+#			status 'youtube::replace()';
+#			$et->{content} = youtube::replace($et->{content}, $ua);
 			addEntry($xml, $_, ($et->{subject} or $jn . ': untitled'), $et->{content});
 			status();
 		}
