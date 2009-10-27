@@ -32,39 +32,39 @@ sub fetch_entry {
 	my ($url) = @_;
 	$cm++;
 	status sprintf 'fetch_entry(%s)', $url;
-	my $r = eval {
-	    local $SIG{ALRM} = sub { die "alarm\n" };
-	    alarm 60;
 	    my $w = $ua->get($url . '?format=light')->content;
 	    die if $w !~ /<blockquote>/s;
 	    my $t = $1 if $w =~ /<title>(.*?)<\/title>/s;
 	    local $_ = $w, s/^.*?<body >//s, s/<\/body>.*?$//s, 
 		s/^(.*?)<hr \/>.*?<hr \/>/$1/s, s/<br style='clear: both' \/>.*?$//s;
-	    return { subject => $t, content => $_ };
-	};
-	my $e = $@;
-	alarm 0;
-	status;
-	if ($e) {
-	    $cf++;
-	    return;
-	}  else {
-	    return $r;
-	}
+	return { subject => $t, content => $_ };
 }
 
 sub get_entry {
 	my ($url) = @_;
 	status sprintf 'get_entry(%s)', $url;
-	if (my $res = $cache->get($url)) {
-		return $res;
-	} else {
-		my $res = fetch_entry($url);
-		status 'cache_set()';
-		$cache->set($url, $res) || die 'failed to add to cache';
-		status;
-		return $res;
-	}
+	my $r = eval {
+		local $SIG{ALRM} = sub { die "alarm\n" };
+		alarm 60;
+		if (my $res = $cache->get($url)) {
+			return $res;
+		} else {
+			my $res = fetch_entry($url);
+			status 'cache_set()';
+			$cache->set($url, $res) || die 'failed to add to cache';
+			status;
+			return $res;
+		}
+	};
+        my $e = $@;
+        alarm 0;
+        status;
+        if ($e) {
+            $cf++;
+            return;
+        }  else {
+            return $r;
+        }
 }
 
 sub login {
