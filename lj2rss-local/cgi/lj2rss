@@ -66,7 +66,7 @@ sub get_entry {
 	if (my $res = $cache->get($url)) {
 		return $res;
 	} else {
-		my $res = load $url;
+		my $res = fetch_entry($url);
 		$cache->set($url, $res) || die 'failed to add to cache';
 		return $res;
 	}
