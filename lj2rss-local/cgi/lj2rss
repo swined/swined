@@ -40,21 +40,26 @@ sub fetch_entry {
 	return { subject => $t, content => $_ };
 }
 
+sub cached_get {
+	my ($url) = @_;
+              if (my $res = $cache->get($url)) {
+                        return $res;
+                } else {
+                        my $res = fetch_entry($url);
+                        status 'cache_set()';
+                        $cache->set($url, $res) || die 'failed to add to cache';
+                        status;
+                        return $res;
+                }
+}
+
 sub get_entry {
 	my ($url) = @_;
 	status sprintf 'get_entry(%s)', $url;
 	my $r = eval {
 		local $SIG{ALRM} = sub { die "alarm\n" };
 		alarm 60;
-		if (my $res = $cache->get($url)) {
-			return $res;
-		} else {
-			my $res = fetch_entry($url);
-			status 'cache_set()';
-			$cache->set($url, $res) || die 'failed to add to cache';
-			status;
-			return $res;
-		}
+		cached_get $url;
 	};
         my $e = $@;
         alarm 0;
@@ -128,15 +133,6 @@ if (my $e = login) {
 		foreach (links) {
 			$ep++;
 			$xml->dataElement('debug', '', 'link' => $_);
-#			my $et = eval {
-#				local $SIG{ALRM} = sub { die "alarm\n" };
-#				alarm 10; 
-#				status 'cache->get()';
-#				$cache->get($_);
-#			};
-#			my $e = $@;
-#			alarm 0;
-#			next if $e;
 			my $et = get_entry($_) || next;
 			my $jn = getJName($_);
 			m|/(\d+)\.html$|;
