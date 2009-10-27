@@ -1,3 +1,9 @@
+lj2rss (0.0.1+svn1935+local) unstable; urgency=low
+
+  * svn revision 1935
+
+ -- Alexey Alexandrov <swined@gmail.com>  Tue, 27 Oct 2009 14:08:54 -0400
+
 lj2rss (0.0.1+svn1933+local) unstable; urgency=low
 
   * svn revision 1933
