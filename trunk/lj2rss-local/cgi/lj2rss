@@ -28,18 +28,10 @@ my $cache = new Cache::Memcached(servers => ['localhost:11211']) || die 'failed 
 die 'cache not active' unless $cache->{active};
 die 'cache is readonly' if $cache->{readonly};
 
-#my $cache = new Cache::FastMmap(
-#    share_file => '/var/cache/lj2rss/cache',
-#    expire_time => '7d',
-#    cache_size => '1024m',
-#    unlink_on_exit => 0,
-#    read_cb => \&fetch_entry,
-#);
-
 sub fetch_entry {
 	my ($url) = @_;
 	$cm++;
-	status 'read_cb()';
+	status 'fetch_entry()';
 	my $r = eval {
 	    local $SIG{ALRM} = sub { die "alarm\n" };
 	    alarm 60;
@@ -63,11 +55,14 @@ sub fetch_entry {
 
 sub get_entry {
 	my ($url) = @_;
+	status 'get_entry()';
 	if (my $res = $cache->get($url)) {
 		return $res;
 	} else {
 		my $res = fetch_entry($url);
+		status 'cache_set()';
 		$cache->set($url, $res) || die 'failed to add to cache';
+		status;
 		return $res;
 	}
 }
