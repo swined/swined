@@ -24,16 +24,20 @@ sub status {
     return;
 }
 
-my $cache = new Cache::FastMmap(
-    share_file => '/var/cache/lj2rss/cache',
-    expire_time => '7d',
-    cache_size => '1024m',
-    unlink_on_exit => 0,
-    read_cb => \&fetch_entry,
-);
+my $cache = new Cache::Memcached(servers => ['localhost:11211']) || die 'failed to connect to memcached';
+die 'cache not active' unless $cache->{active};
+die 'cache is readonly' if $cache->{readonly};
+
+#my $cache = new Cache::FastMmap(
+#    share_file => '/var/cache/lj2rss/cache',
+#    expire_time => '7d',
+#    cache_size => '1024m',
+#    unlink_on_exit => 0,
+#    read_cb => \&fetch_entry,
+#);
 
 sub fetch_entry {
-	my (undef, $url) = @_;
+	my ($url) = @_;
 	$cm++;
 	status 'read_cb()';
 	my $r = eval {
@@ -54,6 +58,17 @@ sub fetch_entry {
 	    return;
 	}  else {
 	    return $r;
+	}
+}
+
+sub get_entry {
+	my ($url) = @_;
+	if (my $res = $cache->get($url)) {
+		return $res;
+	} else {
+		my $res = load $url;
+		$cache->set($url, $res) || die 'failed to add to cache';
+		return $res;
 	}
 }
 
@@ -127,7 +142,7 @@ if (my $e = login) {
 #			my $e = $@;
 #			alarm 0;
 #			next if $e;
-			my $et = fetch_entry(undef, $_) || next;
+			my $et = get_entry($_) || next;
 			my $jn = getJName($_);
 			m|/(\d+)\.html$|;
 			my $id = $1;
