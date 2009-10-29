@@ -1,4 +1,4 @@
-## Interface: 30000
+## Interface: 30200
 ## Title: Craftable 0.0.1
 ## Author: swined
 ## Version: 0.0.1
