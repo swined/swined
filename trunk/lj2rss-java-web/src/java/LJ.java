@@ -23,7 +23,7 @@ public class LJ {
         String session = response.get("ljsession");
         if (null == session)
             throw new Exception("ljsession not found");
-        ua.addCookie("ljsession", session);
+        ua.addCookie("ljsession", session, ".livejournal.com", "/");
     }
 
     public List<String> links() throws Exception {

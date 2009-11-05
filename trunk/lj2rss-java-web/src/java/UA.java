@@ -9,7 +9,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -22,8 +21,10 @@ public class UA {
 
     private CookieStore cookieStore = new BasicCookieStore();
 
-    public void addCookie(String name, String value) {
-        Cookie cookie = new BasicClientCookie(name, value);
+    public void addCookie(String name, String value, String domain, String path) {
+        BasicClientCookie cookie = new BasicClientCookie(name, value);
+        cookie.setDomain(domain);
+        cookie.setPath(path);
         cookieStore.addCookie(cookie);
     }
 
