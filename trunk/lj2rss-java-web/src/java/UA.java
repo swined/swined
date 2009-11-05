@@ -1,7 +1,3 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
@@ -19,7 +15,13 @@ import org.apache.http.util.EntityUtils;
 
 public class UA {
 
+    private HttpClient httpclient = new DefaultHttpClient();
+    private HttpContext localContext = new BasicHttpContext();
     private CookieStore cookieStore = new BasicCookieStore();
+
+    public UA() {
+        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+    }
 
     public void addCookie(String name, String value, String domain, String path) {
         BasicClientCookie cookie = new BasicClientCookie(name, value);
@@ -28,43 +30,23 @@ public class UA {
         cookieStore.addCookie(cookie);
     }
 
-    private String readAll(InputStream stream) throws IOException {
-        String l;
-        String r = "";
-        InputStreamReader reader = new InputStreamReader(stream);
-        BufferedReader buffered = new BufferedReader(reader);
-        while (null != (l = buffered.readLine())) {
-            r += l + "\n";
-        }
-        return r;
+    private String processResponse(HttpResponse response) throws Exception {
+        if (response.getStatusLine().getStatusCode() != 200)
+            throw new Exception(response.getStatusLine().getReasonPhrase());
+        return EntityUtils.toString(response.getEntity());
     }
 
     public String get(URL url) throws Exception {
-        HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(url.toString());
-        HttpContext localContext = new BasicHttpContext();
-        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
         HttpResponse response = httpclient.execute(httpget, localContext);
-        if (response.getStatusLine().getStatusCode() != 200)
-            throw new Exception(response.getStatusLine().getReasonPhrase());
-        return EntityUtils.toString(response.getEntity());
+        return processResponse(response);
     }
 
     public String post(URL url, String data) throws Exception {
-        HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(url.toString());
         httppost.setEntity(new StringEntity(data));
-        HttpContext localContext = new BasicHttpContext();
-        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
         HttpResponse response = httpclient.execute(httppost, localContext);
-        if (response.getStatusLine().getStatusCode() != 200)
-            throw new Exception(response.getStatusLine().getReasonPhrase());
-        return EntityUtils.toString(response.getEntity());
-    }
-
-    @Override
-    public String toString() {
-        return cookieStore.toString();
+        return processResponse(response);
     }
 
 }
