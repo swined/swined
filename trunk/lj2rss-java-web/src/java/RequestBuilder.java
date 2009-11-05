@@ -7,7 +7,7 @@ public class RequestBuilder extends HashMap<String, String> {
         if (null == param) {
             return "";
         } else {
-            return URLEncoder.encode(param);
+            return URLEncoder.encode(param); // FIXME replace eprecated api
         }
     }
 
