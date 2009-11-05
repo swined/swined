@@ -1,4 +1,6 @@
+import java.io.IOException;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
@@ -10,9 +12,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 
 public class UA {
@@ -32,18 +32,18 @@ public class UA {
         cookieStore.addCookie(cookie);
     }
 
-    private String execute(HttpRequestBase request) throws Exception {
+    private String execute(HttpRequestBase request) throws IOException, HttpException {
         HttpResponse response = httpclient.execute(request, localContext);
         if (response.getStatusLine().getStatusCode() != 200)
-            throw new Exception(response.getStatusLine().getReasonPhrase());
+            throw new HttpException(response.getStatusLine().getReasonPhrase());
         return EntityUtils.toString(response.getEntity());
     }
 
-    public String get(String url) throws Exception {
+    public String get(String url) throws IOException, HttpException {
         return execute(new HttpGet(url));
     }
 
-    public String post(String url, HttpEntity data) throws Exception {
+    public String post(String url, HttpEntity data) throws IOException, HttpException {
         HttpPost req = new HttpPost(url);
         req.setEntity(data);
         return execute(req);
