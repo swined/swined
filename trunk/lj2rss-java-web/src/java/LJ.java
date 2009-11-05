@@ -1,23 +1,27 @@
-import java.net.URL;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
 
 public class LJ {
 
     private UA ua = new UA();
 
-    private String buildSessiongenerateRequest(String username, String hash) {
-        RequestBuilder request = new RequestBuilder();
-        request.put("mode", "sessiongenerate");
-        request.put("expiration", "short");
-        request.put("user", username);
-        request.put("hpassword", hash);
-        return request.toString();
+    private HttpEntity buildSessiongenerateRequest(String username, String hash) throws UnsupportedEncodingException {
+        List<NameValuePair> data = new ArrayList();
+        data.add(new BasicNameValuePair("mode", "sessiongenerate"));
+        data.add(new BasicNameValuePair("expiration", "short"));
+        data.add(new BasicNameValuePair("user", username));
+        data.add(new BasicNameValuePair("hpassword", hash));
+        return new UrlEncodedFormEntity(data);
     }
 
     public void login(String username, String hash) throws Exception {
-        final String request = buildSessiongenerateRequest(username, hash);
-        LJResponse response = new LJResponse(ua.post(new URL("http://livejournal.com/interface/flat"), request));
+        final HttpEntity request = buildSessiongenerateRequest(username, hash);
+        LJResponse response = new LJResponse(ua.post("http://livejournal.com/interface/flat", request));
         if (null != response.get("errmsg"))
             throw new Exception(response.get("errmsg"));
         String session = response.get("ljsession");
@@ -27,7 +31,7 @@ public class LJ {
     }
 
     public List<String> links() throws Exception {
-        String r = ua.get(new URL("http://www.livejournal.com/mobile/friends.bml"));
+        String r = ua.get("http://www.livejournal.com/mobile/friends.bml");
         if (r.contains("You must <a href='login.bml'>log in</a> to read your friends page"))
             throw new Exception("not logged in");
         List<String> links = new ArrayList<String>();
@@ -60,7 +64,7 @@ public class LJ {
     }
 
     public String getEntry(String url) throws Exception {
-        String r = ua.get(new URL(url + "?format=light"));
+        String r = ua.get(url + "?format=light");
         if (r.split("<blockquote>").length < 2)
             return null;
         String body = extractBody(r);
