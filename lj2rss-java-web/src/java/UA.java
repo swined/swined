@@ -7,12 +7,25 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.util.EntityUtils;
 
 public class UA {
 
+    private HttpClient httpclient = new DefaultHttpClient();
+    private CookieStore cookieStore = new BasicCookieStore();
     private CookieManager cookies = new CookieManager();
 
     public void addCookie(String name, String value) {
+        Cookie cookie = new BasicClientCookie(name, value);
+        cookieStore.addCookie(cookie);
         cookies.addCookie(new HttpCookie(name, value));
     }
 
@@ -35,6 +48,14 @@ public class UA {
     }
 
     public String get(URL url) throws Exception {
+        HttpGet httpget = new HttpGet(url.toString());
+        HttpResponse response = httpclient.execute(httpget);
+        if (response.getStatusLine().getStatusCode() != 200)
+            throw new Exception(response.getStatusLine().getReasonPhrase());
+        return EntityUtils.toString(response.getEntity());
+    }
+
+    public String _get(URL url) throws Exception {
         System.err.println("get(" + url + ")");
         HttpURLConnection conn = getConnection(url);
         cookies.load(conn);
