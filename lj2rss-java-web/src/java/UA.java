@@ -1,11 +1,10 @@
-import java.net.URL;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
@@ -36,15 +35,15 @@ public class UA {
         return EntityUtils.toString(response.getEntity());
     }
 
-    public String get(URL url) throws Exception {
-        HttpGet httpget = new HttpGet(url.toString());
+    public String get(String url) throws Exception {
+        HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpclient.execute(httpget, localContext);
         return processResponse(response);
     }
 
-    public String post(URL url, String data) throws Exception {
-        HttpPost httppost = new HttpPost(url.toString());
-        httppost.setEntity(new StringEntity(data));
+    public String post(String url, HttpEntity data) throws Exception {
+        HttpPost httppost = new HttpPost(url);
+        httppost.setEntity(data);
         HttpResponse response = httpclient.execute(httppost, localContext);
         return processResponse(response);
     }
