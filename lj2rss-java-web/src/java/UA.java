@@ -2,31 +2,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpCookie;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 public class UA {
 
-    private HttpClient httpclient = new DefaultHttpClient();
     private CookieStore cookieStore = new BasicCookieStore();
-    private CookieManager cookies = new CookieManager();
 
     public void addCookie(String name, String value) {
         Cookie cookie = new BasicClientCookie(name, value);
         cookieStore.addCookie(cookie);
-        cookies.addCookie(new HttpCookie(name, value));
     }
 
     private String readAll(InputStream stream) throws IOException {
@@ -40,53 +38,32 @@ public class UA {
         return r;
     }
 
-    private HttpURLConnection getConnection(URL url) throws IOException, ParseException {
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setInstanceFollowRedirects(false);
-        conn.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
-        return conn;
-    }
-
     public String get(URL url) throws Exception {
+        HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet(url.toString());
-        HttpResponse response = httpclient.execute(httpget);
+        HttpContext localContext = new BasicHttpContext();
+        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+        HttpResponse response = httpclient.execute(httpget, localContext);
         if (response.getStatusLine().getStatusCode() != 200)
             throw new Exception(response.getStatusLine().getReasonPhrase());
         return EntityUtils.toString(response.getEntity());
     }
 
-    public String _get(URL url) throws Exception {
-        System.err.println("get(" + url + ")");
-        HttpURLConnection conn = getConnection(url);
-        cookies.load(conn);
-        conn.connect();
-        cookies.save(conn);
-        if (conn.getResponseCode() != 200)
-            throw new Exception("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage() + " while getting " + url.toString());
-        return readAll(conn.getInputStream());
-    }
-
     public String post(URL url, String data) throws Exception {
-        System.err.println("post(" + url + ")");
-        HttpURLConnection conn = getConnection(url);
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        cookies.load(conn);
-        conn.connect();
-        OutputStream os = conn.getOutputStream();
-        os.write(data.getBytes());
-        os.flush();
-        os.close();
-        cookies.save(conn);
-        if (conn.getResponseCode() != 200) {
-            throw new Exception("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage());
-        }
-        return readAll(conn.getInputStream());
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(url.toString());
+        httppost.setEntity(new StringEntity(data));
+        HttpContext localContext = new BasicHttpContext();
+        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+        HttpResponse response = httpclient.execute(httppost, localContext);
+        if (response.getStatusLine().getStatusCode() != 200)
+            throw new Exception(response.getStatusLine().getReasonPhrase());
+        return EntityUtils.toString(response.getEntity());
     }
 
     @Override
     public String toString() {
-        return cookies.toString();
+        return cookieStore.toString();
     }
 
 }
