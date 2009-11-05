@@ -11,7 +11,7 @@ public class TestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
+        response.setContentType("text/html; charset=utf-8");
         try {
             LJ lj = new LJ();
             lj.login(request.getParameter("login"), request.getParameter("hash"));
