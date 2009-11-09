@@ -1,5 +1,0 @@
-etc/cron.d
-etc/apache2/conf.d
-usr/lib/cgi-bin
-usr/share/lj2rss
-var/cache/lj2rss
