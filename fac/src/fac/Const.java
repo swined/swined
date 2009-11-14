@@ -24,6 +24,17 @@ public class Const {
         return value == 1;
     }
 
+    // solve c + k * x + l * y = this
+    public List<Tuple<Const, Const>> solveLinear(Const c, Const k, Const l) {
+        List<Tuple<Const, Const>> r = new ArrayList();
+        for (int i = 0; i < 0x100; i++)
+            for (int j = i; j < 0x100; j++)
+                if (((c.value + i * k.value + j * l.value) & 0xFF) == value)
+                    r.add(new Tuple(new Const(i), new Const(j)));
+        return r;
+
+    }
+
     public List<Tuple<Const, Const>> demultiplyMod10() {
         List<Tuple<Const, Const>> r = new ArrayList();
         for (int i = 0; i < 0x100; i++)
