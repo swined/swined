@@ -3,31 +3,46 @@ package fac;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConstExpression {
 
-    private final HashMap<Integer, Const> muls = new HashMap();
+    private final ImmutableMap<Integer, Const> muls;
+
+    public ConstExpression(ImmutableMap muls) {
+        if (muls.isEmpty()) {
+            Map<Integer, Const> r = new HashMap();
+            r.put(0, new Const(0));
+            this.muls = new ImmutableMap(r);
+        } else {
+            this.muls = muls;
+        }
+    }
 
     public ConstExpression(List<Tuple<Integer, Const>> nmuls) {
+        HashMap<Integer, Const> r = new HashMap();
         List<Tuple<Integer, Const>> m = new ArrayList(nmuls);
         while (!m.isEmpty()) {
             Tuple<Integer, Const> t = m.remove(0);
-            if (muls.containsKey(t.getX())) {
-                Const c = muls.remove(t.getX());
+            if (r.containsKey(t.getX())) {
+                Const c = r.remove(t.getX());
                 Tuple<Const, Const> x = c.multiply(t.getY());
                 m.add(new Tuple(0, x.getX()));
                 m.add(new Tuple(1, x.getY()));
+            } else {
+                r.put(t.getX(), t.getY());
             }
         }
-        if (muls.isEmpty())
-            muls.put(0, new Const(0));
+        if (r.isEmpty())
+            r.put(0, new Const(0));
+        muls = new ImmutableMap(r);
     }
 
     public static ConstExpression constExpression(int c[]) {
-        List<Tuple<Integer, Const>> muls = new ArrayList();
+        HashMap<Integer, Const> muls = new HashMap();
         for (int i = 0; i < c.length; i++)
-            muls.add(new Tuple<Integer, Const>(i, new Const(c[i])));
-        return new ConstExpression(muls);
+            muls.put(i, new Const(c[i]));
+        return new ConstExpression(new ImmutableMap(muls));
     }
 
     public Const mod10() {
@@ -38,11 +53,11 @@ public class ConstExpression {
     }
 
     public ConstExpression div10() {
-        List<Tuple<Integer, Const>> r = new ArrayList();
+        HashMap<Integer, Const> r = new HashMap();
         for (Integer k : muls.keySet())
             if (k > 0)
-                r.add(new Tuple(k - 1, muls.get(k)));
-        return new ConstExpression(r);
+                r.put(k - 1, muls.get(k));
+        return new ConstExpression(new ImmutableMap(r));
     }
 
     public boolean isZero() {
@@ -50,6 +65,13 @@ public class ConstExpression {
             if (!muls.get(k).isZero())
                 return false;
         return true;
+    }
+
+    public List<Tuple<Integer, Multiplication>> getItems() {
+        List<Tuple<Integer, Multiplication>> m = new ArrayList();
+        for (Integer k : muls.keySet())
+            m.add(new Tuple(k, new Multiplication(muls.get(k))));
+        return m;
     }
 
     @Override

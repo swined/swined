@@ -7,18 +7,18 @@ import java.util.Set;
 
 public class Equation {
 
-    private final HashMap<Variable, Const> vars;
+    private final ImmutableMap<Variable, Const> vars;
     private final Expression left;
     private final ConstExpression right;
 
     public Equation(Expression left, ConstExpression right) {
-        this.vars = new HashMap();
+        this.vars = new ImmutableMap(new HashMap());
         this.left = left;
         this.right = right;
     }
 
-    public Equation(HashMap<Variable, Const> vars, Expression left, ConstExpression right) {
-        this.vars = new HashMap(vars);
+    public Equation(ImmutableMap<Variable, Const> vars, Expression left, ConstExpression right) {
+        this.vars = vars;
         this.left = left;
         this.right = right;
     }
@@ -34,7 +34,7 @@ public class Equation {
     public Equation substituteVariable(Variable v, Const c) {
         HashMap<Variable, Const> nv = new HashMap(vars);
         nv.put(v, c);
-        return new Equation(nv, left.substituteVariable(v, c), right);
+        return new Equation(new ImmutableMap(nv), left.substituteVariable(v, c), right);
     }
 
     public List<Equation> solve() throws Exception {

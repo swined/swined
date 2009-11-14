@@ -44,8 +44,9 @@ public class Mod10Equation {
                 }
                 return r;
             }
-            if (vars.size() == 2)
+            if (vars.size() == 2) {
                 return generateSolutions(vars.get(0), vars.get(1), right.demultiplyMod10());
+            }
         }
         if (muls.size() == 2) {
             if (muls.get(0).getVars().size() == 1) {
@@ -67,6 +68,18 @@ public class Mod10Equation {
                     if (muls.get(2).getVars().size() == 1) {
                         Const c2 = muls.get(2).getConst();
                         Variable v2 = muls.get(2).getVars().get(0);
+                        return generateSolutions(v1, v2, right.solveLinear(c0, c1, c2));
+                    }
+                }
+            }
+            if (muls.get(0).getVars().size() == 1) {
+                Const c1 = muls.get(0).getConst();
+                Variable v1 = muls.get(0).getVars().get(0);
+                if (muls.get(1).getVars().size() == 1) {
+                    Const c2 = muls.get(1).getConst();
+                    Variable v2 = muls.get(1).getVars().get(0);
+                    if (muls.get(2).getVars().isEmpty()) {
+                        Const c0 = muls.get(2).getConst();
                         return generateSolutions(v1, v2, right.solveLinear(c0, c1, c2));
                     }
                 }
