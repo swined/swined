@@ -18,4 +18,9 @@ public class Tuple<X, Y> {
         return y;
     }
 
+    @Override
+    public String toString() {
+        return "<" + x + ", " + y +">";
+    }
+
 }
