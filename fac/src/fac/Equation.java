@@ -24,6 +24,10 @@ public class Equation {
         return new Mod10Equation(left.mod10(), right.mod10());
     }
 
+    public Equation div10() {
+        return new Equation(left.div10(), right.div10());
+    }
+
     @Override
     public String toString() {
         String r = left + " = " + right;

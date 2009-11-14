@@ -1,5 +1,8 @@
 package fac;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Const {
 
     private final int value;
@@ -19,6 +22,15 @@ public class Const {
 
     public boolean isOne() {
         return value == 1;
+    }
+
+    public List<Tuple<Const, Const>> demultiplyMod10() {
+        List<Tuple<Const, Const>> r = new ArrayList();
+        for (int i = 0; i < 0x100; i++)
+            for (int j = i; j < 0x100; j++)
+                if ((i * j) % 0xFF == value)
+                    r.add(new Tuple(new Const(i), new Const(j)));
+        return r;
     }
 
     @Override
