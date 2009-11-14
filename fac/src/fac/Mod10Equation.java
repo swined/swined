@@ -1,7 +1,9 @@
 package fac;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Mod10Equation {
 
@@ -18,7 +20,7 @@ public class Mod10Equation {
         return left + " = " + right;
     }
 
-    public HashMap<Variable, Const> solve() throws Exception {
+    public Set<HashMap<Variable, Const>> solve() throws Exception {
         List<Multiplication> muls = left.getMultiplications();
         if (muls.size() == 1) {
             Multiplication m = muls.get(0);
@@ -26,10 +28,12 @@ public class Mod10Equation {
             if (vars.size() == 2) {
                 Variable v1 = vars.get(0);
                 Variable v2 = vars.get(1);
-                HashMap<Variable, Const> r = new HashMap();
+                Set<HashMap<Variable, Const>> r = new HashSet();
                 for (Tuple<Const, Const> pair : right.demultiplyMod10()) {
-                    r.put(v1, pair.getX());
-                    r.put(v2, pair.getY());
+                    HashMap<Variable, Const> t = new HashMap();
+                    t.put(v1, pair.getX());
+                    t.put(v2, pair.getY());
+                    r.add(t);
                 }
                 return r;
             }

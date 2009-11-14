@@ -28,7 +28,7 @@ public class Const {
         List<Tuple<Const, Const>> r = new ArrayList();
         for (int i = 0; i < 0x100; i++)
             for (int j = i; j < 0x100; j++)
-                if ((i * j) % 0xFF == value)
+                if (((i * j) & 0xFF) == value)
                     r.add(new Tuple(new Const(i), new Const(j)));
         return r;
     }
