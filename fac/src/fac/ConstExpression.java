@@ -9,6 +9,8 @@ public class ConstExpression {
 
     public ConstExpression(List<Tuple<Integer, Const>> muls) {
         this.muls = new ArrayList(muls);
+        if (this.muls.isEmpty())
+            this.muls.add(new Tuple(0, new Const(0)));
     }
 
     public static ConstExpression constExpression(int c[]) {
@@ -19,11 +21,18 @@ public class ConstExpression {
     }
 
     public Const mod10() {
-        Const r = new Const(1);
+        Const r = null;
         for (Tuple<Integer, Const> m : muls)
-            if (m.getX() == 0)
-                r = r.multiply(m.getY()).getX();
-        return r;
+            if (m.getX() == 0) {
+                if (r == null)
+                        r = m.getY();
+                else
+                    r = r.multiply(m.getY()).getX();
+            }
+        if (r == null)
+            return new Const(0);
+        else
+            return r;
     }
 
     public ConstExpression div10() {
