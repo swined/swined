@@ -11,12 +11,19 @@ public class ConstExpression {
         this.muls = new ArrayList(muls);
     }
 
-    public ConstExpression mod10() {
-        List<Tuple<Integer, Const>> r = new ArrayList();
+    public static ConstExpression constExpression(int c[]) {
+        List<Tuple<Integer, Const>> muls = new ArrayList();
+        for (int i = 0; i < c.length; i++)
+            muls.add(new Tuple<Integer, Const>(i, new Const(c[i])));
+        return new ConstExpression(muls);
+    }
+
+    public Const mod10() {
+        Const r = new Const(1);
         for (Tuple<Integer, Const> m : muls)
             if (m.getX() == 0)
-                r.add(m);
-        return new ConstExpression(r);
+                r = r.multiply(m.getY()).getX();
+        return r;
     }
 
     @Override

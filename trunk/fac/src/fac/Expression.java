@@ -1,50 +1,53 @@
 package fac;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Expression {
 
-    private final List<Multiplication> muls;
+    private final List<Tuple<Integer, Multiplication>> muls;
 
-    public Expression(List<Multiplication> muls) {
+    public Expression(List<Tuple<Integer, Multiplication>> muls) {
         this.muls = new ArrayList(muls);
     }
-
-    public static ConstExpression constExpression(int c[]) {
-        List<Tuple<Integer, Const>> muls = new ArrayList();
-        for (int i = 0; i < c.length; i++)
-            muls.add(new Tuple<Integer, Const>(i, new Const(c[i])));
-        return new ConstExpression(muls);
-    }
-
+    
     public static Expression variableExpression(String name, int c) {
-        List<Multiplication> muls = new ArrayList();
+        List<Tuple<Integer, Multiplication>> muls = new ArrayList();
         for (int i = 0; i < c; i++)
-            muls.add(new Multiplication(i, new Variable(name + i)));
+            muls.add(new Tuple(i, new Multiplication(new Variable(name + i))));
         return new Expression(muls);
     }
 
     public Expression multiply(Expression e) {
-        List<Multiplication> r = new ArrayList();
-        for (Multiplication m1 : muls)
-            for (Multiplication m2 : e.muls)
-                r.addAll(m1.multiply(m2).muls);
+        List<Tuple<Integer, Multiplication>> r = new ArrayList();
+        for (Tuple<Integer, Multiplication> m1 : muls)
+            for (Tuple<Integer, Multiplication> m2 : e.muls) {
+                List<Tuple<Integer, Multiplication>> t = new ArrayList();
+                Tuple<Const, Const> nc = m1.getY().getConst().multiply(m2.getY().getConst());
+                HashSet<Variable> v = new HashSet(m1.getY().getVars());
+                v.addAll(m2.getY().getVars());
+                if (!nc.getX().isZero())
+                    t.add(new Tuple(m1.getX() + m2.getX(), new Multiplication(nc.getX(), v)));
+                if (!nc.getY().isZero())
+                    t.add(new Tuple(m1.getX() + m2.getX() + 1, new Multiplication(nc.getY(), v)));
+                r.addAll(t);
+            }
         return new Expression(r);
     }
 
-    public Expression mod10() {
+    public Mod10Expression mod10() {
         List<Multiplication> r = new ArrayList();
-        for (Multiplication m : muls)
-            if (m.getPower() == 0)
-                r.add(m);
-        return new Expression(r);
+        for (Tuple<Integer, Multiplication> m : muls)
+            if (m.getX() == 0)
+                r.add(m.getY());
+        return new Mod10Expression(r);
     }
 
     @Override
     public String toString() {
         String r = "";
-        for (Multiplication m : muls) {
+        for (Tuple<Integer, Multiplication> m : muls) {
             if (!r.isEmpty())
                 r += " + ";
             r += m;
