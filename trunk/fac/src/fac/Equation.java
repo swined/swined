@@ -1,6 +1,9 @@
 package fac;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class Equation {
 
@@ -25,7 +28,27 @@ public class Equation {
     }
 
     public Equation div10() {
-        return new Equation(left.div10(), right.div10());
+        return new Equation(vars, left.div10(), right.div10());
+    }
+
+    public Equation substituteVariable(Variable v, Const c) {
+        HashMap<Variable, Const> nv = new HashMap(vars);
+        nv.put(v, c);
+        return new Equation(nv, left.substituteVariable(v, c), right);
+    }
+
+    public List<Equation> solve() throws Exception {
+        List<Equation> r = new ArrayList();
+        Set<HashMap<Variable, Const>> solutions = mod10().solve();
+        if (solutions.size() == 0)
+            return null;
+        for (HashMap<Variable, Const> solution : solutions) {
+            Equation eq = this;
+            for (Variable v : solution.keySet())
+                eq = eq.substituteVariable(v, solution.get(v));
+            r.add(eq.div10());
+        }
+        return r;
     }
 
     @Override
@@ -34,7 +57,7 @@ public class Equation {
         if (!vars.isEmpty()) {
             r += " // ";
             for (Variable v : vars.keySet())
-                r += v + " = " + vars.get(v);
+                r += v + " = " + vars.get(v) + "; ";
         }
         return r;
     }
