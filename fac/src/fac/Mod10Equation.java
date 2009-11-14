@@ -25,10 +25,16 @@ public class Mod10Equation {
         if (muls.size() == 1) {
             Multiplication m = muls.get(0);
             List<Variable> vars = m.getVars();
+            Set<HashMap<Variable, Const>> r = new HashSet();
+            if (vars.size() == 0) {
+                Const c = m.getConst();
+                if (c == right)
+                    r.add(new HashMap());
+                return r;
+            }
             if (vars.size() == 2) {
                 Variable v1 = vars.get(0);
                 Variable v2 = vars.get(1);
-                Set<HashMap<Variable, Const>> r = new HashSet();
                 for (Tuple<Const, Const> pair : right.demultiplyMod10()) {
                     HashMap<Variable, Const> t = new HashMap();
                     t.put(v1, pair.getX());

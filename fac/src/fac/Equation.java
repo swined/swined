@@ -49,6 +49,10 @@ public class Equation {
         return r;
     }
 
+    public boolean isSolution() {
+        return left.isZero() && right.isZero();
+    }
+
     @Override
     public String toString() {
         String r = left + " = " + right;
