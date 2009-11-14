@@ -20,8 +20,8 @@ public class Equation {
         this.right = right;
     }
 
-    public Equation mod10() {
-        return new Equation(left.mod10(), right.mod10());
+    public Mod10Equation mod10() {
+        return new Mod10Equation(left.mod10(), right.mod10());
     }
 
     @Override
