@@ -36,6 +36,15 @@ public class Expression {
         return new Expression(r);
     }
 
+    public Expression substituteVariable(Variable v, Const c) {
+        List<Tuple<Integer, Multiplication>> r = new ArrayList();
+        for (Tuple<Integer, Multiplication> m : muls) {
+            for (Tuple<Integer, Multiplication> t : m.getY().substituteVariable(v, c))
+                r.add(new Tuple(m.getX() + t.getX(), t.getY()));
+        }
+        return new Expression(r);
+    }
+
     public Mod10Expression mod10() {
         List<Multiplication> r = new ArrayList();
         for (Tuple<Integer, Multiplication> m : muls)

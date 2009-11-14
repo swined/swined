@@ -33,6 +33,26 @@ public class Multiplication {
         return new ArrayList(vars);
     }
 
+    public Multiplication excludeVariable(Variable v) {
+        HashSet<Variable> nv = new HashSet(vars);
+        nv.remove(v);
+        return new Multiplication(c, nv);
+    }
+
+    public List<Tuple<Integer, Multiplication>> multiply(Const c) {
+        Tuple<Const, Const> nc = this.c.multiply(c);
+        List<Tuple<Integer, Multiplication>> r = new ArrayList();
+        if (!nc.getX().isZero())
+            r.add(new Tuple(0, new Multiplication(nc.getX(), vars)));
+        if (!nc.getY().isZero())
+            r.add(new Tuple(1, new Multiplication(nc.getX(), vars)));
+        return r;
+    }
+
+    public List<Tuple<Integer, Multiplication>> substituteVariable(Variable v, Const c) {
+        return excludeVariable(v).multiply(c);
+    }
+
     @Override
     public String toString() {
         String r = "";

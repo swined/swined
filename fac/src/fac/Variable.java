@@ -17,4 +17,16 @@ public class Variable {
         return name;
     }
 
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Variable)
+            return toString().equals(o.toString());
+        return false;
+    }
+
 }
