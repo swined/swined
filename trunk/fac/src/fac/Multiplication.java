@@ -8,6 +8,13 @@ public class Multiplication {
     private Const c;
     private HashSet<Variable> vars;
 
+    public Multiplication(int power, Variable v) {
+        this.power = power;
+        this.c = new Const(1);
+        this.vars = new HashSet();
+        this.vars.add(v);
+    }
+
     public Multiplication(int power, Const c, HashSet<Variable> vars) {
         this.power = power;
         this.c = c;
