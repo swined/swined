@@ -9,9 +9,19 @@ public class Expression {
     private final List<Tuple<Integer, Multiplication>> muls;
 
     public Expression(List<Tuple<Integer, Multiplication>> muls) {
-        this.muls = new ArrayList(muls);
-        if (this.muls.isEmpty())
-            this.muls.add(new Tuple(0, new Multiplication(new Const(0))));
+        List<Tuple<Integer, Multiplication>> m = new ArrayList();
+        List<Tuple<Integer, Const>> c = new ArrayList();
+        for (Tuple<Integer, Multiplication> t : muls)
+            if (t.getY().getVars().isEmpty()) {
+                c.add(new Tuple(t.getX(), t.getY().getConst()));
+            } else {
+                m.add(new Tuple(t.getX(), t.getY()));
+            }
+        if (!c.isEmpty())
+            m.addAll(new ConstExpression(c).getItems());
+        if (m.isEmpty())
+            m.add(new Tuple(0, new Multiplication(new Const(0))));
+        this.muls = m;
     }
     
     public static Expression variableExpression(String name, int c) {
