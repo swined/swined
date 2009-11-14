@@ -43,6 +43,12 @@ public class ConstExpression {
         return new ConstExpression(r);
     }
 
+    public boolean isZero() {
+        if (muls.size() == 1)
+            return muls.get(0).getY().isZero();
+        return false;
+    }
+
     @Override
     public String toString() {
         String r = "";

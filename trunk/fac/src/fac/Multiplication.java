@@ -53,6 +53,10 @@ public class Multiplication {
         return excludeVariable(v).multiply(c);
     }
 
+    public boolean isZero() {
+        return c.isZero() && (vars.size() == 0);
+    }
+
     @Override
     public String toString() {
         String r = "";
@@ -66,7 +70,10 @@ public class Multiplication {
                 r += " * ";
             r += v;
         }
-        return r;
+        if (r.isEmpty())
+            return "0";
+        else
+            return r;
     }
 
 }

@@ -10,6 +10,8 @@ public class Expression {
 
     public Expression(List<Tuple<Integer, Multiplication>> muls) {
         this.muls = new ArrayList(muls);
+        if (this.muls.isEmpty())
+            this.muls.add(new Tuple(0, new Multiplication(new Const(0))));
     }
     
     public static Expression variableExpression(String name, int c) {
@@ -59,6 +61,12 @@ public class Expression {
             if (m.getX() > 0)
                 r.add(new Tuple(m.getX() - 1, m.getY()));
         return new Expression(r);
+    }
+
+    public boolean isZero() {
+        if (muls.size() == 1)
+            return muls.get(0).getY().isZero();
+        return false;
     }
 
     @Override
