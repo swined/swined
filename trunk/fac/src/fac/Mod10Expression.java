@@ -1,7 +1,6 @@
 package fac;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class Mod10Expression {
@@ -10,6 +9,10 @@ public class Mod10Expression {
 
     public Mod10Expression(List<Multiplication> muls) {
         this.muls = new ArrayList(muls);
+    }
+
+    public List<Multiplication> getMultiplications() {
+        return new ArrayList(muls);
     }
 
     @Override

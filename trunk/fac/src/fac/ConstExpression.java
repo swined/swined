@@ -26,15 +26,21 @@ public class ConstExpression {
         return r;
     }
 
+    public ConstExpression div10() {
+        List<Tuple<Integer, Const>> r = new ArrayList();
+        for (Tuple<Integer, Const> m : muls)
+            if (m.getX() > 0)
+                r.add(new Tuple(m.getX() - 1, m.getY()));
+        return new ConstExpression(r);
+    }
+
     @Override
     public String toString() {
         String r = "";
         for (Tuple<Integer, Const> m : muls) {
             if (!r.isEmpty())
                 r += " + ";
-            if (m.getX() != 0)
-                r += "10^" + m.getX() + "*";
-            r += m.getY();
+            r += m;
         }
         return r;
     }

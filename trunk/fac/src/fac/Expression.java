@@ -44,6 +44,14 @@ public class Expression {
         return new Mod10Expression(r);
     }
 
+    public Expression div10() {
+        List<Tuple<Integer, Multiplication>> r = new ArrayList();
+        for (Tuple<Integer, Multiplication> m : muls)
+            if (m.getX() > 0)
+                r.add(new Tuple(m.getX() - 1, m.getY()));
+        return new Expression(r);
+    }
+
     @Override
     public String toString() {
         String r = "";
