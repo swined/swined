@@ -1,5 +1,8 @@
 package fac;
 
+import java.util.HashMap;
+import java.util.Set;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -11,7 +14,12 @@ public class Main {
         System.out.println(e);
         System.out.println(e.mod10());
         System.out.println(e.div10());
-        e.mod10().solve();
+        Set<HashMap<Variable, Const>> solutions = e.mod10().solve();
+        for (HashMap<Variable, Const> solution : solutions) {
+            for (Variable v : solution.keySet())
+                System.out.print(v + " = " + solution.get(v) + " ");
+            System.out.println();
+        }
     }
 
 }
