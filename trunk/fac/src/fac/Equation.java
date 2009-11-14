@@ -40,8 +40,6 @@ public class Equation {
     public List<Equation> solve() throws Exception {
         List<Equation> r = new ArrayList();
         Set<HashMap<Variable, Const>> solutions = mod10().solve();
-        if (solutions.size() == 0)
-            return null;
         for (HashMap<Variable, Const> solution : solutions) {
             Equation eq = this;
             for (Variable v : solution.keySet())

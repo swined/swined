@@ -45,7 +45,7 @@ public class Multiplication {
         if (!nc.getX().isZero())
             r.add(new Tuple(0, new Multiplication(nc.getX(), vars)));
         if (!nc.getY().isZero())
-            r.add(new Tuple(1, new Multiplication(nc.getX(), vars)));
+            r.add(new Tuple(1, new Multiplication(nc.getY(), vars)));
         return r;
     }
 
