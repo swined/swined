@@ -3,7 +3,13 @@ package fac;
 public class Main {
 
     public static void main(String[] args) {
-
+        int cv[] = { 0x42, 0x29, 0x54, 0x17 };
+        Expression c = Expression.constExpression(cv);
+        Expression x = Expression.variableExpression("x", cv.length);
+        Expression y = Expression.variableExpression("y", cv.length);
+        Equation e = new Equation(x.multiply(y), c);
+        System.out.println(e);
+        System.out.println(e.mod10());
     }
 
 }
