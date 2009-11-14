@@ -11,11 +11,11 @@ public class Expression {
         this.muls = new ArrayList(muls);
     }
 
-    public static Expression constExpression(int c[]) {
-        List<Multiplication> muls = new ArrayList();
+    public static ConstExpression constExpression(int c[]) {
+        List<Tuple<Integer, Const>> muls = new ArrayList();
         for (int i = 0; i < c.length; i++)
-            muls.add(new Multiplication(i, new Const(c[i])));
-        return new Expression(muls);
+            muls.add(new Tuple<Integer, Const>(i, new Const(c[i])));
+        return new ConstExpression(muls);
     }
 
     public static Expression variableExpression(String name, int c) {
