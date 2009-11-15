@@ -20,7 +20,7 @@ public class Expression {
         if (!c.isEmpty())
             m.addAll(new ConstExpression(c).getItems());
         if (m.isEmpty())
-            m.add(new Tuple(0, new Multiplication(new Const(0))));
+            m.add(new Tuple(0, new Multiplication(Const.create(0))));
         this.muls = m;
     }
     

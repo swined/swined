@@ -10,7 +10,7 @@ public class Multiplication {
     private HashSet<Variable> vars;
 
     public Multiplication(Variable v) {
-        this.c = new Const(1);
+        this.c = Const.create(1);
         this.vars = new HashSet();
         this.vars.add(v);
     }

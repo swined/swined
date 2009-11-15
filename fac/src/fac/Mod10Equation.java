@@ -55,7 +55,7 @@ public class Mod10Equation {
                 if (muls.get(1).getVars().size() == 1) {
                     Const c2 = muls.get(1).getConst();
                     Variable v2 = muls.get(1).getVars().get(0);
-                    return generateSolutions(v1, v2, right.solveLinear(new Const(0), c1, c2));
+                    return generateSolutions(v1, v2, right.solveLinear(Const.create(0), c1, c2));
                 }
             }
         }

@@ -6,14 +6,35 @@ import java.util.List;
 public class Const {
 
     private final int value;
+    private final static Const consts[];
+    private final static Tuple<Const, Const> multiplications[][];
 
-    public Const(int value) {
+    static {
+        consts = new Const[0x100];
+        for (int i = 0; i < 0x100; i++)
+            consts[i] = new Const(i);
+        multiplications = new Tuple[0x100][0x100];
+        for (int i = 0; i < 0x100; i++)
+            for (int j = 0; j < 0x100; j++)
+                multiplications[i][j] = multiply(create(i), create(j));
+
+    }
+
+    private Const(int value) {
         this.value = value & 0xFF;
     }
 
+    public static Const create(int value) {
+        return consts[value & 0xFF];
+    }
+
+    public static Tuple<Const, Const> multiply(Const a, Const b) {
+        int r = a.value * b.value;
+        return new Tuple(create(r), create(r >> 8));
+    }
+
     public Tuple<Const, Const> multiply(Const c) {
-        int r = value * c.value;
-        return new Tuple(new Const(r), new Const(r >> 8));
+        return multiplications[this.value][c.value];
     }
 
     public boolean isZero() {
