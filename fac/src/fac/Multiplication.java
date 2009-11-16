@@ -63,6 +63,10 @@ public class Multiplication {
         return c.isZero() && (vars.size() == 0);
     }
 
+    public boolean isConst() {
+        return vars.isEmpty();
+    }
+
     @Override
     public String toString() {
         String r = "";

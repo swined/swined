@@ -14,11 +14,14 @@ public class Main {
         queue.add(new Equation(x.multiply(y), c));
         Equation solution = null;
         while (!queue.isEmpty() && solution == null) {
-            Equation eq = queue.remove(0);
-            System.out.println(eq);
-            if (eq.isSolution())
-                solution = eq;
-            queue.addAll(eq.solve());
+            Equation eq = queue.remove(queue.size() - 1);
+            //System.out.println(eq);
+            for (Equation e : eq.solve())
+                if (e.isSolution()) {
+                    solution = e;
+                    continue;
+                } else
+                    queue.add(e);
         }
         System.out.println();
         if (solution == null)
