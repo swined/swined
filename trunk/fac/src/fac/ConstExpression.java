@@ -24,6 +24,8 @@ public class ConstExpression {
         List<Tuple<Integer, Const>> m = new ArrayList(nmuls);
         while (!m.isEmpty()) {
             Tuple<Integer, Const> t = m.remove(0);
+            if (t.getY().isZero())
+                continue;
             if (r.containsKey(t.getX())) {
                 Const c = r.remove(t.getX());
                 Tuple<Const, Const> x = c.multiply(t.getY());

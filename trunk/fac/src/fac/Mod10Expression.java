@@ -9,6 +9,8 @@ public class Mod10Expression {
 
     public Mod10Expression(List<Multiplication> muls) {
         this.muls = new ArrayList(muls);
+        if (this.muls.isEmpty())
+            this.muls.add(new Multiplication(Const.create(0)));
     }
 
     public List<Multiplication> getMultiplications() {
