@@ -50,7 +50,13 @@ public class Multiplication {
     }
 
     public List<Tuple<Integer, Multiplication>> substituteVariable(Variable v, Const c) {
-        return excludeVariable(v).multiply(c);
+        if (vars.contains(v))
+            return excludeVariable(v).multiply(c);
+        else {
+            List<Tuple<Integer, Multiplication>> r = new ArrayList();
+            r.add(new Tuple(0, this));
+            return r;
+        }
     }
 
     public boolean isZero() {

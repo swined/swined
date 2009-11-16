@@ -3,7 +3,6 @@ package fac;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class Equation {
 
@@ -39,12 +38,13 @@ public class Equation {
 
     public List<Equation> solve() throws Exception {
         List<Equation> r = new ArrayList();
-        Set<HashMap<Variable, Const>> solutions = mod10().solve();
-        for (HashMap<Variable, Const> solution : solutions) {
+        Mod10Equation mod10 = mod10();
+        for (HashMap<Variable, Const> solution : mod10.solve()) {
             Equation eq = this;
             for (Variable v : solution.keySet())
                 eq = eq.substituteVariable(v, solution.get(v));
-            r.add(eq.div10());
+            Equation div10 = eq.div10();
+            r.add(div10);
         }
         return r;
     }

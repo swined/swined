@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        int cv[] = { 0x42, 0x17 };
+        int cv[] = { 0x42, 0x00 };
         ConstExpression c = ConstExpression.constExpression(cv);
         Expression x = Expression.variableExpression("x", cv.length);
         Expression y = Expression.variableExpression("y", cv.length);
@@ -15,10 +15,12 @@ public class Main {
         Equation solution = null;
         while (!queue.isEmpty() && solution == null) {
             Equation eq = queue.remove(0);
+            System.out.println(eq);
             if (eq.isSolution())
                 solution = eq;
             queue.addAll(eq.solve());
         }
+        System.out.println();
         if (solution == null)
             System.out.println("solution not found");
         else
