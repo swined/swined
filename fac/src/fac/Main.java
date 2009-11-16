@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        int cv[] = { 0x42, 0x00 };
+        int cv[] = { 0x42, 0x00, 0x00, 0x00 };
         ConstExpression c = ConstExpression.constExpression(cv);
         Expression x = Expression.variableExpression("x", cv.length);
         Expression y = Expression.variableExpression("y", cv.length);
