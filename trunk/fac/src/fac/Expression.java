@@ -79,6 +79,13 @@ public class Expression {
         return false;
     }
 
+    public boolean isConst() {
+        for (Tuple<Integer, Multiplication> m : muls)
+            if (!m.getY().isConst())
+                return false;
+        return true;
+    }
+
     @Override
     public String toString() {
         String r = "";

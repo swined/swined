@@ -22,7 +22,7 @@ public class Mod10Equation {
 
     public Set<HashMap<Variable, Const>> generateSolutions(Variable v1, Variable v2, List<Tuple<Const, Const>> solutions) {
         Set<HashMap<Variable, Const>> r = new HashSet();
-        for (Tuple<Const, Const> pair : right.demultiplyMod10()) {
+        for (Tuple<Const, Const> pair : solutions) {
             HashMap<Variable, Const> t = new HashMap();
             t.put(v1, pair.getX());
             t.put(v2, pair.getY());

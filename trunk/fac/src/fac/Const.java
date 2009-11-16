@@ -50,10 +50,9 @@ public class Const {
         List<Tuple<Const, Const>> r = new ArrayList();
         for (int i = 0; i < 0x100; i++)
             for (int j = i; j < 0x100; j++)
-                if (((c.value + i * k.value + j * l.value) & 0xFF) == value)
-                    r.add(new Tuple(new Const(i), new Const(j)));
+                if (value == ((c.value + i * k.value + j * l.value) & 0xFF))
+                    r.add(new Tuple(Const.create(i), Const.create(j)));
         return r;
-
     }
 
     public List<Tuple<Const, Const>> demultiplyMod10() {
@@ -61,7 +60,7 @@ public class Const {
         for (int i = 0; i < 0x100; i++)
             for (int j = i; j < 0x100; j++)
                 if (((i * j) & 0xFF) == value)
-                    r.add(new Tuple(new Const(i), new Const(j)));
+                    r.add(new Tuple(Const.create(i), Const.create(j)));
         return r;
     }
 
