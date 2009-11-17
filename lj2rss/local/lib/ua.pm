@@ -13,7 +13,7 @@ sub new {
 		timeout => 30,
 		cookie_jar => {},
 	);
-	$self->agent('http://lj2rss.net.ru/; swined@gmail.com');
+#	$self->agent('http://lj2rss.net.ru/; swined@gmail.com');
 	return $self;
 }
 
