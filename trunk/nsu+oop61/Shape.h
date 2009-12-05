@@ -7,6 +7,7 @@ public:
     static Shape* create();
     virtual void print() const = 0;
     virtual double area() const = 0;
+    virtual ~Shape() {};
 private:
 
 };
