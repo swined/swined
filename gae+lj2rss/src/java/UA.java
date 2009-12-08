@@ -30,7 +30,7 @@ public class UA {
     private HttpURLConnection getConnection(URL url) throws IOException, ParseException {
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setInstanceFollowRedirects(false);
-        conn.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
+        //conn.setRequestProperty("user-agent", "http://lj2rss.net.ru/; swined@gmail.com;");
         return conn;
     }
 
@@ -58,7 +58,7 @@ public class UA {
         os.close();
         cookies.save(conn);
         if (conn.getResponseCode() != 200) {
-            throw new Exception("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage());
+            throw new Exception("http error " + conn.getResponseCode() + ": " + conn.getResponseMessage() + " while posting to " + url);
         }
         return readAll(conn.getInputStream());
     }
