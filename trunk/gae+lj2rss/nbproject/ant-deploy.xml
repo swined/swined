@@ -2,7 +2,7 @@
 <project default="-deploy-ant" basedir=".">
 
     <!-- Google App Engine Properties -->
-    <property name="appengine.location" value="/home/sw/appengine-java-sdk-1.2.6"/>
+    <property name="appengine.location" value="/home/sw/appengine-java-sdk-1.2.8"/>
     <property name="appengine.http.port" value="8080"/>
     <property name="appengine.debug.port" value="8765"/>
 

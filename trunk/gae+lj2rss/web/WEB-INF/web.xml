@@ -4,9 +4,17 @@
         <servlet-name>test</servlet-name>
         <servlet-class>TestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ljsession</servlet-name>
+        <servlet-class>LJSessionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ljsession</servlet-name>
+        <url-pattern>/ljsession</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
