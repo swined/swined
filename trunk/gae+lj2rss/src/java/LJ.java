@@ -9,7 +9,7 @@ public class LJ {
     private String buildSessiongenerateRequest(String username, String hash) {
         RequestBuilder request = new RequestBuilder();
         request.put("mode", "sessiongenerate");
-        request.put("expiration", "short");
+        //request.put("expiration", "short");
         request.put("user", username);
         request.put("hpassword", hash);
         return request.toString();
