@@ -31,14 +31,6 @@ public class HubConnectionManager {
         writer.sendRevConnectToMe(nick, peer.getNick());
     }
 
-    public void onPeerIpDetected(String nick, String ip) {
-        for (PeerInfo peer : peers) {
-            if (peer.getNick().equals(nick)) {
-                peer.setIp(ip);
-            }
-        }
-    }
-
     public void onPeerConnectionRequested(String ip) throws Exception {
         throw new Exception("peer connection requested");
     }
