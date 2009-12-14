@@ -2,9 +2,9 @@ package dcpp;
 
 public class LockHandler implements IHubHandler {
 
-    private DownloadManager mgr;
+    private HubConnectionManager mgr;
 
-    public LockHandler(DownloadManager mgr) {
+    public LockHandler(HubConnectionManager mgr) {
         this.mgr = mgr;
     }
 
