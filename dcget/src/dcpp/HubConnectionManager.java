@@ -3,7 +3,7 @@ package dcpp;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DownloadManager {
+public class HubConnectionManager {
 
     private HubReader reader;
     private HubWriter writer;
@@ -11,7 +11,7 @@ public class DownloadManager {
     private String tth;
     private Set<PeerInfo> peers = new HashSet();
 
-    public DownloadManager(HubReader reader, HubWriter writer, String nick, String tth) {
+    public HubConnectionManager(HubReader reader, HubWriter writer, String nick, String tth) {
         this.reader = reader;
         this.writer = writer;
         this.nick = nick;
