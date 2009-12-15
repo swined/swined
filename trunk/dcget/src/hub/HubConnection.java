@@ -1,5 +1,7 @@
 package hub;
 
+import java.net.Socket;
+import logger.ILogger;
 import util.KeyGenerator;
 
 public class HubConnection {
@@ -9,10 +11,11 @@ public class HubConnection {
     private HubWriter writer;
     private String nick;
 
-    public HubConnection(IHubEventHandler handler, HubReader reader, HubWriter writer, String nick) {
+    public HubConnection(IHubEventHandler handler, ILogger logger, String host, int port, String nick) throws Exception {
         this.handler = handler;
-        this.reader = reader;
-        this.writer = writer;
+        Socket sock = new Socket(host, port);
+        this.reader = new HubReader(sock.getInputStream(), logger);
+        this.writer = new HubWriter(sock.getOutputStream(), logger);
         this.nick = nick;
         reader.registerHandler(new LockHandler(this));
         reader.registerHandler(new SRHandler(handler));
@@ -34,4 +37,5 @@ public class HubConnection {
     public void search(String tth) throws Exception {
         writer.sendTTHSearch(nick, tth);
     }
+
 }
