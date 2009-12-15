@@ -1,7 +1,6 @@
 package hub;
 
 import util.KeyGenerator;
-import dcpp.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +10,6 @@ public class HubConnection {
     private HubWriter writer;
     private String nick;
     private String tth;
-    private Set<PeerInfo> peers = new HashSet();
 
     public HubConnection(HubReader reader, HubWriter writer, String nick, String tth) {
         this.reader = reader;
