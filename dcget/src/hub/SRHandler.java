@@ -1,16 +1,11 @@
 package hub;
 
-import dcpp.*;
-import hub.IHubHandler;
-import hub.HubConnection;
-
-
 public class SRHandler implements IHubHandler {
 
-    private HubConnection mgr;
+    private IHubEventHandler handler;
 
-    public SRHandler(HubConnection mgr) {
-        this.mgr = mgr;
+    public SRHandler(IHubEventHandler handler) {
+        this.handler = handler;
     }
 
     public void handleHubCommand(byte[] data) throws Exception {
@@ -19,7 +14,7 @@ public class SRHandler implements IHubHandler {
             return;
         String nick = s.split(" ")[1];
         String file = s.split(" ", 3)[2].split(new String(new byte[] { 0x05 }))[0];
-        mgr.onPeerFound(new PeerInfo(nick, file));
+        handler.onSearchResult(new SearchResult(nick, file));
     }
 
 }
