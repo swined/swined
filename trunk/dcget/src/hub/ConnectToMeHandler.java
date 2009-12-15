@@ -1,8 +1,5 @@
 package hub;
 
-import hub.IHubHandler;
-import hub.HubConnection;
-
 public class ConnectToMeHandler implements IHubHandler {
 
     private HubConnection mgr;
