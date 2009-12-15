@@ -1,6 +1,6 @@
 package hub;
 
-public class SRHandler implements IHubHandler {
+class SRHandler implements IHubHandler {
 
     private IHubEventHandler handler;
 

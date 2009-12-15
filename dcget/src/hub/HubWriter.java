@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import logger.ILogger;
 
-public class HubWriter {
+class HubWriter {
 
     private ILogger logger;
     private OutputStream out;

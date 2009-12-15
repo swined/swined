@@ -6,7 +6,7 @@ import java.util.Set;
 import logger.ILogger;
 
 
-public class HubReader {
+class HubReader {
 
     private ILogger logger;
     private InputStream in;

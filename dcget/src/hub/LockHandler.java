@@ -1,9 +1,6 @@
 package hub;
 
-import dcpp.*;
-import hub.HubConnection;
-
-public class LockHandler implements IHubHandler {
+class LockHandler implements IHubHandler {
 
     private HubConnection mgr;
 

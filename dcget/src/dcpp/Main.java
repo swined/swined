@@ -9,7 +9,6 @@ import logger.ConsoleLogger;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Socket s = new Socket("p2p.academ.org", 411);
         ConsoleLogger l = new ConsoleLogger();
         HubWriter w = new HubWriter(s.getOutputStream(), l);
         HubReader r = new HubReader(s.getInputStream(), l);

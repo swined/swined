@@ -1,6 +1,6 @@
 package hub;
 
-public class ConnectToMeHandler implements IHubHandler {
+class ConnectToMeHandler implements IHubHandler {
 
     private IHubEventHandler handler;
 
