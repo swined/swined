@@ -2,9 +2,9 @@ package dcpp;
 
 public class ConnectToMeHandler implements IHubHandler {
 
-    private HubConnectionManager mgr;
+    private HubConnection mgr;
 
-    public ConnectToMeHandler(HubConnectionManager mgr) {
+    public ConnectToMeHandler(HubConnection mgr) {
         this.mgr = mgr;
     }
 

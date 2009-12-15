@@ -3,9 +3,9 @@ package dcpp;
 
 public class SRHandler implements IHubHandler {
 
-    private HubConnectionManager mgr;
+    private HubConnection mgr;
 
-    public SRHandler(HubConnectionManager mgr) {
+    public SRHandler(HubConnection mgr) {
         this.mgr = mgr;
     }
 
