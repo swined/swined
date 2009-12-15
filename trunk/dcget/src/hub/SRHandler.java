@@ -1,4 +1,8 @@
-package dcpp;
+package hub;
+
+import dcpp.*;
+import hub.IHubHandler;
+import hub.HubConnection;
 
 
 public class SRHandler implements IHubHandler {
