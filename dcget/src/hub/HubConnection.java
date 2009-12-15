@@ -1,5 +1,6 @@
 package hub;
 
+import util.KeyGenerator;
 import dcpp.*;
 import java.util.HashSet;
 import java.util.Set;
