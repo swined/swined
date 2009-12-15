@@ -10,7 +10,7 @@ public class Main {
         ConsoleLogger l = new ConsoleLogger();
         HubWriter w = new HubWriter(s.getOutputStream(), l);
         HubReader r = new HubReader(s.getInputStream(), l);
-        HubConnectionManager m = new HubConnectionManager(r, w, "jined", "WXCQCYNWND57VJIFKIN45H6WYRHGDRS5NMLIDVY");
+        HubConnection m = new HubConnection(r, w, "jined", "WXCQCYNWND57VJIFKIN45H6WYRHGDRS5NMLIDVY");
         while (s.isConnected()) {
             m.run();
             Thread.sleep(100);
