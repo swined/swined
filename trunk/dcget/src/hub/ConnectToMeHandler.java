@@ -12,7 +12,9 @@ class ConnectToMeHandler implements IHubHandler {
         String s = new String(data);
         if (!s.startsWith("$ConnectToMe"))
             return;
-        handler.onPeerConnectionRequested(s.split(" ")[1]);
+        String addr = s.split(" ")[2];
+        String[] ip = addr.split(":");
+        handler.onPeerConnectionRequested(ip[0], Integer.parseInt(ip[1]));
     }
 
 }

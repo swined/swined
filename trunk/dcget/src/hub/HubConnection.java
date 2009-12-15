@@ -38,4 +38,8 @@ public class HubConnection {
         writer.sendTTHSearch(nick, tth);
     }
 
+    public void requestPeerConnection(String target) throws Exception {
+        writer.sendRevConnectToMe(nick, target);
+    }
+
 }
