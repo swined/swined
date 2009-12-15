@@ -1,4 +1,4 @@
-package dcpp;
+package util;
 
 public class KeyGenerator {
 
