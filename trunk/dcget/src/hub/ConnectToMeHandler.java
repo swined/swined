@@ -2,17 +2,17 @@ package hub;
 
 public class ConnectToMeHandler implements IHubHandler {
 
-    private HubConnection mgr;
+    private IHubEventHandler handler;
 
-    public ConnectToMeHandler(HubConnection mgr) {
-        this.mgr = mgr;
+    public ConnectToMeHandler(IHubEventHandler handler) {
+        this.handler = handler;
     }
 
     public void handleHubCommand(byte[] data) throws Exception {
         String s = new String(data);
         if (!s.startsWith("$ConnectToMe"))
             return;
-        mgr.onPeerConnectionRequested(s.split(" ")[1]);
+        handler.onPeerConnectionRequested(s.split(" ")[1]);
     }
 
 }
