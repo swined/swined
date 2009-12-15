@@ -1,4 +1,7 @@
-package dcpp;
+package hub;
+
+import dcpp.*;
+import hub.HubConnection;
 
 public class LockHandler implements IHubHandler {
 

@@ -1,5 +1,8 @@
 package dcpp;
 
+import hub.HubWriter;
+import hub.HubReader;
+import hub.HubConnection;
 import java.net.Socket;
 import logger.ConsoleLogger;
 

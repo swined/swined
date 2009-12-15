@@ -1,5 +1,6 @@
 package dcpp;
 
+import hub.IPeerHandler;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;

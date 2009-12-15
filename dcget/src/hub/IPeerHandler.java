@@ -1,4 +1,4 @@
-package dcpp;
+package hub;
 
 public interface IPeerHandler {
 

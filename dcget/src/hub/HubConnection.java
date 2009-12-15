@@ -1,5 +1,6 @@
-package dcpp;
+package hub;
 
+import dcpp.*;
 import java.util.HashSet;
 import java.util.Set;
 
