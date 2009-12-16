@@ -27,11 +27,15 @@ public class PageFetcher implements ICacheBackend<String, byte[]> {
         try {
             HttpURLConnection conn = (HttpURLConnection) (new URL(url).openConnection());
             conn.setInstanceFollowRedirects(false);
+            conn.setConnectTimeout(15000);
             conn.connect();
-            if (conn.getResponseCode() != 200)
+            if (conn.getResponseCode() != 200) {
+                System.err.println("http error " + conn.getResponseCode() + " while fetching " + url);
                 return null;
+            }
             return readAll(conn.getInputStream());
         } catch (Exception e) {
+            System.err.println(e + ": " + e.getMessage() + " while fetching " + url);
             return null;
         }
     }
