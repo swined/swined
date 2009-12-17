@@ -33,8 +33,8 @@ public class FetchServlet extends HttpServlet {
             response.setHeader("content-type", "text/html; charset=utf-8");
             MemCache<String, byte[]> cache = new MemCache<String, byte[]>(new PageFetcher());
             final String url = request.getParameter("url");
-            if (!new URL(url).getHost().endsWith("livejournal.com"))
-                throw new Exception("only .livejournal.com urls are accepted");
+            //if (!new URL(url).getHost().endsWith("livejournal.com"))
+              //  throw new Exception("only .livejournal.com urls are accepted");
             byte[] r = cache.get(url);
             if (r == null)
                 throw new Exception("failed to fetch");
