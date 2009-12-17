@@ -517,51 +517,13 @@ exists or setup the property manually. For example like this:
     <target depends="init,compile,compile-jsps,-pre-dist,-do-dist-with-manifest,-do-dist-without-manifest" name="do-dist"/>
     <target depends="init" if="dist.ear.dir" name="library-inclusion-in-manifest">
         <copyfiles files="${file.reference.commons-fileupload-1.2.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.commons-fileupload-1.2.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.datanucleus-appengine-1.0.4.1.final.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.datanucleus-appengine-1.0.4.1.final.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.datanucleus-core-1.1.5.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.datanucleus-core-1.1.5.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.datanucleus-jpa-1.1.5.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.datanucleus-jpa-1.1.5.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.geronimo-jpa_3.0_spec-1.1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-jpa_3.0_spec-1.1.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.geronimo-jta_1.1_spec-1.1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-jta_1.1_spec-1.1.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.jdo2-api-2.3-eb.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.jdo2-api-2.3-eb.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.appengine-api-1.0-sdk-1.3.0.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.appengine-api-1.0-sdk-1.3.0.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.appengine-api-labs-1.3.0.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.appengine-api-labs-1.3.0.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.appengine-tools-api.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.appengine-tools-api.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.appengine-local-runtime-shared.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.appengine-local-runtime-shared.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.geronimo-el_1.0_spec-1.0.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-el_1.0_spec-1.0.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.geronimo-jsp_2.1_spec-1.0.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-jsp_2.1_spec-1.0.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.geronimo-servlet_2.5_spec-1.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-servlet_2.5_spec-1.2.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.repackaged-appengine-ant-1.6.5.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.repackaged-appengine-ant-1.6.5.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.repackaged-appengine-ant-launcher-1.6.5.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.repackaged-appengine-ant-launcher-1.6.5.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.repackaged-appengine-commons-el-1.0.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.repackaged-appengine-commons-el-1.0.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.repackaged-appengine-commons-logging-1.1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.repackaged-appengine-commons-logging-1.1.1.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.repackaged-appengine-jasper-compiler-5.0.28.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.repackaged-appengine-jasper-compiler-5.0.28.jar" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.repackaged-appengine-jasper-runtime-5.0.28.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.repackaged-appengine-jasper-runtime-5.0.28.jar" todir="${dist.ear.dir}"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.file.reference.commons-fileupload-1.2.1.jar} ${manifest.file.reference.datanucleus-appengine-1.0.4.1.final.jar} ${manifest.file.reference.datanucleus-core-1.1.5.jar} ${manifest.file.reference.datanucleus-jpa-1.1.5.jar} ${manifest.file.reference.geronimo-jpa_3.0_spec-1.1.1.jar} ${manifest.file.reference.geronimo-jta_1.1_spec-1.1.1.jar} ${manifest.file.reference.jdo2-api-2.3-eb.jar} ${manifest.file.reference.appengine-api-1.0-sdk-1.3.0.jar} ${manifest.file.reference.appengine-api-labs-1.3.0.jar} ${manifest.file.reference.appengine-tools-api.jar} ${manifest.file.reference.appengine-local-runtime-shared.jar} ${manifest.file.reference.geronimo-el_1.0_spec-1.0.1.jar} ${manifest.file.reference.geronimo-jsp_2.1_spec-1.0.1.jar} ${manifest.file.reference.geronimo-servlet_2.5_spec-1.2.jar} ${manifest.file.reference.repackaged-appengine-ant-1.6.5.jar} ${manifest.file.reference.repackaged-appengine-ant-launcher-1.6.5.jar} ${manifest.file.reference.repackaged-appengine-commons-el-1.0.jar} ${manifest.file.reference.repackaged-appengine-commons-logging-1.1.1.jar} ${manifest.file.reference.repackaged-appengine-jasper-compiler-5.0.28.jar} ${manifest.file.reference.repackaged-appengine-jasper-runtime-5.0.28.jar} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.commons-fileupload-1.2.1.jar} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
         <copyfiles files="${file.reference.commons-fileupload-1.2.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.datanucleus-appengine-1.0.4.1.final.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.datanucleus-core-1.1.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.datanucleus-jpa-1.1.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.geronimo-jpa_3.0_spec-1.1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.geronimo-jta_1.1_spec-1.1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.jdo2-api-2.3-eb.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.appengine-api-1.0-sdk-1.3.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.appengine-api-labs-1.3.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.appengine-tools-api.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.appengine-local-runtime-shared.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.geronimo-el_1.0_spec-1.0.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.geronimo-jsp_2.1_spec-1.0.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.geronimo-servlet_2.5_spec-1.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.repackaged-appengine-ant-1.6.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.repackaged-appengine-ant-launcher-1.6.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.repackaged-appengine-commons-el-1.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.repackaged-appengine-commons-logging-1.1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.repackaged-appengine-jasper-compiler-5.0.28.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.repackaged-appengine-jasper-runtime-5.0.28.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest" if="do.tmp.war.package" name="do-ear-dist">
         <dirname file="${dist.ear.war}" property="dist.jar.dir"/>
