@@ -3,10 +3,9 @@ package dcpp;
 import hub.HubConnection;
 import hub.IHubEventHandler;
 import hub.SearchResult;
+import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 import logger.ILogger;
 import peer.IPeerEventHandler;
 import peer.PeerConnection;
@@ -19,10 +18,13 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private String nick;
     private PeerConnection peerConnection;
     private HashMap<String, byte[]> filenames;
+    private OutputStream out;
+    private int toRead = -1;
 
-    public DownloadManager(ILogger logger) throws Exception {
+    public DownloadManager(ILogger logger, OutputStream out) {
         this.logger = logger;
         this.nick = generateNick();
+        this.out = out;
     }
 
     public void download(String host, int port, String tth) throws Exception {
@@ -73,7 +75,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
-        throw new Exception("file length received");
+        toRead = length;
+        peer.send(toRead > 40906 ? 40906 : toRead);
     }
 
     public void onHandShakeDone(PeerConnection peer) throws Exception {
@@ -86,6 +89,12 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     public void onPeerError(PeerConnection peer, String err) throws Exception {
         throw new Exception(err);
+    }
+
+    public void onPeerData(PeerConnection peer, byte[] data) throws Exception {
+        out.write(data);
+        toRead -= data.length;
+        peer.send(toRead > 40906 ? 40906 : toRead);
     }
 
 }
