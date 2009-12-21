@@ -45,4 +45,8 @@ class PeerWriter {
         sendString("$Direction " + direction + " " + a + "|");
     }
 
+    public void sendSend() throws Exception {
+        sendString("$Send|");
+    }
+
 }

@@ -41,6 +41,7 @@ public class PeerConnection {
         reader.registerHandler(new KeyHandler(handler, this));
         reader.registerHandler(new ErrorHandler(handler, this));
         reader.registerHandler(new MaxedOutHandler(handler, this));
+        reader.registerHandler(new DataHandler(handler, this));
         writer = new PeerWriter(sock.getOutputStream(), logger);
         handler.onPeerConnected(this);
     }
@@ -73,6 +74,11 @@ public class PeerConnection {
 
     public String getNick() {
         return nick;
+    }
+
+    public void send(int len) throws Exception {
+        writer.sendSend();
+        reader.expect(len);
     }
 
 }
