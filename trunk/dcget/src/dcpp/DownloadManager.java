@@ -18,7 +18,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private String tth;
     private String nick;
     private PeerConnection peerConnection;
-    private HashMap<String, String> filenames;
+    private HashMap<String, byte[]> filenames;
 
     public DownloadManager(ILogger logger) throws Exception {
         this.logger = logger;
@@ -52,6 +52,10 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onSearchResult(SearchResult r) throws Exception {
+        if (r.getFreeSlots() == 0) {
+            logger.warn("file found, but no free slots");
+            return;
+        }
         filenames.put(r.getNick(), r.getFile());
         hub.requestPeerConnection(r.getNick());
     }

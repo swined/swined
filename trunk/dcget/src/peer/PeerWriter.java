@@ -14,9 +14,13 @@ class PeerWriter {
         this.logger = logger;
     }
 
+    private void sendBytes(byte[] s) throws IOException {
+        out.write(s);
+        logger.debug("sent string to peer: " + new String(s));
+    }
+
     private void sendString(String s) throws IOException {
-        out.write(s.getBytes());
-        logger.debug("sent string to peer: " + s);
+        sendBytes(s.getBytes());
     }
 
     public void sendMyNick(String nick) throws Exception {
@@ -27,8 +31,10 @@ class PeerWriter {
         sendString("$Lock " + lock + " Pk=" + pk + "|");
     }
 
-    public void sendGet(String file, int start) throws Exception {
-        sendString("$Get " + file + "$" + start + "|");
+    public void sendGet(byte[] file, int start) throws Exception {
+        sendString("$Get ");
+        sendBytes(file);
+        sendString("$" + start + "|");
     }
 
     public void sendKey(String key) throws IOException {
