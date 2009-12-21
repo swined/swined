@@ -15,20 +15,28 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private ILogger logger;
     private HubConnection hub;
     private String tth;
+    private String nick;
     private Set<PeerConnection> peers;
 
     public DownloadManager(ILogger logger) throws Exception {
         this.logger = logger;
+        this.nick = generateNick();
     }
 
     public void download(String host, int port, String tth) throws Exception {
-        hub = new HubConnection(this, logger, host, port, generateNick());
+        hub = new HubConnection(this, logger, host, port, nick);
         peers = new HashSet();
         this.tth = tth;
         while (true) {
             hub.run();
-            for (PeerConnection peer : peers)
-                peer.run();
+            for (PeerConnection peer : peers) {
+                try {
+                    peer.run();
+                } catch (Exception e) {
+                    logger.warn("peer error: " + e.getMessage());
+                    peers.remove(peer);
+                }
+            }
         }
     }
 
@@ -37,8 +45,9 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         byte[] bytes = new byte[8];
         rand.nextBytes(bytes);
         String r = "";
-        for (byte b : bytes)
+        for (byte b : bytes) {
             r += Integer.toHexString(b > 0 ? b : b + 0xFF);
+        }
         return r;
     }
 
@@ -51,11 +60,14 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onPeerConnectionRequested(String ip, int port) throws Exception {
-        peers.add(new PeerConnection(logger, this, ip, port));
+        try {
+            peers.add(new PeerConnection(logger, this, ip, port));
+        } catch (Exception e) {
+            logger.warn("peer error: " + e.getMessage());
+        }
     }
 
     public void onPeerConnected(PeerConnection peer) throws Exception {
-        throw new Exception("peer connected");
+        peer.handshake(nick);
     }
-
 }
