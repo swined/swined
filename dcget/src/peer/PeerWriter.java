@@ -36,7 +36,7 @@ class PeerWriter {
     }
 
     public void sendDirection(String direction, int a) throws Exception {
-        sendString("$Direction " + direction + "$" + a + "|");
+        sendString("$Direction " + direction + " " + a + "|");
     }
 
 }

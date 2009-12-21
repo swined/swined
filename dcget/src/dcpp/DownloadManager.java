@@ -17,7 +17,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private HubConnection hub;
     private String tth;
     private String nick;
-    private Set<PeerConnection> peers;
+    private PeerConnection peerConnection;
     private HashMap<String, String> filenames;
 
     public DownloadManager(ILogger logger) throws Exception {
@@ -27,12 +27,12 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     public void download(String host, int port, String tth) throws Exception {
         hub = new HubConnection(this, logger, host, port, nick);
-        peers = new HashSet();
         filenames = new HashMap();
         this.tth = tth;
         while (true) {
             hub.run();
-            updatePeers();
+            if (peerConnection != null)
+                peerConnection.run();
         }
     }
 
@@ -58,7 +58,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     public void onPeerConnectionRequested(String ip, int port) throws Exception {
         try {
-            peers.add(new PeerConnection(logger, this, ip, port));
+            peerConnection = new PeerConnection(logger, this, ip, port);
         } catch (Exception e) {
             logger.warn("peer error: " + e.getMessage());
         }
@@ -76,19 +76,12 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         peer.get(filenames.get(peer.getNick()), 1);
     }
 
-    private void updatePeers() {
-        Set<PeerConnection> dead = new HashSet<PeerConnection>();
-        for (PeerConnection peer : peers) {
-            try {
-                peer.run();
-            } catch (Exception e) {
-                logger.warn("peer error: " + e.getMessage());
-                dead.add(peer);
-            }
-        }
-        for (PeerConnection peer : dead) {
-            peers.remove(peer);
-        }
+    public void onNoFreeSlots(PeerConnection peer) throws Exception {
+        throw new Exception("no free slots");
+    }
+
+    public void onPeerError(PeerConnection peer, String err) throws Exception {
+        throw new Exception(err);
     }
 
 }
