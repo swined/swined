@@ -10,6 +10,7 @@ public class PeerConnection {
     private IPeerEventHandler handler;
     private PeerReader reader;
     private PeerWriter writer;
+    private String nick;
 
     public PeerConnection(ILogger logger, IPeerEventHandler handler, String ip, int port) throws Exception {
         this.logger = new PeerLogger(logger, ip);
@@ -27,6 +28,7 @@ public class PeerConnection {
         reader.registerHandler(new MyNickHandler(handler, this));
         reader.registerHandler(new FileLengthHandler(handler, this));
         reader.registerHandler(new LockHandler(this));
+        reader.registerHandler(new DirectionHandler(handler, this));
         writer = new PeerWriter(sock.getOutputStream(), logger);
         handler.onPeerConnected(this);
     }
@@ -42,6 +44,19 @@ public class PeerConnection {
 
     public void onLockReceived(String lock) throws Exception {
         writer.sendKey(KeyGenerator.generateKey(lock.getBytes()));
+    }
+
+    public void onDirectionReceived(String direction, int i) throws Exception {
+        writer.sendDirection("Download", i + 1);
+        handler.onHandShakeDone(this);
+    }
+
+    public void onPeerNickReceived(String nick) throws Exception {
+        this.nick = nick;
+    }
+
+    public String getNick() {
+        return nick;
     }
 
 }

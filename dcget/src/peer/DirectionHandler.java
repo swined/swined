@@ -1,11 +1,11 @@
 package peer;
 
-class MyNickHandler implements IPeerHandler {
+class DirectionHandler implements IPeerHandler {
 
     private PeerConnection conn;
     private IPeerEventHandler handler;
 
-    public MyNickHandler(IPeerEventHandler handler, PeerConnection conn) {
+    public DirectionHandler(IPeerEventHandler handler, PeerConnection conn) {
         this.handler = handler;
         this.conn = conn;
     }
@@ -16,9 +16,9 @@ class MyNickHandler implements IPeerHandler {
 
     public void handlePeerCommand(byte[] data) throws Exception {
         String s = new String(data);
-        if (!s.startsWith("$MyNick "))
+        if (!s.startsWith("$Direction "))
             return;
-        conn.onPeerNickReceived(s.split(" ")[1]);
+        conn.onDirectionReceived(s.split(" ")[1], new Integer(s.split(" ")[2]));
     }
 
 }

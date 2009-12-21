@@ -21,5 +21,4 @@ class FileLengthHandler implements IPeerHandler {
         handler.onFileLengthReceived(conn, new Integer(s.split(" ")[1]));
     }
 
-
 }
