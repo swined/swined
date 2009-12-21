@@ -3,14 +3,19 @@ package dcpp;
 import hub.HubConnection;
 import hub.IHubEventHandler;
 import hub.SearchResult;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import logger.ILogger;
+import peer.IPeerEventHandler;
+import peer.PeerConnection;
 
-public class DownloadManager implements IHubEventHandler {
+public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     private ILogger logger;
     private HubConnection hub;
     private String tth;
+    private Set<PeerConnection> peers;
 
     public DownloadManager(ILogger logger) throws Exception {
         this.logger = logger;
@@ -18,9 +23,12 @@ public class DownloadManager implements IHubEventHandler {
 
     public void download(String host, int port, String tth) throws Exception {
         hub = new HubConnection(this, logger, host, port, generateNick());
+        peers = new HashSet();
         this.tth = tth;
         while (true) {
             hub.run();
+            for (PeerConnection peer : peers)
+                peer.run();
         }
     }
 
@@ -43,7 +51,11 @@ public class DownloadManager implements IHubEventHandler {
     }
 
     public void onPeerConnectionRequested(String ip, int port) throws Exception {
-        throw new Exception("peer connection (" + ip + ":" + port + ") requested");
+        peers.add(new PeerConnection(logger, this, ip, port));
+    }
+
+    public void onPeerConnected(PeerConnection peer) throws Exception {
+        throw new Exception("peer connected");
     }
 
 }
