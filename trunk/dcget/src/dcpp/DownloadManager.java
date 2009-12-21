@@ -4,6 +4,7 @@ import hub.HubConnection;
 import hub.IHubEventHandler;
 import hub.SearchResult;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 import logger.ILogger;
@@ -19,22 +20,29 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private PeerConnection peerConnection;
     private HashMap<String, byte[]> filenames;
     private OutputStream out;
-    private int toRead = -1;
+    private Integer toRead;
+    private int timeout = 60000;
 
     public DownloadManager(ILogger logger, OutputStream out) {
         this.logger = logger;
         this.nick = generateNick();
         this.out = out;
+        this.toRead = null;
     }
 
     public void download(String host, int port, String tth) throws Exception {
         hub = new HubConnection(this, logger, host, port, nick);
         filenames = new HashMap();
         this.tth = tth;
-        while (true) {
+        Date start = new Date();
+        while (toRead == null || toRead != 0) {
             hub.run();
             if (peerConnection != null)
                 peerConnection.run();
+            if (new Date().getTime() - start.getTime() > timeout && peerConnection == null)
+                throw new Exception("search timed out");
+            if (toRead != null && toRead < 0)
+                throw new Exception("shit happened: need to download " + toRead + " bytes, which is a negative value");
         }
     }
 
@@ -95,6 +103,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         out.write(data);
         toRead -= data.length;
         peer.send(toRead > 40906 ? 40906 : toRead);
+        logger.debug("got " + data.length + " bytes, " + toRead + " bytes left");
     }
 
 }
