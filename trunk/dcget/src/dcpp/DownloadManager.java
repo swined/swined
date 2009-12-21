@@ -32,14 +32,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         this.tth = tth;
         while (true) {
             hub.run();
-            for (PeerConnection peer : peers) {
-                try {
-                    peer.run();
-                } catch (Exception e) {
-                    logger.warn("peer error: " + e.getMessage());
-                    peers.remove(peer);
-                }
-            }
+            updatePeers();
         }
     }
 
@@ -75,12 +68,27 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         peer.handshake(nick);
     }
 
-    public void onPeerNickReceived(PeerConnection peer, String nick) throws Exception {
-        peer.get(filenames.get(nick), 1);
-    }
-
     public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
         throw new Exception("file length received");
+    }
+
+    public void onHandShakeDone(PeerConnection peer) throws Exception {
+        peer.get(filenames.get(peer.getNick()), 1);
+    }
+
+    private void updatePeers() {
+        Set<PeerConnection> dead = new HashSet<PeerConnection>();
+        for (PeerConnection peer : peers) {
+            try {
+                peer.run();
+            } catch (Exception e) {
+                logger.warn("peer error: " + e.getMessage());
+                dead.add(peer);
+            }
+        }
+        for (PeerConnection peer : dead) {
+            peers.remove(peer);
+        }
     }
 
 }
