@@ -3,6 +3,7 @@ package dcpp;
 import hub.HubConnection;
 import hub.IHubEventHandler;
 import hub.SearchResult;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -17,6 +18,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private String tth;
     private String nick;
     private Set<PeerConnection> peers;
+    private HashMap<String, String> filenames;
 
     public DownloadManager(ILogger logger) throws Exception {
         this.logger = logger;
@@ -56,6 +58,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onSearchResult(SearchResult r) throws Exception {
+        filenames.put(r.getNick(), r.getFile());
         hub.requestPeerConnection(r.getNick());
     }
 

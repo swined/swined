@@ -17,7 +17,7 @@ public class PeerConnection {
     }
 
     public void run() throws Exception {
-        
+        reader.read();
     }
 
     private void connect(String ip, int port) throws Exception {
