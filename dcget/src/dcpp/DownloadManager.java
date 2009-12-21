@@ -28,6 +28,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     public void download(String host, int port, String tth) throws Exception {
         hub = new HubConnection(this, logger, host, port, nick);
         peers = new HashSet();
+        filenames = new HashMap();
         this.tth = tth;
         while (true) {
             hub.run();
@@ -73,4 +74,13 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     public void onPeerConnected(PeerConnection peer) throws Exception {
         peer.handshake(nick);
     }
+
+    public void onPeerNickReceived(PeerConnection peer, String nick) throws Exception {
+        peer.get(filenames.get(nick), 1);
+    }
+
+    public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
+        throw new Exception("file length received");
+    }
+
 }

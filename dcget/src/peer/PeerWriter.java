@@ -27,4 +27,12 @@ class PeerWriter {
         sendString("$Lock " + lock + " Pk=" + pk + "|");
     }
 
+    public void sendGet(String file, int start) throws Exception {
+        sendString("$Get " + file + "$" + start + "|");
+    }
+
+    public void sendKey(String key) throws IOException {
+        sendString("$Key " + key + "|");
+    }
+
 }
