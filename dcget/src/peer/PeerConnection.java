@@ -27,7 +27,7 @@ public class PeerConnection {
         handler.onPeerConnected(this);
     }
 
-    private void handshake(String nick) throws Exception {
+    public void handshake(String nick) throws Exception {
         writer.sendMyNick(nick);
         writer.sendLock("some_random_lock", "kio_dcpp");
     }
