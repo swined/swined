@@ -1,5 +1,7 @@
 package hub;
 
+import util.ArrayUtils;
+
 class SRHandler implements IHubHandler {
 
     private IHubEventHandler handler;
@@ -12,9 +14,11 @@ class SRHandler implements IHubHandler {
         String s = new String(data);
         if (!s.startsWith("$SR"))
             return;
-        String nick = s.split(" ")[1];
-        String file = s.split(" ", 3)[2].split(new String(new byte[] { 0x05 }))[0];
-        handler.onSearchResult(new SearchResult(nick, file));
+        byte[][] d = ArrayUtils.split(data, (byte)0x20, 3);
+        byte[][] r = ArrayUtils.split(d[2], (byte)0x05);
+        String info = new String(r[1]).split(" ", 2)[1];
+        String[] slots = info.split("/", 2);
+        handler.onSearchResult(new SearchResult(new String(d[1]), r[0], new Integer(slots[0]), new Integer(slots[1])));
     }
 
 }

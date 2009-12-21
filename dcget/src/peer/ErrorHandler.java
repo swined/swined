@@ -1,6 +1,6 @@
 package peer;
 
-public class ErrorHandler implements IPeerHandler {
+class ErrorHandler implements IPeerHandler {
 
     private PeerConnection conn;
     private IPeerEventHandler handler;

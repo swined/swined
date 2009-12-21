@@ -50,7 +50,7 @@ public class PeerConnection {
         writer.sendLock("some_random_lock", "kio_dcpp");
     }
 
-    public void get(String file, int start) throws Exception {
+    public void get(byte[] file, int start) throws Exception {
         writer.sendGet(file, start);
     }
 
