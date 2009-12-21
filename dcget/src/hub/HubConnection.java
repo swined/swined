@@ -13,6 +13,7 @@ public class HubConnection {
 
     public HubConnection(IHubEventHandler handler, ILogger logger, String host, int port, String nick) throws Exception {
         this.handler = handler;
+        logger.debug("connecting to " + host + ":" + port);
         Socket sock = new Socket(host, port);
         this.reader = new HubReader(sock.getInputStream(), logger);
         this.writer = new HubWriter(sock.getOutputStream(), logger);
