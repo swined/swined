@@ -7,7 +7,6 @@ import util.MutabilityChecker;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        //MutabilityChecker.check(ImmutableMap.class);
         MutabilityChecker.check(Const.class);
 //        MutabilityChecker.check(ConstExpression.class);
 //        MutabilityChecker.check(Equation.class);
