@@ -2,6 +2,7 @@
 #define	_HUBWRITER_H
 
 #include "Socket.h"
+#include "Exception.h"
 
 class HubWriter {
 public:

@@ -3,6 +3,8 @@
 
 #include "IHubHandler.h"
 #include "Socket.h"
+#include "Exception.h"
+#include <vector>
 
 class HubReader {
 public:
