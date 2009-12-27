@@ -14,11 +14,13 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="hub" projectFiles="true">
         <itemPath>ConnectToMeHandler.h</itemPath>
+        <itemPath>HubConnection.cpp</itemPath>
         <itemPath>HubConnection.h</itemPath>
         <itemPath>HubReader.h</itemPath>
         <itemPath>HubWriter.h</itemPath>
         <itemPath>IHubEventHandler.h</itemPath>
         <itemPath>IHubHandler.h</itemPath>
+        <itemPath>LockHandler.cpp</itemPath>
         <itemPath>LockHandler.h</itemPath>
         <itemPath>SRHandler.h</itemPath>
         <itemPath>SearchResult.h</itemPath>
@@ -31,6 +33,7 @@
         <itemPath>Exception.h</itemPath>
         <itemPath>Socket.cpp</itemPath>
         <itemPath>Socket.h</itemPath>
+        <itemPath>StringUtils.h</itemPath>
       </logicalFolder>
       <itemPath>DownloadManager.h</itemPath>
       <itemPath>main.cpp</itemPath>

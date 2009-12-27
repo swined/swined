@@ -4,6 +4,7 @@
 #include "IHubHandler.h"
 #include "Socket.h"
 #include "Exception.h"
+#include "ILogger.h"
 #include <vector>
 
 class HubReader {
@@ -36,9 +37,9 @@ private:
     std::string buffer;
     std::vector<IHubHandler*> handlers;
     void readStream() {
-        std::string buf = std::string();
+        std::string buf;
         in->recv(buf);
-        if (buf.length() == 0);
+        if (buf.length() == 0)
             return;
         buffer.append(buf);
     }
@@ -46,7 +47,7 @@ private:
         int ix = buffer.find('|', 0);
         if (ix != -1) {
             std::string cmd = buffer.substr(0, ix - 1);
-            buffer.replace(0, ix, "");
+            buffer.replace(0, ix + 1, "");
             logger->debug(std::string("received hub command: ") + cmd);
             for (int i = 0; i < handlers.size(); i++)
                 handlers.at(i)->handleHubCommand(cmd);
