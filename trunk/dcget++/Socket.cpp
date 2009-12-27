@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <iostream>
 #include "Exception.h"
+#include <sstream>
 
 Socket::Socket() : m_sock(-1) {
     memset(&m_addr, 0, sizeof ( m_addr));
@@ -33,11 +34,27 @@ void Socket::recv(std::string& s) const {
     char buf [ MAXRECV + 1 ];
     s = "";
     memset(buf, 0, MAXRECV + 1);
+    errno = 0;
     int status = ::recv(m_sock, buf, MAXRECV, 0);
-    if (status == -1) {
-        throw Exception("socket error");
-    } else {
-        s = buf;
+    int e;
+    std::stringstream ss;
+    switch (status) {
+        case 0: return;
+        case -1:
+            e = errno;
+            switch (e) {
+                case EAGAIN:
+                    return;
+                case ENOMSG:
+                    return;
+                default:
+                    ss << "socket error: " << strerror(e) << " (" << e << ")";
+                    throw Exception(ss.str().c_str());
+            };
+        default:
+//            ss << "received " << status << " bytes";
+  //          throw Exception(ss.str().c_str());
+            s = buf;
     }
 }
 

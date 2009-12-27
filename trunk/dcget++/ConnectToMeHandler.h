@@ -15,15 +15,13 @@ public:
     }
 
     virtual void handleHubCommand(const std::string& data) {
-        throw Exception("suddenly ConnectToMehandler::handleHubCommand()");
-/*
-        if (!data->startsWith("$ConnectToMe"))
+        if (data.find("$ConnectToMe") != 0)
             return;
-        std::vector<ByteArray*> *t = data->split(' ');
-        ByteArray *addr = t->at(2);
-        std::vector<ByteArray*> *ip = addr->split(':', 2);
-        handler->onPeerConnectionRequested(ip->at(0)->toString(), ip->at(1)->toInt());
-         */
+        throw Exception("suddenly ConnectoToMeHandler::handle()");
+//        std::vector<ByteArray*> *t = data->split(' ');
+//        ByteArray *addr = t->at(2);
+//        std::vector<ByteArray*> *ip = addr->split(':', 2);
+//        handler->onPeerConnectionRequested(ip->at(0)->toString(), ip->at(1)->toInt());
     }
 
     virtual ~ConnectToMeHandler() {
