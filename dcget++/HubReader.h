@@ -9,19 +9,13 @@
 
 class HubReader {
 public:
-    HubReader() {
-
-    }
-
     HubReader(const HubReader& orig) {
         throw Exception("suddenly HubReader(copy)");
     }
     virtual ~HubReader() {
-        //for (int i = 0; i < handlers.size(); i++)
-            //delete handlers[i];
     }
-    HubReader(Socket& sock, ILogger *logger) {
-        this->in = sock;
+    HubReader(Socket *sock, ILogger *logger) {
+        in = sock;
         this->logger = logger;
     }
     void registerHandler(IHubHandler* handler) {
@@ -35,12 +29,12 @@ public:
 private:
 
     ILogger *logger;
-    Socket in;
+    Socket *in;
     std::string buffer;
     std::vector<IHubHandler*> handlers;
     void readStream() {
         std::string buf;
-        in.recv(buf);
+        in->recv(buf);
         if (buf.length() == 0)
             return;
         buffer.append(buf);

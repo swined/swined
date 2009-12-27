@@ -7,11 +7,9 @@
 
 class Exception {
 public:
-    Exception(const std::string& message) {
-        this->message = message;
+    Exception(const std::string& message) : message(message) {
     }
-    Exception(const Exception& orig) {
-        this->message = orig.message;
+    Exception(const Exception& orig) : message(orig.message) {
     }
     std::string getMessage() {
         return message;

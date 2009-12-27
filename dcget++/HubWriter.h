@@ -6,12 +6,11 @@
 
 class HubWriter {
 public:
-    HubWriter() {}
     HubWriter(const HubWriter& orig) {
         throw Exception("suddenly HubWriter(&)");
     }
     virtual ~HubWriter() {}
-    HubWriter(Socket& sock, ILogger *logger) {
+    HubWriter(Socket *sock, ILogger *logger) {
         this->out = sock;
         this->logger = logger;
     }
@@ -36,10 +35,10 @@ public:
 
 private:
     ILogger *logger;
-    Socket out;
+    Socket *out;
     void sendCommand(std::string s) const {
         logger->debug(std::string("send command to hub: ") + s);
-        out.send(s + std::string("|"));
+        out->send(s + std::string("|"));
     }
 };
 
