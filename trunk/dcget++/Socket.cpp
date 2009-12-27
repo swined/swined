@@ -6,10 +6,6 @@
 #include "Exception.h"
 #include <sstream>
 
-Socket::Socket() : m_sock(-1) {
-    memset(&m_addr, 0, sizeof ( m_addr));
-}
-
 Socket::~Socket() {
     if (is_valid())
         ::close(m_sock);
@@ -40,7 +36,7 @@ void Socket::recv(std::string& s) const {
     std::stringstream ss;
     switch (status) {
         case 0: return;
-        case -1:
+        case -1 :
             e = errno;
             switch (e) {
                 case EAGAIN:
@@ -52,13 +48,13 @@ void Socket::recv(std::string& s) const {
                     throw Exception(ss.str().c_str());
             };
         default:
-//            ss << "received " << status << " bytes";
-  //          throw Exception(ss.str().c_str());
             s = buf;
     }
 }
 
 void Socket::connect(const std::string host, const int port) {
+    sockaddr_in m_addr;
+    memset(&m_addr, 0, sizeof ( m_addr));
     if (!is_valid())
         throw Exception("invalid socket");
     m_addr.sin_family = AF_INET;
@@ -71,10 +67,10 @@ void Socket::connect(const std::string host, const int port) {
         throw Exception("connection failed");
 }
 
-void Socket::set_non_blocking(const bool b) {
+void Socket::set_non_blocking(const bool b) const {
     int opts;
     opts = fcntl(m_sock, F_GETFL);
-    if (opts < 0) 
+    if (opts < 0)
         throw Exception("fcntl() failed");
     if (b)
         opts = (opts | O_NONBLOCK);
