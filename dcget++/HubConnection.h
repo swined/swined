@@ -5,9 +5,13 @@
 #include "ILogger.h"
 #include "HubReader.h"
 #include "HubWriter.h"
+#include "KeyGenerator.h"
 
 class HubConnection {
 public:
+    HubConnection() {
+        
+    }
     HubConnection(const HubConnection& orig) {
         throw Exception("suddenly copy constructor");
     }
@@ -15,18 +19,17 @@ public:
 
     HubConnection(IHubEventHandler *handler, ILogger *logger, const std::string& host, int port, const std::string& nick);
     void run() {
-        reader->run();
+        reader.run();
     }
     void onHubConnected(const std::string& lock) {
-        //throw Exception((std::string("suddenly onHubConnected(): ") + lock).c_str());
-        writer->sendKey(KeyGenerator.generateKey(lock));
-        writer->sendValidateNick(nick);
-        writer->sendVersion("0.01");
-        writer->sendMyInfo(nick);
+        writer.sendKey(KeyGenerator::generateKey(lock));
+        writer.sendValidateNick(nick);
+        writer.sendVersion("0.01");
+        writer.sendMyInfo(nick);
         handler->onHubConnected();
     }
     void search(const std::string& tth) {
-        throw Exception("suddenly search()");
+        writer.sendTTHSearch(nick, tth);
     }
     void requestPeerConnection(const std::string& target) {
         throw Exception("suddenly peer connection requested");
@@ -35,8 +38,9 @@ public:
 private:
 
     IHubEventHandler *handler;
-    HubReader *reader;
-    HubWriter *writer;
+    Socket sock;
+    HubReader reader;
+    HubWriter writer;
     std::string nick;
 
 

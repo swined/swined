@@ -6,17 +6,17 @@
 
 HubConnection::HubConnection(IHubEventHandler *handler, ILogger *logger, const std::string& host, int port, const std::string& nick) {
     this->handler = handler;
-    logger->debug(std::string("connecting to ") + host);
-    Socket *sock = new Socket();
-    sock->create();
-    sock->connect(host, port);
-    sock->set_non_blocking(true);
-    logger->debug(std::string("connected"));
-    this->reader = new HubReader(sock, logger);
-    this->writer = new HubWriter(sock, logger);
-    this->nick = std::string(nick);
-    reader->registerHandler(new LockHandler(this));
-    reader->registerHandler(new SRHandler(handler));
-    reader->registerHandler(new ConnectToMeHandler(handler));
+    logger->debug("connecting to " + host);
+    sock.create();
+    sock.connect(host, port);
+    sock.set_non_blocking(true);
+    logger->debug("connected");
+    reader = HubReader(sock, logger);
+    writer = HubWriter(sock, logger);
+    this->nick = nick;
+    reader.registerHandler(new LockHandler(this));
+    //reader.registerHandler(new SRHandler(handler));
+    //reader.registerHandler(new ConnectToMeHandler(handler));
+ //   throw Exception("suddenly HubConnection()");
 }
 

@@ -16,7 +16,11 @@ public:
     void handleHubCommand(const std::string& data) {
         if (data.find("$SR") != 0)
             return;
-        throw Exception("suddenly SRHandler::handle()");
+        std::vector<std::string> d = StringUtils::split(data, 0x20, 3);
+        std::vector<std::string> r = StringUtils::split(d[2], 0x05);
+        std::string info = StringUtils::split(r[1], ' ', 2)[1];
+        std::vector<std::string> slots = StringUtils::split(info, '/', 2);
+        handler->onSearchResult(SearchResult(d[1], r[0], atoi(slots[0].c_str()), atoi(slots[1].c_str())));
     }
 
 private:

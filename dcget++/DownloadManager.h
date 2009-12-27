@@ -19,14 +19,15 @@ public:
     }
 
     void download(const std::string& host, int port, const std::string& tth) {
-        hub = new HubConnection(this, logger, host, port, nick);
+        hub = HubConnection(this, logger, host, port, nick);
+        throw Exception("suddenly download()");
         this->tth = tth;
         while (true) {
-            hub->run();
+            hub.run();
         }
     }
     void onHubConnected() {
-        hub->search(tth);
+        hub.search(tth);
     }
 
     void onSearchResult(const SearchResult& r) {
@@ -40,7 +41,7 @@ public:
 private:
 
     ILogger *logger;
-    HubConnection *hub;
+    HubConnection hub;
     std::string tth;
     std::string nick;
 

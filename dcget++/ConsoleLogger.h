@@ -9,7 +9,7 @@ public:
 
     }
     ConsoleLogger(const ConsoleLogger& orig) {
-        
+        throw Exception("suddenly ConsoleLogger()");
     }
     virtual ~ConsoleLogger() {}
     virtual void warn(const std::string& message) {
