@@ -5,14 +5,18 @@
 #include "ConnectToMeHandler.h"
 
 HubConnection::HubConnection(IHubEventHandler *handler, ILogger *logger, const std::string& host, int port, const std::string& nick)
-: reader(sock, logger), writer(sock, logger), nick(nick) {
+{
+    this->nick = nick;
     this->handler = handler;
     logger->debug("connecting to " + host);
-    sock.connect(host, port);
-    sock.set_non_blocking(true);
+    this->sock = new Socket();
+    sock->connect(host, port);
+    sock->set_non_blocking(true);
     logger->debug("connected");
-    reader.registerHandler(new LockHandler(this));
-    reader.registerHandler(new SRHandler(handler));
-    reader.registerHandler(new ConnectToMeHandler(handler));
+    this->writer = new HubWriter(sock, logger);
+    this->reader = new HubReader(sock, logger);
+    reader->registerHandler(new LockHandler(this));
+    reader->registerHandler(new SRHandler(handler));
+    reader->registerHandler(new ConnectToMeHandler(handler));
 }
 
