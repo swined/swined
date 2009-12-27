@@ -2,6 +2,7 @@
 #define	_EXCEPTION_H
 
 #include <stdlib.h>
+#include <string.h>
 
 class Exception {
 public:

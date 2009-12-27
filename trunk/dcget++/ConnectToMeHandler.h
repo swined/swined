@@ -2,7 +2,6 @@
 #define	_CONNECTTOMEHANDLER_H
 
 #include "IHubEventHandler.h"
-#include "ByteArray.h"
 
 class ConnectToMeHandler : public virtual IHubHandler {
 public:

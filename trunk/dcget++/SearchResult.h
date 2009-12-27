@@ -3,12 +3,10 @@
 
 #include <string>
 
-#include "ByteArray.h"
-
 class SearchResult {
 public:
 
-    SearchResult(const std::string& nick, const ByteArray& file, int freeSlots, int totalSlots) {
+    SearchResult(const std::string& nick, const std::string& file, int freeSlots, int totalSlots) {
         this->nick = nick;
         this->file = file;
         this->freeSlots = freeSlots;
@@ -25,7 +23,7 @@ public:
 private:
 
     std::string nick;
-    ByteArray file;
+    std::string file;
     int freeSlots;
     int totalSlots;
 

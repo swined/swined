@@ -28,7 +28,6 @@
         <itemPath>ILogger.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="util" projectFiles="true">
-        <itemPath>ByteArray.h</itemPath>
         <itemPath>Exception.h</itemPath>
         <itemPath>Socket.cpp</itemPath>
         <itemPath>Socket.h</itemPath>
