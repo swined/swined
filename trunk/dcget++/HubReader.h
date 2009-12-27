@@ -35,7 +35,8 @@ private:
     std::vector<IHubHandler*> handlers;
     void readStream() {
         std::string buf = std::string();
-        if (in->recv(buf) == 0);
+        in->recv(buf);
+        if (buf.length() == 0);
             return;
         buffer.append(buf);
     }
