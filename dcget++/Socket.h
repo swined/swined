@@ -9,19 +9,17 @@
 #include <string>
 #include <arpa/inet.h>
 
-const int MAXHOSTNAME = 200;
-const int MAXCONNECTIONS = 5;
-const int MAXRECV = 500;
+const int MAXRECV = 1024;
 
 class Socket
 {
  public:
   Socket();
   virtual ~Socket();
-  bool create();
-  bool connect ( const std::string host, const int port );
-  bool send ( const std::string ) const;
-  int recv ( std::string& ) const;
+  void create();
+  void connect ( const std::string host, const int port );
+  void send ( const std::string ) const;
+  void recv ( std::string& ) const;
   void set_non_blocking ( const bool );
   bool is_valid() const { return m_sock != -1; }
 
@@ -29,7 +27,6 @@ class Socket
 
   int m_sock;
   sockaddr_in m_addr;
-
 
 };
 
