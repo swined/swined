@@ -6,30 +6,32 @@
 
 class HubWriter {
 public:
+    HubWriter() {
+        
+    }
     HubWriter(const HubWriter& orig) {
         throw Exception("suddenly HubWriter(&)");
     }
     virtual ~HubWriter() {
-        throw Exception("suddenly ~HubWriter()");
     }
-    HubWriter(Socket *sock, ILogger *logger) {
+    HubWriter(Socket sock, ILogger *logger) {
         this->out = sock;
         this->logger = logger;
     }
     void sendValidateNick(const std::string& nick) {
-        throw Exception("suddenly sendValidateNick()");
+        sendCommand(std::string("$ValidateNick ") + nick);
     }
     void sendKey(const std::string& key) {
-        throw Exception("suddenly sendKey()");
+        sendCommand(std::string("$Key ") + key);
     }
     void sendVersion(const std::string& version) {
-        throw Exception("suddenly sendVersion()");
+        sendCommand(std::string("$Version ") + version);
     }
     void sendMyInfo(const std::string& nick) {
-        throw Exception("suddenly sendMyInfo()");
+        sendCommand(std::string("$MyINFO $ALL ") + nick + std::string(" $ $56k\x08$$1000000000000$"));
     }
     void sendTTHSearch(const std::string& nick, const std::string& tth) {
-        throw Exception("suddenly sendTTHSearch()");
+        sendCommand(std::string("$Search Hub:") + nick + std::string(" F?F?0?9?TTH:") + tth);
     }
     void sendRevConnectToMe(const std::string& nick, const std::string& target) {
         throw Exception("suddenly sendRevConnectToMe()");
@@ -37,8 +39,11 @@ public:
 
 private:
     ILogger *logger;
-    Socket *out;
-    void sendString(std::string s);
+    Socket out;
+    void sendCommand(std::string s) {
+        logger->debug(std::string("send command to hub: ") + s);
+        out.send(s + std::string("|"));
+    }
 };
 
 #endif	/* _HUBWRITER_H */

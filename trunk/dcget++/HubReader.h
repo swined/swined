@@ -9,20 +9,22 @@
 
 class HubReader {
 public:
+    HubReader() {
+
+    }
+
     HubReader(const HubReader& orig) {
         throw Exception("suddenly HubReader(copy)");
     }
     virtual ~HubReader() {
         for (int i = 0; i < handlers.size(); i++)
-            delete handlers.at(i);
+            delete handlers[i];
     }
-    HubReader(Socket *sock, ILogger *logger) {
+    HubReader(Socket sock, ILogger *logger) {
         this->in = sock;
         this->logger = logger;
-        buffer = std::string();
-        handlers = std::vector<IHubHandler*>();
     }
-    void registerHandler(IHubHandler *handler) {
+    void registerHandler(IHubHandler* handler) {
         handlers.push_back(handler);
     }
     void run() {
@@ -33,12 +35,12 @@ public:
 private:
 
     ILogger *logger;
-    Socket *in;
+    Socket in;
     std::string buffer;
     std::vector<IHubHandler*> handlers;
     void readStream() {
         std::string buf;
-        in->recv(buf);
+        in.recv(buf);
         if (buf.length() == 0)
             return;
         buffer.append(buf);
@@ -46,7 +48,7 @@ private:
     void parseCommand() {
         int ix = buffer.find('|', 0);
         if (ix != -1) {
-            std::string cmd = buffer.substr(0, ix - 1);
+            std::string cmd = buffer.substr(0, ix);
             buffer.replace(0, ix + 1, "");
             logger->debug(std::string("received hub command: ") + cmd);
             for (int i = 0; i < handlers.size(); i++)

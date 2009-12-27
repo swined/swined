@@ -31,6 +31,7 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="util" projectFiles="true">
         <itemPath>Exception.h</itemPath>
+        <itemPath>KeyGenerator.h</itemPath>
         <itemPath>Socket.cpp</itemPath>
         <itemPath>Socket.h</itemPath>
         <itemPath>StringUtils.h</itemPath>
