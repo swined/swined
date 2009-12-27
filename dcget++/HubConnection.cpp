@@ -8,7 +8,6 @@ HubConnection::HubConnection(IHubEventHandler *handler, ILogger *logger, const s
 : reader(sock, logger), writer(sock, logger), nick(nick) {
     this->handler = handler;
     logger->debug("connecting to " + host);
-    sock.create();
     sock.connect(host, port);
     sock.set_non_blocking(true);
     logger->debug("connected");

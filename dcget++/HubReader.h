@@ -20,7 +20,7 @@ public:
         //for (int i = 0; i < handlers.size(); i++)
             //delete handlers[i];
     }
-    HubReader(Socket sock, ILogger *logger) {
+    HubReader(Socket& sock, ILogger *logger) {
         this->in = sock;
         this->logger = logger;
     }

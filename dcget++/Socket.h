@@ -15,14 +15,19 @@ const int MAXRECV = 1024;
 class Socket {
 public:
 
-    Socket() : m_sock(-1) {
+    Socket() : m_sock(socket(AF_INET, SOCK_STREAM, 0)) {
+        if (!is_valid())
+            throw Exception("create(): invalid socket");
     }
 
     Socket(const Socket& orig) : m_sock(orig.m_sock) {
+        throw Exception("copying socket");
     }
-    virtual ~Socket();
-    void create();
-    void connect(const std::string host, const int port);
+    virtual ~Socket() {
+        if (is_valid())
+            ::close(m_sock);
+    }
+    void connect(const std::string host, const int port) const;
     void send(const std::string) const;
     void recv(std::string&) const;
     void set_non_blocking(const bool) const;

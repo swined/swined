@@ -6,27 +6,17 @@
 #include "Exception.h"
 #include <sstream>
 
-Socket::~Socket() {
-    if (is_valid())
-        ::close(m_sock);
-}
-
-void Socket::create() {
-    m_sock = socket(AF_INET, SOCK_STREAM, 0);
+void Socket::send(const std::string s) const {
     if (!is_valid())
         throw Exception("invalid socket");
-    int on = 1;
-    if (setsockopt(m_sock, SOL_SOCKET, SO_REUSEADDR, (const char*) & on, sizeof ( on)) == -1)
-        throw Exception("setsockopt() failed");
-}
-
-void Socket::send(const std::string s) const {
     int status = ::send(m_sock, s.c_str(), s.size(), MSG_NOSIGNAL);
     if (status == -1)
         throw Exception("send() failed");
 }
 
 void Socket::recv(std::string& s) const {
+    if (!is_valid())
+        throw Exception("recv(): invalid socket");
     char buf [ MAXRECV + 1 ];
     s = "";
     memset(buf, 0, MAXRECV + 1);
@@ -52,11 +42,11 @@ void Socket::recv(std::string& s) const {
     }
 }
 
-void Socket::connect(const std::string host, const int port) {
+void Socket::connect(const std::string host, const int port) const {
     sockaddr_in m_addr;
     memset(&m_addr, 0, sizeof ( m_addr));
     if (!is_valid())
-        throw Exception("invalid socket");
+        throw Exception("connect(): invalid socket");
     m_addr.sin_family = AF_INET;
     m_addr.sin_port = htons(port);
     int status = inet_pton(AF_INET, host.c_str(), &m_addr.sin_addr);
@@ -68,6 +58,8 @@ void Socket::connect(const std::string host, const int port) {
 }
 
 void Socket::set_non_blocking(const bool b) const {
+    if (!is_valid())
+        throw Exception("invalid socket");
     int opts;
     opts = fcntl(m_sock, F_GETFL);
     if (opts < 0)
