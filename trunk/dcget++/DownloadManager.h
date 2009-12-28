@@ -4,8 +4,9 @@
 #include "IHubEventHandler.h"
 #include "ILogger.h"
 #include "HubConnection.h"
+#include "IPeerEventHandler.h"
 
-class DownloadManager : public virtual IHubEventHandler {
+class DownloadManager : public virtual IHubEventHandler, public virtual IPeerEventHandler {
 public:
     DownloadManager(const DownloadManager& orig) {
         throw Exception("copy constructor suddenly");
@@ -36,6 +37,26 @@ public:
     void onPeerConnectionRequested(const std::string& ip, int port) {
         throw Exception("suddenly peer connection requested");
     }
+
+    void onPeerConnected(PeerConnection *peer) {
+        throw Exception("suddenly onPeerConnected()");
+    }
+    void onFileLengthReceived(PeerConnection *peer, int length) {
+        throw Exception("suddenly onFileLengthReceived()");
+    }
+    void onHandShakeDone(PeerConnection *peer) {
+        throw Exception("suddenly onHandShakeDone()");
+    }
+    void onNoFreeSlots(PeerConnection *peer) {
+        throw Exception("suddenly onNoFreeSlots()");
+    }
+    void onPeerError(PeerConnection *peer, const std::string& error) {
+        throw Exception("suddenly onPeerError()");
+    }
+    void onPeerData(PeerConnection *peer, const std::string& data) {
+        throw Exception("suddenly onPeerData()");
+    };
+
 
 private:
 
