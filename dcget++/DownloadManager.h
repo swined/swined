@@ -39,7 +39,6 @@ public:
         }
     }
 
-
     void onHubConnected() {
         hub->search(tth);
     }
@@ -54,7 +53,11 @@ public:
     }
 
     void onPeerConnectionRequested(const std::string& ip, int port) {
-        throw Exception("suddenly peer connection requested");
+        try {
+            peerConnection = new PeerConnection(logger, this, ip, port);
+        } catch (Exception e) {
+            logger->warn("peer error: " + e.getMessage());
+        }
     }
 
     void onPeerConnected(PeerConnection *peer) {
