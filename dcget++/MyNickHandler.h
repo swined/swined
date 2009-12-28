@@ -1,6 +1,10 @@
 #ifndef _MYNICKHANDLER_H
 #define	_MYNICKHANDLER_H
 
+#include "IPeerEventHandler.h"
+#include "PeerConnection.h"
+
+
 class MyNickHandler : public virtual IPeerHandler {
 public:
     MyNickHandler(IPeerEventHandler *handler, PeerConnection *conn) {

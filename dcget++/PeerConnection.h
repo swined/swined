@@ -7,15 +7,9 @@
 #include "PeerReader.h"
 #include "PeerWriter.h"
 #include "PeerLogger.h"
-#include "MyNickHandler.h"
-#include "FileLengthHandler.h"
-#include "LockHandler.h"
-#include "KeyHandler.h"
-#include "PeerLockHandler.h"
-#include "ErrorHandler.h"
-#include "MaxedOutHandler.h"
-#include "DataHandler.h"
+#include "KeyGenerator.h"
 
+class IPeerEventHandler;
 class PeerConnection {
 public:
     
@@ -37,24 +31,7 @@ public:
         reader->read();
     }
 
-    void connect(const std::string& ip, int port) {
-        logger->debug("connecting to " + ip);
-        sock = new Socket();
-        sock->connect(ip, port);
-        sock->set_non_blocking(true);
-        logger->debug("connected");
-        reader = new PeerReader(sock, logger);
-        reader->registerHandler(new MyNickHandler(handler, this));
-        reader->registerHandler(new FileLengthHandler(this, handler));
-        reader->registerHandler(new PeerLockHandler(this));
-        //reader->registerHandler(new DirectionHandler(handler, this));
-        reader->registerHandler(new KeyHandler(this, handler));
-        reader->registerHandler(new ErrorHandler(this, handler));
-        reader->registerHandler(new MaxedOutHandler(this, handler));
-        reader->registerHandler(new DataHandler(this, handler));
-        writer = new PeerWriter(sock, logger);
-        handler->onPeerConnected(this);
-    }
+    void connect(const std::string& ip, int port);
 
     void handshake(const std::string& nick) {
         writer->sendMyNick(nick);
@@ -65,9 +42,7 @@ public:
         writer->sendGet(file, start);
     }
 
-    void onKeyReceived() {
-        handler->onHandShakeDone(this);
-    }
+    void onKeyReceived();
 
     void onLockReceived(const std::string& lock) {
         writer->sendDirection("Download", 42000);
