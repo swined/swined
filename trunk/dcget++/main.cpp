@@ -5,9 +5,9 @@
 
 int main(int argc, char** argv) {
     ConsoleLogger logger;
+    DownloadManager dm(&logger);
     try {
-        DownloadManager dm(&logger);
-        dm.download(std::string("89.31.118.42"), 411, std::string("W3DVLEHUKUTUVQEUG3A56M7VLNMZGSITPTFTXAI"));
+        dm.download(std::string("89.31.118.42"), 411, std::string("STMUNEWY73LI5KQCVMLWXDMGXZKD76GPJ3M6EQA"));
     } catch (Exception e) {
         logger.error(e.getMessage());
     }

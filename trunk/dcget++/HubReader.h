@@ -6,6 +6,7 @@
 #include "Exception.h"
 #include "ILogger.h"
 #include <vector>
+#include <auto_ptr.h>
 
 class HubReader {
 public:
@@ -18,7 +19,7 @@ public:
         in = sock;
         this->logger = logger;
     }
-    void registerHandler(IHubHandler* handler) {
+    void registerHandler(IHubHandler *handler) {
         handlers.push_back(handler);
     }
     void run() {
