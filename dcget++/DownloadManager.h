@@ -70,6 +70,7 @@ public:
     }
     void onFileLengthReceived(PeerConnection *peer, int length) {
         toRead = length;
+        this->length = length;
         reading = true;
         peer->send(toRead > 40906 ? 40906 : toRead);
     }
@@ -87,6 +88,7 @@ public:
         toRead -= data.length();
         peer->send(toRead > 40906 ? 40906 : toRead);
         logger->debug("got " + StringUtils::itoa(data.length()) + " bytes, " + StringUtils::itoa(toRead) + " bytes left");
+        logger->info(StringUtils::itoa(100 - (int)(100*toRead/length)) + "% done");
     };
 
 
@@ -101,6 +103,7 @@ private:
     std::map<std::string, std::string> filenames;
     int start;
     int toRead;
+    int length;
     bool reading;
     int timeout;
 

@@ -2,10 +2,11 @@
 
 #include "DownloadManager.h"
 #include "ConsoleLogger.h"
+#include "SilentLogger.h"
 #include <fstream>
 
 int main(int argc, char** argv) {
-    ConsoleLogger logger;
+    SilentLogger logger;
     int r = 0;
     try {
         if (argc != 5)
