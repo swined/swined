@@ -65,6 +65,7 @@ public:
     }
     void onFileLengthReceived(PeerConnection *peer, int length) {
         toRead = length;
+        reading = true;
         peer->send(toRead > 40906 ? 40906 : toRead);
     }
     void onHandShakeDone(PeerConnection *peer) {

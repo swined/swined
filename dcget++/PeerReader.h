@@ -5,6 +5,7 @@
 #include "ILogger.h"
 #include "IPeerHandler.h"
 #include <vector>
+#include "StringUtils.h"
 
 class PeerReader {
 public:
@@ -72,6 +73,9 @@ private:
             buffer.replace(0, expectData, "");
             for (int i = 0; i < handlers.size(); i++)
                 handlers.at(i)->handlePeerData(b);
+//        } else {
+  //          if (buffer.length() > 10000)
+    //            throw Exception(StringUtils::itoa(expectData - buffer.length()) + " bytes expected");
         }
     }
 

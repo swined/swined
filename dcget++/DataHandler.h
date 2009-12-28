@@ -15,7 +15,7 @@ public:
     }
 
     void handlePeerData(const std::string& data) {
-        throw Exception("suddenly DataHandler::handlePeerData()");
+        handler->onPeerData(conn, data);
     }
 
     void handlePeerCommand(const std::string& data) {

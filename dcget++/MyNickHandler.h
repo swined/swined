@@ -19,7 +19,6 @@ public:
     }
 
     void handlePeerData(const std::string& data) {
-        throw Exception("suddenly MyNickHandler::handlePeerData()");
     }
 
     void handlePeerCommand(const std::string& data) {

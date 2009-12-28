@@ -15,7 +15,6 @@ public:
     }
 
     void handlePeerData(const std::string& data) {
-        throw Exception("suddenly KeyHandler::handlePeerData()");
     }
 
     void handlePeerCommand(const std::string& data) {
