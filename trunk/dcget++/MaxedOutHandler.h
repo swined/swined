@@ -18,7 +18,6 @@ public:
     }
 
     void handlePeerData(const std::string& data) {
-        throw Exception("suddenly MaxedOutHandler::handlePeerData()");
     }
 
     void handlePeerCommand(const std::string& data) {

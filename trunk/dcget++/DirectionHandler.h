@@ -15,7 +15,6 @@ public:
     }
 
     void handlePeerData(const std::string& data) {
-        throw Exception("suddenly DirectionHandler::handlePeerData()");
     }
 
     void handlePeerCommand(const std::string& data) {

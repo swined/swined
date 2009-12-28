@@ -14,7 +14,6 @@ public:
     }
 
     void handlePeerData(const std::string& data) {
-        throw Exception("suddenly PeerLockHandler::handlePeerData()");
     }
 
     void handlePeerCommand(const std::string& data) {
