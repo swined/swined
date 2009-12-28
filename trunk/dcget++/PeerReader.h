@@ -55,6 +55,7 @@ private:
         if (buf.length() == 0)
             return;
         buffer.append(buf);
+        //logger->info("read " + StringUtils::itoa(buf.length()) + " bytes");
     }
 
     void parseCommand() {

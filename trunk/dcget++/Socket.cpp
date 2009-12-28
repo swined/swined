@@ -38,7 +38,7 @@ void Socket::recv(std::string& s) const {
                     throw Exception(ss.str().c_str());
             };
         default:
-            s = buf;
+            s = std::string(buf, status);
     }
 }
 

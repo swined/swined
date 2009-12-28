@@ -25,6 +25,7 @@ public:
         toRead = 0;
         reading = false;
         timeout = 30;
+        lastData = 0;
     }
 
     void download(const std::string& host, int port, const std::string& tth) {
@@ -33,10 +34,14 @@ public:
         start = time(0);
         while (!reading || toRead != 0) {
             hub->run();
-            if (peerConnection != 0)
+            if (peerConnection != 0) {
                 peerConnection->run();
+                //sleep(1);
+            }
             if (time(0) - start > timeout && peerConnection == 0)
                 throw Exception("search timed out");
+            if (time(0) - lastData > timeout && peerConnection != 0)
+                throw Exception("download timed out");
             if (reading && toRead < 0)
                 throw Exception("shit happened: need to download " + StringUtils::itoa(toRead) + " bytes, which is a negative value");
         }
@@ -59,6 +64,7 @@ public:
         if (peerConnection != 0)
             return;
         try {
+            lastData = time(0);
             peerConnection = new PeerConnection(logger, this, ip, port);
         } catch (Exception e) {
             logger->warn("peer error: " + e.getMessage());
@@ -84,6 +90,7 @@ public:
         throw Exception("suddenly onPeerError()");
     }
     void onPeerData(PeerConnection *peer, const std::string& data) {
+        lastData = time(0);
         out->write(data.c_str(), data.length());
         toRead -= data.length();
         peer->send(toRead > 40906 ? 40906 : toRead);
@@ -102,6 +109,7 @@ private:
     std::string nick;
     std::map<std::string, std::string> filenames;
     int start;
+    int lastData;
     int toRead;
     int length;
     bool reading;
