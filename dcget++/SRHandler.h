@@ -17,14 +17,10 @@ public:
         if (data.find("$SR") != 0)
             return;
         std::vector<std::string> d = StringUtils::split(data, ' ', 3);
-        std::vector<std::string> r = StringUtils::split(d[2], 0x05);
+        std::vector<std::string> r = StringUtils::split(d[2], 0x05, 3);
         std::string info = StringUtils::split(r[1], ' ', 2)[1];
         std::vector<std::string> slots = StringUtils::split(info, '/', 2);
-        std::string file = d[1];
-        std::string nick = r[0];
-        int freeSlots = atoi(slots[0].c_str());
-        int totalSlots = atoi(slots[1].c_str());
-        SearchResult sr(file, nick, freeSlots, totalSlots);
+        SearchResult sr(d[1], r[0], atoi(slots[0].c_str()), atoi(slots[1].c_str()));
         handler->onSearchResult(sr);
     }
 
