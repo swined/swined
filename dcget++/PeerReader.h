@@ -69,7 +69,7 @@ private:
 
     void parseData() {
         if (buffer.length() >= expectData) {
-            std::string b = buffer.substr(0, expectData - 1);
+            std::string b = buffer.substr(0, expectData);
             buffer.replace(0, expectData, "");
             for (int i = 0; i < handlers.size(); i++)
                 handlers.at(i)->handlePeerData(b);

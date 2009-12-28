@@ -15,8 +15,9 @@ public:
     virtual ~DownloadManager() {
         throw Exception("suddenly ~DownloadManager()");
     }
-    DownloadManager(ILogger *logger) {
+    DownloadManager(ILogger *logger, std::ostream *out) {
         this->logger = logger;
+        this->out = out;
         this->nick = std::string(generateNick());
         peerConnection = 0;
         toRead = 0;
@@ -53,6 +54,8 @@ public:
     }
 
     void onPeerConnectionRequested(const std::string& ip, int port) {
+        if (peerConnection != 0)
+            return;
         try {
             peerConnection = new PeerConnection(logger, this, ip, port);
         } catch (Exception e) {
@@ -78,13 +81,17 @@ public:
         throw Exception("suddenly onPeerError()");
     }
     void onPeerData(PeerConnection *peer, const std::string& data) {
-        throw Exception("suddenly onPeerData()");
+        out->write(data.c_str(), data.length());
+        toRead -= data.length();
+        peer->send(toRead > 40906 ? 40906 : toRead);
+        logger->debug("got " + StringUtils::itoa(data.length()) + " bytes, " + StringUtils::itoa(toRead) + " bytes left");
     };
 
 
 private:
 
     ILogger *logger;
+    std::ostream *out;
     HubConnection *hub;
     PeerConnection *peerConnection;
     std::string tth;
