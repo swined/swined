@@ -10,7 +10,7 @@
 #include <arpa/inet.h>
 #include "Exception.h"
 
-const int MAXRECV = 1024;
+const int MAXRECV = 100000;
 
 class Socket {
 public:
