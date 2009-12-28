@@ -4,7 +4,8 @@
 class KeyHandler : public virtual IPeerHandler {
 public:
     KeyHandler(PeerConnection *conn, IPeerEventHandler *handler) {
-        throw Exception("suddenly KeyHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     KeyHandler(const KeyHandler& orig) {
         throw Exception("suddenly KeyHandler(&)");
@@ -18,7 +19,9 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly KeyHandler::handlePeerCommand()");
+        if (data.find("$Key") != 0)
+            return;
+        conn->onKeyReceived();
     }
 
 private:

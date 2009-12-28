@@ -8,7 +8,8 @@
 class MyNickHandler : public virtual IPeerHandler {
 public:
     MyNickHandler(IPeerEventHandler *handler, PeerConnection *conn) {
-        throw Exception("suddenly MyNickHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     MyNickHandler(const MyNickHandler& orig) {
         throw Exception("suddenly MyNickHandler(&)");
@@ -22,7 +23,9 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly MyNickHandler::handlePeerCommand()");
+        if (data.find("$MyNick") != 0)
+            return;
+        conn->onPeerNickReceived(StringUtils::split(data, ' ', 2)[1]);
     }
 
 private:

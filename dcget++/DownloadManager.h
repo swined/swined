@@ -21,7 +21,7 @@ public:
         peerConnection = 0;
         toRead = 0;
         reading = false;
-        timeout = 30000;
+        timeout = 30;
     }
 
     void download(const std::string& host, int port, const std::string& tth) {
@@ -61,7 +61,7 @@ public:
     }
 
     void onPeerConnected(PeerConnection *peer) {
-        throw Exception("suddenly onPeerConnected()");
+        peer->handshake(nick);
     }
     void onFileLengthReceived(PeerConnection *peer, int length) {
         throw Exception("suddenly onFileLengthReceived()");

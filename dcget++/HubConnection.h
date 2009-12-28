@@ -32,7 +32,7 @@ public:
         writer->sendTTHSearch(nick, tth);
     }
     void requestPeerConnection(const std::string& target) {
-        throw Exception("suddenly peer connection requested");
+        writer->sendRevConnectToMe(nick, target);
     }
 
 private:
