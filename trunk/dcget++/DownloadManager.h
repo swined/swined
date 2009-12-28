@@ -20,7 +20,6 @@ public:
 
     void download(const std::string& host, int port, const std::string& tth) {
         hub = new HubConnection(this, logger, host, port, nick);
-//        throw Exception("suddenly download()");
         this->tth = tth;
         while (true) {
             hub->run();
