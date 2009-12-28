@@ -11,7 +11,7 @@ public:
         throw Exception("suddenly FileLengthHandler(&)");
     }
     virtual ~FileLengthHandler() {
-        throw Exception("suddenly ~FileLengthHandler()");
+        
     }
 
     void handlePeerData(const std::string& data) {

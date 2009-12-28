@@ -14,7 +14,8 @@ public:
         throw Exception("suddenly PeerReader(&)");
     }
     virtual ~PeerReader() {
-        throw Exception("suddenly ~PeerReader()");
+        for (int i = 0; i < handlers.size(); i++)
+            delete handlers[i];
     }
 
     PeerReader(Socket *in, ILogger *logger) {

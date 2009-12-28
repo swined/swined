@@ -8,7 +8,6 @@ class HubConnection;
 class LockHandler : public virtual IHubHandler {
 public:
     LockHandler(const LockHandler& orig) {
-        throw Exception("suddenly LockHandler(&)");
     }
     virtual ~LockHandler() {
     }

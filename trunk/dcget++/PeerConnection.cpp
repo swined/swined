@@ -8,6 +8,13 @@
 #include "ErrorHandler.h"
 #include "MaxedOutHandler.h"
 #include "DataHandler.h"
+#include <string>
+
+PeerConnection::PeerConnection(ILogger *logger, IPeerEventHandler *handler, const std::string& ip, int port) {
+    this->logger = new PeerLogger(logger, ip);
+    this->handler = handler;
+    this->connect(ip, port);
+}
 
 void PeerConnection::connect(const std::string& ip, int port) {
     logger->debug("connecting to " + ip);
@@ -19,7 +26,6 @@ void PeerConnection::connect(const std::string& ip, int port) {
     reader->registerHandler(new MyNickHandler(handler, this));
     reader->registerHandler(new FileLengthHandler(this, handler));
     reader->registerHandler(new PeerLockHandler(this));
-    //reader->registerHandler(new DirectionHandler(handler, this));
     reader->registerHandler(new KeyHandler(this, handler));
     reader->registerHandler(new ErrorHandler(this, handler));
     reader->registerHandler(new MaxedOutHandler(this, handler));

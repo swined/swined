@@ -11,7 +11,7 @@ public:
         throw Exception("suddenly KeyHandler(&)");
     }
     virtual ~KeyHandler() {
-        throw Exception("suddenly ~KeyHandler()");
+        
     }
 
     void handlePeerData(const std::string& data) {

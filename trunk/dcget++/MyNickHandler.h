@@ -15,7 +15,7 @@ public:
         throw Exception("suddenly MyNickHandler(&)");
     }
     virtual ~MyNickHandler() {
-        throw Exception("suddenly ~MyNickHandler()");
+        
     }
 
     void handlePeerData(const std::string& data) {

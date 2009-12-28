@@ -14,7 +14,7 @@ public:
         throw Exception("suddenly MaxedOutHandler(&)");
     }
     virtual ~MaxedOutHandler() {
-        throw Exception("suddenly ~MaxedOutHandler()");
+        
     }
 
     void handlePeerData(const std::string& data) {

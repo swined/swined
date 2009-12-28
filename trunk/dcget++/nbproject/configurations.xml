@@ -31,7 +31,6 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="peer" projectFiles="true">
         <itemPath>DataHandler.h</itemPath>
-        <itemPath>DirectionHandler.h</itemPath>
         <itemPath>ErrorHandler.h</itemPath>
         <itemPath>FileLengthHandler.h</itemPath>
         <itemPath>IPeerEventHandler.h</itemPath>

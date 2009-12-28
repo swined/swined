@@ -8,7 +8,7 @@ public:
     }
 
     virtual ~PeerLogger() {
-        throw Exception("suddenly ~PeerLogger()");
+        
     }
 
     PeerLogger(ILogger *logger, const std::string& name) {
