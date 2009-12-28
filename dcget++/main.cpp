@@ -6,6 +6,7 @@
 
 int main(int argc, char** argv) {
     ConsoleLogger logger;
+    int r = 0;
     try {
         if (argc != 5)
             throw Exception("expected exactly 4 args");
@@ -18,7 +19,8 @@ int main(int argc, char** argv) {
         logger.info("done");
     } catch (Exception e) {
         logger.error(e.getMessage());
+        r = 1;
     }
-    return (EXIT_SUCCESS);
+    return r;
 }
 

@@ -10,7 +10,7 @@ public:
         throw Exception("suddenly PeerLockHandler(&)");
     }
     virtual ~PeerLockHandler() {
-        throw Exception("suddenly ~PeerLockHandler()");
+        
     }
 
     void handlePeerData(const std::string& data) {

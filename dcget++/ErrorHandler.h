@@ -11,7 +11,7 @@ public:
         throw Exception("suddenly ErrorHandler(&)");
     }
     virtual ~ErrorHandler() {
-        throw Exception("suddenly ~ErrorHandler()");
+        
     }
 
     void handlePeerData(const std::string& data) {

@@ -7,7 +7,6 @@
 class HubWriter {
 public:
     HubWriter(const HubWriter& orig) {
-        throw Exception("suddenly HubWriter(&)");
     }
     virtual ~HubWriter() {}
     HubWriter(Socket *sock, ILogger *logger) {

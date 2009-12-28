@@ -13,7 +13,9 @@ public:
         throw Exception("copy constructor suddenly");
     }
     virtual ~DownloadManager() {
-        throw Exception("suddenly ~DownloadManager()");
+        delete hub;
+        if (peerConnection != 0)
+            delete peerConnection;
     }
     DownloadManager(ILogger *logger, std::ostream *out) {
         this->logger = logger;

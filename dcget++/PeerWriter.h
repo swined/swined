@@ -10,7 +10,7 @@ public:
         throw Exception("suddenly PeerWriter(&)");
     }
     virtual ~PeerWriter() {
-        throw Exception("suddenly ~PeerWriter()");
+        
     }
 
     PeerWriter(Socket *out, ILogger *logger) {

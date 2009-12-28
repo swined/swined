@@ -14,6 +14,8 @@ public:
         throw Exception("suddenly HubReader(copy)");
     }
     virtual ~HubReader() {
+        for (int i = 0; i < handlers.size(); i++)
+            delete handlers[i];
     }
     HubReader(Socket *sock, ILogger *logger) {
         in = sock;

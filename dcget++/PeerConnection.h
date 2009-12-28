@@ -18,20 +18,17 @@ public:
     }
 
     virtual ~PeerConnection() {
-        throw Exception("suddenly ~PeerConnection()");
+        delete logger;
+        delete reader;
+        delete writer;
+        delete sock;
     }
 
-    PeerConnection(ILogger *logger, IPeerEventHandler *handler, const std::string& ip, int port) {
-        this->logger = new PeerLogger(logger, ip);
-        this->handler = handler;
-        connect(ip, port);
-    }
+    PeerConnection(ILogger *logger, IPeerEventHandler *handler, const std::string& ip, int port);
 
     void run() {
         reader->read();
     }
-
-    void connect(const std::string& ip, int port);
 
     void handshake(const std::string& nick) {
         writer->sendMyNick(nick);
@@ -70,6 +67,8 @@ private:
     PeerWriter *writer;
     std::string nick;
     Socket *sock;
+
+    void connect(const std::string&, int);
 
 };
 

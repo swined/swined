@@ -13,9 +13,6 @@ public:
     HubConnection(const HubConnection& orig) {
         throw Exception("suddenly copy constructor");
     }
-    virtual ~HubConnection() {
-        throw Exception("suddenly ~HubConnection()");
-    }
 
     HubConnection(IHubEventHandler *handler, ILogger *logger, const std::string& host, int port, const std::string& nick);
     void run() {
@@ -33,6 +30,9 @@ public:
     }
     void requestPeerConnection(const std::string& target) {
         writer->sendRevConnectToMe(nick, target);
+    }
+    virtual ~HubConnection() {
+        delete sock;
     }
 
 private:
