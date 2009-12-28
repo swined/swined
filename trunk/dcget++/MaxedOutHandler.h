@@ -1,10 +1,14 @@
 #ifndef _MAXEDOUTHANDLER_H
 #define	_MAXEDOUTHANDLER_H
 
+#include "IPeerEventHandler.h"
+
+
 class MaxedOutHandler : public virtual IPeerHandler {
 public:
     MaxedOutHandler(PeerConnection *conn, IPeerEventHandler *handler) {
-        throw Exception("suddenly MaxedOutHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     MaxedOutHandler(const MaxedOutHandler& orig) {
         throw Exception("suddenly MaxedOutHandler(&)");
@@ -18,7 +22,9 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly MaxedOutHandler::handlePeerCommand()");
+        if (data.find("$MaxedOut") != 0)
+            return;
+        handler->onNoFreeSlots(conn);
     }
 
 private:

@@ -17,7 +17,9 @@ public:
     virtual void handleHubCommand(const std::string& data) {
         if (data.find("$ConnectToMe") != 0)
             return;
-        throw Exception("suddenly ConnectoToMeHandler::handle()");
+        std::string addr = StringUtils::split(data, ' ', 3)[2];
+        std::vector<std::string> ip = StringUtils::split(addr, ':', 2);
+        handler->onPeerConnectionRequested(ip[0], atoi(ip[1].c_str()));
     }
 
     virtual ~ConnectToMeHandler() {

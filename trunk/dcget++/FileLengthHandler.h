@@ -4,7 +4,8 @@
 class FileLengthHandler : public virtual IPeerHandler {
 public:
     FileLengthHandler(PeerConnection *conn, IPeerEventHandler *handler) {
-        throw Exception("suddenly FileLengthHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     FileLengthHandler(const FileLengthHandler& orig) {
         throw Exception("suddenly FileLengthHandler(&)");
@@ -18,7 +19,9 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly FileLengthHandler::handlePeerCommand()");
+        if (data.find("$FileLength") != 0)
+            return;
+        handler->onFileLengthReceived(conn, atoi(StringUtils::split(data, ' ', 2)[1].c_str()));
     }
 
 private:

@@ -4,7 +4,8 @@
 class ErrorHandler : public virtual IPeerHandler {
 public:
     ErrorHandler(PeerConnection *conn, IPeerEventHandler *handler) {
-        throw Exception("suddenly ErrorHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     ErrorHandler(const ErrorHandler& orig) {
         throw Exception("suddenly ErrorHandler(&)");
@@ -18,7 +19,9 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly ErrorHandler::handlePeerCommand()");
+        if (data.find("$Error") != 0)
+            return;
+        throw Exception(StringUtils::split(data, ' ', 2)[1]);
     }
 
 private:

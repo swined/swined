@@ -4,7 +4,8 @@
 class DirectionHandler : public virtual IPeerHandler {
 public:
     DirectionHandler(PeerConnection *conn, IPeerEventHandler *handler) {
-        throw Exception("suddenly DirectionHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     DirectionHandler(const DirectionHandler& orig) {
         throw Exception("suddenly DirectionHandler(&)");

@@ -4,7 +4,7 @@
 class PeerLockHandler : public virtual IPeerHandler {
 public:
     PeerLockHandler(PeerConnection *conn) {
-        throw Exception("suddenly PeerLockHandler()");
+        this->conn = conn;
     }
     PeerLockHandler(const PeerLockHandler& orig) {
         throw Exception("suddenly PeerLockHandler(&)");
@@ -18,7 +18,9 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly PeerLockHandler::handlePeerCommand()");
+        if (data.find("$Lock") != 0)
+            return;
+        conn->onLockReceived(StringUtils::split(data, ' ', 2)[1]);
     }
 
 private:

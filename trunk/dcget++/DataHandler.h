@@ -4,7 +4,8 @@
 class DataHandler : public virtual IPeerHandler {
 public:
     DataHandler(PeerConnection *conn, IPeerEventHandler *handler) {
-        throw Exception("suddenly DataHandler()");
+        this->conn = conn;
+        this->handler = handler;
     }
     DataHandler(const DataHandler& orig) {
         throw Exception("suddenly DataHandler(&)");
@@ -18,7 +19,6 @@ public:
     }
 
     void handlePeerCommand(const std::string& data) {
-        throw Exception("suddenly DataHandler::handlePeerCommand()");
     }
 
 private:

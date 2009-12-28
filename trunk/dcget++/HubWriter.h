@@ -30,7 +30,7 @@ public:
         sendCommand("$Search Hub:" + nick + " F?F?0?9?TTH:" + tth);
     }
     void sendRevConnectToMe(const std::string& nick, const std::string& target) const {
-        throw Exception("suddenly sendRevConnectToMe()");
+        sendCommand("$RevConnectToMe " + nick + " " + target);
     }
 
 private:
