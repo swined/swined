@@ -64,10 +64,11 @@ public:
         peer->handshake(nick);
     }
     void onFileLengthReceived(PeerConnection *peer, int length) {
-        throw Exception("suddenly onFileLengthReceived()");
+        toRead = length;
+        peer->send(toRead > 40906 ? 40906 : toRead);
     }
     void onHandShakeDone(PeerConnection *peer) {
-        throw Exception("suddenly onHandShakeDone()");
+        peer->get(filenames[peer->getNick()], 1);
     }
     void onNoFreeSlots(PeerConnection *peer) {
         throw Exception("suddenly onNoFreeSlots()");
