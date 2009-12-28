@@ -5,6 +5,7 @@
 #include "ILogger.h"
 #include "HubConnection.h"
 #include "IPeerEventHandler.h"
+#include <map>
 
 class DownloadManager : public virtual IHubEventHandler, public virtual IPeerEventHandler {
 public:
@@ -17,15 +18,36 @@ public:
     DownloadManager(ILogger *logger) {
         this->logger = logger;
         this->nick = std::string(generateNick());
+        peerConnection = 0;
+        toRead = 0;
+        reading = false;
+        timeout = 30000;
     }
 
-    void download(const std::string& host, int port, const std::string& tth) {
+/*    void download(const std::string& host, int port, const std::string& tth) {
         hub = new HubConnection(this, logger, host, port, nick);
         this->tth = tth;
         while (true) {
             hub->run();
         }
+    }*/
+
+    void download(const std::string& host, int port, const std::string& tth) {
+        hub = new HubConnection(this, logger, host, port, nick);
+        this->tth = tth;
+        start = time(0);
+        while (!reading || toRead != 0) {
+            hub->run();
+            if (peerConnection != 0)
+                peerConnection->run();
+            if (time(0) - start > timeout && peerConnection == 0)
+                throw Exception("search timed out");
+            if (reading && toRead < 0)
+                throw Exception("shit happened: need to download " + StringUtils::itoa(toRead) + " bytes, which is a negative value");
+        }
     }
+
+
     void onHubConnected() {
         hub->search(tth);
     }
@@ -62,8 +84,14 @@ private:
 
     ILogger *logger;
     HubConnection *hub;
+    PeerConnection *peerConnection;
     std::string tth;
     std::string nick;
+    std::map<std::string, std::string> filenames;
+    int start;
+    int toRead;
+    bool reading;
+    int timeout;
 
     static std::string generateNick() {
         srand(time(NULL));

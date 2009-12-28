@@ -3,8 +3,8 @@
 
 class IPeerHandler {
 public:
-    void handlePeerCommand(const std::string& data);
-    void handlePeerData(const std::string& data);
+    virtual void handlePeerCommand(const std::string& data) = 0;
+    virtual void handlePeerData(const std::string& data) = 0;
     virtual ~IPeerHandler() {};
 private:
 
