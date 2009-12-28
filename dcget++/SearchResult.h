@@ -17,7 +17,6 @@ public:
         this->file = orig.file;
         this->freeSlots = orig.freeSlots;
         this->totalSlots = orig.totalSlots;
-
     }
     virtual ~SearchResult() {}
 private:

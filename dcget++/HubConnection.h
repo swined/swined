@@ -6,6 +6,7 @@
 #include "HubReader.h"
 #include "HubWriter.h"
 #include "KeyGenerator.h"
+#include <auto_ptr.h>
 
 class HubConnection {
 public:
@@ -14,9 +15,6 @@ public:
     }
     virtual ~HubConnection() {
         throw Exception("suddenly ~HubConnection()");
-        delete reader;
-        delete sock;
-        delete writer;
     }
 
     HubConnection(IHubEventHandler *handler, ILogger *logger, const std::string& host, int port, const std::string& nick);
@@ -41,8 +39,8 @@ private:
 
     IHubEventHandler *handler;
     Socket *sock;
-    HubReader *reader;
-    HubWriter *writer;
+    std::auto_ptr<HubReader> reader;
+    std::auto_ptr<HubWriter> writer;
     std::string nick;
 
 

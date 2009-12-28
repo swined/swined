@@ -13,8 +13,8 @@ HubConnection::HubConnection(IHubEventHandler *handler, ILogger *logger, const s
     sock->connect(host, port);
     sock->set_non_blocking(true);
     logger->debug("connected");
-    this->writer = new HubWriter(sock, logger);
-    this->reader = new HubReader(sock, logger);
+    this->writer = std::auto_ptr<HubWriter>(new HubWriter(sock, logger));
+    this->reader = std::auto_ptr<HubReader>(new HubReader(sock, logger));
     reader->registerHandler(new LockHandler(this));
     reader->registerHandler(new SRHandler(handler));
     reader->registerHandler(new ConnectToMeHandler(handler));
