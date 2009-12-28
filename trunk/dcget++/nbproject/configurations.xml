@@ -28,6 +28,7 @@
       <logicalFolder name="f3" displayName="logger" projectFiles="true">
         <itemPath>ConsoleLogger.h</itemPath>
         <itemPath>ILogger.h</itemPath>
+        <itemPath>SilentLogger.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="peer" projectFiles="true">
         <itemPath>DataHandler.h</itemPath>
