@@ -6,7 +6,7 @@ import logger.ConsoleLogger;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        ConsoleLogger logger = new ConsoleLogger();
+        ConsoleLogger logger = new ConsoleLogger(false);
         try {
             FileOutputStream file = new FileOutputStream(args[3]);
             DownloadManager m = new DownloadManager(logger, file);

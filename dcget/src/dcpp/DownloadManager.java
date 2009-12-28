@@ -22,6 +22,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private OutputStream out;
     private Integer toRead;
     private int timeout = 60000;
+    private int length = 0;
 
     public DownloadManager(ILogger logger, OutputStream out) {
         this.logger = logger;
@@ -84,6 +85,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
         toRead = length;
+        this.length = length;
         peer.send(toRead > 40906 ? 40906 : toRead);
     }
 
@@ -104,6 +106,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         toRead -= data.length;
         peer.send(toRead > 40906 ? 40906 : toRead);
         logger.debug("got " + data.length + " bytes, " + toRead + " bytes left");
+        logger.info((100 - (int)(100*toRead/length)) + "% done");
     }
 
 }
