@@ -7,11 +7,13 @@
 int main(int argc, char** argv) {
     ConsoleLogger logger;
     try {
-        std::ofstream out("/home/sw/dcget.mp3", std::ios::out | std::ios::binary);
+        if (argc != 5)
+            throw Exception("expected exactly 4 args");
+        std::ofstream out(argv[4], std::ios::out | std::ios::binary);
         if(!out)
             throw Exception("failed to open file");
         DownloadManager dm(&logger, &out);
-        dm.download(std::string("89.31.118.42"), 411, std::string("STMUNEWY73LI5KQCVMLWXDMGXZKD76GPJ3M6EQA"));
+        dm.download(std::string(argv[1]), atoi(argv[2]), std::string(argv[3]));
         out.close();
         logger.info("done");
     } catch (Exception e) {
