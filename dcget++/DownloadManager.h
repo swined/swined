@@ -30,7 +30,7 @@ public:
     }
 
     void onSearchResult(const SearchResult& r) {
-        throw Exception("suddenly got search result");
+        throw Exception("suddenly SR");
     }
 
     void onPeerConnectionRequested(const std::string& ip, int port) {
