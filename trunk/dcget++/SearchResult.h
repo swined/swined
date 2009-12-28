@@ -18,6 +18,19 @@ public:
         this->freeSlots = orig.freeSlots;
         this->totalSlots = orig.totalSlots;
     }
+
+    int getFreeSlots() const {
+        return freeSlots;
+    }
+
+    std::string getNick() const {
+        return nick;
+    }
+
+    std::string getFile() const {
+        return file;
+    }
+
     virtual ~SearchResult() {}
 private:
 

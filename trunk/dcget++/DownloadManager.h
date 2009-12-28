@@ -24,14 +24,6 @@ public:
         timeout = 30000;
     }
 
-/*    void download(const std::string& host, int port, const std::string& tth) {
-        hub = new HubConnection(this, logger, host, port, nick);
-        this->tth = tth;
-        while (true) {
-            hub->run();
-        }
-    }*/
-
     void download(const std::string& host, int port, const std::string& tth) {
         hub = new HubConnection(this, logger, host, port, nick);
         this->tth = tth;
@@ -53,7 +45,12 @@ public:
     }
 
     void onSearchResult(const SearchResult& r) {
-        throw Exception("suddenly SR");
+        if (r.getFreeSlots() == 0) {
+            logger->warn("file found, but no free slots");
+            return;
+        }
+        filenames[r.getNick()] = r.getFile();
+        hub->requestPeerConnection(r.getNick());
     }
 
     void onPeerConnectionRequested(const std::string& ip, int port) {
