@@ -63,7 +63,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onSearchResult(SearchResult r) throws Exception {
-        if (r.getFreeSlots() == 0) {
+        if (r.getFreeSlots() < 1) {
             logger.warn("file found, but no free slots");
             return;
         }
@@ -72,6 +72,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onPeerConnectionRequested(String ip, int port) throws Exception {
+        if (peerConnection != null)
+            return;
         try {
             peerConnection = new PeerConnection(logger, this, ip, port);
         } catch (Exception e) {
@@ -105,8 +107,12 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         out.write(data);
         toRead -= data.length;
         peer.send(toRead > 40906 ? 40906 : toRead);
-        logger.debug("got " + data.length + " bytes, " + toRead + " bytes left");
-        logger.info((100 - (int)(100*toRead/length)) + "% done");
+        logger.debug("got " + data.length + " bytes, " + toRead + " of " + length + " bytes left");
+        logger.info((int)(100*(1 - (float)toRead/(float)length)) + "% done");
+    }
+
+    public void onSupportsReceived(PeerConnection peer, String[] features) throws Exception {
+        logger.info("peer supports features: " + features);
     }
 
 }

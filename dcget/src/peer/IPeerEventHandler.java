@@ -8,5 +8,6 @@ public interface IPeerEventHandler {
     void onNoFreeSlots(PeerConnection peer) throws Exception;
     void onPeerError(PeerConnection peer, String error) throws Exception;
     void onPeerData(PeerConnection peer, byte[] data) throws Exception;
+    void onSupportsReceived(PeerConnection peer, String[] features) throws Exception;
     
 }

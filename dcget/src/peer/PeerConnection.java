@@ -42,13 +42,14 @@ public class PeerConnection {
         reader.registerHandler(new ErrorHandler(handler, this));
         reader.registerHandler(new MaxedOutHandler(handler, this));
         reader.registerHandler(new DataHandler(handler, this));
+        reader.registerHandler(new SupportsHandler(handler, this));
         writer = new PeerWriter(sock.getOutputStream(), logger);
         handler.onPeerConnected(this);
     }
 
     public void handshake(String nick) throws Exception {
         writer.sendMyNick(nick);
-        writer.sendLock("some_random_lock", "kio_dcpp");
+        writer.sendLock("EXXTENDEDPROTOCOL_some_random_lock", "kio_dcpp");
     }
 
     public void get(byte[] file, int start) throws Exception {
