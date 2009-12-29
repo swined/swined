@@ -31,10 +31,11 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/HubConnection.o \
 	${OBJECTDIR}/Socket.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/HubConnection.o \
 	${OBJECTDIR}/LockHandler.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/PeerConnection.o
 
 # C Compiler Flags
 CFLAGS=
@@ -60,25 +61,30 @@ dist/Release/GNU-Linux-x86/dcget__: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/GNU-Linux-x86
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/dcget__ ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/HubConnection.o: nbproject/Makefile-${CND_CONF}.mk HubConnection.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/HubConnection.o HubConnection.cpp
-
 ${OBJECTDIR}/Socket.o: nbproject/Makefile-${CND_CONF}.mk Socket.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Socket.o Socket.cpp
+
+${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/HubConnection.o: nbproject/Makefile-${CND_CONF}.mk HubConnection.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/HubConnection.o HubConnection.cpp
 
 ${OBJECTDIR}/LockHandler.o: nbproject/Makefile-${CND_CONF}.mk LockHandler.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/LockHandler.o LockHandler.cpp
 
-${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
+${OBJECTDIR}/PeerConnection.o: nbproject/Makefile-${CND_CONF}.mk PeerConnection.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/PeerConnection.o PeerConnection.cpp
 
 # Subprojects
 .build-subprojects:
