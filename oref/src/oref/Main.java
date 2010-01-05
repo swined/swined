@@ -5,7 +5,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        final int c = 100;
+        final int c = 1000;
         Random rand = new Random();
         Point path[] = new Point[c];
         for (int i = 0; i < c; i++)
