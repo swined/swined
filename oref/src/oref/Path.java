@@ -21,50 +21,54 @@ public class Path {
         return length;
     }
 
-    private boolean worthSwap(int i, int j) {
-        //Path p = swap(i, j);
-        //return p.getLength() < getLength();
-        if (i == j)
-            return false;
-        final int im = (i - 1 + path.length) % path.length;
-        final int ip = (i + 1) % path.length;
-        final int jp = (j + 1) % path.length;
-        if (ip == j)
-            return 0 <
-                path[im].getDistance(path[i]) +
-                path[jp].getDistance(path[j]) -
-                path[im].getDistance(path[j]) -
-                path[jp].getDistance(path[i]);
-        final int jm = (j - 1 + path.length) % path.length;
-        if (jp == i)
-            return 0 <
-                path[jm].getDistance(path[j]) +
-                path[ip].getDistance(path[i]) -
-                path[jm].getDistance(path[i]) -
-                path[ip].getDistance(path[j]);
-        return 0 <
-            path[im].getDistance(path[i]) +
-            path[ip].getDistance(path[i]) +
-            path[jm].getDistance(path[j]) +
-            path[jp].getDistance(path[j]) -
-            path[im].getDistance(path[j]) -
-            path[ip].getDistance(path[j]) -
-            path[jm].getDistance(path[i]) -
-            path[jp].getDistance(path[i]);
+    public Point getPoint(int ix) {
+        return path[ix];
     }
 
-    private Path swap(int i, int j) {
-        Point[] t = path.clone();
-        t[i] = path[j];
-        t[j] = path[i];
-        return new Path(t);
+    public int getPointCount() {
+        return path.length;
     }
 
-    public Path optimize() {
-        for (int i = 0; i < path.length - 1; i++)
-            for (int j = i + 1; j < path.length; j++)
-                if (worthSwap(i, j))
-                    return swap(i, j);
+    private static boolean inc(int ix[], int m) {
+        for (int i = ix.length - 1; i >= 0; i--)
+            if (ix[i] + 1 < m) {
+                ix[i]++;
+                return false;
+            } else {
+                ix[i] = 0;
+            }
+        return true;
+    }
+
+    public static boolean unequal(int ix[]) {
+        for (int i = 0; i < ix.length - 1; i++)
+            for (int j = i + 1; j < ix.length; j++)
+                if (ix[i] == ix[j])
+                    return false;
+        return true;
+    }
+
+    public Path optimize(int n) {
+        int ix[] = new int[n];
+        for (int i = 0; i < ix.length; i++)
+            ix[i] = 0;
+        while (!inc(ix, path.length)) {
+            if (!unequal(ix))
+                continue;
+            int jx[] = new int[n];
+            for (int i = 0; i < n; i++)
+                jx[i] = 0;
+            while (!inc(jx, n)) {
+                if (!unequal(jx))
+                    continue;
+                Point t[] = path.clone();
+                for (int i = 0; i < n; i++)
+                    t[ix[i]] = path[ix[jx[i]]];
+                Path p = new Path(t);
+                if (p.getLength() < getLength())
+                    return p;
+            }
+        }
         return null;
     }
 
