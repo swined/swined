@@ -1,5 +1,9 @@
 package oref;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Path {
 
     private final double length;
@@ -69,6 +73,23 @@ public class Path {
                     return p;
             }
         }
+        return null;
+    }
+
+    public Path optimize2() {
+        for (int i = 0; i < path.length; i++)
+            for (int j = 0; j < path.length - 1; j++) {
+                List<Point> t = new LinkedList();
+                for (Point p : path)
+                    t.add(p);
+                t.add(j, t.remove(i));
+                Point[] tt = new Point[t.size()];
+                for (int ii = 0; ii < t.size(); ii++)
+                    tt[ii] = t.get(ii);
+                Path p = new Path(tt);
+                if (p.getLength() < getLength())
+                    return p;
+            }
         return null;
     }
 
