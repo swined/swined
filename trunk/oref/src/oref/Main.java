@@ -13,8 +13,10 @@ public class Main {
         Path p = new Path(path);
         System.out.println(p.getLength());
         Path np = null;
-        while ((np = p.optimize()) != null)
+        while ((np = p.optimize()) != null) {
             p = np;
+            //System.out.println(p.getLength());
+        }
         System.out.println(p.getLength());
     }
 
