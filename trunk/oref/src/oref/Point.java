@@ -10,16 +10,8 @@ public class Point {
         this.y = y;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
     public double getDistance(Point p) {
-        return Math.sqrt((p.getX() - x)*(p.getX() - x)+(p.getY() - y)*(p.getY() - y));
+        return Math.sqrt((p.x - x)*(p.x - x)+(p.y - y)*(p.y - y));
     }
 
 }

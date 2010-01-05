@@ -22,15 +22,27 @@ public class Path {
     }
 
     private boolean worthSwap(int i, int j) {
-        Path p = swap(i, j);
-        return p.getLength() < getLength();
-        /*
+        //Path p = swap(i, j);
+        //return p.getLength() < getLength();
+        if (i == j)
+            return false;
         final int im = (i - 1 + path.length) % path.length;
-        final int ip = (i + 1 + path.length) % path.length;
+        final int ip = (i + 1) % path.length;
+        final int jp = (j + 1) % path.length;
+        if (ip == j)
+            return 0 <
+                path[im].getDistance(path[i]) +
+                path[jp].getDistance(path[j]) -
+                path[im].getDistance(path[j]) -
+                path[jp].getDistance(path[i]);
         final int jm = (j - 1 + path.length) % path.length;
-        final int jp = (j + 1 + path.length) % path.length;
-        final double r =
-            10 +
+        if (jp == i)
+            return 0 <
+                path[jm].getDistance(path[j]) +
+                path[ip].getDistance(path[i]) -
+                path[jm].getDistance(path[i]) -
+                path[ip].getDistance(path[j]);
+        return 0 <
             path[im].getDistance(path[i]) +
             path[ip].getDistance(path[i]) +
             path[jm].getDistance(path[j]) +
@@ -39,8 +51,6 @@ public class Path {
             path[ip].getDistance(path[j]) -
             path[jm].getDistance(path[i]) -
             path[jp].getDistance(path[i]);
-        return r > 10;
-         */
     }
 
     private Path swap(int i, int j) {
