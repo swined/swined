@@ -76,6 +76,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             return;
         try {
             peerConnection = new PeerConnection(logger, this, ip, port);
+            logger.info("connected to " + ip + ":" + port);
         } catch (Exception e) {
             logger.warn("peer error: " + e.getMessage());
         }
@@ -112,7 +113,16 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onSupportsReceived(PeerConnection peer, String[] features) throws Exception {
-        logger.info("peer supports features: " + features);
+        boolean adcGet = false;
+        for (String feature : features)
+            if (feature.equalsIgnoreCase("ADCGet"))
+                adcGet = true;
+        if (!adcGet)
+            throw new Exception("peer does not support adcget");
+        String supports = "";
+        for (String feature : features)
+            supports += feature + " ";
+        logger.info("peer supports features: " + supports);
     }
 
 }
