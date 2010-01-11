@@ -93,7 +93,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onHandShakeDone(PeerConnection peer) throws Exception {
-        peer.get(filenames.get(peer.getNick()), 1);
+        //peer.get(filenames.get(peer.getNick()), 1);
+        peer.adcGet(tth, length - toRead, toRead > 40906 ? 40906 : toRead);
     }
 
     public void onNoFreeSlots(PeerConnection peer) throws Exception {
@@ -107,7 +108,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     public void onPeerData(PeerConnection peer, byte[] data) throws Exception {
         out.write(data);
         toRead -= data.length;
-        peer.send(toRead > 40906 ? 40906 : toRead);
+        peer.adcGet(tth, length - toRead, toRead > 40906 ? 40906 : toRead);
+        //peer.send(toRead > 40906 ? 40906 : toRead);
         logger.debug("got " + data.length + " bytes, " + toRead + " of " + length + " bytes left");
         logger.info((int)(100*(1 - (float)toRead/(float)length)) + "% done");
     }

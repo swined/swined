@@ -43,6 +43,7 @@ public class PeerConnection {
         reader.registerHandler(new MaxedOutHandler(handler, this));
         reader.registerHandler(new DataHandler(handler, this));
         reader.registerHandler(new SupportsHandler(handler, this));
+        reader.registerHandler(new AdcSndHandler(handler, this));
         writer = new PeerWriter(sock.getOutputStream(), logger);
         handler.onPeerConnected(this);
     }
@@ -79,6 +80,14 @@ public class PeerConnection {
 
     public void send(int len) throws Exception {
         writer.sendSend();
+        reader.expect(len);
+    }
+
+    public void adcGet(String tth, int from, int len) throws Exception {
+        writer.sendAdcGet(tth, from, len);
+    }
+
+    public void onAdcSndReceived(int from, int len) throws Exception {
         reader.expect(len);
     }
 
