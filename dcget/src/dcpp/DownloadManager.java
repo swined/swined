@@ -14,12 +14,11 @@ import peer.PeerConnection;
 
 public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
-    private final int timeout = 30000;
     private final int searchPeriod = 60000;
-    private final int chunkSize = 100000;
-    private final int chunkTimeout = 30000;
-    private final int maxChunks = 100;
-    private final Date start = new Date();
+    private final int chunkSize = 100 * 1024;
+    
+    private final int chunkTimeout = chunkSize * 1000;
+    private final int maxChunks = 10 * 1024 * 1024 / chunkSize;
 
     private ILogger logger;
     private String tth;
@@ -27,6 +26,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private OutputStream out;
     private Integer toRead;
     private int length = 0;
+    private boolean hubConnected = false;
     private Set<Chunk> chunks;
     private Set<PeerConnection> connecting;
     private Set<PeerConnection> peers;
@@ -56,8 +56,10 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private void expireChunks() {
         for (Chunk chunk : chunks)
             if (chunk.getData() == null)
-                if (new Date().getTime() - chunk.getCTime() > chunkTimeout)
+                if (new Date().getTime() - chunk.getCTime() > chunkTimeout / (peers.size() + 1)) {
+                    logger.warn("download timed out, dropping peer");
                     peers.remove(chunk.getPeer());
+                }
     }
 
     private void cleanChunks() {
@@ -145,7 +147,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         chunks = new HashSet();
         peers = new HashSet();
         connecting = new HashSet();
-        Date lastSearch = new Date();
+        Date lastSearch = new Date(0);
         while (toRead == null || toRead != 0) {
             hub.run();
             runPeers(peers, logger);
@@ -155,11 +157,9 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             dumpChunks();
             if (toRead != null)
                 requestChunks();
-            if (new Date().getTime() - start.getTime() > timeout && peers.isEmpty())
-                throw new Exception("timed out");
-            if (new Date().getTime() - lastSearch.getTime() > timeout && !peers.isEmpty()) {
+            if (new Date().getTime() - lastSearch.getTime() > searchPeriod && hubConnected) {
                 lastSearch = new Date();
-                logger.info("trying to find more peers");
+                logger.info("looking for peers");
                 hub.search(tth);
             }
             if (toRead != null && toRead < 0)
@@ -179,7 +179,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onHubConnected(HubConnection hub) throws Exception {
-        hub.search(tth);
+        logger.info("connected to hub");
+        hubConnected = true;
     }
 
     public void onSearchResult(HubConnection hub, SearchResult r) throws Exception {

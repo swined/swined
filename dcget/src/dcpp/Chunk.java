@@ -39,8 +39,9 @@ public class Chunk {
         this.data = data;
     }
 
+    @Override
     public String toString() {
-        return "chunk(" + from + "-" + len + ((data == null) ? "" : data.length) + ")";
+        return "chunk(" + from + "-" + (from + len) + ((data == null) ? "" : ", " + data.length) + ")";
     }
 
     public long getCTime() {
