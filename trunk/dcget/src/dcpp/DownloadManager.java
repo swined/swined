@@ -194,11 +194,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         for (Chunk chunk : chunks)
             if (chunk.getPeer() == peer) {
                 chunk.setData(data);
-                
-//                logger.debug("" + chunks.size() + " chunks queued, " + peers.size() + " peers connected, " + connecting.size() + " peers connecting");
-  //              for (Chunk c : chunks) {
-    //                logger.debug("" + c.getStart() + "-" + c.getLength() + " " + ((c.getData() == null) ? "" : "+"));
-      //          }
                 return;
             }
         throw new Exception("unexpected data from peer");
