@@ -21,6 +21,7 @@ public class Main {
             logger.debug("done");
         } catch (Exception e) {
             logger.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 
