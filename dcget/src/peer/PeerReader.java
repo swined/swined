@@ -21,9 +21,10 @@ class PeerReader {
     }
 
     private void readStream() throws Exception {
-        if (in.available() == 0)
+        int a = in.available();
+        if (a == 0)
             return;
-        byte[] read = new byte[in.available()];
+        byte[] read = new byte[a > 10000 ? 10000 : a];
         int c = in.read(read);
         if (c == 0)
             return;
@@ -75,8 +76,12 @@ class PeerReader {
             if (data == null)
                 return;
             logger.debug("received peer command: " + new String(data));
+            boolean handled = false;
             for (IPeerHandler handler : handlers)
-                handler.handlePeerCommand(data);
+                if (handler.handlePeerCommand(data))
+                    handled = true;
+            if (!handled)
+                logger.warn("unhandled command : " + new String(data));
         }
     }
 

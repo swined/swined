@@ -1,6 +1,7 @@
 package hub;
 
-import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.Set;
 import logger.ILogger;
@@ -10,25 +11,23 @@ import util.ArrayUtils;
 class HubReader {
 
     private ILogger logger;
-    private InputStream in;
+    private SocketChannel in;
     private byte[] buffer = new byte[0];
-    private byte[] read = new byte[1024];
     private Set<IHubHandler> handlers = new HashSet();
 
-    public HubReader(InputStream in, ILogger logger) {
+    public HubReader(SocketChannel in, ILogger logger) {
         this.in = in;
         this.logger = logger;
     }
 
     private void readStream() throws Exception {
-        if (in.available() == 0)
+        ByteBuffer bb = ByteBuffer.allocate(1024);
+        int r = in.read(bb);
+        if (r == 0)
             return;
-        int c = in.read(read);
-        if (c == 0)
-            return;
-        if (c == -1)
-            throw new Exception("read failed");
-        buffer = ArrayUtils.append(buffer, read, c);
+        if (r == -1)
+            throw new Exception("connection closede");
+        buffer = ArrayUtils.append(buffer, bb.array());
     }
 
     private byte[] readCommand() throws Exception {

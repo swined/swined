@@ -1,21 +1,23 @@
 package hub;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channel;
+import java.nio.channels.SocketChannel;
 import logger.ILogger;
 
 class HubWriter {
 
     private ILogger logger;
-    private OutputStream out;
+    private SocketChannel out;
 
-    public HubWriter(OutputStream out, ILogger logger) {
+    public HubWriter(SocketChannel out, ILogger logger) {
         this.out = out;
         this.logger = logger;
     }
 
     private void sendString(String s) throws IOException {
-        out.write(s.getBytes());
+        out.write(ByteBuffer.wrap(s.getBytes()));
         logger.debug("sent string to hub: " + s);
     }
 
@@ -32,7 +34,7 @@ class HubWriter {
     }
 
     public void sendMyInfo(String nick) throws IOException {
-        sendString("$MyINFO $ALL " + nick + " $ $56k" + new String(new byte[] { 0x08 }) + "$$1000000000000$|");
+        sendString("$MyINFO $ALL " + nick + " $ $56k" + new String(new byte[] { 0x08 }) + "$$0$|");
     }
     
     public void sendTTHSearch(String nick, String tth) throws IOException {

@@ -14,11 +14,12 @@ class MaxedOutHandler implements IPeerHandler {
 
     }
 
-    public void handlePeerCommand(byte[] data) throws Exception {
+    public boolean handlePeerCommand(byte[] data) throws Exception {
         String s = new String(data);
         if (!s.startsWith("$MaxedOut"))
-            return;
+            return false;
         handler.onNoFreeSlots(conn);
+        return true;
     }
 
 }
