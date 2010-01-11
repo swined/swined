@@ -84,19 +84,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         peer.handshake(nick);
     }
 
-    /*
-    public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
-        if (null != toRead) {
-            if (length != this.length)
-                throw new Exception("peer lied about file length: " + length + " != " + this.length);
-            else
-                return;
-        }
-        toRead = length;
-        this.length = length;
-        adcGet(peer);
-    }*/
-
     public void onHandShakeDone(PeerConnection peer) throws Exception {
         adcGet(peer);
     }
