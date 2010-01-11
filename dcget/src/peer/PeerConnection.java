@@ -35,7 +35,6 @@ public class PeerConnection {
         this.sock = new Socket(ip, port);
         reader = new PeerReader(sock.getInputStream(), logger);
         reader.registerHandler(new MyNickHandler(handler, this));
-        //reader.registerHandler(new FileLengthHandler(handler, this));
         reader.registerHandler(new LockHandler(this));
         reader.registerHandler(new DirectionHandler(handler, this));
         reader.registerHandler(new KeyHandler(handler, this));
