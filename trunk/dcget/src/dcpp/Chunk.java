@@ -1,13 +1,16 @@
 package dcpp;
 
+import java.util.Date;
 import peer.PeerConnection;
 
 public class Chunk {
 
+    private final long start = new Date().getTime();
+    private final int from;
+    private final int len;
+    private final PeerConnection peer;
+
     private byte[] data;
-    private int from;
-    private int len;
-    private PeerConnection peer;
 
     public Chunk(PeerConnection peer, int from, int len) {
         this.peer = peer;
@@ -34,6 +37,14 @@ public class Chunk {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public String toString() {
+        return "chunk(" + from + "-" + len + ((data == null) ? "" : data.length) + ")";
+    }
+
+    public long getCTime() {
+        return start;
     }
 
 }
