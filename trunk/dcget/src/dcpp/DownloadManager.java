@@ -19,23 +19,22 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     
     private final int chunkTimeout = chunkSize * 1000;
     private final int maxChunks = 10 * 1024 * 1024 / chunkSize;
+    private final String nick = generateNick();
+    private final ILogger logger;
+    private final String tth;
+    private final OutputStream out;
 
-    private ILogger logger;
-    private String tth;
-    private String nick;
-    private OutputStream out;
-    private Integer toRead;
+    private Integer toRead = null;
     private int length = 0;
     private boolean hubConnected = false;
     private Set<Chunk> chunks;
     private Set<PeerConnection> connecting;
     private Set<PeerConnection> peers;
 
-    public DownloadManager(ILogger logger, OutputStream out) {
+    public DownloadManager(ILogger logger, OutputStream out, String tth) {
         this.logger = logger;
-        this.nick = generateNick();
         this.out = out;
-        this.toRead = null;
+        this.tth = tth;
     }
 
     private static void runPeers(Set<PeerConnection> peers, ILogger logger) throws Exception {
@@ -95,13 +94,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         return false;
     }
 
-    private boolean isChunkLoading(int start) {
-        for (Chunk chunk : chunks)
-            if (chunk.getStart() == start)
-                return true;
-        return false;
-    }
-
     private PeerConnection getPeer() throws Exception {
         for (PeerConnection peer : peers)
             if (!isPeerBusy(peer))
@@ -110,8 +102,11 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     private int getNextChunk() {
+        Set<Integer> used = new HashSet();
+        for (Chunk c : chunks)
+            used.add(c.getStart());
         for (int i = length - toRead; i < length; i += chunkSize)
-            if (!isChunkLoading(i))
+            if (!used.contains(i))
                 return i;
         return -1;
     }
@@ -141,9 +136,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         logger.info("" + progress + "% (" + rp + "%) done, " + peers.size() + " peers");
     }
 
-    public void download(String host, int port, String tth) throws Exception {
+    public void download(String host, int port) throws Exception {
         HubConnection hub = new HubConnection(this, logger, host, port, nick);
-        this.tth = tth;
         chunks = new HashSet();
         peers = new HashSet();
         connecting = new HashSet();

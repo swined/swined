@@ -1,6 +1,8 @@
 package hub;
 
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 import logger.ILogger;
 import util.KeyGenerator;
 
@@ -14,9 +16,10 @@ public class HubConnection {
     public HubConnection(IHubEventHandler handler, ILogger logger, String host, int port, String nick) throws Exception {
         this.handler = handler;
         logger.debug("connecting to " + host + ":" + port);
-        Socket sock = new Socket(host, port);
-        this.reader = new HubReader(sock.getInputStream(), logger);
-        this.writer = new HubWriter(sock.getOutputStream(), logger);
+        SocketChannel channel = SocketChannel.open(new InetSocketAddress(host, port));
+        channel.configureBlocking(false);
+        this.reader = new HubReader(channel, logger);
+        this.writer = new HubWriter(channel, logger);
         this.nick = nick;
         reader.registerHandler(new LockHandler(this));
         reader.registerHandler(new SRHandler(this, handler));

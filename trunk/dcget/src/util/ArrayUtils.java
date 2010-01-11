@@ -5,6 +5,10 @@ import java.util.List;
 
 public class ArrayUtils {
 
+    public static byte[] append(byte[] a, byte[] b) {
+        return append(a, b, b.length);
+    }
+
     public static byte[] append(byte[] a, byte[] b, int l) {
         byte[] r = new byte[a.length + l];
         for (int i = 0; i < a.length; i++)
