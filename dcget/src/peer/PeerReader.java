@@ -48,6 +48,7 @@ class PeerReader {
         if (buffer.length >= expectData) {
             byte[] b = ArrayUtils.sub(buffer, 0, expectData - 1);
             buffer = ArrayUtils.sub(buffer, expectData, buffer.length - 1);
+            expectData = 0;
             return b;
         }
         return null;
