@@ -2,8 +2,8 @@ package hub;
 
 public interface IHubEventHandler {
 
-    void onHubConnected() throws Exception;
-    void onSearchResult(SearchResult result) throws Exception;
-    void onPeerConnectionRequested(String ip, int port) throws Exception;
+    void onHubConnected(HubConnection hub) throws Exception;
+    void onSearchResult(HubConnection hub, SearchResult result) throws Exception;
+    void onPeerConnectionRequested(HubConnection hub, String ip, int port) throws Exception;
 
 }

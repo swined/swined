@@ -4,9 +4,11 @@ import util.ArrayUtils;
 
 class SRHandler implements IHubHandler {
 
+    private HubConnection hub;
     private IHubEventHandler handler;
 
-    public SRHandler(IHubEventHandler handler) {
+    public SRHandler(HubConnection hub, IHubEventHandler handler) {
+        this.hub = hub;
         this.handler = handler;
     }
 
@@ -22,7 +24,7 @@ class SRHandler implements IHubHandler {
         String info = new String(r[1]).split(" ", 2)[1];
         String[] slots = info.split("/", 2);
         int size = new Integer(new String(x[0]));
-        handler.onSearchResult(new SearchResult(new String(d[1]), r[0], size, new Integer(slots[0]), new Integer(slots[1])));
+        handler.onSearchResult(hub, new SearchResult(new String(d[1]), r[0], size, new Integer(slots[0]), new Integer(slots[1])));
     }
 
 }
