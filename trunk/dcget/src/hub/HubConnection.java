@@ -19,8 +19,8 @@ public class HubConnection {
         this.writer = new HubWriter(sock.getOutputStream(), logger);
         this.nick = nick;
         reader.registerHandler(new LockHandler(this));
-        reader.registerHandler(new SRHandler(handler));
-        reader.registerHandler(new ConnectToMeHandler(handler));
+        reader.registerHandler(new SRHandler(this, handler));
+        reader.registerHandler(new ConnectToMeHandler(this, handler));
     }
 
     public void run() throws Exception {
@@ -32,7 +32,7 @@ public class HubConnection {
         writer.sendValidateNick(nick);
         writer.sendVersion("0.01");
         writer.sendMyInfo(nick);
-        handler.onHubConnected();
+        handler.onHubConnected(this);
     }
 
     public void search(String tth) throws Exception {

@@ -18,7 +18,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private final int maxChunks = 10;
 
     private ILogger logger;
-    private HubConnection hub;
     private String tth;
     private String nick;
     private OutputStream out;
@@ -118,7 +117,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void download(String host, int port, String tth) throws Exception {
-        hub = new HubConnection(this, logger, host, port, nick);
+        HubConnection hub = new HubConnection(this, logger, host, port, nick);
         this.tth = tth;
         Date start = new Date();
         chunks = new HashSet();
@@ -150,11 +149,11 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         return r;
     }
 
-    public void onHubConnected() throws Exception {
+    public void onHubConnected(HubConnection hub) throws Exception {
         hub.search(tth);
     }
 
-    public void onSearchResult(SearchResult r) throws Exception {
+    public void onSearchResult(HubConnection hub, SearchResult r) throws Exception {
         if (r.getFreeSlots() < 1) {
             logger.warn("file found, but no free slots");
             return;
@@ -169,7 +168,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         hub.requestPeerConnection(r.getNick());
     }
 
-    public void onPeerConnectionRequested(String ip, int port) throws Exception {
+    public void onPeerConnectionRequested(HubConnection hub, String ip, int port) throws Exception {
         try {
             connecting.add(new PeerConnection(logger, this, ip, port));
             logger.info("connected to " + ip + ":" + port);

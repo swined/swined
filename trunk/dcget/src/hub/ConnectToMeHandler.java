@@ -2,10 +2,12 @@ package hub;
 
 class ConnectToMeHandler implements IHubHandler {
 
+    private HubConnection hub;
     private IHubEventHandler handler;
 
-    public ConnectToMeHandler(IHubEventHandler handler) {
+    public ConnectToMeHandler(HubConnection hub, IHubEventHandler handler) {
         this.handler = handler;
+        this.hub = hub;
     }
 
     public void handleHubCommand(byte[] data) throws Exception {
@@ -14,7 +16,7 @@ class ConnectToMeHandler implements IHubHandler {
             return;
         String addr = s.split(" ")[2];
         String[] ip = addr.split(":");
-        handler.onPeerConnectionRequested(ip[0], Integer.parseInt(ip[1]));
+        handler.onPeerConnectionRequested(hub, ip[0], Integer.parseInt(ip[1]));
     }
 
 }
