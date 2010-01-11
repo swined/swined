@@ -151,7 +151,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             dumpChunks();
             if (toRead != null)
                 requestChunks();
-            if (new Date().getTime() - lastSearch.getTime() > searchPeriod && hubConnected) {
+            if (new Date().getTime() - lastSearch.getTime() > searchPeriod * (peers.size() + 1) && hubConnected) {
                 lastSearch = new Date();
                 logger.info("looking for peers");
                 hub.search(tth);
@@ -194,10 +194,10 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     public void onPeerConnectionRequested(HubConnection hub, String ip, int port) throws Exception {
         try {
+            logger.info("connecting to " + ip + ":" + port);
             connecting.add(new PeerConnection(logger, this, ip, port));
-            logger.info("connected to " + ip + ":" + port);
         } catch (Exception e) {
-            logger.warn("peer error: " + e.getMessage());
+            logger.warn("connection failed: " + e.getMessage());
         }
     }
 

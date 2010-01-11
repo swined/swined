@@ -1,6 +1,7 @@
 package peer;
 
-import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.Set;
 import logger.ILogger;
@@ -9,28 +10,23 @@ import util.ArrayUtils;
 class PeerReader {
 
     private ILogger logger;
-    private InputStream in;
+    private SocketChannel in;
     private byte[] buffer = new byte[0];
     private Set<IPeerHandler> handlers = new HashSet();
     private int expectData;
 
-    public PeerReader(InputStream in, ILogger logger) {
+    public PeerReader(SocketChannel in, ILogger logger) {
         this.in = in;
         this.logger = logger;
         this.expectData = 0;
     }
 
     private void readStream() throws Exception {
-        int a = in.available();
-        if (a == 0)
+        ByteBuffer bb = ByteBuffer.allocate(1024);
+        int r = in.read(bb);
+        if (r <= 0)
             return;
-        byte[] read = new byte[a > 10000 ? 10000 : a];
-        int c = in.read(read);
-        if (c == 0)
-            return;
-        if (c == -1)
-            throw new Exception("read failed");
-        buffer = ArrayUtils.append(buffer, read, c);
+        buffer = ArrayUtils.append(buffer, bb.array(), r);
     }
 
     private byte[] readCommand() throws Exception {

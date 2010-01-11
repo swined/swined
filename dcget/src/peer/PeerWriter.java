@@ -1,21 +1,22 @@
 package peer;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import logger.ILogger;
 
 class PeerWriter {
 
     private ILogger logger;
-    private OutputStream out;
+    private SocketChannel out;
 
-    public PeerWriter(OutputStream out, ILogger logger) {
+    public PeerWriter(SocketChannel out, ILogger logger) {
         this.out = out;
         this.logger = logger;
     }
 
     private void sendBytes(byte[] s) throws IOException {
-        out.write(s);
+        out.write(ByteBuffer.wrap(s));
         logger.debug("sent string to peer: " + new String(s));
     }
 

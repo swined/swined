@@ -1,6 +1,7 @@
 package peer;
 
-import java.net.Socket;
+import java.net.InetSocketAddress;
+import java.nio.channels.SocketChannel;
 import util.KeyGenerator;
 import logger.ILogger;
 
@@ -11,7 +12,6 @@ public class PeerConnection {
     private PeerReader reader;
     private PeerWriter writer;
     private String nick;
-    private Socket sock;
 
     public PeerConnection(ILogger logger, IPeerEventHandler handler, String ip, int port) throws Exception {
         this.logger = new PeerLogger(logger, ip);
@@ -20,20 +20,14 @@ public class PeerConnection {
     }
 
     public void run() throws Exception {
-        if (!sock.isConnected())
-            throw new Exception("not connected");
-        if (sock.isInputShutdown())
-            throw new Exception("not connected");
-        if (sock.isOutputShutdown())
-            throw new Exception("not connected");
-        if (sock.isClosed())
-            throw new Exception("not connected");
         reader.read();
     }
 
     private void connect(String ip, int port) throws Exception {
-        this.sock = new Socket(ip, port);
-        reader = new PeerReader(sock.getInputStream(), logger);
+        SocketChannel channel = SocketChannel.open(new InetSocketAddress(ip, port));
+        channel.configureBlocking(false);
+        writer = new PeerWriter(channel, logger);
+        reader = new PeerReader(channel, logger);
         reader.registerHandler(new MyNickHandler(handler, this));
         reader.registerHandler(new LockHandler(this));
         reader.registerHandler(new DirectionHandler(handler, this));
@@ -43,7 +37,6 @@ public class PeerConnection {
         reader.registerHandler(new DataHandler(handler, this));
         reader.registerHandler(new SupportsHandler(handler, this));
         reader.registerHandler(new AdcSndHandler(handler, this));
-        writer = new PeerWriter(sock.getOutputStream(), logger);
         handler.onPeerConnected(this);
     }
 
