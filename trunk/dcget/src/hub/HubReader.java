@@ -23,11 +23,9 @@ class HubReader {
     private void readStream() throws Exception {
         ByteBuffer bb = ByteBuffer.allocate(1024);
         int r = in.read(bb);
-        if (r == 0)
+        if (r <= 0)
             return;
-        if (r == -1)
-            throw new Exception("connection closede");
-        buffer = ArrayUtils.append(buffer, bb.array());
+        buffer = ArrayUtils.append(buffer, bb.array(), r);
     }
 
     private byte[] readCommand() throws Exception {
