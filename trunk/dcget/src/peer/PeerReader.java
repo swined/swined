@@ -22,7 +22,7 @@ class PeerReader {
     }
 
     private void readStream() throws Exception {
-        ByteBuffer bb = ByteBuffer.allocate(1024);
+        ByteBuffer bb = ByteBuffer.allocate(1024*1024);
         int r = in.read(bb);
         if (r <= 0)
             return;

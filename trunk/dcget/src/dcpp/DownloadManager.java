@@ -15,9 +15,9 @@ import peer.PeerConnection;
 public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     private final int searchPeriod = 60000;
-    private final int chunkSize = 100 * 1024;
-    
-    private final int chunkTimeout = chunkSize * 1000;
+    private final int chunkSize = 1024 * 1024;
+    private final int chunkTimeout = 60000;
+
     private final int maxChunks = 100 * 1024 * 1024 / chunkSize;
     private final String nick = generateNick();
     private final ILogger logger;
@@ -126,13 +126,13 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     private void status() {
-        int size = length - toRead;
-        int real = size;
+        long size = length - toRead;
+        long real = size;
         for (Chunk chunk : chunks)
             if (chunk.getData() != null)
                 real += chunk.getLength();
-        double progress = (int)(1000 * (double)size / (double)length) / 10;
-        double rp = (int)(1000 * (double)real / (double)length) / 10;
+        double progress = Math.round(1000.0 * size / length) / 10.0;
+        double rp = Math.round(1000.0 * real / length) / 10.0;
         logger.info("" + progress + "% (" + rp + "%) done, " + peers.size() + " peers");
     }
 
