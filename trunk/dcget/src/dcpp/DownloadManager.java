@@ -5,7 +5,9 @@ import hub.IHubEventHandler;
 import hub.SearchResult;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import logger.ILogger;
 import peer.IPeerEventHandler;
 import peer.PeerConnection;
@@ -16,11 +18,14 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private HubConnection hub;
     private String tth;
     private String nick;
-    private PeerConnection peerConnection;
     private OutputStream out;
     private Integer toRead;
     private int timeout = 60000;
     private int length = 0;
+    private int maxChunks = 10;
+    private Set<Chunk> chunks;
+    private Set<PeerConnection> connecting;
+    private Set<PeerConnection> peers;
 
     public DownloadManager(ILogger logger, OutputStream out) {
         this.logger = logger;
@@ -29,15 +34,105 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         this.toRead = null;
     }
 
+    private static void runPeers(Set<PeerConnection> peers, ILogger logger) throws Exception {
+        Set<PeerConnection> delete = new HashSet();
+        Set<PeerConnection> p = new HashSet(peers);
+        for (PeerConnection peer : p) {
+            try {
+                peer.run();
+            } catch (Exception e) {
+                logger.warn("peer error: " + e.getMessage());
+                delete.add(peer);
+            }
+        }
+        for (PeerConnection peer : delete)
+            peers.remove(peer);
+    }
+
+    private void cleanChunks() {
+        Set<Chunk> delete = new HashSet();
+        for (Chunk chunk : chunks)
+            if (chunk.getData() == null)
+                if (!peers.contains(chunk.getPeer()))
+                    delete.add(chunk);
+        for (Chunk chunk : delete)
+            chunks.remove(chunk);
+    }
+
+    private void dumpChunks() throws Exception {
+        cleanChunks();
+        while (chunks.size() > 0) {
+            Chunk chunk = null;
+            for (Chunk c : chunks)
+                if (c.getStart() == length - toRead)
+                    if (c.getData() != null)
+                        chunk = c;
+            if (chunk == null)
+                return;
+            out.write(chunk.getData());
+            toRead -= chunk.getData().length;
+            chunks.remove(chunk);
+        }
+    }
+
+    private boolean isPeerBusy(PeerConnection peer) throws Exception {
+        for (Chunk chunk : chunks)
+            if (chunk.getPeer().equals(peer))
+                return true;
+        return false;
+    }
+
+    private boolean isChunkLoading(int start) {
+        for (Chunk chunk : chunks)
+            if (chunk.getStart() == start)
+                return true;
+        return false;
+    }
+
+    private PeerConnection getPeer() throws Exception {
+        for (PeerConnection peer : peers)
+            if (!isPeerBusy(peer))
+                return peer;
+        return null;
+    }
+
+    private int getNextChunk() {
+        for (int i = length - toRead; i < length; i += 40906)
+            if (!isChunkLoading(i))
+                return i;
+        return -1;
+    }
+
+    private void requestChunks() throws Exception {
+        while (chunks.size() < maxChunks) {
+            int next = getNextChunk();
+            if (next == -1)
+                return;
+            int len = toRead > 40906 ? 40906 : toRead;
+            PeerConnection peer = getPeer();
+            if (peer == null)
+                return;
+            chunks.add(new Chunk(peer, next, len));
+            peer.adcGet(tth, next, len);
+        }
+    }
+
     public void download(String host, int port, String tth) throws Exception {
         hub = new HubConnection(this, logger, host, port, nick);
         this.tth = tth;
         Date start = new Date();
+        chunks = new HashSet();
+        peers = new HashSet();
+        connecting = new HashSet();
         while (toRead == null || toRead != 0) {
             hub.run();
-            if (peerConnection != null)
-                peerConnection.run();
-            if (new Date().getTime() - start.getTime() > timeout && peerConnection == null)
+            runPeers(peers, logger);
+            runPeers(connecting, logger);
+            if (toRead != null) {
+                dumpChunks();
+                requestChunks();
+            }
+            if (new Date().getTime() - start.getTime() > timeout && peers.isEmpty())
                 throw new Exception("search timed out");
             if (toRead != null && toRead < 0)
                 throw new Exception("shit happened: need to download " + toRead + " bytes, which is a negative value");
@@ -70,10 +165,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onPeerConnectionRequested(String ip, int port) throws Exception {
-        if (peerConnection != null)
-            return;
         try {
-            peerConnection = new PeerConnection(logger, this, ip, port);
+            connecting.add(new PeerConnection(logger, this, ip, port));
             logger.info("connected to " + ip + ":" + port);
         } catch (Exception e) {
             logger.warn("peer error: " + e.getMessage());
@@ -85,7 +178,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onHandShakeDone(PeerConnection peer) throws Exception {
-        adcGet(peer);
+        peers.add(peer);
+        connecting.remove(peer);
     }
 
     public void onNoFreeSlots(PeerConnection peer) throws Exception {
@@ -96,20 +190,16 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         throw new Exception(err);
     }
 
-    private void adcGet(PeerConnection peer) throws Exception {
-        peer.adcGet(tth, length - toRead, toRead > 40906 ? 40906 : toRead);
-    }
-
     public void onPeerData(PeerConnection peer, byte[] data) throws Exception {
         out.write(data);
         toRead -= data.length;
         logger.debug("got " + data.length + " bytes, " + toRead + " of " + length + " bytes left");
-        logger.info((int)(100*(1 - (float)toRead/(float)length)) + "% done");
-        if (toRead == 0)
-            return;
-        if (toRead < 0)
-            throw new Exception("negative toRead detected");
-        adcGet(peer);
+        for (Chunk chunk : chunks)
+            if (chunk.getPeer() == peer) {
+                chunk.setData(data);
+                return;
+            }
+        throw new Exception("unexpected data from peer");
     }
 
     public void onSupportsReceived(PeerConnection peer, String[] features) throws Exception {
