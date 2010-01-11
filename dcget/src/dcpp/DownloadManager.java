@@ -60,11 +60,10 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     private void dumpChunks() throws Exception {
-        cleanChunks();
         while (chunks.size() > 0) {
             Chunk chunk = null;
             for (Chunk c : chunks)
-                if (c.getStart() == length - toRead)
+                if (c.getStart() == (length - toRead))
                     if (c.getData() != null)
                         chunk = c;
             if (chunk == null)
@@ -128,10 +127,10 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             hub.run();
             runPeers(peers, logger);
             runPeers(connecting, logger);
-            if (toRead != null) {
-                dumpChunks();
+            cleanChunks();
+            dumpChunks();
+            if (toRead != null)
                 requestChunks();
-            }
             if (new Date().getTime() - start.getTime() > timeout && peers.isEmpty())
                 throw new Exception("search timed out");
             if (toRead != null && toRead < 0)
@@ -191,12 +190,15 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onPeerData(PeerConnection peer, byte[] data) throws Exception {
-        out.write(data);
-        toRead -= data.length;
         logger.debug("got " + data.length + " bytes, " + toRead + " of " + length + " bytes left");
         for (Chunk chunk : chunks)
             if (chunk.getPeer() == peer) {
                 chunk.setData(data);
+                
+//                logger.debug("" + chunks.size() + " chunks queued, " + peers.size() + " peers connected, " + connecting.size() + " peers connecting");
+  //              for (Chunk c : chunks) {
+    //                logger.debug("" + c.getStart() + "-" + c.getLength() + " " + ((c.getData() == null) ? "" : "+"));
+      //          }
                 return;
             }
         throw new Exception("unexpected data from peer");
