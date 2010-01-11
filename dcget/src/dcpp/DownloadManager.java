@@ -15,7 +15,11 @@ import peer.PeerConnection;
 public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     private final int timeout = 30000;
-    private final int maxChunks = 10;
+    private final int searchPeriod = 60000;
+    private final int chunkSize = 100000;
+    private final int chunkTimeout = 30000;
+    private final int maxChunks = 100;
+    private final Date start = new Date();
 
     private ILogger logger;
     private String tth;
@@ -49,6 +53,13 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             peers.remove(peer);
     }
 
+    private void expireChunks() {
+        for (Chunk chunk : chunks)
+            if (chunk.getData() == null)
+                if (new Date().getTime() - chunk.getCTime() > chunkTimeout)
+                    peers.remove(chunk.getPeer());
+    }
+
     private void cleanChunks() {
         Set<Chunk> delete = new HashSet();
         for (Chunk chunk : chunks)
@@ -76,8 +87,9 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     private boolean isPeerBusy(PeerConnection peer) throws Exception {
         for (Chunk chunk : chunks)
-            if (chunk.getPeer().equals(peer))
-                return true;
+            if (chunk.getData() == null)
+                if (chunk.getPeer().equals(peer))
+                    return true;
         return false;
     }
 
@@ -96,7 +108,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     private int getNextChunk() {
-        for (int i = length - toRead; i < length; i += 40906)
+        for (int i = length - toRead; i < length; i += chunkSize)
             if (!isChunkLoading(i))
                 return i;
         return -1;
@@ -107,7 +119,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             int next = getNextChunk();
             if (next == -1)
                 return;
-            int len = toRead > 40906 ? 40906 : toRead;
+            int len = toRead > chunkSize ? chunkSize : toRead;
             PeerConnection peer = getPeer();
             if (peer == null)
                 return;
@@ -116,23 +128,40 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         }
     }
 
+    private void status() {
+        int size = length - toRead;
+        int real = size;
+        for (Chunk chunk : chunks)
+            if (chunk.getData() != null)
+                real += chunk.getLength();
+        double progress = (int)(1000 * (double)size / (double)length) / 10;
+        double rp = (int)(1000 * (double)real / (double)length) / 10;
+        logger.info("" + progress + "% (" + rp + "%) done, " + peers.size() + " peers");
+    }
+
     public void download(String host, int port, String tth) throws Exception {
         HubConnection hub = new HubConnection(this, logger, host, port, nick);
         this.tth = tth;
-        Date start = new Date();
         chunks = new HashSet();
         peers = new HashSet();
         connecting = new HashSet();
+        Date lastSearch = new Date();
         while (toRead == null || toRead != 0) {
             hub.run();
             runPeers(peers, logger);
             runPeers(connecting, logger);
+            expireChunks();
             cleanChunks();
             dumpChunks();
             if (toRead != null)
                 requestChunks();
             if (new Date().getTime() - start.getTime() > timeout && peers.isEmpty())
-                throw new Exception("search timed out");
+                throw new Exception("timed out");
+            if (new Date().getTime() - lastSearch.getTime() > timeout && !peers.isEmpty()) {
+                lastSearch = new Date();
+                logger.info("trying to find more peers");
+                hub.search(tth);
+            }
             if (toRead != null && toRead < 0)
                 throw new Exception("shit happened: need to download " + toRead + " bytes, which is a negative value");
         }
@@ -199,6 +228,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         for (Chunk chunk : chunks)
             if (chunk.getPeer() == peer) {
                 chunk.setData(data);
+                status();
                 return;
             }
         throw new Exception("unexpected data from peer");
@@ -214,7 +244,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         String supports = "";
         for (String feature : features)
             supports += feature + " ";
-        logger.info("peer supports features: " + supports);
+        logger.debug("peer supports features: " + supports);
     }
 
 }
