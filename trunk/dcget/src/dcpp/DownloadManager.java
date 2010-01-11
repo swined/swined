@@ -5,7 +5,6 @@ import hub.IHubEventHandler;
 import hub.SearchResult;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Random;
 import logger.ILogger;
 import peer.IPeerEventHandler;
@@ -18,7 +17,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private String tth;
     private String nick;
     private PeerConnection peerConnection;
-    private HashMap<String, byte[]> filenames;
     private OutputStream out;
     private Integer toRead;
     private int timeout = 60000;
@@ -33,7 +31,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
     public void download(String host, int port, String tth) throws Exception {
         hub = new HubConnection(this, logger, host, port, nick);
-        filenames = new HashMap();
         this.tth = tth;
         Date start = new Date();
         while (toRead == null || toRead != 0) {
@@ -67,7 +64,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             logger.warn("file found, but no free slots");
             return;
         }
-        filenames.put(r.getNick(), r.getFile());
         length = r.getLength();
         toRead = r.getLength();
         hub.requestPeerConnection(r.getNick());
@@ -88,6 +84,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         peer.handshake(nick);
     }
 
+    /*
     public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
         if (null != toRead) {
             if (length != this.length)
@@ -97,16 +94,11 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         }
         toRead = length;
         this.length = length;
-        //peer.send(toRead > 40906 ? 40906 : toRead);
         adcGet(peer);
-        //peer.adcGet(tth, length - toRead, -1);
-    }
+    }*/
 
     public void onHandShakeDone(PeerConnection peer) throws Exception {
-        //if (null == toRead)
-          //  peer.get(filenames.get(peer.getNick()), 1);
-        //else
-            adcGet(peer);
+        adcGet(peer);
     }
 
     public void onNoFreeSlots(PeerConnection peer) throws Exception {
@@ -131,7 +123,6 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         if (toRead < 0)
             throw new Exception("negative toRead detected");
         adcGet(peer);
-        //peer.send(toRead > 40906 ? 40906 : toRead);
     }
 
     public void onSupportsReceived(PeerConnection peer, String[] features) throws Exception {

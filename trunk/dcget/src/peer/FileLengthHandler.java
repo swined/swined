@@ -18,7 +18,7 @@ class FileLengthHandler implements IPeerHandler {
         String s = new String(data);
         if (!s.startsWith("$FileLength "))
             return;
-        handler.onFileLengthReceived(conn, new Integer(s.split(" ")[1]));
+        //handler.onFileLengthReceived(conn, new Integer(s.split(" ")[1]));
     }
 
 }
