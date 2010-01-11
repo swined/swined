@@ -16,7 +16,7 @@ class AdcSndHandler implements IPeerHandler {
 
     public void handlePeerCommand(byte[] data) throws Exception {
         String s = new String(data);
-        if (!s.startsWith("$AdcSnd "))
+        if (!s.startsWith("$ADCSND "))
             return;
         String f[] = s.split(" ");
         conn.onAdcSndReceived(new Integer(f[3]), new Integer(f[4]));

@@ -50,7 +50,7 @@ public class PeerConnection {
 
     public void handshake(String nick) throws Exception {
         writer.sendMyNick(nick);
-        writer.sendLock("EXXTENDEDPROTOCOL_some_random_lock", "kio_dcpp");
+        writer.sendLock("EXTENDEDPROTOCOL_some_random_lock", "kio_dcpp");
     }
 
     public void get(byte[] file, int start) throws Exception {
@@ -62,6 +62,7 @@ public class PeerConnection {
     }
 
     public void onLockReceived(String lock) throws Exception {
+        writer.sendSupports("ADCGet TTHF");
         writer.sendDirection("Download", 42000);
         writer.sendKey(KeyGenerator.generateKey(lock.getBytes()));
     }
@@ -88,7 +89,12 @@ public class PeerConnection {
     }
 
     public void onAdcSndReceived(int from, int len) throws Exception {
+        logger.debug("peer offered " + len + " bytes of data");
         reader.expect(len);
+    }
+
+    public void sendSupports(String features) throws Exception {
+        writer.sendSupports(features);
     }
 
 }
