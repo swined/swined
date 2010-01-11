@@ -18,7 +18,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     private final int chunkSize = 100 * 1024;
     
     private final int chunkTimeout = chunkSize * 1000;
-    private final int maxChunks = 10 * 1024 * 1024 / chunkSize;
+    private final int maxChunks = 100 * 1024 * 1024 / chunkSize;
     private final String nick = generateNick();
     private final ILogger logger;
     private final String tth;
@@ -221,11 +221,12 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     public void onPeerData(PeerConnection peer, byte[] data) throws Exception {
         logger.debug("got " + data.length + " bytes, " + toRead + " of " + length + " bytes left");
         for (Chunk chunk : chunks)
-            if (chunk.getPeer() == peer) {
-                chunk.setData(data);
-                status();
-                return;
-            }
+            if (chunk.getPeer() == peer)
+                if (chunk.getData() == null) {
+                    chunk.setData(data);
+                    status();
+                    return;
+                }
         throw new Exception("unexpected data from peer");
     }
 
