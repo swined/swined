@@ -10,7 +10,8 @@ public class Main {
         args = new String[] {
             "p2p.academ.org",
             "411",
-            "STMUNEWY73LI5KQCVMLWXDMGXZKD76GPJ3M6EQA",
+            //"STMUNEWY73LI5KQCVMLWXDMGXZKD76GPJ3M6EQA",
+              "YVWQRDZ4KUJSIAG5WFIRJ3L6Z5KZ7ACXEV37QPA",
             "/tmp/dcget.out",
         };
         ConsoleLogger logger = new ConsoleLogger(true);

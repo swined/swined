@@ -14,15 +14,16 @@ import peer.PeerConnection;
 
 public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
 
+    private final int timeout = 30000;
+    private final int maxChunks = 10;
+
     private ILogger logger;
     private HubConnection hub;
     private String tth;
     private String nick;
     private OutputStream out;
     private Integer toRead;
-    private int timeout = 60000;
     private int length = 0;
-    private int maxChunks = 10;
     private Set<Chunk> chunks;
     private Set<PeerConnection> connecting;
     private Set<PeerConnection> peers;
@@ -67,7 +68,7 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
                     if (c.getData() != null)
                         chunk = c;
             if (chunk == null)
-                return;
+                break;
             out.write(chunk.getData());
             toRead -= chunk.getData().length;
             chunks.remove(chunk);
@@ -158,8 +159,13 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             logger.warn("file found, but no free slots");
             return;
         }
-        length = r.getLength();
-        toRead = r.getLength();
+        if (toRead == null) {
+            length = r.getLength();
+            toRead = r.getLength();
+        } else {
+            if (length != r.getLength())
+                throw new Exception("peer lied about length");
+        }
         hub.requestPeerConnection(r.getNick());
     }
 
