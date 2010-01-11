@@ -11,7 +11,6 @@ class PeerReader {
     private ILogger logger;
     private InputStream in;
     private byte[] buffer = new byte[0];
-    private byte[] read = new byte[1024];
     private Set<IPeerHandler> handlers = new HashSet();
     private int expectData;
 
@@ -24,6 +23,7 @@ class PeerReader {
     private void readStream() throws Exception {
         if (in.available() == 0)
             return;
+        byte[] read = new byte[in.available()];
         int c = in.read(read);
         if (c == 0)
             return;
