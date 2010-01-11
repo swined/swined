@@ -1,6 +1,5 @@
 package oref;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -76,20 +75,30 @@ public class Path {
         return null;
     }
 
-    public Path optimize2() {
+    public Path optimize2(int n) {
         for (int i = 0; i < path.length; i++)
-            for (int j = 0; j < path.length - 1; j++) {
+            for (int j = 0; j < path.length - n; j++) {
                 List<Point> t = new LinkedList();
                 for (Point p : path)
                     t.add(p);
-                t.add(j, t.remove(i));
-                Point[] tt = new Point[t.size()];
+                List<Point> tt = new LinkedList();
+                for (int k = 0; k < n; k++)
+                    tt.add(t.remove(i % t.size()));
+                for (Point p : tt)
+                    t.add(j, p);
+                Point[] ttt = new Point[t.size()];
                 for (int ii = 0; ii < t.size(); ii++)
-                    tt[ii] = t.get(ii);
-                Path p = new Path(tt);
+                    ttt[ii] = t.get(ii);
+                Path p = new Path(ttt);
                 if (p.getLength() < getLength())
                     return p;
             }
+        return null;
+    }
+
+    public Path deintersect() {
+        for (int i = 0; i < path.length - 2; i++)
+            for (int j = i + 2; j < path.length; j++);
         return null;
     }
 
