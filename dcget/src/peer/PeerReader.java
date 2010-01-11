@@ -14,6 +14,7 @@ class PeerReader {
     private byte[] buffer = new byte[0];
     private Set<IPeerHandler> handlers = new HashSet();
     private int expectData;
+    private ByteBuffer bb = ByteBuffer.allocate(1024*1024);
 
     public PeerReader(SocketChannel in, ILogger logger) {
         this.in = in;
@@ -22,7 +23,7 @@ class PeerReader {
     }
 
     private void readStream() throws Exception {
-        ByteBuffer bb = ByteBuffer.allocate(1024*1024);
+        bb.clear();
         int r = in.read(bb);
         if (r <= 0)
             return;
