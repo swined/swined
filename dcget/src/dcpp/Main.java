@@ -6,7 +6,14 @@ import logger.ConsoleLogger;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        ConsoleLogger logger = new ConsoleLogger(false);
+        if (args.length == 0)
+        args = new String[] {
+            "p2p.academ.org",
+            "411",
+            "STMUNEWY73LI5KQCVMLWXDMGXZKD76GPJ3M6EQA",
+            "/tmp/dcget.out",
+        };
+        ConsoleLogger logger = new ConsoleLogger(true);
         try {
             FileOutputStream file = new FileOutputStream(args[3]);
             DownloadManager m = new DownloadManager(logger, file);
