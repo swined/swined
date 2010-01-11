@@ -68,6 +68,8 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
             return;
         }
         filenames.put(r.getNick(), r.getFile());
+        length = r.getLength();
+        toRead = r.getLength();
         hub.requestPeerConnection(r.getNick());
     }
 
@@ -87,14 +89,24 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
     }
 
     public void onFileLengthReceived(PeerConnection peer, int length) throws Exception {
+        if (null != toRead) {
+            if (length != this.length)
+                throw new Exception("peer lied about file length: " + length + " != " + this.length);
+            else
+                return;
+        }
         toRead = length;
         this.length = length;
-        peer.send(toRead > 40906 ? 40906 : toRead);
+        //peer.send(toRead > 40906 ? 40906 : toRead);
+        adcGet(peer);
+        //peer.adcGet(tth, length - toRead, -1);
     }
 
     public void onHandShakeDone(PeerConnection peer) throws Exception {
-        //peer.get(filenames.get(peer.getNick()), 1);
-        peer.adcGet(tth, length - toRead, toRead > 40906 ? 40906 : toRead);
+        //if (null == toRead)
+          //  peer.get(filenames.get(peer.getNick()), 1);
+        //else
+            adcGet(peer);
     }
 
     public void onNoFreeSlots(PeerConnection peer) throws Exception {
@@ -105,13 +117,21 @@ public class DownloadManager implements IHubEventHandler, IPeerEventHandler {
         throw new Exception(err);
     }
 
+    private void adcGet(PeerConnection peer) throws Exception {
+        peer.adcGet(tth, length - toRead, toRead > 40906 ? 40906 : toRead);
+    }
+
     public void onPeerData(PeerConnection peer, byte[] data) throws Exception {
         out.write(data);
         toRead -= data.length;
-        peer.adcGet(tth, length - toRead, toRead > 40906 ? 40906 : toRead);
-        //peer.send(toRead > 40906 ? 40906 : toRead);
         logger.debug("got " + data.length + " bytes, " + toRead + " of " + length + " bytes left");
         logger.info((int)(100*(1 - (float)toRead/(float)length)) + "% done");
+        if (toRead == 0)
+            return;
+        if (toRead < 0)
+            throw new Exception("negative toRead detected");
+        adcGet(peer);
+        //peer.send(toRead > 40906 ? 40906 : toRead);
     }
 
     public void onSupportsReceived(PeerConnection peer, String[] features) throws Exception {

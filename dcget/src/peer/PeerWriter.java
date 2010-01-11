@@ -41,6 +41,10 @@ class PeerWriter {
         sendString("$Key " + key + "|");
     }
 
+    public void sendSupports(String features) throws IOException {
+        sendString("$Supports " + features + "|");
+    }
+
     public void sendDirection(String direction, int a) throws Exception {
         sendString("$Direction " + direction + " " + a + "|");
     }
@@ -50,7 +54,7 @@ class PeerWriter {
     }
 
     public void sendAdcGet(String tth, int from, int len) throws Exception {
-        sendString("$ADCGet file TTH/" + tth + " " + from + " " + len + "|");
+        sendString("$ADCGET file TTH/" + tth + " " + from + " " + len + "|");
     }
 
 }
