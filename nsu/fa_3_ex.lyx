@@ -1,0 +1,740 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language russian
+\inputencoding koi8-r
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 0cm
+\topmargin 0cm
+\rightmargin 0cm
+\bottommargin 0cm
+\headheight 0cm
+\headsep 0cm
+\footskip 0cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+1) пост.
+ зад.
+ о разл.
+ пер.
+ ф.
+ по прост.
+ гармоникам
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\frac{a_{0}}{2}+\sum_{n=1}^{\infty}(a_{n}\cos nx+b_{n}\sin nx)$
+\end_inset
+
+ -- р.Ф.
+\end_layout
+
+\begin_layout Standard
+2) коэф.
+ Ф.
+ и р.Ф.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $a_{n}=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\cos nxdx$
+\end_inset
+
+, n=0,1,2,...
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $b_{n}=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin nxdx$
+\end_inset
+
+, n=1,2,...
+\end_layout
+
+\begin_layout Standard
+3) ядро Дирихле
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $D_{n}(z)=\frac{1}{2\pi}\frac{\sin\frac{2n+1}{2}z}{\sin\frac{z}{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+интеграл Дирихле - 
+\begin_inset Formula $\int_{-\pi}^{\pi}f(t)D_{n}(t-x)dt=S_{n}(x)$
+\end_inset
+
+ - частичная сумма р.Ф.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\int_{-\pi}^{\pi}D_{n}(z)dz=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+4) усл.
+ предст.
+ ф.
+ в т.
+ своим р.Ф.
+\end_layout
+
+\begin_layout Standard
+кус.-гл.
+ ф.
+ - 
+\begin_inset Formula $f$
+\end_inset
+
+: 
+\begin_inset Formula $\exists$
+\end_inset
+
+ конеч.
+ число 
+\begin_inset Formula $x_{i}\in[-\pi,\pi]$
+\end_inset
+
+: 
+\begin_inset Formula $\forall(x_{i},x_{i+1})$
+\end_inset
+
+: 
+\begin_inset Formula $f$
+\end_inset
+
+ непр.
+ дифф.
+ и 
+\begin_inset Formula $\forall x_{i}$
+\end_inset
+
+: 
+\begin_inset Formula $lim_{x\rightarrow x_{o}\pm0}f(x)<\infty$
+\end_inset
+
+, 
+\begin_inset Formula $lim_{h\rightarrow+0}\frac{f(x_{i}\pm h)-f(x_{i}\pm0)}{\pm h}<\infty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Т: р.Ф.
+ кус.-гл.
+ 
+\begin_inset Formula $2\pi$
+\end_inset
+
+-п.
+ ф.
+ сх.
+ в 
+\begin_inset Formula $\forall x\in R$
+\end_inset
+
+, а его 
+\begin_inset Formula $\sum=f(x)$
+\end_inset
+
+ в т.
+ непр.
+ и 
+\begin_inset Formula $\frac{1}{2}(f(x+0)-f(x-0))$
+\end_inset
+
+ в т.
+ разр.
+\end_layout
+
+\begin_layout Standard
+5) усл.
+ Дини
+\end_layout
+
+\begin_layout Standard
+р.Ф.
+ ф.
+ 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ в т.
+ 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ сх.
+ к.
+ 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+, если 
+\begin_inset Formula $\exists h>0:\exists\int_{0}^{h}\frac{|\varphi(t)|}{t}dt$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\varphi(t)=f(x_{0}+t)+f(x_{0}-t)-2S_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+6) приц.
+ лок.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{1}$
+\end_inset
+
+ и 
+\begin_inset Formula $f_{2}$
+\end_inset
+
+ -- 
+\begin_inset Formula $2\pi$
+\end_inset
+
+-п.
+ кус.-гл.
+ ф.
+ совп.
+ в окр.
+ 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 
+\begin_inset Formula $\implies$
+\end_inset
+
+р.Ф.
+ 
+\begin_inset Formula $f_{1}$
+\end_inset
+
+ и 
+\begin_inset Formula $f_{2}$
+\end_inset
+
+ сх.
+ или расх.
+ одновременно и к 1 и той же 
+\begin_inset Formula $\sum$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+7) пример разложения
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\begin{cases}
+\frac{\pi}{4} & 0<x<\pi\end{cases}\begin{cases}
+0 & x=0,x=\pi\end{cases}\begin{cases}
+-\frac{\pi}{4} & -\pi<\end{cases}x<0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $a_{n}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $b_{n}=\begin{cases}
+0 & n-\text{чёт}\end{cases}\begin{cases}
+\frac{1}{n} & n-\text{нечёт}\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+8) разл.
+ по 
+\begin_inset Formula $\sin,\cos$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f:[o,\pi]\rightarrow R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sin$
+\end_inset
+
+: продолж 
+\begin_inset Formula $f$
+\end_inset
+
+ на 
+\begin_inset Formula $[-\pi,0)$
+\end_inset
+
+ нечётно: 
+\begin_inset Formula $f(x)=\sum_{n=1}^{\infty}b_{n}\sin nx$
+\end_inset
+
+, 
+\begin_inset Formula $b_{n}=\frac{2}{\pi}\int_{0}^{\pi}f(x)\sin nxdx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\cos$
+\end_inset
+
+: продолж 
+\begin_inset Formula $f$
+\end_inset
+
+ на 
+\begin_inset Formula $[-\pi,0)$
+\end_inset
+
+ чётно: 
+\begin_inset Formula $f(x)=\frac{a_{0}}{2}+\sum_{n=1}^{\infty}a_{n}\cos nx$
+\end_inset
+
+, 
+\begin_inset Formula $a_{n}=\frac{2}{\pi}\int_{0}^{\pi}f(x)\cos nxdx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+9) дифф.
+ и инт.
+ р.Ф.
+ 
+\end_layout
+
+\begin_layout Standard
+дифф.: 
+\begin_inset Formula $\frac{d}{dx}\sim$
+\end_inset
+
+ф.р.Ф., 
+\begin_inset Formula $a'_{n}=nb_{n}$
+\end_inset
+
+, 
+\begin_inset Formula $b'_{n}=-na_{n}$
+\end_inset
+
+, 
+\begin_inset Formula $a'_{0}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+инт.: 
+\begin_inset Formula $g(x)\sim\text{ф.р.Ф.}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{0}=0\implies G(x)=\int_{0}^{x}g(t)dt=\text{р.Ф.},\, A_{0}=2\sum_{n=1}^{\infty}\frac{b_{n}}{n},\, A_{n}=-\frac{b_{n}}{n},\, B_{n}=\frac{a_{n}}{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+10) равн.
+ сх.
+ р.Ф.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f_{n}\rightarrow_{\text{равн. на [a, b]}}f$
+\end_inset
+
+, если sup-норма - 
+\begin_inset Formula $\sup_{x\in[a,b]}|f(x)-f_{n}(x)|\rightarrow_{n\rightarrow\infty}0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S_{n}\rightarrow_{\text{равн. }}S_{\infty}$
+\end_inset
+
+ 
+\begin_inset Formula $\implies$
+\end_inset
+
+р.Ф.
+ сх.
+ равн.
+\end_layout
+
+\begin_layout Standard
+Т: 
+\begin_inset Formula $2\pi$
+\end_inset
+
+-п.
+ ф.
+ 
+\begin_inset Formula $f:R\rightarrow R$
+\end_inset
+
+ непр.
+ дифф.
+ 
+\begin_inset Formula $\implies$
+\end_inset
+
+р.Ф.
+\begin_inset Formula $f$
+\end_inset
+
+ 
+\begin_inset Formula $\rightarrow_{\text{равн. }}\text{f}$
+\end_inset
+
+ 
+\begin_inset Formula $\forall x\in R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+11) суммирование по Фейеру, ядро Фейера
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sigma_{n}=\frac{1}{n}\sum_{i=1}^{n}S_{i}(x)=\frac{1}{n}\int_{-\pi}^{\pi}f(u)\sum_{m=0}^{n-1}D_{m}(u-x)du=\frac{1}{2\pi n}\int_{-\pi}^{\pi}f(u)[\frac{\sin\frac{n}{2}(u-x)}{\sin\frac{1}{2}(u-x)}]^{2}du$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Т: 
+\begin_inset Formula $\exists\lim_{x\rightarrow x_{0}\pm0}\sigma_{n}(x_{0})\implies\lim_{n\rightarrow+\infty}\sigma_{n}(x_{0})=\frac{f(x_{0}+0)+f(x_{0}-0)}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)$
+\end_inset
+
+ непр в 
+\begin_inset Formula $R$
+\end_inset
+
+ 
+\begin_inset Formula $\implies$
+\end_inset
+
+ 
+\begin_inset Formula $\sigma_{n}(x)\rightarrow_{\text{равн. }}f(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+12) т.
+ Вейерштрасса о равн.
+ прибл.
+ непр.
+ ф.
+ многочленами
+\end_layout
+
+\begin_layout Standard
+Т: непр.
+ 
+\begin_inset Formula $f:[-\pi,\pi]\rightarrow R$
+\end_inset
+
+, 
+\begin_inset Formula $f(-\pi)=f(\pi)$
+\end_inset
+
+ 
+\begin_inset Formula $\implies$
+\end_inset
+
+ 
+\begin_inset Formula $\forall\varepsilon>0\mbox{\exists}$
+\end_inset
+
+триг.
+ многочл.
+ 
+\begin_inset Formula $T_{n}(x)=S_{n}(x)$
+\end_inset
+
+: 
+\begin_inset Formula $\forall x\in[-\pi,\pi]:|f(x)-T_{n}(x)|<\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Т: непр.
+ 
+\begin_inset Formula $f:[a,b]\rightarrow R\implies\forall\varepsilon>0\exists P_{n}(x)=\sum_{m=0}^{n}c_{m}x^{m}:\forall x\in[a,b]:|f(x)-P_{n}(x)|<\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+13) методы улучш.
+ сх.
+ р.Ф.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f:[0,\pi]\rightarrow R$
+\end_inset
+
+, разложение по 
+\begin_inset Formula $\sin/\cos$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+построить 
+\begin_inset Formula $\bar{f}$
+\end_inset
+
+ с изв.
+ разл.
+ содерж.
+ все разрывы 
+\begin_inset Formula $f^{(n)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+разл.
+ 
+\begin_inset Formula $f-\bar{f}$
+\end_inset
+
+ сх.
+ быстро
+\end_layout
+
+\begin_layout Standard
+14) комп.
+ форма р.Ф.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\sum_{n=-\infty}^{\infty}c_{n}e^{inx}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{n}=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)e^{-inx}dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+15) равенства Парсеваля и Ляпунова
+\end_layout
+
+\begin_layout Standard
+Т: 
+\begin_inset Formula $f:[-\pi,\pi]\rightarrow R;\int_{-\pi}^{\pi}f^{2}(x)dx<\infty\implies\frac{a_{0}^{2}}{2}+\sum_{n=1}^{\infty}(a_{n}^{2}+b_{n}^{2})=\frac{1}{\pi}\int_{-\pi}^{\pi}f^{2}(x)dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Т: 
+\begin_inset Formula $f^{2},g^{2}$
+\end_inset
+
+ инт.
+ на 
+\begin_inset Formula $[-\pi,\pi]\implies\frac{a_{0}\alpha_{0}}{2}+\sum_{n=1}^{\infty}(a_{n}\alpha_{n}+b_{n}\beta_{n})=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)g(x)dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Т: 
+\begin_inset Formula $f^{2}$
+\end_inset
+
+ инт.
+ на 
+\begin_inset Formula $[-\pi,\pi]\implies\sum_{n=-\infty}^{\infty}|c_{n}|^{2}=\frac{1}{2\pi}\int_{-\pi}^{\pi}f^{2}(x)dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+16) прил.
+ р.Ф.
+ к сумм.
+ числ.
+ р.
+\end_layout
+
+\begin_layout Standard
+разложение в р.Ф.
+ в фикс.
+ т., равенство Ляпунова
+\end_layout
+
+\begin_layout Standard
+17) прим.
+ р.Ф.
+ к реш.
+ ур.
+ мат.
+ физ.
+\end_layout
+
+\begin_layout Standard
+ур.
+ Лапласа: 
+\begin_inset Formula $\frac{d^{2}u}{dx^{2}}+\frac{d^{2}u}{dy^{2}}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u$
+\end_inset
+
+ непр.
+ в круге 
+\begin_inset Formula $x^{2}+y^{2}\le1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u(x,y)|_{x^{2}+y^{2}=1}=f(x,y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+реш.: 
+\begin_inset Formula $u(r,\varphi)=\frac{\alpha_{0}}{2}+\sum_{n=1}^{\infty}r^{n}(\alpha_{n}\cos n\varphi+\beta_{n}\sin n\varphi)$
+\end_inset
+
+; 
+\begin_inset Formula $\alpha_{n},\beta_{n}$
+\end_inset
+
+ -- к.Ф.
+\begin_inset Formula $f$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P_{r}(\theta)=\frac{1}{2\pi}\frac{1-r^{2}}{1-2r\cos\theta+r^{2}}$
+\end_inset
+
+ -- ядро Пуассона
+\end_layout
+
+\begin_layout Standard
+реш.: 
+\begin_inset Formula $u(r,\varphi)=\int_{-\pi}^{\pi}f(t)P_{r}(t-\varphi)dt$
+\end_inset
+
+ -- инт.
+ Пуассона
+\end_layout
+
+\end_body
+\end_document

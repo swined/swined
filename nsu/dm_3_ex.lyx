@@ -1,0 +1,1307 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\options twocolumn
+\use_default_options true
+\language russian
+\inputencoding koi8-r
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 1cm
+\topmargin 0cm
+\rightmargin 1cm
+\bottommargin 1cm
+\headheight 0cm
+\headsep 0cm
+\footskip 0cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+1.1) высказывания, логические операции
+\end_layout
+
+\begin_layout Standard
+логическое высказывание - утв., кот.
+ всегда можно сопост.
+ одно из значений: истина, или ложь
+\end_layout
+
+\begin_layout Standard
+операции:
+\end_layout
+
+\begin_layout Standard
+отрицание - 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+конъюнкция - 
+\begin_inset Formula $x\&y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+дизъюнкция - 
+\begin_inset Formula $x\vee y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+импликация - 
+\begin_inset Formula $x\rightarrow y=\overline{x\overline{y}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сложение mod 2 - 
+\begin_inset Formula $x\oplus y=x\overline{y}\vee\overline{x}y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+эквиваленция - 
+\begin_inset Formula $x\sim y=\overline{x\oplus y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+штрих шеффера - 
+\begin_inset Formula $x|y=\overline{xy}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+стрелка пирса - 
+\begin_inset Formula $x\downarrow y=\overline{x\vee y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+приоритет: слева направо, 
+\begin_inset Formula $\neg\&\vee\ldots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.2) эквив.
+ преобр., табл.
+ ист., булевы ф.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A=B\Longleftrightarrow A(\vec{x})=B(\vec{x})\forall\vec{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+осн.
+ эквив.:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x(yz)=(xy)z$
+\end_inset
+
+,
+\begin_inset Formula $x\vee(y\vee z)=(x\vee y)\vee z$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $xy=yx$
+\end_inset
+
+,
+\begin_inset Formula $x\vee y=y\vee x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x(y\vee z)=xy\vee xz$
+\end_inset
+
+,
+\begin_inset Formula $x(y\oplus z)=xy\oplus xz$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x\vee yz=(x\vee y)(x\vee z)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $xx=x$
+\end_inset
+
+,
+\begin_inset Formula $x\vee x=x$
+\end_inset
+
+,
+\begin_inset Formula $\overline{\overline{x}}=x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x1=x$
+\end_inset
+
+,
+\begin_inset Formula $x0=0$
+\end_inset
+
+,
+\begin_inset Formula $x\vee1=1$
+\end_inset
+
+,
+\begin_inset Formula $x\vee0=x$
+\end_inset
+
+,
+\begin_inset Formula $\overline{0}=1$
+\end_inset
+
+,
+\begin_inset Formula $\overline{1}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{x\vee y}=\overline{x}\overline{y}$
+\end_inset
+
+,
+\begin_inset Formula $\overline{xy}=\overline{x}\vee\overline{y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x\overline{x}=0$
+\end_inset
+
+,
+\begin_inset Formula $x\vee\overline{x}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x\vee xy=x$
+\end_inset
+
+,
+\begin_inset Formula $x(x\vee y)=x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x\vee\overline{x}y=x\vee y$
+\end_inset
+
+,
+\begin_inset Formula $x(\overline{x}\vee y)=xy$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+табл.
+ ист.
+ - табл.
+ содерж.
+ знач.
+ выск.
+ на всех возм.
+ наб.
+ пар.
+\end_layout
+
+\begin_layout Standard
+б.
+ ф.
+ - 
+\begin_inset Formula $f:\{0,1\}^{n}\rightarrow\{0,1\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.3) СНФ, двойственность выск.
+\end_layout
+
+\begin_layout Standard
+ДНФ - 
+\begin_inset Formula $\sum\prod\{x_{i},\overline{x_{i}}\}$
+\end_inset
+
+, КНФ - 
+\begin_inset Formula $\prod\sum\{x_{i},\overline{x_{i}}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+п.Ж.
+ - 
+\begin_inset Formula $\prod x_{i}\oplus\prod x_{i}\oplus\ldots\oplus\{0,1\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+СДНФ - ДНФ, где кажд.
+ пер.
+ вх.
+ в кажд.
+ одночлен ровно 1 раз
+\end_layout
+
+\begin_layout Standard
+СКНФ - КНФ, где кажд.
+ пер.
+ вх.
+ в кажд.
+ множ.
+ ровно 1 раз
+\end_layout
+
+\begin_layout Standard
+двойств.
+ ф.
+ - 
+\begin_inset Formula $f^{*}(\vec{x})=\overline{f(\overline{\vec{x}})}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+принцип двойственности - 
+\begin_inset Formula $\Phi^{*}(\vec{f})=\Phi(\vec{f^{*}})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.4) зависимость и полнота сист.
+ б.
+ ф.
+\end_layout
+
+\begin_layout Standard
+замыкание - 
+\begin_inset Formula $[F]=\{\Phi(\vec{f}\in F)\in F\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+полная с.
+ ф.
+ - 
+\begin_inset Formula $[F]=P_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.5) замк.
+ классы б.
+ ф., т.
+ Поста
+\end_layout
+
+\begin_layout Standard
+замк.
+ класс - 
+\begin_inset Formula $F=[F]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ф.
+ сохр.
+ 0 - 
+\begin_inset Formula $f\in F_{0}\Longleftrightarrow f(\vec{0})=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ф.
+ сохр.
+ 1 - 
+\begin_inset Formula $f\in F_{1}\Longleftrightarrow f(\vec{1})=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+самодвойственные - 
+\begin_inset Formula $f\in S\Longleftrightarrow f=f^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+мажорирует - 
+\begin_inset Formula $\vec{a}\succeq\vec{b}\Longleftrightarrow\forall i:a_{i}\ge b_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+монотонные - 
+\begin_inset Formula $f\in M\Longleftrightarrow\forall\vec{a}\succeq\vec{b}:f(\vec{a})\ge f(\vec{b})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+линейные - 
+\begin_inset Formula $f\in L\Longleftrightarrow f(\vec{x})=\{0,1\}\oplus\{0,1\}x_{i}\oplus\{0,1\}x_{i}\oplus\ldots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Т.: с.
+ ф.
+ 
+\begin_inset Formula $B$
+\end_inset
+
+ - полная 
+\begin_inset Formula $\Longleftrightarrow\forall X\in\{F_{0},F_{1},S,M,L\},f\in B:f\notin X$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.6) реализации б.ф.
+\end_layout
+
+\begin_layout Standard
+СФЭ
+\end_layout
+
+\begin_layout Standard
+КС - мультиграф с двумя выделенными полюсами, все ребра - контакты
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pi$
+\end_inset
+
+-с.: контакт 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ - 
+\begin_inset Formula $\pi$
+\end_inset
+
+-c.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S_{1}(a_{1},b_{1})$
+\end_inset
+
+, 
+\begin_inset Formula $S_{2}(a_{2},b_{2})$
+\end_inset
+
+ - 
+\begin_inset Formula $\pi$
+\end_inset
+
+-с.
+ 
+\begin_inset Formula $\implies S(a=a_{1}=a_{2},b=b_{1}=b_{2})$
+\end_inset
+
+ - 
+\begin_inset Formula $\pi$
+\end_inset
+
+-с.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S_{1}(a_{1},b_{1})$
+\end_inset
+
+, 
+\begin_inset Formula $S_{2}(a_{2},b_{2})$
+\end_inset
+
+ - 
+\begin_inset Formula $\pi$
+\end_inset
+
+-с.
+ 
+\begin_inset Formula $\implies S(a_{1},b_{2}):b_{1}=a_{2}$
+\end_inset
+
+ - 
+\begin_inset Formula $\pi$
+\end_inset
+
+-с.
+\end_layout
+
+\begin_layout Standard
+1.7) двоичный сумматор
+\end_layout
+
+\begin_layout Standard
+ф.
+ переноса - 
+\begin_inset Formula $q_{0}=0,q_{i+1}=x_{i}y_{i}\vee x_{i}q_{i}\vee y_{i}q_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сумма - 
+\begin_inset Formula $z_{i}=x_{i}\oplus y_{i}\oplus q_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.8) т.
+ Шеннона о сущ.
+ ф.
+ эксп.
+ сл.
+ в КС
+\end_layout
+
+\begin_layout Standard
+почти все 
+\begin_inset Formula $f:\{0,1\}^{n}\rightarrow\{0,1\}$
+\end_inset
+
+имеют сложность в КС не более 
+\begin_inset Formula $\frac{2^{n}}{n^{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.9) понятие о предикатах
+\end_layout
+
+\begin_layout Standard
+предикат - высказывание с параметрами
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A^{n}=A\times\ldots\times A=\{\vec{a}:a_{i}\in A\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+предикат - 
+\begin_inset Formula $P:A^{n}\rightarrow\{0,1\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+отношение - 
+\begin_inset Formula $R\in A^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+предикат вхождения - 
+\begin_inset Formula $P_{R}(\vec{a})=1\Longleftrightarrow\vec{a}\in R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+операция - 
+\begin_inset Formula $f:A^{n}\rightarrow A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.1) число отображений конечных множеств в конечные множества
+\end_layout
+
+\begin_layout Standard
+сюръекция - каждый элемент имеет прообраз
+\end_layout
+
+\begin_layout Standard
+инъекция - ни какие 2 элемента не отобр.
+ в 1
+\end_layout
+
+\begin_layout Standard
+биекция - инъекция+сюръекция
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A$
+\end_inset
+
+ - неразличимые, 
+\begin_inset Formula $\widetilde{A}$
+\end_inset
+
+ - различимые
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $|X|=n,|Y|=m$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f:X\rightarrow Y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+произвольных - 
+\begin_inset Formula $n^{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сюръекций - 
+\begin_inset Formula $S(m,n)n!$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+инъекций - 
+\begin_inset Formula $A_{n}^{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+биекций - 
+\begin_inset Formula $n!$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f:X\rightarrow\widetilde{Y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+произвольных - 
+\begin_inset Formula $\sum_{k=1}^{n}S(m,k),k>m:S(m,k)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сюръекций - 
+\begin_inset Formula $S(m,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+инъекций - 
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+биекций - 
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f:\widetilde{X}\rightarrow Y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+произвольных - 
+\begin_inset Formula $C_{m+n-1}^{n-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сюръекций - 
+\begin_inset Formula $C_{m-1}^{n-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+инъекций - 
+\begin_inset Formula $C_{n}^{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+биекций - 
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f:\widetilde{X}\rightarrow\widetilde{Y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+произвольных - 
+\begin_inset Formula $\sum_{k=1}^{n}P(m,k),k>m:P(m,k)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сюръекций - 
+\begin_inset Formula $P(m,n)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+инъекций - 
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+биекций - 
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.2) сочетания с повторениями, схема с перегородками
+\end_layout
+
+\begin_layout Standard
+перестановка - 
+\begin_inset Formula $P_{n}=n!$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+размещение - 
+\begin_inset Formula $A_{n}^{k}=\frac{n!}{(n-k)!}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сочетание - 
+\begin_inset Formula $C_{n}^{k}=$
+\end_inset
+
+
+\begin_inset Formula $\frac{A_{n}^{k}}{P_{k}}=\frac{n!}{(n-k)!k!}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+сочетания с повторениями - 
+\begin_inset Formula $\widetilde{C}_{n}^{k}=C_{k+n-1}^{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.3) разбиение конечных множеств, ч.
+ Стирлинга второго рода
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S(n,m)$
+\end_inset
+
+ - число разбиений 
+\begin_inset Formula $n$
+\end_inset
+
+-элем.
+ мн-ва на 
+\begin_inset Formula $m$
+\end_inset
+
+ непустых частей
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $S(n,m)=S(n-1,m-1)+mS(n-1,m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.4) разбиения чисел на слагаемые
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $P(m,k)=|\vec{n}:\sum_{i=1}^{k}n_{i}=m,n_{i}\in N|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P(m,k)=\sum_{i=1}^{k}P(m-k,i)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.5) диаграммы Ферре
+\end_layout
+
+\begin_layout Standard
+предст.
+ неупоряд.
+ разл.
+ числа на слаг.
+\end_layout
+
+\begin_layout Standard
+представляет 2 разл.
+ - при чтении по строкам и столбцам
+\end_layout
+
+\begin_layout Standard
+2.6) формула включений и исключений
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $|A\cup B|=|A|+|B|-|A\cap B|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.7) возвратные посл-ти
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\{a_{n}\}_{n=0}^{\infty}$
+\end_inset
+
+- в.п.
+ 
+\begin_inset Formula $\Longleftrightarrow\exists k\in N:\exists p_{k}\ne0:\forall n\ge0:a_{n+k}+\sum_{i=1}^{k}p_{i}a_{n+k-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+лин.
+ комб.
+ в.
+ п.
+ - в.п.
+\end_layout
+
+\begin_layout Standard
+2.8) числа Каталана
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{0}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{n}=\sum_{i=0}^{n-1}c_{i}c_{n-i-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2.9) производящие функции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\sum_{n=0}^{\infty}a_{n}x^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}x^{n}\implies a_{n}=\frac{f^{(n)}(0)}{n!}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.1) осн.
+ опр.
+ и понятия
+\end_layout
+
+\begin_layout Standard
+граф - совокупность вершин и ребер
+\end_layout
+
+\begin_layout Standard
+маршрут - последовательность связанных ребер
+\end_layout
+
+\begin_layout Standard
+путь - маршрут без самопересечений
+\end_layout
+
+\begin_layout Standard
+граф связный - существует путь между любой парой вершин
+\end_layout
+
+\begin_layout Standard
+цикл - замкнутый путь
+\end_layout
+
+\begin_layout Standard
+дерево - связный граф без циклов
+\end_layout
+
+\begin_layout Standard
+инцидентны - ребро 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ и вершина 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+степень вершины, 
+\begin_inset Formula $d(v)$
+\end_inset
+
+ - число ребер инцидентных 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1-конструируемый граф - можно построить из 1-вершинного добавлением висячих
+ вершин
+\end_layout
+
+\begin_layout Standard
+т.
+ о рукопожатиях: 
+\begin_inset Formula $\sum d(v)=2E$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.2) способы задания графов
+\end_layout
+
+\begin_layout Standard
+3.3) деревья, характеризации деревьев
+\end_layout
+
+\begin_layout Standard
+для 
+\begin_inset Formula $G(V,E)$
+\end_inset
+
+ равносильно:
+\end_layout
+
+\begin_layout Standard
+а) 
+\begin_inset Formula $G$
+\end_inset
+
+ - дерево
+\end_layout
+
+\begin_layout Standard
+б) 
+\begin_inset Formula $\forall u,v\in V(G):\exists!$
+\end_inset
+
+путь из 
+\begin_inset Formula $u$
+\end_inset
+
+ в 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+в) 
+\begin_inset Formula $G$
+\end_inset
+
+ связен и 
+\begin_inset Formula $|E(G)|\le|V(G)|-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+г) 
+\begin_inset Formula $|E(G)|\ge|V(G)|-1$
+\end_inset
+
+ и 
+\begin_inset Formula $G$
+\end_inset
+
+ не имеет циклов
+\end_layout
+
+\begin_layout Standard
+д) 
+\begin_inset Formula $G$
+\end_inset
+
+ является 1-конструируемым
+\end_layout
+
+\begin_layout Standard
+3.4) кодирование деревьев
+\end_layout
+
+\begin_layout Standard
+код Прюфера:
+\end_layout
+
+\begin_layout Standard
+кодирование: удаляем висячую вершину и пишем в код номер ее соседа
+\end_layout
+
+\begin_layout Standard
+декодирование: 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ - код, 
+\begin_inset Formula $\vec{b}=()$
+\end_inset
+
+.
+ 
+\begin_inset Formula $for(s=1;s\le|a|;s++)\{min(n):n>0!\exists a_{i>s-1}=n,b_{j}=n;n\rightarrow a_{s};\vec{b}=(\vec{b},n)\};|a|+1\rightarrow min(n):!\exists b_{i}=n$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+3.5) т.
+ Кэли
+\end_layout
+
+\begin_layout Standard
+число 
+\begin_inset Formula $n$
+\end_inset
+
+-верш.
+ дер.
+ с помеченными вершинами равно 
+\begin_inset Formula $n^{n-2},n\ge2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.6) эйлеровы обходы, дост.
+ усл.
+ гамильтоновости
+\end_layout
+
+\begin_layout Standard
+3.7) двудольные г., т-ы о паросочетаниях в 2-дольных г.
+\end_layout
+
+\begin_layout Standard
+3.8) системы разл.
+ представителей
+\end_layout
+
+\begin_layout Standard
+3.9) плоские графы
+\end_layout
+
+\begin_layout Standard
+грань - макс.
+ мн.
+ точек пл-ти каждую пару которых можно соединить жордановой кривой не пересекающ
+ей ребер
+\end_layout
+
+\begin_layout Standard
+ф-ла Эйлера: 
+\begin_inset Formula $|V|-|E|+|F|=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ранг грани 
+\begin_inset Formula $r(f)$
+\end_inset
+
+ - длина ее границы
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum_{f\in F}r(f)=2E$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum(d(v)-4)+\sum(r(f)-4)=-8$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\exists(v:d(v)\le3)\vee(f:r(f)=3)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\sum(d(v)-6)+\sum(2r(f)-6)=-12$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\exists v:d(v)\le5$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $V\ge3\implies E\le3V-6$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $V\ge3,!\exists c:|c|=3\implies E\le2V-4$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.10) задачи раскраски, т.
+ Брукса
+\end_layout
+
+\begin_layout Standard
+3.11) экстремальные задачи на г., т.
+ Турана
+\end_layout
+
+\end_body
+\end_document
