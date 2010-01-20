@@ -113,7 +113,7 @@
 \end_layout
 
 \begin_layout Standard
-штрих шеффера - 
+штрих Шеффера - 
 \begin_inset Formula $x|y=\overline{xy}$
 \end_inset
 
@@ -121,7 +121,7 @@
 \end_layout
 
 \begin_layout Standard
-стрелка пирса - 
+стрелка Пирса - 
 \begin_inset Formula $x\downarrow y=\overline{x\vee y}$
 \end_inset
 
@@ -1078,6 +1078,10 @@
 \end_layout
 
 \begin_layout Standard
+матрица смежности
+\end_layout
+
+\begin_layout Standard
 3.3) деревья, характеризации деревьев
 \end_layout
 
@@ -1168,7 +1172,7 @@
 
 .
  
-\begin_inset Formula $for(s=1;s\le|a|;s++)\{min(n):n>0!\exists a_{i>s-1}=n,b_{j}=n;n\rightarrow a_{s};\vec{b}=(\vec{b},n)\};|a|+1\rightarrow min(n):!\exists b_{i}=n$
+\begin_inset Formula $for(s=1;s\le|a|;s++)\{min(n):n>0!\exists a_{i\ge s}=n,b_{j}=n;n\rightarrow a_{s};\vec{b}=(\vec{b},n)\};|a|+1\rightarrow min(n):!\exists b_{i}=n$
 \end_inset
 
  
@@ -1200,12 +1204,187 @@
 \end_layout
 
 \begin_layout Standard
+эйлеров обход - замкнутый маршрут такой, что каждое ребро г.
+ встречается в нем ровно 1 раз
+\end_layout
+
+\begin_layout Standard
+эйлеров граф - содержит эйлеров цикл
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $G$
+\end_inset
+
+ эйлеров 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $\forall v\in V(g):d(v)\%2=0$
+\end_inset
+
+ 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ мн-во ребер можно разбить на циклы
+\end_layout
+
+\begin_layout Standard
+гамильтонов цикл - замкнутый маршрут такой, что каждая вершина г.
+ встречается в нем ровно 1 раз
+\end_layout
+
+\begin_layout Standard
+гамильтонов г.
+ - содержит гамильтонов цикл
+\end_layout
+
+\begin_layout Standard
+т.
+ Дирака - 
+\begin_inset Formula $\forall v\in V(G):d(v)>V(G)/2,|V(G)|>3\implies G$
+\end_inset
+
+ - гамильтонов 
+\end_layout
+
+\begin_layout Standard
 3.7) двудольные г., т-ы о паросочетаниях в 2-дольных г.
+\end_layout
+
+\begin_layout Standard
+двудольный г.
+ - 
+\begin_inset Formula $\exists U,W\in V,U\cap V=\emptyset:\forall(u,v)\in E:u\in U,v\in W$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+г.
+ двудольный 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ нет циклов нечетной длины
+\end_layout
+
+\begin_layout Standard
+смежные ребра - инцидентны одной вершине
+\end_layout
+
+\begin_layout Standard
+паросочетание - набор попарно несмежных ребер
+\end_layout
+
+\begin_layout Standard
+совершенное паросочетание - покрывает все вершины
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pi(G)$
+\end_inset
+
+ - мощность макс.
+ паросочетания
+\end_layout
+
+\begin_layout Standard
+вершинное покрытие - 
+\begin_inset Formula $\forall(u,v)\in E:u\in V'\vee v\in V'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tau(G)$
+\end_inset
+
+ - мощность мин.
+ верш.
+ покр.
+\end_layout
+
+\begin_layout Standard
+т.
+ Кёнига: 
+\begin_inset Formula $\forall G=K_{m,n}:\pi(G)=\tau(G)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $G(U,W,E):N(U')\in W:\forall(u,v)\in E:u\in U',v\in W$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+т.
+ Кёнига-Холла: в 
+\begin_inset Formula $G(U,W,E)$
+\end_inset
+
+ 
+\begin_inset Formula $\exists$
+\end_inset
+
+ паросочетание покрывающее 
+\begin_inset Formula $U$
+\end_inset
+
+ 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $\forall U'\in U:|N(U')|\ge|U'|$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 3.8) системы разл.
  представителей
+\end_layout
+
+\begin_layout Standard
+- 
+\begin_inset Formula $\{a_{i}\}_{i=1}^{k}:a_{i}\in A_{i},\forall_{i\ne j}a_{i}\ne a_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+т.
+ Холла - если 
+\begin_inset Formula $\{A_{i}\}_{i=1}^{k}:\forall i:A_{i}\in A=\{v_{i}\}_{i=1}^{n}$
+\end_inset
+
+ то 
+\begin_inset Formula $\exists$
+\end_inset
+
+ сист.
+ разл.
+ пред.
+ 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $\forall I\subset\{i\}_{i=1}^{k}:\cup_{i\in I}A_{i}\ge|I|$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1299,8 +1478,194 @@
 \end_layout
 
 \begin_layout Standard
+хроматическое число - мин.
+ 
+\begin_inset Formula $k$
+\end_inset
+
+, при котором граф имеет 
+\begin_inset Formula $k$
+\end_inset
+
+-раскраску
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k$
+\end_inset
+
+-вырожденный граф - 
+\begin_inset Formula $\forall G'\in G:\exists v\in G':d(v)<k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+граф 
+\begin_inset Formula $k$
+\end_inset
+
+-вырожден 
+\begin_inset Formula $\implies$
+\end_inset
+
+ граф 
+\begin_inset Formula $(k+1)$
+\end_inset
+
+-раскрашиваем
+\end_layout
+
+\begin_layout Standard
+каждый плоский граф 5-вырожден
+\end_layout
+
+\begin_layout Standard
+каждый плоский граф 6-раскрашиваем
+\end_layout
+
+\begin_layout Standard
+каждый плоский граф 5-раскрашиваем
+\end_layout
+
+\begin_layout Standard
+максимальная степень - 
+\begin_inset Formula $\Delta(G)=max_{v\in V(G)}d(v)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+подграф - 
+\begin_inset Formula $G'\subseteq G\Longleftrightarrow V'\subseteq V\&E'\subseteq E$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+компонента связности - максимальный по включению связный подграф
+\end_layout
+
+\begin_layout Standard
+разделяющее мн-во вершин - 
+\begin_inset Formula $V'\subseteq V:G/V'$
+\end_inset
+
+ - не связный
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k$
+\end_inset
+
+-разбираемый г.
+ - 
+\begin_inset Formula $\exists\vec{\alpha}:\forall1\le i\le|V|:\forall i\le j\le|V|:|(v_{\alpha_{i}},v_{\alpha_{j}})\in E|\le k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $G$
+\end_inset
+
+ 
+\begin_inset Formula $k$
+\end_inset
+
+-вырожден 
+\begin_inset Formula $\Longleftrightarrow\forall G'\subseteq G:\exists v\in G':d(v)\le k\Longleftrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $G$
+\end_inset
+
+ 
+\begin_inset Formula $k$
+\end_inset
+
+-разбираем
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k$
+\end_inset
+
+-однородный г.
+ - 
+\begin_inset Formula $\forall v\in V(G):d(v)=k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+связный не-
+\begin_inset Formula $\Delta(G)$
+\end_inset
+
+-однородный граф является 
+\begin_inset Formula $(\Delta(G)-1)$
+\end_inset
+
+-вырожденным, а значит 
+\begin_inset Formula $\Delta(G)$
+\end_inset
+
+-раскрашиваемым
+\end_layout
+
+\begin_layout Standard
+т.
+ Брукса: связный 
+\begin_inset Formula $G:\Delta(G)\ge3,G\ne K_{|V(G)|}\implies$
+\end_inset
+
+ 
+\begin_inset Formula $G$
+\end_inset
+
+ - 
+\begin_inset Formula $\Delta(G)$
+\end_inset
+
+-раскрашиваем
+\end_layout
+
+\begin_layout Standard
 3.11) экстремальные задачи на г., т.
  Турана
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T_{3,n}=K_{\lfloor\frac{n}{2}\rfloor,\lceil\frac{n}{2}\rceil}$
+\end_inset
+
+ - полный сбалансированный 2-дольный г.
+\end_layout
+
+\begin_layout Standard
+т.
+ Турана: среди всех 
+\begin_inset Formula $n$
+\end_inset
+
+-верш.
+ графов не содержащих 
+\begin_inset Formula $K_{3}$
+\end_inset
+
+ макс.
+ число вершин имеет 
+\begin_inset Formula $T_{3}$
+\end_inset
+
+
 \end_layout
 
 \end_body
