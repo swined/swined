@@ -1,12 +1,9 @@
 package mds1;
 
-import java.util.HashSet;
-
 public class Or1 implements IExp1 {
 
     private final IExp1 a;
     private final IExp1 b;
-    private HashSet<Var1> vars = null;
 
     public Or1(IExp1 a, IExp1 b) {
         this.a = a;
@@ -35,15 +32,6 @@ public class Or1 implements IExp1 {
 
     public IExp1 not() {
         return new Not1(this);
-    }
-
-    public void getVars(HashSet<Var1> vars) {
-        if (this.vars == null) {
-            this.vars = new HashSet();
-            a.getVars(this.vars);
-            b.getVars(this.vars);
-        }
-        vars.addAll(this.vars);
     }
 
     @Override
