@@ -1,9 +1,12 @@
 package mds1;
 
+import java.util.HashSet;
+
 public class Xor1 implements IExp1 {
 
     private final IExp1 a;
     private final IExp1 b;
+    private HashSet<Var1> vars = null;
 
     public Xor1(IExp1 a, IExp1 b) {
         this.a = a;
@@ -34,6 +37,16 @@ public class Xor1 implements IExp1 {
         return new Not1(this);
     }
 
+    public void getVars(HashSet<Var1> vars) {
+        if (this.vars == null) {
+            this.vars = new HashSet();
+            a.getVars(this.vars);
+            b.getVars(this.vars);
+        }
+        vars.addAll(this.vars);
+    }
+
+    @Override
     public String toString() {
         return "(" + a + " ^ " + b + ")";
     }

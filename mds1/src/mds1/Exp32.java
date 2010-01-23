@@ -1,5 +1,7 @@
 package mds1;
 
+import java.util.HashSet;
+
 public class Exp32 {
 
     private final IExp1[] bits;
@@ -73,6 +75,11 @@ public class Exp32 {
                 return null;
             }
         return r & 0xFFFFFFFFL;
+    }
+
+    public void getVars(HashSet<Var1> vars) {
+        for (int i = 0; i < 32; i++)
+            bits[i].getVars(vars);
     }
 
     @Override
