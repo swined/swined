@@ -42,8 +42,16 @@ public class Const1 implements IExp1 {
         }
     }
 
-    public IExp1 not() {
+    public Const1 not() {
         return Const1.create(!value);
+    }
+
+    public IExp1 substitute(Var1 v, Const1 c) {
+        return this;
+    }
+
+    public PDNF toPDNF() {
+        return new PDNF(value);
     }
 
     @Override
