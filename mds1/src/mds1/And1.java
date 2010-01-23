@@ -49,7 +49,7 @@ public class And1 implements IExp1 {
 
     public IExp1 not() {
         if (not == null) {
-            not = a.not().and(b.not());
+            not = a.not().or(b.not());
             not.setNot(this);
         }
         return not;
@@ -78,10 +78,10 @@ public class And1 implements IExp1 {
 
     @Override
     public String toString() {
-        return "and";
-        //if (string == null)
-//            string = "(" + a + " & " + b + ")";
-  //      return string;
+//        return "and";
+        if (string == null)
+            string = "(" + a + " & " + b + ")";
+        return string;
     }
 
 }

@@ -20,8 +20,8 @@ public class Exp32 {
             bits[i] = new Var1(name + "[" + i + "]");
     }
 
-    public void setBit(int i, IExp1 exp) {
-        bits[i] = exp;
+    public IExp1[] bits() {
+        return bits;
     }
 
     public Exp32 and(Exp32 exp) {

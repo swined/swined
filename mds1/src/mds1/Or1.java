@@ -51,7 +51,7 @@ public class Or1 implements IExp1 {
 
     public IExp1 not() {
         if (not == null) {
-            not = a.not().or(b.not());
+            not = a.not().and(b.not());
             not.setNot(this);
         }
         return not;
