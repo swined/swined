@@ -90,7 +90,7 @@ public class Var1 implements IExp1 {
             if (!c.equals(subConst))
                 sub = null;
         if (sub == null) {
-            if (this.equals(v)) {
+            if (equals(v)) {
                 sub = c;
             } else if (not().equals(v)) {
                 sub = c.not();
