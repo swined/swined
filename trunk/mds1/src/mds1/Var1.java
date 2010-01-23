@@ -1,7 +1,5 @@
 package mds1;
 
-import java.util.HashSet;
-
 public class Var1 implements IExp1 {
 
     private final String name;
@@ -28,10 +26,6 @@ public class Var1 implements IExp1 {
 
     public IExp1 not() {
         return new Not1(this);
-    }
-
-    public void getVars(HashSet<Var1> vars) {
-        vars.add(this);
     }
 
     @Override
