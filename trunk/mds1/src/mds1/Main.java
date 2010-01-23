@@ -10,12 +10,12 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        Exp32 in[] = new Exp32[13];
+        Exp32 in[] = new Exp32[0];
         for (int i = 0; i < in.length; i++)
             in[i] = new Exp32("x" + i);
         Exp32 out[] = MD5.transform(in);
-//        for (int i = 0; i < out.length; i++)
-  //          System.out.println(out[i]);
+        for (int i = 0; i < out.length; i++)
+            System.out.println(out[i]);
       //  IExp1 eq = Const1.create(false);
     //    for (int i = 0; i < out.length; i++)
   //          eq = eq.or(out[i].equation());
