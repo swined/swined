@@ -8,6 +8,5 @@ public interface IExp1 {
     IExp1 not();
     void setNot(IExp1 not);
     IExp1 sub(Var1 v, Const1 c);
-    PDNF toPDNF();
 
 }

@@ -8,7 +8,6 @@ public class Or1 implements IExp1 {
     private Var1 subVar;
     private Const1 subConst;
     private String string = null;
-    private PDNF pdnf = null;
     private IExp1 not = null;
 
     public Or1(IExp1 a, IExp1 b) {
@@ -70,12 +69,6 @@ public class Or1 implements IExp1 {
             sub = a.sub(v, c).or(b.sub(v, c));
         }
         return sub;
-    }
-
-    public PDNF toPDNF() {
-        if (pdnf == null)
-            pdnf = a.toPDNF().or(b.toPDNF());
-        return pdnf;
     }
 
     @Override
