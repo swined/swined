@@ -52,7 +52,10 @@ public class PDNF implements IExp1 {
     }
 
     public IExp1 not() {
-        return new Not1(this);
+        throw new UnsupportedOperationException();
+    }
+
+    public void setNot(IExp1 not) {
     }
 
     public IExp1 xor(IExp1 exp) {

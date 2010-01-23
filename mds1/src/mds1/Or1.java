@@ -6,6 +6,8 @@ public class Or1 implements IExp1 {
     private final IExp1 b;
     private IExp1 sub = null;
     private String string = null;
+    private PDNF pdnf = null;
+    private IExp1 not = null;
 
     public Or1(IExp1 a, IExp1 b) {
         this.a = a;
@@ -34,13 +36,22 @@ public class Or1 implements IExp1 {
 
     public IExp1 xor(IExp1 exp) {
         return exp.not().and(this).or(this.not().and(exp));
-//        if (exp instanceof Const1)
-  //          return exp.xor(this);
-    //    return new Xor1(this, exp);
+    }
+
+    public void setNot(IExp1 not) {
+        if (this.not == null)
+            this.not = not;
+        else
+            throw new UnsupportedOperationException();
     }
 
     public IExp1 not() {
-        return new Not1(this);
+        if (not == null) {
+            not = a.not().or(b.not());
+            not.setNot(this);
+        }
+        return not;
+        //return new Not1(this);
     }
 
     public IExp1 substitute(Var1 v, Const1 c) {
@@ -50,7 +61,9 @@ public class Or1 implements IExp1 {
     }
 
     public PDNF toPDNF() {
-        return a.toPDNF().or(b.toPDNF()).toPDNF();
+        if (pdnf == null)
+            pdnf = a.toPDNF().or(b.toPDNF()).toPDNF();
+        return pdnf;
     }
 
     @Override

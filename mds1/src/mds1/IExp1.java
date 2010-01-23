@@ -6,6 +6,7 @@ public interface IExp1 {
     IExp1 or(IExp1 exp);
     IExp1 xor(IExp1 exp);
     IExp1 not();
+    void setNot(IExp1 not);
     IExp1 substitute(Var1 v, Const1 c);
     PDNF toPDNF();
 
