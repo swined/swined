@@ -1,5 +1,7 @@
 package mds1;
 
+import java.util.HashSet;
+
 public class Var1 implements IExp1 {
 
     private final String name;
@@ -28,9 +30,27 @@ public class Var1 implements IExp1 {
         return new Not1(this);
     }
 
+    public void getVars(HashSet<Var1> vars) {
+        vars.add(this);
+    }
+
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Var1) {
+            return name.equals(((Var1)o).name);
+        } else {
+            return false;
+        }
     }
 
 }

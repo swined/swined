@@ -1,5 +1,7 @@
 package mds1;
 
+import java.util.HashSet;
+
 public class Const1 implements IExp1 {
 
     private final boolean value;
@@ -46,6 +48,10 @@ public class Const1 implements IExp1 {
         return Const1.create(!value);
     }
 
+    public void getVars(HashSet<Var1> vars) {
+    }
+
+    @Override
     public String toString() {
         return value ? "1" : "0";
     }
