@@ -51,7 +51,7 @@ public class Const1 implements IExp1 {
         return Const1.create(!value);
     }
 
-    public IExp1 substitute(Var1 v, Const1 c) {
+    public IExp1 sub(Var1 v, Const1 c) {
         return this;
     }
 

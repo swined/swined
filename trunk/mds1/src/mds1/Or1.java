@@ -5,6 +5,8 @@ public class Or1 implements IExp1 {
     private final IExp1 a;
     private final IExp1 b;
     private IExp1 sub = null;
+    private Var1 subVar;
+    private Const1 subConst;
     private String string = null;
     private PDNF pdnf = null;
     private IExp1 not = null;
@@ -25,6 +27,8 @@ public class Or1 implements IExp1 {
     public IExp1 and(IExp1 exp) {
         if (exp instanceof Const1)
             return exp.and(this);
+        if (exp instanceof Var1)
+            return a.and(exp).or(b.and(exp));
         return new And1(this, exp);
     }
 
@@ -53,9 +57,18 @@ public class Or1 implements IExp1 {
         return not;
     }
 
-    public IExp1 substitute(Var1 v, Const1 c) {
-        if (sub == null)
-            sub = a.substitute(v, c).or(b.substitute(v, c));
+    public IExp1 sub(Var1 v, Const1 c) {
+        if (sub != null)
+            if (!v.equals(subVar))
+                sub = null;
+        if (sub != null)
+            if (!c.equals(subConst))
+                sub = null;
+        if (sub == null) {
+            subVar = v;
+            subConst = c;
+            sub = a.sub(v, c).or(b.sub(v, c));
+        }
         return sub;
     }
 
@@ -68,7 +81,7 @@ public class Or1 implements IExp1 {
     @Override
     public String toString() {
         if (string == null)
-            string = "(" + a + " & " + b + ")";
+            string = "(" + a + " | " + b + ")";
         return string;
     }
 
