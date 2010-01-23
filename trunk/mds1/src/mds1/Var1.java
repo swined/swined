@@ -4,15 +4,18 @@ public class Var1 implements IExp1 {
 
     private final String name;
     private final boolean invert;
+    private final PDNF pdnf;
 
     public Var1(String name) {
         this.name = name;
         this.invert = false;
+        this.pdnf = new PDNF(this);
     }
 
     public Var1(String name, boolean invert) {
         this.name = name;
         this.invert = invert;
+        this.pdnf = new PDNF(this);
     }
 
     public String getName() {
@@ -82,7 +85,7 @@ public class Var1 implements IExp1 {
     }
 
     public PDNF toPDNF() {
-        return new PDNF(this);
+        return pdnf;
     }
 
 }

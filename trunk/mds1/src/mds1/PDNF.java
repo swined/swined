@@ -21,7 +21,7 @@ public class PDNF implements IExp1 {
     }
 
     private static Var1[][] merge(Var1[][] a, Var1[][] b) {
-        Var1 r[][] = new Var1[0][a.length + b.length];
+        Var1 r[][] = new Var1[a.length + b.length][0];
         System.arraycopy(a, 0, r, 0, a.length);
         System.arraycopy(b, 0, r, a.length, b.length);
         return r;
@@ -38,7 +38,7 @@ public class PDNF implements IExp1 {
         if (!this.c)
             return this;
         PDNF pdnf = exp.toPDNF();
-        Var1 r[][] = new Var1[0][this.v.length * pdnf.v.length];
+        Var1 r[][] = new Var1[this.v.length * pdnf.v.length][0];
         for (int i = 0; i < this.v.length; i++)
             for (int j = 0; j < pdnf.v.length; j++)
                 r[i*j] = merge(this.v[i], pdnf.v[j]);
@@ -59,7 +59,7 @@ public class PDNF implements IExp1 {
     }
 
     public IExp1 xor(IExp1 exp) {
-        return exp.not().and(this).or(this.not().and(exp));
+        throw new UnsupportedOperationException();
     }
 
     public PDNF toPDNF() {
