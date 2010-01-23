@@ -28,9 +28,6 @@ public class Var1 implements IExp1 {
             return exp.and(this);
         if (equals(exp))
             return this;
-        if (exp instanceof Not1)
-            if (((Not1)exp).getExp().equals(this))
-                return this;
         return new And1(this, exp);
     }
 
