@@ -3,13 +3,11 @@ package mds1;
 public class Const1 implements IExp1 {
 
     private final boolean value;
-    private final PDNF pdnf;
     private static final Const1 TRUE = new Const1(true);
     private static final Const1 FALSE = new Const1(false);
 
     private Const1(boolean value) {
         this.value = value;
-        this.pdnf = new PDNF(value);
     }
 
     public static Const1 create(boolean value) {
@@ -53,10 +51,6 @@ public class Const1 implements IExp1 {
 
     public IExp1 sub(Var1 v, Const1 c) {
         return this;
-    }
-
-    public PDNF toPDNF() {
-        return pdnf;
     }
 
     @Override

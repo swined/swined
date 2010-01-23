@@ -4,7 +4,6 @@ public class Var1 implements IExp1 {
 
     private final String name;
     private final boolean invert;
-    private final PDNF pdnf;
     private final Var1 not;
     private IExp1 sub;
     private Var1 subVar;
@@ -13,21 +12,18 @@ public class Var1 implements IExp1 {
     public Var1(String name) {
         this.name = name;
         this.invert = false;
-        this.pdnf = new PDNF(this);
         this.not = new Var1(name, true, this);
     }
 
     public Var1(String name, boolean invert) {
         this.name = name;
         this.invert = invert;
-        this.pdnf = new PDNF(this);
         this.not = new Var1(name, !invert, this);
     }
 
     private Var1(String name, boolean invert, Var1 not) {
         this.name = name;
         this.invert = invert;
-        this.pdnf = new PDNF(this);
         this.not = not;
     }
 
@@ -125,9 +121,5 @@ public class Var1 implements IExp1 {
             return false;
         }
     }
-
-    public PDNF toPDNF() {
-        return pdnf;
-    }
-
+    
 }

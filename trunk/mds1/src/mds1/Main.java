@@ -9,7 +9,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        Exp32 in[] = new Exp32[1];
+        Exp32 in[] = new Exp32[8];
         for (int i = 0; i < in.length; i++)
             in[i] = new Exp32("x" + i);
         Exp32 out[] = MD5.transform(in);
@@ -17,7 +17,7 @@ public class Main {
         for (int i = 0; i < out.length; i++)
             eq = eq.or(out[i].equation());
         for (int j = 0; j < in.length; j++)
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i < 1; i++)
                 eq = split(eq, new Var1("x"+j+"[" + i + "]"));
         //System.out.println(eq);
     }

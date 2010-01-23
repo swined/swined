@@ -8,7 +8,6 @@ public class And1 implements IExp1 {
     private Var1 subVar = null;
     private Const1 subConst = null;
     private String string = null;
-    private PDNF pdnf = null;
     private IExp1 not = null;
 
     public And1(IExp1 a, IExp1 b) {
@@ -70,15 +69,8 @@ public class And1 implements IExp1 {
         return sub;
     }
 
-    public PDNF toPDNF() {
-        if (pdnf == null)
-            pdnf = a.toPDNF().and(b.toPDNF());
-        return pdnf;
-    }
-
     @Override
     public String toString() {
-//        return "and";
         if (string == null)
             string = "(" + a + " & " + b + ")";
         return string;
