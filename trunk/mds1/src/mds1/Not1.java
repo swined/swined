@@ -4,7 +4,7 @@ public class Not1 implements IExp1 {
 
     private final IExp1 exp;
 
-    public Not1(IExp1 exp) {
+    private Not1(IExp1 exp) {
         this.exp = exp;
     }
 
@@ -30,11 +30,9 @@ public class Not1 implements IExp1 {
 
     public IExp1 xor(IExp1 exp) {
         return exp.not().and(this).or(this.not().and(exp));
-//        if (exp instanceof Const1)
-  //          return exp.xor(this);
-    //    if (exp instanceof Not1)
-      //      return new Xor1(this.exp, ((Not1)exp).exp);
-        //return new Xor1(this, exp);
+    }
+
+    public void setNot(IExp1 not) {
     }
 
     public IExp1 not() {

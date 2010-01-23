@@ -16,9 +16,10 @@ public class Main {
         Exp32 out[] = MD5.transform(in);
 //        for (int i = 0; i < out.length; i++)
   //          System.out.println(out[i]);
-    //    IExp1 eq = Const1.create(false);
-      //  for (int i = 0; i < out.length; i++)
-        //    eq = eq.or(out[i].equation());
+      //  IExp1 eq = Const1.create(false);
+    //    for (int i = 0; i < out.length; i++)
+  //          eq = eq.or(out[i].equation());
+//        eq.toPDNF();
         //for (int i = 0; i < 31; i++)
           //  eq = eq.substitute(new Var1("x0[" + i + "]"), Const1.create(false));
         //System.out.println(eq);

@@ -44,15 +44,10 @@ public class Var1 implements IExp1 {
 
     public IExp1 xor(IExp1 exp) {
         return exp.not().and(this).or(this.not().and(exp));
-        //if (exp instanceof Const1)
-//            return exp.xor(this);
-  //      if (equals(exp))
-    //        return Const1.create(false);
-      //  return new Xor1(this, exp);
     }
 
     public IExp1 not() {
-        return new Not1(this);
+        return new Var1(name, !invert);
     }
 
     public IExp1 substitute(Var1 v, Const1 c) {
@@ -67,9 +62,12 @@ public class Var1 implements IExp1 {
         return this;
     }
 
+    public void setNot(IExp1 not) {
+    }
+
     @Override
     public String toString() {
-        return name;
+        return (invert ? "!" : "") + name;
     }
 
     @Override

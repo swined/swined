@@ -42,6 +42,9 @@ public class Const1 implements IExp1 {
         }
     }
 
+    public void setNot(IExp1 not) {
+    }
+
     public Const1 not() {
         return Const1.create(!value);
     }
