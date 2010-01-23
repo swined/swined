@@ -2,15 +2,8 @@ package mds1;
 
 public class Main {
 
-    private final static long start = System.currentTimeMillis();
-    private final static long timeout = 500;
-
-    public static boolean timeout() {
-        return System.currentTimeMillis() - start > timeout;
-    }
-
     public static void main(String[] args) throws Exception {
-        Exp32 in[] = new Exp32[13];
+        Exp32 in[] = new Exp32[1];
         for (int i = 0; i < in.length; i++)
             in[i] = new Exp32("x" + i);
         Exp32 out[] = MD5.transform(in);

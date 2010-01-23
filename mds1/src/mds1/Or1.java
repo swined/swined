@@ -51,7 +51,6 @@ public class Or1 implements IExp1 {
             not.setNot(this);
         }
         return not;
-        //return new Not1(this);
     }
 
     public IExp1 substitute(Var1 v, Const1 c) {
@@ -62,14 +61,12 @@ public class Or1 implements IExp1 {
 
     public PDNF toPDNF() {
         if (pdnf == null)
-            pdnf = a.toPDNF().or(b.toPDNF()).toPDNF();
+            pdnf = a.toPDNF().or(b.toPDNF());
         return pdnf;
     }
 
     @Override
     public String toString() {
-        if (Main.timeout())
-            return "or";
         if (string == null)
             string = "(" + a + " & " + b + ")";
         return string;
