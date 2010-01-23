@@ -5,6 +5,8 @@ public class And1 implements IExp1 {
     private final IExp1 a;
     private final IExp1 b;
     private IExp1 sub = null;
+    private Var1 subVar = null;
+    private Const1 subConst = null;
     private String string = null;
     private PDNF pdnf = null;
     private IExp1 not = null;
@@ -35,7 +37,7 @@ public class And1 implements IExp1 {
     }
     
     public IExp1 xor(IExp1 exp) {
-        return exp.not().and(this).or(this.not().and(exp));
+        return exp.not().and(this).or(not().and(exp));
     }
 
     public void setNot(IExp1 not) {
@@ -53,9 +55,18 @@ public class And1 implements IExp1 {
         return not;
     }
 
-    public IExp1 substitute(Var1 v, Const1 c) {
-        if (sub == null)
-            sub = a.substitute(v, c).and(b.substitute(v, c));
+    public IExp1 sub(Var1 v, Const1 c) {
+        if (sub != null)
+            if (!v.equals(subVar))
+                sub = null;
+        if (sub != null)
+            if (!c.equals(subConst))
+                sub = null;
+        if (sub == null) {
+            subVar = v;
+            subConst = c;
+            sub = a.sub(v, c).and(b.sub(v, c));
+        }
         return sub;
     }
 
@@ -67,9 +78,10 @@ public class And1 implements IExp1 {
 
     @Override
     public String toString() {
-        if (string == null)
-            string = "(" + a + " & " + b + ")";
-        return string;
+        return "and";
+        //if (string == null)
+//            string = "(" + a + " & " + b + ")";
+  //      return string;
     }
 
 }

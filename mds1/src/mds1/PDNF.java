@@ -1,5 +1,9 @@
 package mds1;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 public class PDNF {
 
     private final boolean c;
@@ -18,8 +22,11 @@ public class PDNF {
 
     private PDNF(boolean c, Var1 v[][]) {
         this.c = c;
-        this.v = v;
-        System.gc();
+        List<Var1[]> x = new ArrayList();
+        for (int i = 0; i < v.length; i++)
+            if (v[i].length > 0)
+                x.add(v[i]);
+        this.v = x.toArray(v);
     }
 
     private static Var1[][] merge(Var1[][] a, Var1[][] b) {
@@ -30,35 +37,25 @@ public class PDNF {
     }
 
     private static Var1[] merge(Var1[] a, Var1[] b) {
-        int dupes = 0;
         for (int i = 0; i < a.length; i++)
             for (int j = 0; j < b.length; j++)
-                if (a[i].getName().equals(b[j].getName())) {
-                    if (a[i].isInverted() != b[j].isInverted())
-                        return nothing;
-                    else
-                        dupes++;
-                }
-        Var1 r[] = new Var1[a.length + b.length - dupes];
-        System.arraycopy(a, 0, r, 0, a.length);
-        if (dupes == 0) {
-            System.arraycopy(b, 0, r, a.length, b.length);
-        } else {
-            int c = 0;
-            for (int i = 0; i < a.length; i++)
-                for (int j = 0; j < b.length; i++)
-                    if (!a[i].equals(b[j])) {
-                        r[a.length + c] = b[j];
-                        c++;
-                    }
-        }
-        return r;
+                if (a[i].not().equals(b[j]))
+                    return nothing;
+        HashSet<Var1> vars = new HashSet();
+        for (int i = 0; i < a.length; i++)
+            vars.add(a[i]);
+        for (int i = 0; i < b.length; i++)
+            vars.add(b[i]);
+        return vars.toArray(a);
     }
 
     public PDNF and(PDNF pdnf) {
         if (!this.c)
             return this;
-        Var1 r[][] = new Var1[this.v.length * pdnf.v.length][0];
+        int l = this.v.length * pdnf.v.length;
+        if (l < 0)
+            throw new RuntimeException("" + this.v.length + " * " + pdnf.v.length + " = " + l);
+        Var1 r[][] = new Var1[l][0];
         for (int i = 0; i < this.v.length; i++)
             for (int j = 0; j < pdnf.v.length; j++)
                 r[i*j] = merge(this.v[i], pdnf.v[j]);

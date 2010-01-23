@@ -6,6 +6,9 @@ public class Var1 implements IExp1 {
     private final boolean invert;
     private final PDNF pdnf;
     private final Var1 not;
+    private IExp1 sub;
+    private Var1 subVar;
+    private Const1 subConst;
 
     public Var1(String name) {
         this.name = name;
@@ -37,32 +40,41 @@ public class Var1 implements IExp1 {
     }
 
     public IExp1 and(IExp1 exp) {
-        if (exp instanceof Const1)
+        if (exp instanceof Const1) {
             return exp.and(this);
-        if (equals(exp))
+        }
+        if (equals(exp)) {
             return this;
-        if (not().equals(exp))
+        }
+        if (not().equals(exp)) {
             return Const1.create(false);
+        }
         return new And1(this, exp);
     }
 
     public IExp1 or(IExp1 exp) {
-        if (exp instanceof Const1)
+        if (exp instanceof Const1) {
             return exp.or(this);
-        if (equals(exp))
+        }
+        if (equals(exp)) {
             return this;
-        if (not().equals(exp))
+        }
+        if (not().equals(exp)) {
             return Const1.create(true);
+        }
         return new Or1(this, exp);
     }
 
     public IExp1 xor(IExp1 exp) {
-        if (exp instanceof Const1)
+        if (exp instanceof Const1) {
             return exp.xor(this);
-        if (equals(exp))
+        }
+        if (equals(exp)) {
             return Const1.create(false);
-        if (not().equals(exp))
+        }
+        if (not().equals(exp)) {
             return Const1.create(true);
+        }
         return exp.not().and(this).or(this.not().and(exp));
     }
 
@@ -70,12 +82,25 @@ public class Var1 implements IExp1 {
         return not;
     }
 
-    public IExp1 substitute(Var1 v, Const1 c) {
-        if (this.equals(v)) {
-            return c;
-        } else {
-            return this;
+    public IExp1 sub(Var1 v, Const1 c) {
+        if (sub != null)
+            if (!v.equals(subVar))
+                sub = null;
+        if (sub != null)
+            if (!c.equals(subConst))
+                sub = null;
+        if (sub == null) {
+            if (this.equals(v)) {
+                sub = c;
+            } else if (not().equals(v)) {
+                sub = c.not();
+            } else {
+                sub = this;
+            }
+            subVar = v;
+            subConst = c;
         }
+        return sub;
     }
 
     public void setNot(IExp1 not) {
@@ -94,7 +119,7 @@ public class Var1 implements IExp1 {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Var1) {
-            Var1 v = (Var1)o;
+            Var1 v = (Var1) o;
             return name.equals(v.name) && (invert == v.invert);
         } else {
             return false;
