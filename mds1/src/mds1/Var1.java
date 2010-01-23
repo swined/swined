@@ -3,29 +3,68 @@ package mds1;
 public class Var1 implements IExp1 {
 
     private final String name;
+    private final boolean invert;
 
     public Var1(String name) {
         this.name = name;
+        this.invert = false;
+    }
+
+    public Var1(String name, boolean invert) {
+        this.name = name;
+        this.invert = invert;
     }
 
     public String getName() {
         return name;
     }
 
+    public boolean isInverted() {
+        return invert;
+    }
+
     public IExp1 and(IExp1 exp) {
+        if (exp instanceof Const1)
+            return exp.and(this);
+        if (equals(exp))
+            return this;
+        if (exp instanceof Not1)
+            if (((Not1)exp).getExp().equals(this))
+                return this;
         return new And1(this, exp);
     }
 
     public IExp1 or(IExp1 exp) {
+        if (exp instanceof Const1)
+            return exp.or(this);
+        if (equals(exp))
+            return this;
         return new Or1(this, exp);
     }
 
     public IExp1 xor(IExp1 exp) {
-        return new Xor1(this, exp);
+        return exp.not().and(this).or(this.not().and(exp));
+        //if (exp instanceof Const1)
+//            return exp.xor(this);
+  //      if (equals(exp))
+    //        return Const1.create(false);
+      //  return new Xor1(this, exp);
     }
 
     public IExp1 not() {
         return new Not1(this);
+    }
+
+    public IExp1 substitute(Var1 v, Const1 c) {
+        if (this.equals(v)) {
+            return c;
+        } else {
+            return this;
+        }
+    }
+
+    public IExp1 optimize() {
+        return this;
     }
 
     @Override
@@ -41,10 +80,14 @@ public class Var1 implements IExp1 {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Var1) {
-            return name.equals(((Var1)o).name);
+            return name.equals(((Var1)o).name) && (invert == ((Var1)o).invert);
         } else {
             return false;
         }
+    }
+
+    public PDNF toPDNF() {
+        return new PDNF(this);
     }
 
 }

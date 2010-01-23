@@ -75,6 +75,13 @@ public class Exp32 {
         return r & 0xFFFFFFFFL;
     }
 
+    public IExp1 equation() {
+        IExp1 r = Const1.create(false);
+        for (int i = 0; i < 32; i++)
+            r = r.or(bits[i]);
+        return r;
+    }
+
     @Override
     public String toString() {
         Long l = asLong();
