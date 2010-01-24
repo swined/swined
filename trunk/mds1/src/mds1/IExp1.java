@@ -12,8 +12,7 @@ public interface IExp1 {
     void setNot(IExp1 not);
     IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c);
     boolean hasDisjunctions();
-    Var1 getVarA();
-    Var1 getVarB();
+    Var1 getVar();
     void print(PrintStream out);
 
 }

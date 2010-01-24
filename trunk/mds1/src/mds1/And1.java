@@ -8,24 +8,18 @@ public class And1 implements IExp1 {
     private final IExp1 a;
     private final IExp1 b;
     private final boolean hasDisjunctions;
-    private final Var1 varA;
-    private final Var1 varB;
+    private final Var1 var;
     private IExp1 not = null;
 
     public And1(IExp1 a, IExp1 b) {
         this.a = a;
         this.b = b;
         hasDisjunctions = a.hasDisjunctions() || b.hasDisjunctions();
-        Var1 ta = a.getVarA();
-        if (ta == null)
-            varA = b.getVarA();
+        Var1 tv = a.getVar();
+        if (tv == null)
+            var = b.getVar();
         else
-            varA = ta;
-        Var1 tb = b.getVarB();
-        if (tb == null)
-            varB = a.getVarB();
-        else
-            varB = tb;
+            var = tv;
     }
 
     public IExp1 getA() {
@@ -100,12 +94,8 @@ public class And1 implements IExp1 {
         return hasDisjunctions;
     }
 
-    public Var1 getVarA() {
-        return varA;
-    }
-
-    public Var1 getVarB() {
-        return varB;
+    public Var1 getVar() {
+        return var;
     }
 
     public void print(PrintStream out) {
