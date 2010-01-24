@@ -47,12 +47,15 @@ public class Var1 implements IExp1 {
         if (not().equals(exp)) {
             return Const1.create(false);
         }
-        if (exp.depth() < 10) {
+        if (exp.depth() < 100) {
             HashMap<IExp1, BigInteger> dc = new HashMap();
             if (exp.depends(dc, this).compareTo(BigInteger.ZERO) > 0) {
                 System.out.println("cleaning and");
+                BigInteger c0 = Main.complexity(exp);
                 HashMap<IExp1, IExp1> sc = new HashMap();
                 IExp1 n = exp.sub(sc, this, Const1.create(true));
+                BigInteger c1 = Main.complexity(n);
+                System.out.println(c0.subtract(c1));
                 return this.and(n);
             }
         }
@@ -72,12 +75,15 @@ public class Var1 implements IExp1 {
         }
         if (exp instanceof And1)
             return exp.or(this);
-        if (exp.depth() < 10) {
+        if (exp.depth() < 100) {
             HashMap<IExp1, BigInteger> dc = new HashMap();
             if (exp.depends(dc, this).compareTo(BigInteger.ZERO) > 0) {
                 System.out.println("cleaning or");
+                BigInteger c0 = Main.complexity(exp);
                 HashMap<IExp1, IExp1> sc = new HashMap();
                 IExp1 n = exp.sub(sc, this, Const1.create(false));
+                BigInteger c1 = Main.complexity(n);
+                System.out.println(c0.subtract(c1));
                 return this.or(n);
             }
         }
