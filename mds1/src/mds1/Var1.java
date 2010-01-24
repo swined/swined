@@ -47,7 +47,7 @@ public class Var1 implements IExp1 {
         if (not().equals(exp)) {
             return Const1.create(false);
         }
-        if (exp.depth() < 100) {
+        if (exp.depth() < 10) {
             HashMap<IExp1, BigInteger> dc = new HashMap();
             if (exp.depends(dc, this).compareTo(BigInteger.ZERO) > 0) {
                 System.out.println("cleaning and");
@@ -72,7 +72,7 @@ public class Var1 implements IExp1 {
         }
         if (exp instanceof And1)
             return exp.or(this);
-        if (exp.depth() < 100) {
+        if (exp.depth() < 10) {
             HashMap<IExp1, BigInteger> dc = new HashMap();
             if (exp.depends(dc, this).compareTo(BigInteger.ZERO) > 0) {
                 System.out.println("cleaning or");
