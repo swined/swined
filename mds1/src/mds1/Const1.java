@@ -1,5 +1,7 @@
 package mds1;
 
+import java.io.PrintStream;
+
 public class Const1 implements IExp1 {
 
     private final boolean value;
@@ -61,9 +63,8 @@ public class Const1 implements IExp1 {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return value ? "1" : "0";
+    public void print(PrintStream out) {
+        out.print(value ? "1" : "0");
     }
 
 }
