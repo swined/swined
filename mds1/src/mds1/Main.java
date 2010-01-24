@@ -1,7 +1,7 @@
 package mds1;
 
+import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
@@ -18,18 +18,31 @@ public class Main {
         return var.and(p).or(var.not().and(n));
     }
 
-    private static IExp1 split(IExp1 exp, List<Var1> vars) {
+    private static IExp1 split(IExp1 exp) {
         if (!exp.hasDisjunctions())
             return exp;
         Var1 var = exp.getVar();
-        vars.add(var);
         if (var == null)
             return exp;
         System.out.println("splitting by " + var);
         IExp1 p = sub(exp, var, true);
-        //p = split(p, vars);
+        p = split(p);
         IExp1 n = sub(exp, var, false);
-        n = split(n, vars);
+        n = split(n);
+        return var.and(p).or(var.not().and(n));
+    }
+
+    private static IExp1 split(IExp1 exp, Exp32[] in) {
+        if (!exp.hasDisjunctions())
+            return exp;
+        Var1 var = mostUsed(exp, in);
+        if (var == null)
+            return exp;
+        System.out.println("splitting by " + var);
+        IExp1 p = sub(exp, var, true);
+        p = split(p, in);
+        IExp1 n = sub(exp, var, false);
+        //n = split(n, in);
         return var.and(p).or(var.not().and(n));
     }
 
@@ -54,6 +67,22 @@ public class Main {
         return in;
     }
 
+    private static Var1 mostUsed(IExp1 exp, Exp32[] in) {
+            Var1 bv = null;
+            BigInteger bd = BigInteger.valueOf(0);
+            for (int i = 0; i < in.length; i++)
+                for (int j = 0; j < 32; j++) {
+                    Var1 v = new Var1("x" + i + "[" + j + "]");
+                    HashMap<IExp1, BigInteger> dc = new HashMap();
+                    BigInteger depends = exp.depends(dc, v);
+                    if (depends.compareTo(bd) == 1) {
+                        bv = v;
+                        bd = depends;
+                    }
+                }
+            return bv;
+    }
+
     public static void main(String[] args) throws Exception {
         Exp32[] to = new Exp32[] {
                 new Exp32(0xcd6b8f09L),
@@ -61,15 +90,40 @@ public class Main {
                 new Exp32(0x834edecaL),
                 new Exp32(0xf6b42726L)
         };
-        IExp1 eq = equation(xpr(1), to);
-        List<Var1> vars = new LinkedList();
-        for (int i = 0; i < 3; i++) {
-            eq = split(eq, vars);
-            eq = split(eq, vars.get(vars.size() - 1));
-            vars.clear();
-        }
-        System.out.println("done");
+        Exp32[] in = xpr(1);
+        IExp1 eq = equation(in, to);
+        eq = split(eq, in);
+        //eq = split(eq);
         eq.print(System.out);
-        System.out.println();
+        /*for (int k = 0; k < 5; k++) {
+            Var1 bv = null;
+            BigInteger bd = BigInteger.valueOf(0);
+            BigInteger total = BigInteger.valueOf(0);
+            for (int i = 0; i < in.length; i++)
+                for (int j = 0; j < 32; j++) {
+                    Var1 v = new Var1("x" + i + "[" + j + "]");
+                    HashMap<IExp1, BigInteger> dc = new HashMap();
+                    BigInteger depends = eq.depends(dc, v);
+                    total = total.add(depends);
+                    System.out.println("" + v + ": " + depends);
+                    if (depends.compareTo(bd) == 1) {
+                        bv = v;
+                        bd = depends;
+                    }
+                }
+            System.out.println("total: " + total);
+            System.out.println(bv);
+            eq = split(eq, bv);
+        }*/
+        //List<Var1> vars = new LinkedList();
+        //for (int i = 0; i < 3; i++) {
+          //  eq = split(eq, vars);
+           // eq = split(eq, vars.get(0));
+           // System.out.println(eq.depth());
+        //    vars.clear();
+       // }
+        //System.out.println("done");
+        //eq.print(System.out);
+        //System.out.println();
     }
 }

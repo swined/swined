@@ -1,6 +1,7 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.math.BigInteger;
 import java.util.HashMap;
 
 public class Const1 implements IExp1 {
@@ -64,8 +65,16 @@ public class Const1 implements IExp1 {
         return null;
     }
 
+    public BigInteger depends(HashMap<IExp1, BigInteger> context, Var1 v) {
+        return BigInteger.valueOf(0);
+    }
+
     public void print(PrintStream out) {
         out.print(value ? "1" : "0");
+    }
+
+    public int depth() {
+        return 0;
     }
 
 }

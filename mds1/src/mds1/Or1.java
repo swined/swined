@@ -1,6 +1,7 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.math.BigInteger;
 import java.util.HashMap;
 
 public class Or1 implements IExp1 {
@@ -8,6 +9,7 @@ public class Or1 implements IExp1 {
     private final IExp1 a;
     private final IExp1 b;
     private final Var1 var;
+    private final int depth;
     private IExp1 not = null;
 
     public Or1(IExp1 a, IExp1 b) {
@@ -18,6 +20,9 @@ public class Or1 implements IExp1 {
             var = b.getVar();
         else
             var = tv;
+        int da = a.depth();
+        int db = b.depth();
+        depth = (da > db ? da : db) + 1;
     }
 
     public IExp1 getA() {
@@ -70,8 +75,8 @@ public class Or1 implements IExp1 {
                 sub = this;
             else
                 sub = sa.or(sb);
+            context.put(this, sub);
         }
-        context.put(this, sub);
         return sub;
     }
 
@@ -81,6 +86,19 @@ public class Or1 implements IExp1 {
 
     public Var1 getVar() {
         return var;
+    }
+
+    public BigInteger depends(HashMap<IExp1, BigInteger> context, Var1 v) {
+        BigInteger dep = context.get(this);
+        if (dep == null) {
+            dep = a.depends(context, v).add(b.depends(context, v));
+            context.put(this, dep);
+        }
+        return dep;
+    }
+
+    public int depth() {
+        return depth;
     }
 
     public void print(PrintStream out) {
