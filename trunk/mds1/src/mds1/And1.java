@@ -9,10 +9,18 @@ public class And1 implements IExp1 {
     private Const1 subConst = null;
     private String string = null;
     private IExp1 not = null;
+    private final boolean hasDisjunctions;
+    private final Var1 var;
 
     public And1(IExp1 a, IExp1 b) {
         this.a = a;
         this.b = b;
+        hasDisjunctions = a.hasDisjunctions() || b.hasDisjunctions();
+        Var1 tv = a.getVar();
+        if (tv == null)
+            var = b.getVar();
+        else
+            var = tv;
     }
 
     public IExp1 getA() {
@@ -64,9 +72,22 @@ public class And1 implements IExp1 {
         if (sub == null) {
             subVar = v;
             subConst = c;
-            sub = a.sub(v, c).and(b.sub(v, c));
+            IExp1 sa = a.sub(v, c);
+            IExp1 sb = b.sub(v, c);
+            if (sa == a && sb == b)
+                sub = this;
+            else
+                sub = sa.and(sb);
         }
         return sub;
+    }
+
+    public boolean hasDisjunctions() {
+        return hasDisjunctions;
+    }
+
+    public Var1 getVar() {
+        return var;
     }
 
     @Override
