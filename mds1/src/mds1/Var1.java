@@ -84,11 +84,7 @@ public class Var1 implements IExp1 {
         return false;
     }
 
-    public Var1 getVarA() {
-        return this;
-    }
-
-    public Var1 getVarB() {
+    public Var1 getVar() {
         return this;
     }
 

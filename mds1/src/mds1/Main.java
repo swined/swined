@@ -1,30 +1,35 @@
 package mds1;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
 
-    private static IExp1 split(IExp1 exp, boolean a) {
+    private static IExp1 sub(IExp1 e, Var1 v, boolean c) {
+        HashMap<IExp1, IExp1> context = new HashMap();
+        return e.sub(context, v, Const1.create(c));
+    }
+
+    private static IExp1 split(IExp1 exp, Var1 var) {
+        System.out.println("splitting by " + var);
+        IExp1 p = sub(exp, var, true);
+        IExp1 n = sub(exp, var, false);
+        return var.and(p).or(var.not().and(n));
+    }
+
+    private static IExp1 split(IExp1 exp, List<Var1> vars) {
         if (!exp.hasDisjunctions())
             return exp;
-        Var1 var = !a ? exp.getVarA() : exp.getVarB();
+        Var1 var = exp.getVar();
+        vars.add(var);
         if (var == null)
             return exp;
         System.out.println("splitting by " + var);
-        HashMap<IExp1, IExp1> context = new HashMap();
-        IExp1 p = exp.sub(context, var, Const1.create(true));
-        if (a)
-            p = split(p, a);
-        //if (!p.hasDisjunctions())
-        //    if (p.getVar() != null)
-        //        return var.and(p);
-        context = new HashMap();
-        IExp1 n = exp.sub(context, var, Const1.create(false));
-        if (!a)
-            n = split(n, a);
-        //if (!n.hasDisjunctions())
-        //    if (n.getVar() != null)
-        //        return var.not().and(n);
+        IExp1 p = sub(exp, var, true);
+        //p = split(p, vars);
+        IExp1 n = sub(exp, var, false);
+        n = split(n, vars);
         return var.and(p).or(var.not().and(n));
     }
 
@@ -57,8 +62,13 @@ public class Main {
                 new Exp32(0xf6b42726L)
         };
         IExp1 eq = equation(xpr(1), to);
-        for (int i = 0; i < 2; i++)
-            eq = split(eq, i % 2 == 0);
+        List<Var1> vars = new LinkedList();
+        for (int i = 0; i < 3; i++) {
+            eq = split(eq, vars);
+            eq = split(eq, vars.get(vars.size() - 1));
+            vars.clear();
+        }
+        System.out.println("done");
         eq.print(System.out);
         System.out.println();
     }
