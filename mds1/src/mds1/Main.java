@@ -1,24 +1,30 @@
 package mds1;
 
+import java.util.HashMap;
+
 public class Main {
 
-    private static IExp1 split(IExp1 exp) {
+    private static IExp1 split(IExp1 exp, boolean a) {
         if (!exp.hasDisjunctions())
             return exp;
-        Var1 var = exp.getVar();
+        Var1 var = !a ? exp.getVarA() : exp.getVarB();
         if (var == null)
             return exp;
         System.out.println("splitting by " + var);
-        IExp1 p = exp.sub(var, Const1.create(true));
-        p = split(p);
-        if (!p.hasDisjunctions())
-            if (p.getVar() != null)
-                return var.and(p);
-        IExp1 n = exp.sub(var, Const1.create(false));
-        n = split(n);
-        if (!n.hasDisjunctions())
-            if (n.getVar() != null)
-                return var.not().and(n);
+        HashMap<IExp1, IExp1> context = new HashMap();
+        IExp1 p = exp.sub(context, var, Const1.create(true));
+        if (a)
+            p = split(p, a);
+        //if (!p.hasDisjunctions())
+        //    if (p.getVar() != null)
+        //        return var.and(p);
+        context = new HashMap();
+        IExp1 n = exp.sub(context, var, Const1.create(false));
+        if (!a)
+            n = split(n, a);
+        //if (!n.hasDisjunctions())
+        //    if (n.getVar() != null)
+        //        return var.not().and(n);
         return var.and(p).or(var.not().and(n));
     }
 
@@ -45,13 +51,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Exp32[] to = new Exp32[] {
-                new Exp32(0),//xcd6b8f09L),
-                new Exp32(0),//x73d32146L),
-                new Exp32(0),//x834edecaL),
-                new Exp32(0),//xf6b42726L)
+                new Exp32(0xcd6b8f09L),
+                new Exp32(0x73d32146L),
+                new Exp32(0x834edecaL),
+                new Exp32(0xf6b42726L)
         };
-        IExp1 eq = equation(xpr(2), to);
-        eq = split(eq);
+        IExp1 eq = equation(xpr(1), to);
+        for (int i = 0; i < 2; i++)
+            eq = split(eq, i % 2 == 0);
         eq.print(System.out);
         System.out.println();
     }

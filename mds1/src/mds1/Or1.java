@@ -1,25 +1,29 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 public class Or1 implements IExp1 {
 
     private final IExp1 a;
     private final IExp1 b;
-    private IExp1 sub = null;
-    private Var1 subVar;
-    private Const1 subConst;
+    private final Var1 varA;
+    private final Var1 varB;
     private IExp1 not = null;
-    private final Var1 var;
 
     public Or1(IExp1 a, IExp1 b) {
         this.a = a;
         this.b = b;
-        Var1 tv = a.getVar();
-        if (tv == null)
-            var = b.getVar();
+        Var1 ta = a.getVarA();
+        if (ta == null)
+            varA = b.getVarA();
         else
-            var = tv;
+            varA = ta;
+        Var1 tb = b.getVarB();
+        if (tb == null)
+            varB = a.getVarB();
+        else
+            varB = tb;
     }
 
     public IExp1 getA() {
@@ -63,23 +67,17 @@ public class Or1 implements IExp1 {
         return not;
     }
 
-    public IExp1 sub(Var1 v, Const1 c) {
-        if (sub != null)
-            if (!v.equals(subVar))
-                sub = null;
-        if (sub != null)
-            if (!c.equals(subConst))
-                sub = null;
+    public IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c) {
+        IExp1 sub = context.get(this);
         if (sub == null) {
-            subVar = v;
-            subConst = c;
-            IExp1 sa = a.sub(v, c);
-            IExp1 sb = b.sub(v, c);
+            IExp1 sa = a.sub(context, v, c);
+            IExp1 sb = b.sub(context, v, c);
             if (sa == a && sb == b)
                 sub = this;
             else
                 sub = sa.or(sb);
         }
+        context.put(this, sub);
         return sub;
     }
 
@@ -87,8 +85,12 @@ public class Or1 implements IExp1 {
         return true;
     }
 
-    public Var1 getVar() {
-        return var;
+    public Var1 getVarA() {
+        return varA;
+    }
+
+    public Var1 getVarB() {
+        return varB;
     }
 
     public void print(PrintStream out) {
