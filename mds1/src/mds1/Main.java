@@ -82,9 +82,9 @@ public class Main {
             return bv;
     }
 
-    private static BigInteger complexity(IExp1 exp, Exp32[] in) {
+    public static BigInteger complexity(IExp1 exp) {
             BigInteger bd = BigInteger.ZERO;
-            for (int i = 0; i < in.length; i++)
+            for (int i = 0; i < 1; i++)
                 for (int j = 0; j < 32; j++) {
                     Var1 v = new Var1("x" + i + "[" + j + "]");
                     HashMap<IExp1, BigInteger> dc = new HashMap();
@@ -103,10 +103,10 @@ public class Main {
         };
         Exp32[] in = xpr(1);
         IExp1 eq = equation(in, to);
-        System.out.println(complexity(eq, in));
+        System.out.println(complexity(eq));
         eq = split(eq, in);
         System.out.println("done");
-        System.out.println(complexity(eq, in));
+        System.out.println(complexity(eq));
         eq.print(System.out);
     }
 }
