@@ -53,6 +53,14 @@ public class Const1 implements IExp1 {
         return this;
     }
 
+    public boolean hasDisjunctions() {
+        return false;
+    }
+
+    public Var1 getVar() {
+        return null;
+    }
+
     @Override
     public String toString() {
         return value ? "1" : "0";

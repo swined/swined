@@ -78,6 +78,14 @@ public class Var1 implements IExp1 {
         return not;
     }
 
+    public boolean hasDisjunctions() {
+        return false;
+    }
+
+    public Var1 getVar() {
+        return this;
+    }
+
     public IExp1 sub(Var1 v, Const1 c) {
         if (sub != null)
             if (!v.equals(subVar))
