@@ -1,6 +1,7 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.math.BigInteger;
 import java.util.HashMap;
 
 public class And1 implements IExp1 {
@@ -9,6 +10,7 @@ public class And1 implements IExp1 {
     private final IExp1 b;
     private final boolean hasDisjunctions;
     private final Var1 var;
+    private final int depth;
     private IExp1 not = null;
 
     public And1(IExp1 a, IExp1 b) {
@@ -20,6 +22,9 @@ public class And1 implements IExp1 {
             var = b.getVar();
         else
             var = tv;
+        int da = a.depth();
+        int db = b.depth();
+        depth = (da > db ? da : db) + 1;
     }
 
     public IExp1 getA() {
@@ -85,9 +90,18 @@ public class And1 implements IExp1 {
                 sub = this;
             else
                 sub = sa.and(sb);
+            context.put(this, sub);
         }
-        context.put(this, sub);
         return sub;
+    }
+
+    public BigInteger depends(HashMap<IExp1, BigInteger> context, Var1 v) {
+        BigInteger dep = context.get(this);
+        if (dep == null) {
+            dep = a.depends(context, v).add(b.depends(context, v));
+            context.put(this, dep);
+        }
+        return dep;
     }
 
     public boolean hasDisjunctions() {
@@ -96,6 +110,10 @@ public class And1 implements IExp1 {
 
     public Var1 getVar() {
         return var;
+    }
+
+    public int depth() {
+        return depth;
     }
 
     public void print(PrintStream out) {
