@@ -1,5 +1,7 @@
 package mds1;
 
+import java.io.PrintStream;
+
 public class Var1 implements IExp1 {
 
     private final String name;
@@ -129,5 +131,10 @@ public class Var1 implements IExp1 {
             return false;
         }
     }
-    
+
+    public void print(PrintStream out) {
+        out.print(invert ? "!" : "");
+        out.print(name);
+    }
+
 }

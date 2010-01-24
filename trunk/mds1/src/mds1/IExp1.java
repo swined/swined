@@ -1,5 +1,7 @@
 package mds1;
 
+import java.io.PrintStream;
+
 public interface IExp1 {
 
     IExp1 and(IExp1 exp);
@@ -10,5 +12,6 @@ public interface IExp1 {
     IExp1 sub(Var1 v, Const1 c);
     boolean hasDisjunctions();
     Var1 getVar();
+    void print(PrintStream out);
 
 }

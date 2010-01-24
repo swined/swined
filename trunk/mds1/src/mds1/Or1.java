@@ -1,5 +1,7 @@
 package mds1;
 
+import java.io.PrintStream;
+
 public class Or1 implements IExp1 {
 
     private final IExp1 a;
@@ -7,7 +9,6 @@ public class Or1 implements IExp1 {
     private IExp1 sub = null;
     private Var1 subVar;
     private Const1 subConst;
-    private String string = null;
     private IExp1 not = null;
     private final Var1 var;
 
@@ -90,11 +91,12 @@ public class Or1 implements IExp1 {
         return var;
     }
 
-    @Override
-    public String toString() {
-        if (string == null)
-            string = "(" + a + " | " + b + ")";
-        return string;
+    public void print(PrintStream out) {
+        out.print("(");
+        a.print(out);
+        out.print(" | ");
+        b.print(out);
+        out.print(")");
     }
 
 }
