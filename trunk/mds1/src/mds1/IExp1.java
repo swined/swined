@@ -1,6 +1,7 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 public interface IExp1 {
 
@@ -9,9 +10,10 @@ public interface IExp1 {
     IExp1 xor(IExp1 exp);
     IExp1 not();
     void setNot(IExp1 not);
-    IExp1 sub(Var1 v, Const1 c);
+    IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c);
     boolean hasDisjunctions();
-    Var1 getVar();
+    Var1 getVarA();
+    Var1 getVarB();
     void print(PrintStream out);
 
 }

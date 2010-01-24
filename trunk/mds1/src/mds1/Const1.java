@@ -1,6 +1,7 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 public class Const1 implements IExp1 {
 
@@ -51,7 +52,7 @@ public class Const1 implements IExp1 {
         return Const1.create(!value);
     }
 
-    public IExp1 sub(Var1 v, Const1 c) {
+    public IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c) {
         return this;
     }
 
@@ -59,7 +60,11 @@ public class Const1 implements IExp1 {
         return false;
     }
 
-    public Var1 getVar() {
+    public Var1 getVarA() {
+        return null;
+    }
+
+    public Var1 getVarB() {
         return null;
     }
 

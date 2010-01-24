@@ -1,15 +1,13 @@
 package mds1;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 public class Var1 implements IExp1 {
 
     private final String name;
     private final boolean invert;
     private final Var1 not;
-    private IExp1 sub;
-    private Var1 subVar;
-    private Const1 subConst;
 
     public Var1(String name) {
         this.name = name;
@@ -60,6 +58,8 @@ public class Var1 implements IExp1 {
         if (not().equals(exp)) {
             return Const1.create(true);
         }
+        if (exp instanceof And1)
+            return exp.or(this);
         return new Or1(this, exp);
     }
 
@@ -84,17 +84,16 @@ public class Var1 implements IExp1 {
         return false;
     }
 
-    public Var1 getVar() {
+    public Var1 getVarA() {
         return this;
     }
 
-    public IExp1 sub(Var1 v, Const1 c) {
-        if (sub != null)
-            if (!v.equals(subVar))
-                sub = null;
-        if (sub != null)
-            if (!c.equals(subConst))
-                sub = null;
+    public Var1 getVarB() {
+        return this;
+    }
+
+    public IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c) {
+        IExp1 sub = context.get(this);
         if (sub == null) {
             if (equals(v)) {
                 sub = c;
@@ -103,9 +102,8 @@ public class Var1 implements IExp1 {
             } else {
                 sub = this;
             }
-            subVar = v;
-            subConst = c;
         }
+        context.put(this, sub);
         return sub;
     }
 
