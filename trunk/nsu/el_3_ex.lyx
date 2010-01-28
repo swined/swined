@@ -1,0 +1,648 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\options twocolumn
+\use_default_options true
+\language russian
+\inputencoding koi8-r
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 1cm
+\topmargin 0cm
+\rightmargin 1cm
+\bottommargin 1cm
+\headheight 0cm
+\headsep 0cm
+\footskip 0cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+1.
+ электрический заряд
+\end_layout
+
+\begin_layout Standard
+2.
+ закон кулона
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{F}_{1,2}=\frac{q_{1}q_{2}}{r_{1,2}^{2}}\frac{\vec{r}_{1,2}}{r_{1,2}}=q_{2}\vec{E}_{1}(\vec{r}_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.
+ электрическое поле
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{E}(\vec{r})=\frac{q(\vec{r}-\vec{r}_{0})}{|\vec{r}-\vec{r}_{0}|^{3}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+4.
+ принцип суперпозиции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{E}(\vec{r})=\sum\vec{E}_{i}(\vec{r})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+5.
+ силовые линии электрического поля
+\end_layout
+
+\begin_layout Standard
+6.
+ интегральная форма уравнений электростатики
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\oint\vec{E}_{n}dS=\int div\vec{E}dV$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+7.
+ т.
+ Гаусса и т.
+ о циркуляции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\oint_{S}\vec{E}_{n}dS=4\pi Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\oint\vec{E}dl=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+8.
+ дифф.
+ ур.
+ эл.-ст.
+ поля в вакууме
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $div\vec{E}=4\pi\rho$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+9.
+ потенциал
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\varphi(r)=\frac{q}{r}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+10.
+ ур.
+ Пуассона и его общ.
+ решение
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\varphi(\vec{r})=\int\frac{\rho(\vec{r}')}{|\vec{r}-\vec{r}'|}dV'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Delta\varphi=-4\pi\rho$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+11.
+ эл.
+ поле на больших расст.
+ от сист.
+ зарядов
+\end_layout
+
+\begin_layout Standard
+12.
+ диполь
+\end_layout
+
+\begin_layout Standard
+13.
+ квадруполь
+\end_layout
+
+\begin_layout Standard
+14.
+ понятие о мультиполях
+\end_layout
+
+\begin_layout Standard
+15.
+ проводники в эл.-ст.
+ поле, гран.
+ усл.
+\end_layout
+
+\begin_layout Standard
+внутри: 
+\begin_inset Formula $\vec{E}=0$
+\end_inset
+
+, 
+\begin_inset Formula $\rho=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+граница: 
+\begin_inset Formula $\vec{E}_{1n}-\vec{E}_{2n}=4\pi\sigma$
+\end_inset
+
+, 
+\begin_inset Formula $\vec{E}_{1\tau}=\vec{E}_{2\tau}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+16.
+ электроемкость
+\end_layout
+
+\begin_layout Standard
+17.
+ конденсатор
+\end_layout
+
+\begin_layout Standard
+18.
+ энергия конденсатора
+\end_layout
+
+\begin_layout Standard
+19.
+ энергия электрического поля
+\end_layout
+
+\begin_layout Standard
+20.
+ электрическое поле в среде
+\end_layout
+
+\begin_layout Standard
+21.
+ диэлектрики
+\end_layout
+
+\begin_layout Standard
+22.
+ поляризация, эл.-ст.
+ индукция, диэл.
+ проницаемость, гран.
+ усл.
+\end_layout
+
+\begin_layout Standard
+23.
+ энергия поля в среде
+\end_layout
+
+\begin_layout Standard
+24.
+ силы в эл.
+ поле в среде
+\end_layout
+
+\begin_layout Standard
+25.
+ электрический ток
+\end_layout
+
+\begin_layout Standard
+26.
+ закон сохранения заряда
+\end_layout
+
+\begin_layout Standard
+27.
+ уравнение непрерывности
+\end_layout
+
+\begin_layout Standard
+28.
+ ток в проводниках
+\end_layout
+
+\begin_layout Standard
+29.
+ проводимость
+\end_layout
+
+\begin_layout Standard
+30.
+ дифф.
+ закон Ома
+\end_layout
+
+\begin_layout Standard
+31.
+ граничные условия
+\end_layout
+
+\begin_layout Standard
+32.
+ линейные проводники
+\end_layout
+
+\begin_layout Standard
+33.
+ сопротивление
+\end_layout
+
+\begin_layout Standard
+34.
+ з.
+ Ома и правила Кирхгофа
+\end_layout
+
+\begin_layout Standard
+35.
+ ЭДС
+\end_layout
+
+\begin_layout Standard
+36.
+ ток в вакууме
+\end_layout
+
+\begin_layout Standard
+37.
+ ток в газе и жидкости
+\end_layout
+
+\begin_layout Standard
+38.
+ одвижность ионов и электронов
+\end_layout
+
+\begin_layout Standard
+39.
+ постоянное магнитное поле
+\end_layout
+
+\begin_layout Standard
+40.
+ закон ампера
+\end_layout
+
+\begin_layout Standard
+41.
+ закон Био-Савара
+\end_layout
+
+\begin_layout Standard
+42.
+ принцип суперпозиции
+\end_layout
+
+\begin_layout Standard
+43.
+ силовые линии магнитного поля
+\end_layout
+
+\begin_layout Standard
+44.
+ инт.
+ форма уравнений магнитостатики и его общ.
+ реш.
+\end_layout
+
+\begin_layout Standard
+45.
+ поток и циркуляция магнитного поля
+\end_layout
+
+\begin_layout Standard
+46.
+ дифф.
+ ур.
+ магнитостатики в вакууме
+\end_layout
+
+\begin_layout Standard
+47.
+ вектор-потенциал
+\end_layout
+
+\begin_layout Standard
+48.
+ осн.
+ ур.
+ магнитостатики и его общ.
+ реш.
+\end_layout
+
+\begin_layout Standard
+49.
+ магнитное поле на больших расстояниях
+\end_layout
+
+\begin_layout Standard
+50.
+ магнитный (дипольный) момент
+\end_layout
+
+\begin_layout Standard
+51.
+ магнитное поле в среде
+\end_layout
+
+\begin_layout Standard
+52.
+ намагничивание
+\end_layout
+
+\begin_layout Standard
+53.
+ магнитная индукция
+\end_layout
+
+\begin_layout Standard
+54.
+ магнитная проницаемость
+\end_layout
+
+\begin_layout Standard
+55.
+ типы магнетиков
+\end_layout
+
+\begin_layout Standard
+56.
+ ферромагнетизм, гистерезис
+\end_layout
+
+\begin_layout Standard
+57.
+ граничные условия
+\end_layout
+
+\begin_layout Standard
+58.
+ закон эл.-м.
+ индукции
+\end_layout
+
+\begin_layout Standard
+59.
+ самоиндукция и взаимоиндукция
+\end_layout
+
+\begin_layout Standard
+60.
+ индуктивность
+\end_layout
+
+\begin_layout Standard
+61.
+ силы в магнитном поле
+\end_layout
+
+\begin_layout Standard
+62.
+ энергия магниного поля
+\end_layout
+
+\begin_layout Standard
+63.
+ сверхпроводимость, эффект Мейснера, критическое магнитное поле
+\end_layout
+
+\begin_layout Standard
+64.
+ граничные условия
+\end_layout
+
+\begin_layout Standard
+65.
+ инт.
+ и дифф.
+ формы ур.
+ квазистац.
+ эл.-маг.
+ процессов
+\end_layout
+
+\begin_layout Standard
+66.
+ токи Фуко, скин-эффект
+\end_layout
+
+\begin_layout Standard
+67.
+ цепи переменного тока, компл.
+ сопр.
+\end_layout
+
+\begin_layout Standard
+68.
+ колебательный контур
+\end_layout
+
+\begin_layout Standard
+69.
+ ток смещения
+\end_layout
+
+\begin_layout Standard
+70.
+ ур.
+ Максвела в инт.
+ и дифф.
+ форме
+\end_layout
+
+\begin_layout Standard
+71.
+ граничные условия
+\end_layout
+
+\begin_layout Standard
+72.
+ поток энергии поля, вектор Пойнтинга
+\end_layout
+
+\begin_layout Standard
+73.
+ импульс эл.-м.
+ поля
+\end_layout
+
+\begin_layout Standard
+74.
+ эл.-м.
+ волны
+\end_layout
+
+\begin_layout Standard
+75.
+ волновое ур.
+\end_layout
+
+\begin_layout Standard
+76.
+ плоская монохроматическая волна
+\end_layout
+
+\begin_layout Standard
+77.
+ поляризация
+\end_layout
+
+\begin_layout Standard
+78.
+ отр.
+ и преломление эл.-м.
+ волны
+\end_layout
+
+\begin_layout Standard
+79.
+ формулы Френеля
+\end_layout
+
+\begin_layout Standard
+80.
+ давление света
+\end_layout
+
+\begin_layout Standard
+81.
+ Фурье-разложение эл.-м.
+ поля
+\end_layout
+
+\begin_layout Standard
+82.
+ соотношение неопределенностей
+\end_layout
+
+\begin_layout Standard
+83.
+ закон дисперсии
+\end_layout
+
+\begin_layout Standard
+84.
+ фазовая и групповая скорость
+\end_layout
+
+\begin_layout Standard
+85.
+ волновой пакет
+\end_layout
+
+\begin_layout Standard
+86.
+ расплывание волнового пакета
+\end_layout
+
+\begin_layout Standard
+87.
+ волноводы
+\end_layout
+
+\begin_layout Standard
+88.
+ эл.-м.
+ поле в волноводе
+\end_layout
+
+\begin_layout Standard
+89.
+ типы волн, критическая частота
+\end_layout
+
+\begin_layout Standard
+90.
+ резонаторы, собственные частоты
+\end_layout
+
+\end_body
+\end_document
