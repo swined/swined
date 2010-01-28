@@ -200,6 +200,27 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\varphi(\vec{r})=\frac{Q}{r}+\frac{\vec{d}\vec{r}}{r^{3}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Q=\sum q_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d=\sum q_{i}\vec{r}'_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 13.
  квадруполь
 \end_layout
@@ -261,8 +282,51 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $W=\sum q_{i}\varphi_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\varphi_{i}$
+\end_inset
+
+ - поле в точке заряда 
+\begin_inset Formula $q_{i}$
+\end_inset
+
+ от всех, кроме 
+\begin_inset Formula $q_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 20.
  электрическое поле в среде
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{d}$
+\end_inset
+
+ - дипольный момент атома
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $n$
+\end_inset
+
+ - концентрация
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{P}=n<\vec{d}>$
+\end_inset
+
+ - дипольный момент единицы объема
 \end_layout
 
 \begin_layout Standard
@@ -300,8 +364,22 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\frac{\partial}{\partial t}\int\rho dV=-\oint_{S}j_{n}dS$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 27.
  уравнение непрерывности
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{\partial\rho}{\partial t}+div\vec{j}=0$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -315,9 +393,23 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\sigma$
+\end_inset
+
+ - проводимость
+\end_layout
+
+\begin_layout Standard
 30.
  дифф.
  закон Ома
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{j}=\sigma\vec{E}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -342,8 +434,37 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\vec{j}=\sigma(\vec{E}+\vec{E}_{\text{сторонн.}})$
+\end_inset
+
+ - з.
+ Ома
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum I=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum RI=\sum\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 35.
  ЭДС
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\varepsilon=\oint\vec{E}_{\text{сторонн.}}d\vec{l}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -358,7 +479,7 @@
 
 \begin_layout Standard
 38.
- одвижность ионов и электронов
+ подвижность ионов и электронов
 \end_layout
 
 \begin_layout Standard
@@ -368,12 +489,19 @@
 
 \begin_layout Standard
 40.
- закон ампера
+ закон Ампера
 \end_layout
 
 \begin_layout Standard
 41.
  закон Био-Савара
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $d\vec{B}=\frac{1}{c}\frac{[\vec{j}(\vec{r}'\times\vec{R})]}{R^{3}}dV'=\frac{I}{c}\frac{[d\vec{l}\times\vec{R}]}{R^{3}}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -399,10 +527,38 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\oint_{S}\vec{B}_{n}dS=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\oint\vec{B}_{l}d\vec{l}=\frac{4\pi}{c}I$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 46.
  дифф.
  ур.
  магнитостатики в вакууме
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{B}=rot\vec{A}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $div\vec{B}=0$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -411,11 +567,46 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\vec{B}(\vec{r})=rot\vec{A}(\vec{r})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $div\vec{A}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 48.
  осн.
  ур.
  магнитостатики и его общ.
  реш.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Delta\vec{A}=-\frac{4\pi}{c}\vec{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{A}=\frac{1}{c}\int\frac{\vec{j}(\vec{r}')}{R(\vec{r},\vec{r}')}dV'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{A}=\frac{I}{c}\oint\frac{d\vec{l}}{R}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -431,6 +622,27 @@
 \begin_layout Standard
 51.
  магнитное поле в среде
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{B}=\mu\vec{H}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $rot\vec{H}=\frac{4\pi}{c}\vec{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{H}=\vec{B}-4\pi\vec{M}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
