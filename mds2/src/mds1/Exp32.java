@@ -27,28 +27,28 @@ public class Exp32 {
     public Exp32 and(Exp32 exp) {
         IExp1[] r = new IExp1[32];
         for (int i = 0; i < 32; i++)
-            r[i] = bits[i].and(exp.bits[i]);
+            r[i] = new And1(bits[i], exp.bits[i]);
         return new Exp32(r);
     }
 
     public Exp32 or(Exp32 exp) {
         IExp1[] r = new IExp1[32];
         for (int i = 0; i < 32; i++)
-            r[i] = bits[i].or(exp.bits[i]);
+            r[i] = new Or1(bits[i], exp.bits[i]);
         return new Exp32(r);
     }
 
     public Exp32 xor(Exp32 exp) {
         IExp1[] r = new IExp1[32];
         for (int i = 0; i < 32; i++)
-            r[i] = bits[i].xor(exp.bits[i]);
+            r[i] = new Xor1(bits[i], exp.bits[i]);
         return new Exp32(r);
     }
 
     public Exp32 not() {
         IExp1[] r = new IExp1[32];
         for (int i = 0; i < 32; i++)
-            r[i] = bits[i].not();
+            r[i] = new Not1(bits[i]);
         return new Exp32(r);
     }
 
@@ -62,8 +62,8 @@ public class Exp32 {
     public Exp32 sum(Exp32 exp) {
         IExp1[] q = new IExp1[32];
         q[0] = Const1.create(false);
-        for (int i = 1; i < 32; i++)
-            q[i] = bits[i - 1].and(exp.bits[i-1]).or(bits[i-1].and(q[i-1])).or(exp.bits[i-1].and(q[i-1]));
+        for (int i = 0; i < 31; i++)
+            q[i + 1] = new Or1(new And1(bits[i], exp.bits[i]), new And1(q[i], new Or1(bits[i], exp.bits[i])));
         return this.xor(exp).xor(new Exp32(q));
     }
 
@@ -82,7 +82,7 @@ public class Exp32 {
     public IExp1 equation() {
         IExp1 r = Const1.create(false);
         for (int i = 0; i < 32; i++)
-            r = r.or(bits[i]);
+            r = new Or1(r, bits[i]);
         return r;
     }
 
