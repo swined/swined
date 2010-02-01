@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class And1 implements IExp1 {
 
-    private IExp1 a;
-    private IExp1 b;
+    private final IExp1 a;
+    private final IExp1 b;
 
     public And1(IExp1 a, IExp1 b) {
         this.a = a;
@@ -29,24 +29,22 @@ public class And1 implements IExp1 {
     public IExp1 optimize(HashMap<IExp1, IExp1> context) {
         IExp1 opt = context.get(this);
         if (opt == null) {
-            a = a.optimize(context);
-            b = b.optimize(context);
-            if (a == Const1.create(true)) {
-                opt = b;
-            } else if (a == Const1.create(false)) {
+            IExp1 oa = a.optimize(context);
+            IExp1 ob = b.optimize(context);
+            if (oa == Const1.create(true)) {
+                opt = ob;
+            } else if (oa == Const1.create(false)) {
                 opt = Const1.create(false);
-            } else if (b == Const1.create(true)) {
-                opt = a;
-            } else if (b == Const1.create(false)) {
+            } else if (ob == Const1.create(true)) {
+                opt = oa;
+            } else if (ob == Const1.create(false)) {
                 opt = Const1.create(false);
             } else {
-                opt = this;
+                opt = new And1(oa, ob);
             }
             context.put(this, opt);
-            return opt;
-        } else {
-            return opt;
         }
+        return opt;
     }
 
 }
