@@ -10,8 +10,12 @@ public class Main {
     }
 
     private static IExp1 split(IExp1 e, Var1 v) {
-        IExp1 p = optimize(sub(e, v, Const1.create(true)));
-        IExp1 n = optimize(sub(e, v, Const1.create(false)));
+        System.out.println("splitting by " + v);
+        System.out.println("p");
+        IExp1 p = sub(e, v, Const1.create(true));
+        System.out.println("n");
+        IExp1 n = sub(e, v, Const1.create(false));
+        System.out.println("r");
         return new Or1(new And1(v, p), new And1(new Not1(v), n));
     }
 
@@ -62,8 +66,9 @@ public class Main {
         };
         Exp32[] in = xpr(1);
         //Exp32[] inx = new Exp32[] { new Exp32(0x30303030L) };
-        IExp1 eq = optimize(equation(in, to));
-        eq = split(eq, new Var1("x0[0]"));
+        IExp1 eq = equation(in, to);
+        for (int i = 0; i < 10; i++)
+            eq = optimize(split(eq, new Var1("x0[" + i + "]")));
 //        for (int i = 0; i < 32; i++)
   //          eq = sub(eq, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]);
         System.out.println(eq);
