@@ -40,8 +40,11 @@ public class Exp32 {
 
     public Exp32 xor(Exp32 exp) {
         IExp1[] r = new IExp1[32];
-        for (int i = 0; i < 32; i++)
-            r[i] = new Xor1(bits[i], exp.bits[i]);
+        for (int i = 0; i < 32; i++) {
+            And1 a = new And1(bits[i], new Not1(exp.bits[i]));
+            And1 b = new And1(new Not1(bits[i]), exp.bits[i]);
+            r[i] = new Or1(a, b);
+        }
         return new Exp32(r);
     }
 
