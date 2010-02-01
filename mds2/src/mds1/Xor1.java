@@ -22,7 +22,12 @@ public class Xor1 implements IExp1 {
 
     @Override
     public IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c) {
-        return this;
+        IExp1 sub = context.get(this);
+        if (sub == null) {
+            sub = new Xor1(a.sub(context, v, c), b.sub(context, v, c));
+            context.put(this, sub);
+        }
+        return sub;
     }
 
     @Override

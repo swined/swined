@@ -31,19 +31,31 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        /*Exp32[] to = new Exp32[] {
+        /*Exp32[] to = new Exp32[] { // 'test'
                 new Exp32(0xcd6b8f09L),
                 new Exp32(0x73d32146L),
                 new Exp32(0x834edecaL),
                 new Exp32(0xf6b42726L)
         };*/
-        Exp32[] to = new Exp32[] {
+        /*Exp32[] to = new Exp32[] { // ''
             new Exp32(0xd98c1dd4L),
             new Exp32(0x04b2008fL),
             new Exp32(0x980980e9L),
             new Exp32(0x7e42f8ecL),
+        };*/
+        Exp32[] to = new Exp32[] { // '0000'
+            new Exp32(0xd41e7d4aL),
+            new Exp32(0x404e4714L),
+            new Exp32(0xcc29ac33L),
+            new Exp32(0x9b3d65b8L),
         };
-        Exp32[] in = xpr(0);
-        System.out.println(optimize(equation(in, to)));
+        Exp32[] in = xpr(1);
+        Exp32[] inx = new Exp32[] { new Exp32(0x30303030L) };
+        IExp1 eq = equation(in, to);
+        for (int i = 0; i < 32; i++) {
+            HashMap<IExp1, IExp1> context = new HashMap();
+            eq = eq.sub(context, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]);
+        }
+        System.out.println(optimize(eq));
     }
 }
