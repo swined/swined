@@ -4,6 +4,17 @@ import java.util.HashMap;
 
 public class Main {
 
+    private static IExp1 sub(IExp1 e, Var1 v, Const1 c) {
+        HashMap<IExp1, IExp1> ctx = new HashMap();
+        return e.sub(ctx, v, c);
+    }
+
+    private static IExp1 split(IExp1 e, Var1 v) {
+        IExp1 p = optimize(sub(e, v, Const1.create(true)));
+        IExp1 n = optimize(sub(e, v, Const1.create(false)));
+        return new Or1(new And1(v, p), new And1(new Not1(v), n));
+    }
+
     private static IExp1 equation(Exp32[] in, Exp32[] to) {
         Exp32 out[] = MD5.transform(in);
         for (int i = 0; i < out.length; i++)
@@ -50,12 +61,11 @@ public class Main {
             new Exp32(0x9b3d65b8L),
         };
         Exp32[] in = xpr(1);
-        Exp32[] inx = new Exp32[] { new Exp32(0x30303030L) };
-        IExp1 eq = equation(in, to);
-        for (int i = 0; i < 32; i++) {
-            HashMap<IExp1, IExp1> context = new HashMap();
-            eq = eq.sub(context, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]);
-        }
-        System.out.println(optimize(eq));
+        //Exp32[] inx = new Exp32[] { new Exp32(0x30303030L) };
+        IExp1 eq = optimize(equation(in, to));
+        eq = split(eq, new Var1("x0[0]"));
+//        for (int i = 0; i < 32; i++)
+  //          eq = sub(eq, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]);
+        System.out.println(eq);
     }
 }
