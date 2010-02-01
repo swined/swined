@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Not1 implements IExp1 {
 
-    private final IExp1 e;
+    private IExp1 e;
 
     public Not1(IExp1 e) {
         this.e = e;
@@ -21,7 +21,21 @@ public class Not1 implements IExp1 {
 
     @Override
     public IExp1 optimize(HashMap<IExp1, IExp1> context) {
-        return this;
+        IExp1 opt = context.get(this);
+        if (opt == null) {
+            e = e.optimize(context);
+            if (e == Const1.create(true)) {
+                opt = Const1.create(false);
+            } else if (e == Const1.create(false)) {
+                opt = Const1.create(true);
+            } else {
+                opt = this;
+            }
+            context.put(this, opt);
+            return opt;
+        } else {
+            return opt;
+        }
     }
 
 }

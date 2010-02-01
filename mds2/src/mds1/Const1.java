@@ -30,4 +30,9 @@ public class Const1 implements IExp1 {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return value ? "1" : "0";
+    }
+
 }

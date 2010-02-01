@@ -31,11 +31,17 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        Exp32[] to = new Exp32[] {
+        /*Exp32[] to = new Exp32[] {
                 new Exp32(0xcd6b8f09L),
                 new Exp32(0x73d32146L),
                 new Exp32(0x834edecaL),
                 new Exp32(0xf6b42726L)
+        };*/
+        Exp32[] to = new Exp32[] {
+            new Exp32(0xd98c1dd4L),
+            new Exp32(0x04b2008fL),
+            new Exp32(0x980980e9L),
+            new Exp32(0x7e42f8ecL),
         };
         Exp32[] in = xpr(0);
         System.out.println(optimize(equation(in, to)));
