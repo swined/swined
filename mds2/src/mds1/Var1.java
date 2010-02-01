@@ -29,4 +29,9 @@ public class Var1 implements IExp1 {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }
