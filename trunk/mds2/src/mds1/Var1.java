@@ -12,7 +12,11 @@ public class Var1 implements IExp1 {
 
     @Override
     public IExp1 sub(HashMap<IExp1, IExp1> context, Var1 v, Const1 c) {
-        return this;
+        if (v.getName().equals(name)) {
+            return c;
+        } else {
+            return this;
+        }
     }
 
     @Override
