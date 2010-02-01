@@ -11,11 +11,8 @@ public class Main {
 
     private static IExp1 split(IExp1 e, Var1 v) {
         System.out.println("splitting by " + v);
-        System.out.println("p");
         IExp1 p = sub(e, v, Const1.create(true));
-        System.out.println("n");
         IExp1 n = sub(e, v, Const1.create(false));
-        System.out.println("r");
         return new Or1(new And1(v, p), new And1(new Not1(v), n));
     }
 
@@ -69,7 +66,7 @@ public class Main {
         IExp1 eq = optimize(equation(in, to));
         for (int i = 0; i < 4; i++)
             eq = optimize(split(eq, new Var1("x0[" + i + "]")));
-        for (int i = 4; i < 32; i++)
+        for (int i = 0; i < 32; i++)
             eq = optimize(sub(eq, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]));
         System.out.println(eq);
     }

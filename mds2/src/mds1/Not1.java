@@ -36,7 +36,7 @@ public class Not1 implements IExp1 {
             } else {
                 opt = this;
             }
-            context.put(this, opt);
+//            context.put(this, opt);
         }
         return opt;
     }
