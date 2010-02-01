@@ -36,8 +36,12 @@ public class Xor1 implements IExp1 {
         if (opt == null) {
             a = a.optimize(context);
             b = b.optimize(context);
-            if (a == Const1.create(false)) {
+            if (a == Const1.create(true)) {
+                opt = new Not1(b).optimize(context);
+            } else if (a == Const1.create(false)) {
                 opt = b;
+            } else if (b == Const1.create(true)) {
+                opt = new Not1(a).optimize(context);
             } else if (b == Const1.create(false)) {
                 opt = a;
             } else {
