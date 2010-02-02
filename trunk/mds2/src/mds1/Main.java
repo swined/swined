@@ -64,8 +64,8 @@ public class Main {
         Exp32[] in = xpr(1);
         Exp32[] inx = new Exp32[] { new Exp32(0x30303030L) };
         IExp1 eq = optimize(equation(in, to));
-        for (int i = 0; i < 4; i++)
-            eq = optimize(split(eq, new Var1("x0[" + i + "]")));
+//        for (int i = 0; i < 4; i++)
+  //          eq = optimize(split(eq, new Var1("x0[" + i + "]")));
         for (int i = 0; i < 32; i++)
             eq = optimize(sub(eq, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]));
         System.out.println(eq);
