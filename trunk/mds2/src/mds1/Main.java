@@ -55,19 +55,26 @@ public class Main {
             new Exp32(0x980980e9L),
             new Exp32(0x7e42f8ecL),
         };*/
-        Exp32[] to = new Exp32[] { // '0000'
+        /*Exp32[] to = new Exp32[] { // '0000'
             new Exp32(0xd41e7d4aL),
             new Exp32(0x404e4714L),
             new Exp32(0xcc29ac33L),
             new Exp32(0x9b3d65b8L),
+        };*/
+        Exp32[] to = new Exp32[] { // '00001111'
+            new Exp32(0x18217255L),
+            new Exp32(0x8e64b7e8L),
+            new Exp32(0x55b68553L),
+            new Exp32(0x1277a728L),
         };
-        Exp32[] in = xpr(1);
-        Exp32[] inx = new Exp32[] { new Exp32(0x30303030L) };
+        Exp32[] in = xpr(2);
+        Exp32[] inx = new Exp32[] { new Exp32(0x30303030L), new Exp32(0x31313131L) };
         IExp1 eq = optimize(equation(in, to));
 //        for (int i = 0; i < 4; i++)
   //          eq = optimize(split(eq, new Var1("x0[" + i + "]")));
-        for (int i = 0; i < 32; i++)
-            eq = optimize(sub(eq, new Var1("x0[" + i + "]"), (Const1)inx[0].bits()[i]));
+        for (int k = 0; k < in.length; k++)
+            for (int i = 0; i < 32; i++)
+                eq = optimize(sub(eq, new Var1("x" + k + "[" + i + "]"), (Const1)inx[k].bits()[i]));
         System.out.println(eq);
     }
 }
