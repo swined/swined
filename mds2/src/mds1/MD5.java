@@ -56,14 +56,9 @@ public class MD5 {
         return a.sum(I(b, c, d)).sum(mj).sum(new Exp32(ti)).shift(s).sum(b);
     }
 
-    public static Exp32[] transform(Exp32 data[]) {
+    private static Exp32[] init(Exp32[] data) {
         if (data.length > 13)
             throw new UnsupportedOperationException("at most 13 data elements expected");
-        Exp32 a = A;
-        Exp32 b = B;
-        Exp32 c = C;
-        Exp32 d = D;
-        
         Exp32 x[] = new Exp32[16];
         for (int i = 0; i < data.length; i++)
             x[i] = data[i];
@@ -72,6 +67,16 @@ public class MD5 {
             x[i] = new Exp32(0);
         x[15] = new Exp32(0);
         x[14] = new Exp32(data.length * 32);
+        return x;
+    }
+
+    public static Exp32[] transform(Exp32 data[]) {
+        Exp32[] x = init(data);
+
+        Exp32 a = A;
+        Exp32 b = B;
+        Exp32 c = C;
+        Exp32 d = D;
 
         a = FF(a, b, c, d, x[0], S11, 0xd76aa478L);
         d = FF(d, a, b, c, x[1], S12, 0xe8c7b756L);
