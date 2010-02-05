@@ -1,0 +1,56 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use XML::RPC;
+use XML::XSLT;
+use XML::Simple;
+use Attribute::Args;
+use MIME::Base64;
+
+sub call :ARGS('scalar', 'scalar', 'list?') {
+	my ($url, $met, @par) = @_;
+	my $rpc = new XML::RPC($url);
+	my $res = eval { $rpc->call($met, @par) };
+	if (my $e = $@) {
+		die $e;
+	}
+	if ($res->{faultString}) {
+		die $res->{faultString};
+	}
+	return $res;
+}
+
+sub getfriendspage :ARGS('scalar', 'scalar') {
+	my ($login, $hash) = @_;
+	return call
+		'http://livejournal.com/interface/xmlrpc',
+		'LJ.XMLRPC.getfriendspage',
+		{
+			'username' => $login,
+			'hpassword' => $hash,
+		};
+}
+
+sub decode_entry :ARGS('HASH') {
+	my ($entry) = @_;
+	for ('event_raw', 'subject_raw') {
+		$entry->{$_} ||= '';
+		$entry->{$_} = MIME::Base64::decode($entry->{$_});
+	}
+}
+
+sub decode :ARGS('HASH') {
+	my ($friendspage) = @_;
+	for (@{$friendspage->{entries}}) {
+		decode_entry($_);
+	}
+}
+
+my ($login, $hash) = ('swined', 'ae188e2735c68fa33c0e124f0eb79c81');
+my $friendspage = getfriendspage($login, $hash);
+#decode($friendspage);
+$friendspage->{login} = $login;
+my $xml = XMLout($friendspage);
+my $xslt = new XML::XSLT(Source => 'friends.xsl');
+print $xslt->serve($xml);
