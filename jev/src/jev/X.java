@@ -1,13 +1,13 @@
 package jev;
 
-public class X implements Runnable, I {
+public class X implements I {
 
-        public void run() {
-            System.out.println("bye, world!");
+        public void foo(int x) {
+            System.out.println("hello, world");
         }
 
-        public void foo(int x) throws IllegalArgumentException {
-            throw new IllegalArgumentException("shit happened");
+        public int bar(int x) {
+            return x;
         }
 
 }
