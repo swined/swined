@@ -12,6 +12,7 @@ public class Main implements Runnable {
         d.register(new Main());
         d.register(new X());
         d.invoke(Runnable.class).run();
+        d.invoke(Main.class).run();
     }
 
 }
