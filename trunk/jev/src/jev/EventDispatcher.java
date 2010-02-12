@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class EventDispatcher {
 
-    private final Set handlers = new HashSet();
+    private final Set<Object> handlers = new HashSet<Object>();
 
     private class ProxyHandler implements InvocationHandler {
 
@@ -21,19 +21,27 @@ public class EventDispatcher {
 
         public Object invoke(Object proxy, Method m, Object[] args)
                 throws IllegalAccessException, InvocationTargetException {
-            final Class mc = m.getDeclaringClass();
+            if (m.getExceptionTypes().length > 0)
+                throw new IllegalArgumentException("invoking methods that can throw exceptions is not supported");
+            if (m.getReturnType() != void.class)
+                throw new IllegalArgumentException("invoking methods that return non-void is not supported");
+            final Class<?> mc = m.getDeclaringClass();
             for (Object handler : handlers) {
                 final Class hc = handler.getClass();
                 if (mc.isAssignableFrom(hc))
                     m.invoke(handler, args);
             }
-            return null;
+            return m.getDefaultValue();
         }
 
     }
 
     public void register(Object handler) {
         handlers.add(handler);
+    }
+
+    public void unregister(Object handler) {
+        handlers.remove(handler);
     }
 
     public<T> T invoke(Class<T> c) {
