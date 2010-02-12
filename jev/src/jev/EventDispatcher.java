@@ -20,16 +20,20 @@ public class EventDispatcher {
         }
 
         public Object invoke(Object proxy, Method m, Object[] args)
-                throws IllegalAccessException, InvocationTargetException {
-            if (m.getExceptionTypes().length > 0)
-                throw new IllegalArgumentException("invoking methods that can throw exceptions is not supported");
+                throws Throwable {
+//            if (m.getExceptionTypes().length > 0)
+  //              throw new IllegalArgumentException("invoking methods that can throw exceptions is not supported");
             if (m.getReturnType() != void.class)
                 throw new IllegalArgumentException("invoking methods that return non-void is not supported");
             final Class<?> mc = m.getDeclaringClass();
-            for (Object handler : handlers) {
-                final Class hc = handler.getClass();
-                if (mc.isAssignableFrom(hc))
-                    m.invoke(handler, args);
+            try {
+                for (Object handler : handlers) {
+                    final Class hc = handler.getClass();
+                    if (mc.isAssignableFrom(hc))
+                        m.invoke(handler, args);
+                }
+            } catch (InvocationTargetException e) {
+                throw e.getCause();
             }
             return m.getDefaultValue();
         }
