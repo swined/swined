@@ -1,6 +1,7 @@
 package jev;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashSet;
@@ -12,17 +13,18 @@ public class EventDispatcher {
 
     private class ProxyHandler implements InvocationHandler {
 
-        private final Class cl;
         private final Set handlers;
 
-        public ProxyHandler(Class cl, Set handlers) {
-            this.cl = cl;
+        public ProxyHandler(Set handlers) {
             this.handlers = handlers;
         }
 
-        public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
+        public Object invoke(Object proxy, Method m, Object[] args)
+                throws IllegalAccessException, InvocationTargetException {
+            final Class mc = m.getDeclaringClass();
             for (Object handler : handlers) {
-                if (cl.isAssignableFrom(handler.getClass()))
+                final Class hc = handler.getClass();
+                if (mc.isAssignableFrom(hc))
                     m.invoke(handler, args);
             }
             return null;
@@ -37,7 +39,7 @@ public class EventDispatcher {
     public<T> T invoke(Class<T> c) {
         final ClassLoader loader = c.getClassLoader();
         final Class[] interfaces = new Class[]{ c };
-        final ProxyHandler handler = new ProxyHandler(c, handlers);
+        final ProxyHandler handler = new ProxyHandler(handlers);
         return (T)Proxy.newProxyInstance(loader, interfaces, handler);
     }
 
