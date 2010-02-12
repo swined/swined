@@ -10,6 +10,7 @@ public class Main implements Runnable {
         EventDispatcher d = new EventDispatcher();
         d.register(new Main());
         d.register(new Main());
+        d.register(new X());
         d.invoke(Runnable.class).run();
     }
 
