@@ -9,11 +9,12 @@ import java.util.HashSet;
 
 public class EventDispatcher {
 
-    private final static HashMap<Class<?>, Object> defaultValues = new HashMap<Class<?>, Object>();
+    private final static HashMap<Class<?>, Object> defaultValues;
     private final HashSet<Object> handlers = new HashSet<Object>();
     private final HashMap<Class<?>, Object> proxies = new HashMap<Class<?>, Object>();
 
     static {
+        defaultValues = new HashMap<Class<?>, Object>();
         defaultValues.put(int.class, (int)0);
         defaultValues.put(byte.class, (byte)0);
         defaultValues.put(short.class, (short)0);
