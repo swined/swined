@@ -2,7 +2,16 @@ package jev;
 
 public interface I {
 
-    void foo(int x) throws E;
-    int bar(int x);
+    byte testByte();
+    short testShort();
+    int testInt();
+    long testLong();
+    float testFloat();
+    double testDouble();
+    char testChar();
+    String testString();
+    boolean testBoolean();
+    void testVoid();
+    Object testObject();
 
 }
