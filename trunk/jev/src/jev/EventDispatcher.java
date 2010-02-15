@@ -34,17 +34,21 @@ public class EventDispatcher {
             this.handlers = handlers;
         }
 
-        public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
+        private Object invoke(Method m, Object[] args) throws InvocationTargetException, IllegalAccessException {
             Object result = defaultValues.get(m.getReturnType());
             final Class<?> mc = m.getDeclaringClass();
+            for (Object handler : handlers)
+                if (mc.isAssignableFrom(handler.getClass()))
+                    result = m.invoke(handler, args);
+            return result;
+        }
+
+        public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
             try {
-                for (Object handler : handlers)
-                        if (mc.isAssignableFrom(handler.getClass()))
-                                result = m.invoke(handler, args);
+                return invoke(m, args);
             } catch (InvocationTargetException e) {
                 throw e.getCause();
             }
-            return result;
         }
 
     }
