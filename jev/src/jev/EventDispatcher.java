@@ -4,38 +4,45 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 public class EventDispatcher {
 
-    private final Set<Object> handlers = new HashSet<Object>();
+    private final HashSet<Object> handlers = new HashSet<Object>();
+    private final HashMap<Class<?>, Object> proxies = new HashMap<Class<?>, Object>();
 
     private class ProxyHandler implements InvocationHandler {
 
-        private final Set handlers;
+        private final HashSet<Object> handlers;
 
-        public ProxyHandler(Set handlers) {
+        public ProxyHandler(HashSet<Object> handlers) {
             this.handlers = handlers;
         }
 
-        public Object invoke(Object proxy, Method m, Object[] args)
-                throws Throwable {
-//            if (m.getExceptionTypes().length > 0)
-  //              throw new IllegalArgumentException("invoking methods that can throw exceptions is not supported");
-            if (m.getReturnType() != void.class)
-                throw new IllegalArgumentException("invoking methods that return non-void is not supported");
+        private Object getDefaultValue(Class<?> cl) {
+            if (cl.isPrimitive()) {
+                if (cl == boolean.class)
+                    return false;
+                else
+                    return 0;
+            } else
+                return null;
+        }
+
+        public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
+            Object result = getDefaultValue(m.getReturnType());
             final Class<?> mc = m.getDeclaringClass();
             try {
-                for (Object handler : handlers) {
-                    final Class hc = handler.getClass();
-                    if (mc.isAssignableFrom(hc))
-                        m.invoke(handler, args);
-                }
+                for (Object handler : handlers)
+                        if (mc.isAssignableFrom(handler.getClass()))
+                                result = m.invoke(handler, args);
             } catch (InvocationTargetException e) {
                 throw e.getCause();
             }
-            return m.getDefaultValue();
+            if (result == null)
+                System.out.println("null result");
+            return result;
         }
 
     }
@@ -48,11 +55,25 @@ public class EventDispatcher {
         handlers.remove(handler);
     }
 
-    public<T> T invoke(Class<T> c) {
-        final ClassLoader loader = c.getClassLoader();
-        final Class[] interfaces = new Class[]{ c };
+    private Object createProxy(Class<?> cl) {
+        final ClassLoader loader = cl.getClassLoader();
+        final Class<?>[] interfaces = new Class[]{ cl };
         final ProxyHandler handler = new ProxyHandler(handlers);
-        return (T)Proxy.newProxyInstance(loader, interfaces, handler);
+        return Proxy.newProxyInstance(loader, interfaces, handler);
+    }
+
+    private Object getProxy(Class<?> cl) {
+        Object proxy = proxies.get(cl);
+        if (proxy == null) {
+                proxy = createProxy(cl);
+                proxies.put(cl, proxy);
+        }
+                return proxy;
+    }
+
+    @SuppressWarnings("unchecked")
+        public<T> T invoke(Class<T> cl) {
+        return (T)getProxy(cl);
     }
 
 }
