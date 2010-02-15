@@ -2,6 +2,7 @@ package jev;
 
 public interface I {
 
+    enum E { A, B, C };
     byte testByte();
     short testShort();
     int testInt();
@@ -13,5 +14,6 @@ public interface I {
     boolean testBoolean();
     void testVoid();
     Object testObject();
-
+    E testEnum();
+    int[] testArray();
 }

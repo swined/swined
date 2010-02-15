@@ -9,29 +9,32 @@ import java.util.HashSet;
 
 public class EventDispatcher {
 
+    private final static HashMap<Class<?>, Object> defaultValues = new HashMap<Class<?>, Object>();
     private final HashSet<Object> handlers = new HashSet<Object>();
     private final HashMap<Class<?>, Object> proxies = new HashMap<Class<?>, Object>();
 
+    static {
+        defaultValues.put(int.class, (int)0);
+        defaultValues.put(byte.class, (byte)0);
+        defaultValues.put(short.class, (short)0);
+        defaultValues.put(long.class, (long)0);
+        defaultValues.put(float.class, (float)0);
+        defaultValues.put(double.class, (double)0);
+        defaultValues.put(char.class, (char)0);
+        defaultValues.put(boolean.class, false);
+    }
+
     private class ProxyHandler implements InvocationHandler {
 
+        
         private final HashSet<Object> handlers;
 
         public ProxyHandler(HashSet<Object> handlers) {
             this.handlers = handlers;
         }
 
-        private Object getDefaultValue(Class<?> cl) {
-            if (cl.isPrimitive()) {
-                if (cl == boolean.class)
-                    return false;
-                else
-                    return 0;
-            } else
-                return null;
-        }
-
         public Object invoke(Object proxy, Method m, Object[] args) throws Throwable {
-            Object result = getDefaultValue(m.getReturnType());
+            Object result = defaultValues.get(m.getReturnType());
             final Class<?> mc = m.getDeclaringClass();
             try {
                 for (Object handler : handlers)
@@ -40,8 +43,6 @@ public class EventDispatcher {
             } catch (InvocationTargetException e) {
                 throw e.getCause();
             }
-            if (result == null)
-                System.out.println("null result");
             return result;
         }
 
