@@ -1,5 +1,6 @@
 package jev;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,24 +10,10 @@ import java.util.HashSet;
 
 public class EventDispatcher {
 
-    private final static HashMap<Class<?>, Object> defaultValues;
     private final HashSet<Object> handlers = new HashSet<Object>();
     private final HashMap<Class<?>, Object> proxies = new HashMap<Class<?>, Object>();
 
-    static {
-        defaultValues = new HashMap<Class<?>, Object>();
-        defaultValues.put(int.class, (int)0);
-        defaultValues.put(byte.class, (byte)0);
-        defaultValues.put(short.class, (short)0);
-        defaultValues.put(long.class, (long)0);
-        defaultValues.put(float.class, (float)0);
-        defaultValues.put(double.class, (double)0);
-        defaultValues.put(char.class, (char)0);
-        defaultValues.put(boolean.class, false);
-    }
-
     private class ProxyHandler implements InvocationHandler {
-
         
         private final HashSet<Object> handlers;
 
@@ -34,8 +21,15 @@ public class EventDispatcher {
             this.handlers = handlers;
         }
 
+        private Object getDefaultValue(Class<?> cl) {
+            if (cl == void.class)
+                return null;
+            Object a = Array.newInstance(cl, 1);
+            return Array.get(a, 0);
+        }
+
         private Object invoke(Method m, Object[] args) throws InvocationTargetException, IllegalAccessException {
-            Object result = defaultValues.get(m.getReturnType());
+            Object result = getDefaultValue(m.getReturnType());
             final Class<?> mc = m.getDeclaringClass();
             for (Object handler : handlers)
                 if (mc.isAssignableFrom(handler.getClass()))
