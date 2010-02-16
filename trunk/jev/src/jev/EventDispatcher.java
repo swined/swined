@@ -24,8 +24,8 @@ public class EventDispatcher {
         private Object getDefaultValue(Class<?> cl) {
             if (cl == void.class)
                 return null;
-            Object a = Array.newInstance(cl, 1);
-            return Array.get(a, 0);
+            Object array = Array.newInstance(cl, 1);
+            return Array.get(array, 0);
         }
 
         private Object invoke(Method m, Object[] args) throws InvocationTargetException, IllegalAccessException {
