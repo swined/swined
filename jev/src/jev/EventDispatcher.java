@@ -10,15 +10,19 @@ import java.util.HashSet;
 
 public class EventDispatcher {
 
-    private final HashSet<Object> handlers = new HashSet<Object>();
+    private final ProxyHandler handler = new ProxyHandler();
     private final HashMap<Class<?>, Object> proxies = new HashMap<Class<?>, Object>();
 
     private class ProxyHandler implements InvocationHandler {
         
-        private final HashSet<Object> handlers;
+        private final HashSet<Object> handlers = new HashSet<Object>();
 
-        public ProxyHandler(HashSet<Object> handlers) {
-            this.handlers = handlers;
+        public void register(Object handler) {
+            handlers.add(handler);
+        }
+
+        public void unregister(Object handler) {
+            handlers.remove(handler);
         }
 
         private Object getDefaultValue(Class<?> cl) {
@@ -48,31 +52,30 @@ public class EventDispatcher {
     }
 
     public void register(Object handler) {
-        handlers.add(handler);
+        this.handler.register(handler);
     }
 
     public void unregister(Object handler) {
-        handlers.remove(handler);
+        this.handler.unregister(handler);
     }
 
     private Object createProxy(Class<?> cl) {
-        final ClassLoader loader = cl.getClassLoader();
-        final Class<?>[] interfaces = new Class[]{ cl };
-        final ProxyHandler handler = new ProxyHandler(handlers);
+        ClassLoader loader = cl.getClassLoader();
+        Class<?>[] interfaces = new Class[]{ cl };
         return Proxy.newProxyInstance(loader, interfaces, handler);
     }
 
     private Object getProxy(Class<?> cl) {
         Object proxy = proxies.get(cl);
         if (proxy == null) {
-                proxy = createProxy(cl);
-                proxies.put(cl, proxy);
+            proxy = createProxy(cl);
+            proxies.put(cl, proxy);
         }
-                return proxy;
+        return proxy;
     }
 
     @SuppressWarnings("unchecked")
-        public<T> T invoke(Class<T> cl) {
+    public<T> T invoke(Class<T> cl) {
         return (T)getProxy(cl);
     }
 
