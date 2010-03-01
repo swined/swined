@@ -343,6 +343,20 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\vec{D}=\vec{E}-4\pi\vec{P}=\sigma\vec{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $div\vec{D}=4\pi\rho$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 23.
  энергия поля в среде
 \end_layout
@@ -615,8 +629,22 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\vec{B}=\frac{3(\vec{r}\vec{m})\vec{r}}{r^{5}}-\frac{\vec{m}}{r^{3}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 50.
  магнитный (дипольный) момент
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{m}=\frac{1}{2c}\int_{V}[\vec{r}'\times\vec{j}(\vec{r}')]dV'$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -666,6 +694,47 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $k$
+\end_inset
+
+ - магнитная восприимчивость
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{M}=k\vec{B}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mu=\frac{1}{1-4\pi k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+диамагнетики - 
+\begin_inset Formula $\mu<1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+парамагнетики - 
+\begin_inset Formula $\mu>1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+ферромагнетики
+\end_layout
+
+\begin_layout Standard
 56.
  ферромагнетизм, гистерезис
 \end_layout
@@ -673,6 +742,20 @@
 \begin_layout Standard
 57.
  граничные условия
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{B}_{1n}=\vec{B}_{2n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{H}_{2\tau}-\vec{H}_{1\tau}=\frac{4\pi}{c}\vec{j}_{N}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -743,11 +826,60 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ - поверхностная плотность зарядов
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{D}-\vec{E}=4\pi\Sigma$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\vec{j}_{\text{см}}=\frac{1}{4\pi}\frac{\partial\vec{D}}{\partial t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 70.
  ур.
  Максвела в инт.
  и дифф.
  форме
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $rot\vec{E}=-\frac{1}{c}\frac{\partial\vec{B}}{\partial t}\Leftrightarrow\oint\vec{E}_{l}d\vec{l}=-\frac{1}{c}\int\frac{\partial B_{n}}{\partial t}dS$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $div\vec{B}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $rot\vec{H}=\frac{4\pi}{c}\vec{j}+\frac{1}{c}\frac{\partial\vec{D}}{\partial t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $div\vec{D}=4\pi\rho$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

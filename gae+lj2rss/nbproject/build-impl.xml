@@ -523,9 +523,10 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.geronimo-el_1.0_spec-1.0.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-el_1.0_spec-1.0.1.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.geronimo-jsp_2.1_spec-1.0.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-jsp_2.1_spec-1.0.1.jar" todir="${dist.ear.dir}"/>
         <copyfiles files="${file.reference.geronimo-servlet_2.5_spec-1.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.geronimo-servlet_2.5_spec-1.2.jar" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.xmlrpc-1.1.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.file.reference.xmlrpc-1.1.1.jar" todir="${dist.ear.dir}"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.file.reference.appengine-tools-api.jar} ${manifest.file.reference.appengine-api-1.0-sdk-1.3.0.jar} ${manifest.file.reference.appengine-api-labs-1.3.0.jar} ${manifest.file.reference.appengine-local-runtime-shared.jar} ${manifest.file.reference.geronimo-el_1.0_spec-1.0.1.jar} ${manifest.file.reference.geronimo-jsp_2.1_spec-1.0.1.jar} ${manifest.file.reference.geronimo-servlet_2.5_spec-1.2.jar} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.appengine-tools-api.jar} ${manifest.file.reference.appengine-api-1.0-sdk-1.3.0.jar} ${manifest.file.reference.appengine-api-labs-1.3.0.jar} ${manifest.file.reference.appengine-local-runtime-shared.jar} ${manifest.file.reference.geronimo-el_1.0_spec-1.0.1.jar} ${manifest.file.reference.geronimo-jsp_2.1_spec-1.0.1.jar} ${manifest.file.reference.geronimo-servlet_2.5_spec-1.2.jar} ${manifest.file.reference.xmlrpc-1.1.1.jar} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
@@ -536,6 +537,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.geronimo-el_1.0_spec-1.0.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.geronimo-jsp_2.1_spec-1.0.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.geronimo-servlet_2.5_spec-1.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.xmlrpc-1.1.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest" if="do.tmp.war.package" name="do-ear-dist">
         <dirname file="${dist.ear.war}" property="dist.jar.dir"/>
