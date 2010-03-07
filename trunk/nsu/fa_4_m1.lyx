@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -20,7 +20,7 @@
 \spacing single
 \use_hyperref false
 \papersize default
-\use_geometry true
+\use_geometry false
 \use_amsmath 1
 \use_esint 1
 \cite_engine basic
@@ -54,6 +54,20 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $||x-y||^{2}=(x-y,x-y)=(x,x-y)-(y,x-y)=\overline{(x,x)}-\overline{(y,x)}-\overline{(x,y)}+\overline{(y,y)}=(x,x)-(x,y)-(y,x)+(y,y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $2||z-\frac{x+y}{2}||^{2}=2(z,z)-2(z,\frac{x+y}{2})-2(\frac{x+y}{2},z)+2(\frac{x+y}{2},\frac{x+y}{2})=2(z,z)-\overline{(x,z)}-\overline{(y,z)}-(x,z)-(y,z)+(x,\frac{x+y}{2})+(y,\frac{x+y}{2})=2(z,z)-(z,x)-(z,y)-(x,z)-(y,z)+\frac{1}{2}\overline{(x,x)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $||z-x||^{2}+||z-y||^{2}=\frac{1}{2}||x-y||^{2}+2||z-\frac{x+y}{2}||^{2}$
 \end_inset
 
@@ -61,151 +75,7 @@
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $(z-x,z-x)+(z-y,z-y)=\frac{1}{2}(x-y,x-y)+2(z-\frac{x+y}{2},z-\frac{x+y}{2})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $(z,z-x)-(x,z-x)+(z,z-y)-(y,z-y)=\frac{1}{2}(x,x-y)-\frac{1}{2}(y,x-y)+2(z,z-\frac{x+y}{2})-2(\frac{x+y}{2},z-\frac{x+y}{2})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\overline{(z,z)-(x,z)}-\overline{(z,x)-(x,x)}+\overline{(y,z)-(z,z)}-\overline{(z,y)-(y,y)}=$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $=\frac{1}{2}\overline{(x,x)-(y,x)}-\frac{1}{2}\overline{(x,y)-(y,y)}+2\overline{(z,z)-(\frac{x+y}{2},z)}-2\overline{(z,\frac{x+y}{2})-(\frac{x+y}{2},\frac{x+y}{2})}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\overline{(z,z)}-\overline{(x,z)}-\overline{(z,x)}+\overline{(x,x)}+\overline{(y,z)}-\overline{(z,z)}-\overline{(z,y)}+\overline{(y,y)}=$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $=\frac{1}{2}\overline{(x,x)}-\frac{1}{2}\overline{(y,x)}-\frac{1}{2}\overline{(x,y)}+\frac{1}{2}\overline{(y,y)}+2\overline{(z,z)}-2\overline{(\frac{x+y}{2},z)}-2\overline{(z,\frac{x+y}{2})}+2\overline{(\frac{x+y}{2},\frac{x+y}{2})}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $-\overline{(x,z)}-\overline{(z,x)}+\frac{1}{2}\overline{(x,x)}+\overline{(y,z)}-\overline{(z,y)}+\frac{1}{2}\overline{(y,y)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}\overline{(x,y)}-2\overline{(z,z)}=-2\overline{(\frac{x+y}{2},z)}-2\overline{(z,\frac{x+y}{2})}+2\overline{(\frac{x+y}{2},\frac{x+y}{2})}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-\lang english
-\begin_inset Formula $-\overline{(x,z)}-\overline{(z,x)}+\frac{1}{2}\overline{(x,x)}+\overline{(y,z)}-\overline{(z,y)}+\frac{1}{2}\overline{(y,y)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}\overline{(x,y)}-2\overline{(z,z)}=$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-\lang english
-\begin_inset Formula $=-\overline{(x,z)}-\overline{(y,z)}-2(\frac{x+y}{2},z)+\overline{(x,\frac{x+y}{2})}+\overline{(y,\frac{x+y}{2})}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-\lang english
-\begin_inset Formula $-\overline{(z,x)}+\frac{1}{2}\overline{(x,x)}+2\overline{(y,z)}-\overline{(z,y)}+\frac{1}{2}\overline{(y,y)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}\overline{(x,y)}-2\overline{(z,z)}=-(x,z)-(y,z)+(\frac{x+y}{2},x)+(\frac{x+y}{2},y)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-\lang english
-\begin_inset Formula $-\overline{(z,x)}+\frac{1}{2}\overline{(x,x)}+2\overline{(y,z)}-\overline{(z,y)}+\frac{1}{2}\overline{(y,y)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}\overline{(x,y)}-2\overline{(z,z)}=$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-\lang english
-\begin_inset Formula $=-(x,z)-(y,z)+\frac{1}{2}(x,x)+\frac{1}{2}(y,x)+\frac{1}{2}(x,y)+\frac{1}{2}(y,y)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-\lang english
-\begin_inset Formula $(z,y)-(z,z)=0$
+\begin_inset Formula $(z,z)-(x,z)-(z,x)+(x,x)+(z,z)-(z,y)-(y,z)+(y,y)=\frac{1}{2}(x,x)-\frac{1}{2}(x,y)-\frac{1}{2}(y,x)+\frac{1}{2}(y,y)+$
 \end_inset
 
 
