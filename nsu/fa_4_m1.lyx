@@ -54,20 +54,6 @@
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $||x-y||^{2}=(x-y,x-y)=(x,x-y)-(y,x-y)=\overline{(x,x)}-\overline{(y,x)}-\overline{(x,y)}+\overline{(y,y)}=(x,x)-(x,y)-(y,x)+(y,y)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $2||z-\frac{x+y}{2}||^{2}=2(z,z)-2(z,\frac{x+y}{2})-2(\frac{x+y}{2},z)+2(\frac{x+y}{2},\frac{x+y}{2})=2(z,z)-\overline{(x,z)}-\overline{(y,z)}-(x,z)-(y,z)+(x,\frac{x+y}{2})+(y,\frac{x+y}{2})=2(z,z)-(z,x)-(z,y)-(x,z)-(y,z)+\frac{1}{2}\overline{(x,x)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula $||z-x||^{2}+||z-y||^{2}=\frac{1}{2}||x-y||^{2}+2||z-\frac{x+y}{2}||^{2}$
 \end_inset
 
@@ -75,7 +61,30 @@
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $(z,z)-(x,z)-(z,x)+(x,x)+(z,z)-(z,y)-(y,z)+(y,y)=\frac{1}{2}(x,x)-\frac{1}{2}(x,y)-\frac{1}{2}(y,x)+\frac{1}{2}(y,y)+$
+\begin_inset Formula $||x-y||^{2}=(x-y,x-y)=(x,x-y)-(y,x-y)=\overline{(x,x)}-\overline{(y,x)}-\overline{(x,y)}+\overline{(y,y)}=(x,x)-(x,y)-(y,x)+(y,y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $2||z-\frac{x+y}{2}||^{2}=2(z,z)-2(z,\frac{x+y}{2})-2(\frac{x+y}{2},z)+2(\frac{x+y}{2},\frac{x+y}{2})=2(z,z)-\overline{(x,z)}-\overline{(y,z)}-(x,z)-(y,z)+(x,\frac{x+y}{2})+(y,\frac{x+y}{2})=2(z,z)-(z,x)-(z,y)-(x,z)-(y,z)+\frac{1}{2}\overline{(x,x)}+\frac{1}{2}\overline{(y,x)}+\frac{1}{2}\overline{(x,y)}+\frac{1}{2}\overline{(y,y)}=2(z,z)-(z,x)-(z,y)-(x,z)-(y,z)+\frac{1}{2}(x,x)+\frac{1}{2}(x,y)+\frac{1}{2}(y,x)+\frac{1}{2}(y,y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\frac{1}{2}||x-y||^{2}+2||z-\frac{x+y}{2}||^{2}=\frac{1}{2}(x,x)-\frac{1}{2}(x,y)-\frac{1}{2}(y,x)+\frac{1}{2}(y,y)+2(z,z)-(z,x)-(z,y)-(x,z)-(y,z)+\frac{1}{2}(x,x)+\frac{1}{2}(x,y)+\frac{1}{2}(y,x)+\frac{1}{2}(y,y)=2(z,z)-(z,x)-(z,y)-(x,z)-(y,z)+(x,x)+(y,y)=[(z,z)-(z,x)-(x,z)+(x,x)]+[(z,z)-(z,y)-(y,z)+(y,y)]=||z-x||^{2}+||z-y||^{2}$
 \end_inset
 
 
