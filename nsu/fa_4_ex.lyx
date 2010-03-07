@@ -50,6 +50,60 @@
 \begin_body
 
 \begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+скалярное произведение в линейном прострастве L - функция (x,y), принимающая
+ числовые значения, определенная для каждой пары 
+\begin_inset Formula $x,y\in L$
+\end_inset
+
+ и:
+\end_layout
+
+\begin_layout Standard
+1) 
+\begin_inset Formula $\forall x_{1},x_{2},y\in L,\alpha_{1},\alpha_{2}:(\alpha_{1}x_{1}+\alpha_{2}x_{2},y)=\alpha_{1}(x_{1},y)+\alpha_{2}(x_{2},y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+2) 
+\begin_inset Formula $\forall x,y\in L:(x,y)=\overline{(y,x)}$
+\end_inset
+
+ (компл.
+ сопр.)
+\end_layout
+
+\begin_layout Standard
+3) 
+\begin_inset Formula $\forall x\in L:(x,x)\ge0$
+\end_inset
+
+ и 
+\begin_inset Formula $(x,x)=0$
+\end_inset
+
+ только при 
+\begin_inset Formula $x=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+норма - 
+\begin_inset Formula $||x||=\sqrt{(x,x)}$
+\end_inset
+
 
 \end_layout
 
