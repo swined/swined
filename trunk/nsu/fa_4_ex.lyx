@@ -107,5 +107,119 @@
 
 \end_layout
 
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $L_{p}[0,1]=\{f:[0,1]\rightarrow R|\int_{0}^{1}|f(x)|^{p}dx<+\infty\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $||f||_{L_{p}[0,1]}=\{\int_{0}^{1}|f(x)|^{p}dx\}^{\frac{1}{p}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+правило параллелограмма:
+\end_layout
+
+\begin_layout Standard
+если норма в лин.
+ прост.
+ 
+\begin_inset Formula $L$
+\end_inset
+
+ порождена скалярным произведением, то 
+\begin_inset Formula $\forall x,y\in L:||x+y||^{2}+||x-y||^{2}=2||x||^{2}+2||y||^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(f,g)=\int_{0}^{1}f(x)\overline{g(x)}dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\cos\varphi=\frac{(x,y)}{||x||||y||}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+если 
+\begin_inset Formula $x_{1},x_{2},...,x_{n}$
+\end_inset
+
+ - счетная система линейно независимых векторов в лин.
+ прост.
+ со скал.
+ произв.
+ 
+\begin_inset Formula $L$
+\end_inset
+
+, то новые последовательности 
+\begin_inset Formula $y_{n}=x_{n}-\sum_{k=1}^{n-1}(x_{n},z_{k})z_{k}$
+\end_inset
+
+ и 
+\begin_inset Formula $z_{n}=\frac{y_{n}}{||y_{n}||}$
+\end_inset
+
+ обладают свойствами:
+\end_layout
+
+\begin_layout Standard
+1) система 
+\begin_inset Formula $z_{1},z_{2},...,z_{n}$
+\end_inset
+
+ ортонормирована
+\end_layout
+
+\begin_layout Standard
+2) 
+\begin_inset Formula $\forall n\in N$
+\end_inset
+
+ линейная оболочка векторов 
+\begin_inset Formula $z_{n}$
+\end_inset
+
+ совпадает с линейной оболочкой 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
