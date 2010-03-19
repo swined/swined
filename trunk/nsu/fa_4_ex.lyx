@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -174,6 +174,10 @@
 \end_layout
 
 \begin_layout Standard
+метод Грамма-Шмидта:
+\end_layout
+
+\begin_layout Standard
 если 
 \begin_inset Formula $x_{1},x_{2},...,x_{n}$
 \end_inset
@@ -216,6 +220,162 @@
 
  совпадает с линейной оболочкой 
 \begin_inset Formula $x_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+если для кус.гл.
+ 
+\begin_inset Formula $f:(0,+\infty)\rightarrow R$
+\end_inset
+
+ 
+\begin_inset Formula $\int_{0}^{+\infty}e^{-x}x^{\alpha}[f(x)]^{2}dx<+\infty$
+\end_inset
+
+, то 
+\begin_inset Formula $\forall x$
+\end_inset
+
+ т.
+ непр.
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ справедливо 
+\begin_inset Formula $f(x)=\sum_{n=0}^{\infty}c_{n}L_{n}^{\alpha}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+где 
+\begin_inset Formula $c_{n}=\frac{n!}{\Gamma(n+\alpha+1)}\int_{0}^{+\infty}e^{-x}x^{\alpha}L_{n}^{\alpha}(x)f(x)dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+ф-ла Родрига
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $L_{n}^{\alpha}=e^{x}\frac{x^{-\alpha}}{n!}\frac{d^{n}}{dx^{n}}[e^{-x}x^{n+\alpha}]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $H_{n}=(-1)^{n}e^{x^{2}}\frac{d^{n}}{dx^{n}}e^{-x^{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=x^{\beta},x>0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{n}=(-1)^{n}\frac{\Gamma(\alpha+\beta+1)\Gamma(\beta+1)}{\Gamma(n+\alpha+1)\Gamma(\beta-n+1)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+если для кус.гл.
+ 
+\begin_inset Formula $f:R\rightarrow R$
+\end_inset
+
+ 
+\begin_inset Formula $\int_{-\infty}^{+\infty}e^{-x^{2}}f^{2}(x)dx<+\infty$
+\end_inset
+
+, то 
+\begin_inset Formula $\forall x$
+\end_inset
+
+ т.
+ непр.
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ справедливо 
+\begin_inset Formula $f(x)=\sum_{n=0}^{\infty}c_{n}H_{n}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+где 
+\begin_inset Formula $c_{n}=\frac{1}{2^{n}n!\sqrt{\pi}}\int_{-\infty}^{+\infty}e^{-x^{2}}f(x)H_{n}(x)dx$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $ $
+\end_inset
+
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $H_{n+1}(x)-2xH_{n}(x)+2nH_{n-1}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $H'_{n}(x)-2nH_{n-1}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+соотношение ортогональности:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\int_{R}e^{-x^{2}}H_{n}(x)H_{m}(x)dx=\begin{cases}
+2^{n}n!\sqrt{\pi} & n=m\\
+0 & n\ne m\end{cases}$
 \end_inset
 
 
