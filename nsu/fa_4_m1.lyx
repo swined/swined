@@ -233,5 +233,207 @@
 
 \end_layout
 
+\begin_layout Standard
+1.5
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\lang english
+\begin_inset Formula $c_{n}=(-1)^{n}\frac{\Gamma(\alpha+\frac{3}{2})\Gamma(\frac{3}{2})}{\Gamma(n+\alpha+1)\Gamma(\frac{3}{2}-n)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+1.6
+\end_layout
+
+\begin_layout Standard
+а) 
+\begin_inset Formula $f(x)=sgn(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{2n}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{2n+1}=\frac{1}{2^{2n+1}(2n+1)!\sqrt{\pi}}\int_{-\infty}^{+\infty}e^{-x^{2}}f(x)H_{2n+1}(x)dx=$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $=\frac{2}{2^{2n+1}(2n+1)!\sqrt{\pi}}\int_{0}^{+\infty}e^{-x^{2}}(-1)^{2n+1}e^{x^{2}}\frac{d^{2n+1}}{dx^{2n+1}}e^{-x^{2}}dx=\frac{-1}{2^{2n}(2n+1)!\sqrt{\pi}}\int_{0}^{+\infty}\frac{d^{2n+1}}{dx^{2n+1}}e^{-x^{2}}dx=$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $=\frac{-1}{2^{2n}(2n+1)!\sqrt{\pi}}\int_{0}^{+\infty}\frac{d}{dx}[\frac{d^{2n}}{dx^{2n}}e^{-x^{2}}]dx=\frac{-1}{2^{2n}(2n+1)!\sqrt{\pi}}(-[\frac{d^{2n}}{dx^{2n}}e^{-x^{2}}](0))=\frac{1}{2^{2n}(2n+1)!\sqrt{\pi}}H_{2n}(0)=$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $=\frac{(-1)^{n}(2n)!}{2^{2n}(2n+1)(2n)!n!\sqrt{\pi}}=\frac{(-1)^{n}}{(2n+1)2^{2n}n!\sqrt{\pi}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $ $
+\end_inset
+
+
+\begin_inset Formula $e^{2xt-t^{2}}=\sum_{n=0}^{\infty}\frac{H_{n}(x)}{n!}t^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $e^{-t^{2}}=\sum_{k=0}^{\infty}\frac{(-t^{2})^{k}}{k!}=\sum\frac{(-1)^{k}t^{2k}}{k!}=\sum_{n=0}^{\infty}\frac{H_{n}(0)}{n!}t^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{(-1)^{k}}{k!}=\frac{H_{2k}(0)}{(2k)!}\Rightarrow H_{2n}(0)=(-1)^{n}\frac{(2n)!}{n!}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+б)
+\begin_inset Formula $f(x)=\sin2x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $e^{2xt-t^{2}}=\sum_{n=0}^{\infty}\frac{H_{n}(x)}{n!}t^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t=i:e^{2xi+1}=\sum_{n=0}^{\infty}\frac{H_{n}(x)}{n!}i^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t=-i:e^{-2xi+1}=\sum_{n=0}^{\infty}\frac{H_{n}(x)}{n!}(-i)^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $sin2x=\frac{e^{2xi}-e^{-2xi}}{2i}=\frac{1}{2ie}\sum_{n=0}^{\infty}\frac{i^{n}+(-i)^{n}}{n!}H_{n}(x)=\frac{1}{2ie}\sum_{n=0}^{\infty}\frac{e^{\frac{\pi}{2}in}+e^{-\frac{\pi}{2}in}}{n!}H_{n}(x)=\frac{1}{ie}\sum_{n=0}^{\infty}\frac{1}{n!}\cos\frac{\pi n}{2}H_{n}(x)=\frac{1}{ie}\sum_{n=0}^{\infty}\frac{(-1)^{n}}{(2n)!}H_{2n}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.7
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(e^{-x^{2}}H_{n-1}(x))'+e^{-x^{2}}H_{n}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $-2xe^{-x^{2}}H{}_{n-1}(x)+e^{-x^{2}}H'_{n-1}(x)+e^{-x^{2}}H_{n}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $-2xH{}_{n-1}(x)+H'_{n-1}(x)+H_{n}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $H'_{n}(x)-2nH_{n-1}(x)=0\Rightarrow-2xH{}_{n-1}(x)+2(n-1)H{}_{n-2}(x)+H_{n}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $-2xH{}_{n}(x)+2nH{}_{n-1}(x)+H_{n+1}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+1.8
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $H_{n+1}(x)-2xH_{n}(x)+2nH_{n-1}(x)=0\Rightarrow xH_{n}(x)=\frac{1}{2}H_{n+1}(x)+nH_{n-1}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\int_{R}x^{2}e^{-x^{2}}H_{n}^{2}(x)dx=\int_{R}e^{-x^{2}}(xH_{n})^{2}dx=\int_{R}e^{-x^{2}}(\frac{1}{2}H_{n+1}+nH_{n-1})^{2}dx=$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $=\frac{1}{4}\int_{R}e^{-x^{2}}H_{n+1}^{2}dx+n\int_{R}e^{-x^{2}}H_{n+1}H_{n-1}dx+n^{2}\int_{R}e^{-x^{2}}H_{n-1}dx=$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $=\frac{1}{4}2^{n+1}(n+1)!\sqrt{\pi}+n^{2}2^{n-1}(n-1)!\sqrt{\pi}=2^{n}n!\sqrt{\pi}(n+\frac{1}{2})$
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
