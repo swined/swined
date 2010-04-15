@@ -20,7 +20,9 @@ public class AddServlet extends HttpServlet {
 			PMUtils.save(link);
 			res.sendRedirect("http://" + link.getKey() + "." + DomainUtils.guessDomain(req) + "/info.jsp");
 		} catch (Throwable e) {
-			res.sendRedirect("http://" + DomainUtils.guessDomain(req) + "/");
+			res.setContentType("text/plain");
+			e.printStackTrace(res.getWriter());
+			//res.sendRedirect("http://" + DomainUtils.guessDomain(req) + "/");
 		}
 	}
 
