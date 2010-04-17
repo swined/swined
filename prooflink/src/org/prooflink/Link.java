@@ -83,5 +83,9 @@ public class Link {
                 return url;
             return null;
     }
+    
+    public long getId() {
+    	return id;
+    }
 
 }

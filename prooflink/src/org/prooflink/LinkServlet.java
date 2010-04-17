@@ -13,6 +13,7 @@ public class LinkServlet extends HttpServlet {
 		try {
 			Link link = Link.load(id);
 			res.sendRedirect(link.getLink());
+			PMUtils.save(new Request(link.getId()));
 		} catch (Throwable e) {
 			res.sendRedirect("/404.jsp?link=" + id);
 		}
