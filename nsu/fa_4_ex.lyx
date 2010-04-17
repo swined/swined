@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -386,6 +386,75 @@
 0 & n\ne m\end{cases}$
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda\in C$
+\end_inset
+
+ принадлежит точечному спектру оператора 
+\begin_inset Formula $A$
+\end_inset
+
+, если оператор 
+\begin_inset Formula $A-\lambda I$
+\end_inset
+
+ необратим
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+оператор 
+\begin_inset Formula $B$
+\end_inset
+
+ называется обратимым, если уравнение 
+\begin_inset Formula $Bx=y$
+\end_inset
+
+ имеет не более одного решения
+\end_layout
+
+\begin_layout Standard
+или если 
+\begin_inset Formula $Bx=0$
+\end_inset
+
+ имеет ненулевое решение
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda\in\sigma_{p}(A)\Leftrightarrow(A-\lambda I)x=0$
+\end_inset
+
+ имеет ненулевое решение
+\end_layout
+
+\begin_layout Standard
+--
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda\in\sigma_{c}(A)\Leftrightarrow dom(A-\lambda I)\ne L_{2}[0,1],cl(dom(A-\lambda I)^{-1})=L_{2}[0,1]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
