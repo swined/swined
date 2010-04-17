@@ -1,5 +1,9 @@
 package org.prooflink;
 
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -10,7 +14,7 @@ import com.google.appengine.api.users.User;
 @PersistenceCapable
 public class Link {
 	
-	private final static String DIGITS = "1234567890qwertyuiopasdfghjklzxcvbnm";
+	private final static char[] DIGITS = "1234567890qwertyuiopasdfghjklzxcvbnm".toCharArray();
 	
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -18,49 +22,66 @@ public class Link {
 
     @Persistent
     private User owner;
+    
+    @Persistent
+    private String key;
 
     @Persistent
-    private String url;
+    private String link;
 
-    public Link() {
-    }
-    
-    public Link(User owner, String url) {
+    private Link(String link, User owner) {
+        this.key = generateKey();
+        this.link = link;
         this.owner = owner;
-        this.url = url;
     }
 
-    public Long getId() {
-    	return id;
+    public String getLink() {
+        return link;
     }
-    
+
     public String getKey() {
-    	long k = id;
-    	String key = "";
-    	while (k > 0) {
-    		int digit = (int)(k % DIGITS.length());
-    		key = DIGITS.substring(digit, digit + 1) + key;
-    		k = k / DIGITS.length();
-    	}
-    	return key;
+        return key;
     }
-    
-    public static Link load(String key) {
-    	long k = 0;
-    	long p = 1;
-    	for (int i = key.length(); i > 0; i--) {
-    		k += DIGITS.indexOf(key.substring(i - 1, i)) * p;
-    		p *= DIGITS.length();
-    	}
-    	return PMUtils.load(Link.class, k);
+
+    private static String generateKey() {
+        for (int i = 1; true; i++) {
+            String key = randStr(i);
+            if (load(key) == null)
+                return key;
+        }
     }
-    
+
+    private static String randStr(int l) {
+        StringBuilder r = new StringBuilder();
+        for (int i = 0; i < l; i++)
+            r.append(DIGITS[(int)(Math.random() * DIGITS.length)]);
+        return r.toString();
+    }
+
+    public static Link create(String link, User owner) {
+            PersistenceManager pm = PMUtils.pm();
+            Query query = pm.newQuery(Link.class, "link == linkParam");
+            query.declareParameters("String linkParam");
+            query.setRange(0, 1);
+            for (Link url : (List<Link>)query.execute(link))
+                return url;
+            Link url = new Link(link, owner);
+            pm.makePersistent(url);
+            return url;
+    }
+
     public User getOwner() {
     	return owner;
     }
     
-    public String getUrl() {
-        return url;
+    public static Link load(String key) {
+            PersistenceManager pm = PMUtils.pm();
+            Query query = pm.newQuery(Link.class, "key == keyParam");
+            query.declareParameters("String keyParam");
+            query.setRange(0, 1);
+            for (Link url : (List<Link>)query.execute(key))
+                return url;
+            return null;
     }
-    
+
 }

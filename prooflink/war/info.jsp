@@ -21,7 +21,7 @@
 </head>
 <body>
 <center>
-<a href='http://<%= request.getServerName() %>'><%= request.getServerName() %></a> =&gt; <a href='<%= link.getUrl() %>'><%= link.getUrl() %></a>
+<a href='http://<%= request.getServerName() %>'><%= request.getServerName() %></a> =&gt; <a href='<%= link.getLink() %>'><%= link.getLink() %></a>
 <br/>
 added by <%= link.getOwner().getNickname() %>
 </center>

@@ -15,9 +15,7 @@ public class AddServlet extends HttpServlet {
 			throws IOException {
 		try {
 			UserService userService = UserServiceFactory.getUserService();
-			Link link = new Link(userService.getCurrentUser(), req
-					.getParameter("url"));
-			PMUtils.save(link);
+			Link link = Link.create(req.getParameter("url"), userService.getCurrentUser());
 			res.sendRedirect("http://" + link.getKey() + "." + DomainUtils.guessDomain(req) + "/info.jsp");
 		} catch (Throwable e) {
 			res.setContentType("text/plain");
