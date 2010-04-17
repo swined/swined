@@ -12,7 +12,7 @@ public class LinkServlet extends HttpServlet {
 		String id = DomainUtils.guessSubdomain(req);
 		try {
 			Link link = Link.load(id);
-			res.sendRedirect(link.getUrl());
+			res.sendRedirect(link.getLink());
 		} catch (Throwable e) {
 			res.sendRedirect("/404.jsp?link=" + id);
 		}
