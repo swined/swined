@@ -20,21 +20,13 @@ public class Request {
     @Persistent
     private long link;
     
-    public Request(long link) {
+    @Persistent
+    private String domain;
+    
+    public Request(long link, String domain) {
+    	this.domain = domain;
         this.link = link;
         this.time = new Date();
-    }
-
-    public long getLinkId() {
-    	return link;
-    }
-    
-    public Link getLink() {
-        return PMUtils.load(Link.class, link);
-    }
-
-    public Date getTime() {
-    	return time;
     }
     
 }
