@@ -21,7 +21,7 @@ public class Main {
         long[] r = new long[a.length / 8];
         for (int i = 0; i < r.length; i++)
             for (int j = 0; j < 8; j++)
-                r[i] += ((0x100 + (long)a[8 * i + j]) & 0xFF) << (8 * j);
+                r[i] += ((0x00 + (long)a[8 * i + j]) & 0xFF) << (8 * j);
         return r;
     }
 
