@@ -26,22 +26,19 @@ $\alpha>1\Rightarrow\varphi(x)=x^\beta\in L_2[0,1]\Leftrightarrow\int_0^1|x^\bet
 
 $A\varphi\in L_2[0,1] \Leftrightarrow \int_0^1|(x^\alpha)^\beta|^2dx=\int_0^1x^{2\alpha\beta}dx=\frac{x^{2\alpha\beta+1}}{2\alpha\beta+1}|_0^1<+\infty \Leftrightarrow 2\alpha\beta+1>0 \Rightarrow \beta > -\frac{1}{2\alpha}$
 
-г) $||A||=\sup_{||\varphi|| \le 1}||A\varphi||\le\sup_{||\varphi|| \le 1}||\varphi|| \le 1$
+г) $ ||A||=\sup_{x\ne0}\frac{||Ax||}{||x||}=\sup_{x\ne0}\frac{\sqrt{\int_0^1|Ax(t)|^2dt}}{\sqrt{\int_0^1|x(t)|^2dt}}=\sup_{x\ne0}\frac{\sqrt{\int_0^1|x(t^\alpha)|^2dt}}{\sqrt{\int_0^1|x(t)|^2dt}}=\sup_{x\ne0}\frac{\sqrt{\int_0^1|x(u)|^2\frac{1}{\alpha}u^{\frac{1}{\alpha}-1}du}}{\sqrt{\int_0^1|x(t)|^2dt}} $
 
-$||A||\ge ||A\widetilde{\varphi}||$
+$ 0 < \alpha \le 1 \Rightarrow u^{\frac{1}{\alpha}-1} \le 1 \forall u \in [0,1] \Rightarrow ||A|| \le \frac{1}{\sqrt{\alpha}} \sup_{x\ne0}\frac{\sqrt{\int_0^1|x(u)|^2du}}{\sqrt{\int_0^1|x(t)|^2dt}}=\frac{1}{\sqrt{\alpha}}$
 
-$\widetilde{\varphi}=cx^\beta$
+$ x(t)=t^\beta : ||A|| \ge \sup_{\beta}\frac{\sqrt{\int_0^1u^{2\beta}\frac{1}{\alpha}u^{\frac{1}{\alpha}-1}}}{\sqrt{\int_0^1t^{2\beta}dt}} = \frac{1}{\sqrt{\alpha}}\sup_{\beta}\frac{\sqrt{\int_0^1u^{2\beta+\frac{1}{\alpha}-1}}}{\sqrt{\int_0^1t^{2\beta}dt}}$
 
-$\int_0^1|\widetilde{\varphi}(x)|^2dx=c^2x^{2\beta}dx=c^2\frac{x^{2\beta+1}}{2\beta+1}|_0^1=c^2\frac{1}{2\beta+1}=1$
+$ 2 \beta + 1 > 0 : \int_0^1t^{2\beta}dt = \frac{1}{2\beta+1} $
 
-$\int_0^1|\widetilde{\varphi}(x^\alpha)|^2dx=\int_0^1c^2x^{2\alpha\beta}dx=(2\beta+1)\frac{x^{2\alpha\beta+1}}{2\alpha\beta+1}|_0^1=\frac{2\beta+1}{2\alpha\beta+1}\ge 1$
+$ 2\beta + \frac{1}{\alpha} > 0 : \int_0^1u^{2\beta+\frac{1}{\alpha}-1} = \frac{1}{2\beta+\frac{1}{\alpha}} $
 
-$\beta > 0, \alpha\le1$
+$ ||A|| \ge \frac{1}{\alpha} \sup _ \beta \frac{\sqrt{2\beta+1}}{\sqrt{2\beta+\frac{1}{\alpha}}} \ge_{\beta \rightarrow \infty } \frac{1}{\sqrt{\alpha}}$
 
-$||A||=1$
-
-
-\pagebreak
+$ ||A|| = \frac{1}{\sqrt{\alpha}} $
 
 2.2
 
