@@ -8,6 +8,41 @@
 \makeatother
 
 \begin{document}
+2.1
+
+а) $A(a\varphi_1+b\varphi_2)=(a\varphi_1+b\varphi_2)(x^\alpha)=a\varphi_1(x^\alpha)+b\varphi_2(x^\alpha)=aA\varphi_1+bA\varphi_2$
+
+б) $A$ непрерывен как суперпозиция двух непрерывных функций
+
+$||\varphi||_{C[0,1]}=\sup_{x\in[0,1]}|\varphi(x)|$
+
+$||A\varphi||_{C[0,1]}=\sup_{x\in[0,1]}|\varphi(x^\alpha)|=_{t=x^\alpha}\sup_{t\in[0,1]}|\varphi(t)|=||\varphi||_{C[0,1]}$
+
+в) $||A\varphi||^2=\int_0^1|\varphi(x^\alpha)|^2dx=_{t=x^\alpha}\frac{1}{\alpha}\int_0^1|\varphi(t)|^2t^{\frac{1}{\alpha}-1}dt$
+
+$\frac{1}{\alpha}-1\ge0\Rightarrow\int_0^1|\varphi(t)|^2t^{\frac{1}{\alpha}-1}dt\le\int_0^1|\varphi(t)|^2dt<+\infty$
+
+$\alpha>1\Rightarrow\varphi(x)=x^\beta\in L_2[0,1]\Leftrightarrow\int_0^1|x^\beta|^2dx=\int_0^1x^{2\beta}dx=\frac{x^{2\beta+1}}{2\beta+1}|_0^1=\frac{1}{2\beta+1}<_{2\beta+1>0}+\infty$
+
+$A\varphi\in L_2[0,1] \Leftrightarrow \int_0^1|(x^\alpha)^\beta|^2dx=\int_0^1x^{2\alpha\beta}dx=\frac{x^{2\alpha\beta+1}}{2\alpha\beta+1}|_0^1<+\infty \Leftrightarrow 2\alpha\beta+1>0 \Rightarrow \beta > -\frac{1}{2\alpha}$
+
+г) $||A||=\sup_{||\varphi|| \le 1}||A\varphi||\le\sup_{||\varphi|| \le 1}||\varphi|| \le 1$
+
+$||A||\ge ||A\widetilde{\varphi}||$
+
+$\widetilde{\varphi}=cx^\beta$
+
+$\int_0^1|\widetilde{\varphi}(x)|^2dx=c^2x^{2\beta}dx=c^2\frac{x^{2\beta+1}}{2\beta+1}|_0^1=c^2\frac{1}{2\beta+1}=1$
+
+$\int_0^1|\widetilde{\varphi}(x^\alpha)|^2dx=\int_0^1c^2x^{2\alpha\beta}dx=(2\beta+1)\frac{x^{2\alpha\beta+1}}{2\alpha\beta+1}|_0^1=\frac{2\beta+1}{2\alpha\beta+1}\ge 1$
+
+$\beta > 0, \alpha\le1$
+
+$||A||=1$
+
+
+\pagebreak
+
 2.2
 
 а) $||A||=sup_{||\varphi||=1}||A\varphi||=sup_{\sqrt{\int_{0}^{1}|\varphi(q)|^{2}dq}=1}\sqrt{\int_{0}^{1}|q\varphi(q)|^{2}dq}$
