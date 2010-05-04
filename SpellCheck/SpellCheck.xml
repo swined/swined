@@ -11,9 +11,9 @@
 			<AbsDimension x="24" y="24" />
 		</Size>
 		<Anchors>
-			<Anchor point="CENTER" relativeTo="UIParent">
+			<Anchor point="RIGHT" relativeTo="TargetFrame">
 				<Offset>
-					<AbsDimension x="-257" y="245" />
+					<AbsDimension x="0" y="0" />
 				</Offset>
 			</Anchor>
 		</Anchors>
