@@ -25,18 +25,21 @@ public class Main {
         for (int i = 0; i < p.length; i++)
             p[i] = create(m.getParameterTypes()[i], params[i]);
         Object o = m.getDeclaringClass().newInstance();
+        m.setAccessible(true);
         m.invoke(o, p);
     }
 
     private static void invoke(Class c, String n, String... p) throws Throwable {
-        for (Method m : c.getMethods())
+        for (Method m : c.getDeclaredMethods())
             if (m.getName().equals(n)) {
                 invoke(m, p);
                 return;
             }
+        if (c.getSuperclass() != null)
+            invoke(c.getSuperclass(), n, p);
     }
 
-    public static void foo(Integer bar, String baz) {
+    private void foo(Integer bar, String baz) {
         System.out.println("foo(" + bar + ", " + baz + ")");
     }
 
