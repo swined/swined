@@ -35,11 +35,15 @@ public class ServerThread<T> implements Runnable {
         notify();
     }
 
-    private synchronized Task getTask() throws InterruptedException {
+    //private final Object lock = new Object();
+
+    private Task getTask() throws InterruptedException {
+        synchronized (this) {
         while (tasks.isEmpty()) {
             wait();
         }
         return tasks.remove(0);
+        }
     }
 
     public void run() {

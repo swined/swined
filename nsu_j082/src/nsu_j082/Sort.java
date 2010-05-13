@@ -6,7 +6,6 @@ public class Sort {
     private int[] data = new int[0];
 
     public synchronized int[] sort(int count, int[] data) throws InterruptedException {
-        Thread[] threads = new Thread[count];
         final int len = data.length / count;
         for (int i = 0; i < count; i++) {
             int offset = i * len;
@@ -15,8 +14,7 @@ public class Sort {
                 length = data.length - offset;
             int[] chunk = new int[length];
             System.arraycopy(data, offset, chunk, 0, length);
-            threads[i] = new Thread(new SortThread(this, chunk));
-            threads[i].start();
+            new Thread(new SortThread(this, chunk)).start();
         }
         activeThreads = count;
         this.data = new int[0];

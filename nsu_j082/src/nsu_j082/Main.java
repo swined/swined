@@ -5,12 +5,12 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) throws Throwable {
-        int[] data = new int[500000];
+        int[] data = new int[10000];
         for (int i = 0; i < data.length; i++)
             data[i] = new Random().nextInt(100);
         System.out.println();
         Sort sort = new Sort();
-        for (int i = 1; i < 26; i++) {
+        for (int i = 1; i < 1000; i++) {
             long start = System.currentTimeMillis();
             sort.sort(i, data);
             long end = System.currentTimeMillis();
