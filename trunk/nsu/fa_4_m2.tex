@@ -50,14 +50,38 @@ $ ||A|| = \sup _{\varphi \ne 0 } \frac{||A\varphi||}{||\varphi||} \ge _{\varphi=
 
 $ ||A|| = 1 $
 
-б) $q\varphi(q)-\lambda\varphi(q)=0\Rightarrow(q-\lambda)\varphi(q)=0\Rightarrow\varphi=_{L_{2}}0$
+б) $q\varphi(q)-\lambda\varphi(q)=0\Rightarrow(q-\lambda)\varphi(q)=0\Rightarrow\varphi=_{L_{2}}0 \Rightarrow $ ненулевых решений нет $\Rightarrow$ $\sigma_{p}(A)=\varnothing$
 
-$\Rightarrow \varphi(q) =
-	0, \mbox{если} q \ne \lambda \mbox{и} \varphi(q) =
-	?, \mbox{если} q = \lambda
-$ ненулевых решений нет $\Rightarrow$ $\sigma_{p}(A)=\varnothing$
+в) $ \lambda \in \sigma_c(A) \Leftrightarrow dom (A - \lambda I)^{-1} \ne L_2[0,1], cl dom (A - \lambda I) ^ {-1} = L_2 [0,1]$
 
-в) $(A-\lambda I)\varphi=\psi\Leftrightarrow q\varphi(q)-\lambda\varphi(q)=\psi(q)$
+$(A-\lambda I)\varphi=\psi\Leftrightarrow q\varphi(q)-\lambda\varphi(q)=\psi(q)$
 
 $\varphi(q)=\frac{\psi(q)}{q-\lambda}$
+
+$ \lambda \notin [0, 1]; \exists \varepsilon > 0 : \forall q \in [0,1] |q-\lambda|\ge \varepsilon $
+
+$ dom(A-\lambda I)^{-1}=\{\psi\in L_2[0,1]|\varphi=(A-\lambda I)^{-1},\psi \in L_2[0,1]\}$
+
+$ ||\varphi||^2_{L_2} = \int_0^1|\varphi(q)|^2dq=\int_0^1\frac{|\psi|^2}{|q-\lambda|^2}dq \le \frac{1}{\varepsilon^2}\int_0^1|\psi|^2dq < +\infty$
+
+$ \Rightarrow \lambda \notin [0,1] $ является регулярным значением оператора $A$, т.е. $dom(A-\lambda I)^{-1}=L_2[0,1]$
+
+пусть $ \lambda \in [0,1]$, предположим, что $dom(A-\lambda I)^{-1}\ne L_2[0,1]$, т.е. $\exists \psi \in L_2 : \varphi = \frac{\psi}{q-\lambda}\notin L_2 $
+
+$ \psi = 1 \in L_2 $
+
+$ ||\varphi||^2 = \int _0^1 \frac{1}{q-\lambda}dq = \int_0^\lambda + \int_\lambda^1 = \frac{1}{q-\lambda}|_0^\lambda+\frac{1}{q-\lambda}|_\lambda^1=\infty \Rightarrow dom(A-\lambda i) \ne L_2 $
+
+$ Z_\lambda = \{\psi \in L_2 | \exists \epsilon > 0 : \forall q \in [0,1] : |q - \lambda|\le \varepsilon, \psi(q) = 0\} $
+
+утв. 1: $cl Z_\lambda = L_2 \Leftrightarrow ||\varphi_\epsilon - \varphi || \rightarrow _ {\epsilon \rightarrow 0} 0 \Leftrightarrow \varphi_ \epsilon \rightarrow _{\epsilon \rightarrow 0} 0$
+
+утв. 2: $Z_\lambda \in dom(A-\lambda I)^{-1} \Rightarrow cl dom (A-\lambda I)^{-1} = L_2$
+
+$\psi \in Z_\lambda$, надо доказать, что $\psi \in dom (A-\lambda I)^{-1}$, т.е. что $\varphi = (A-\lambda I)^{-1}\psi=\frac{\psi(q)}{q-\lambda} \in L_2$
+
+$||\varphi||^2 = \int_0^1\frac{|\psi(q)|^2}{|q-\lambda|^2}dq = \int_0^{\lambda - \epsilon} + \int_{\lambda - \epsilon}^{\lambda + \epsilon} + \int_{\lambda + \epsilon}^1=\int_0^{\lambda - \epsilon}\frac{|\varphi(q)|^2}{|q-\lambda|^2}dq+\int_{\lambda + \epsilon}^1\frac{|\varphi(q)|^2}{|q-\lambda|^2}dq\le\frac{1}{\epsilon^2}\int_0^1|\varphi(q)|^2dq<\infty$
+
+г) $\sigma_p = \varnothing \Rightarrow A$ не компактен
+
 \end{document}
