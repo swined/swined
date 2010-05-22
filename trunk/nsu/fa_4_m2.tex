@@ -84,4 +84,26 @@ $||\varphi||^2 = \int_0^1\frac{|\psi(q)|^2}{|q-\lambda|^2}dq = \int_0^{\lambda -
 
 г) $\sigma_p = \varnothing \Rightarrow A$ не компактен
 
+2.3
+
+а) $A(x_1, ..., x_n) = (a_1 x_1, ..., a_n x_n)$
+
+$A(\alpha x + \beta y) = (\alpha a_1 x_1 + \beta a_1 y_1, ..., \alpha a_n x_n + \beta a_n y_n) = \alpha (a_1 x_1, ..., a_n x_n) + \beta (a_1 y_1, ..., a_n, y_n) = \alpha A x + \beta A y$
+
+б) $l_2 = \{ (x_n) | \sum_{n=1}^{\infty}|x_n|^2<\infty \}$
+
+$\forall x \in l_2 : Ax \in l_2 $
+
+доказать: если $(a_n)$ ограничена ($\exists c < \infty : \forall n : a_n \le c $), то $\sum_1^\infty |x_n|^2 < \infty \Rightarrow \sum_1^\infty  |a_n x_n| ^2 < \infty$
+
+1) $ \sum_1^\infty  |a_n x_n| ^2 \le \sum_1^\infty  |c x_n| ^2 = c^2 \sum_1^\infty |x_n| ^2 < \infty$
+
+2) допустим $(a_n)$ не ограничена, т.е. $\forall N \in \Bbb N \exists n(N) : a_{n(N)} > N, \forall i>j : a_i>a_j $
+
+$x_i = \{ \forall i \in (n(N)) : \frac{1}{a_{n(N)}} | \forall i \notin (n(N)) : 0 \}$
+
+$ \sum _1^\infty (x_n)^2 = \sum _1^\infty \frac{1}{a_{n(N)}^2} < \sum _1^\infty \frac{1}{N^2} = \frac{\pi^2}{6} < \infty $
+
+$ \sum _1^\infty (a_n x_n)^2 = \sum _{n\in(n(N))} (a_n x_n)^2 = \sum _{N=1}^\infty (a_{n(N)} x_{n(N)})^2 = \sum _{N=1}^\infty (\frac{a_{n(N)}}{a_{n(N)}})^2 = \sum 1 = \infty $
+
 \end{document}
