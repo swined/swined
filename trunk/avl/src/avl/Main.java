@@ -21,6 +21,23 @@ public class Main {
                 System.out.println();
             }
         }
+        data = new int[] { 24, 12 };
+        for (int d : data) {
+            System.out.println("удаляем " + d + " : ");
+            System.out.println();
+            node = node.remove(d);
+            System.out.println("\\Tree " + node);
+            System.out.println();
+            while (true) {
+                AVLNode n = node.rebalance();
+                if (n == node)
+                    break;
+                else
+                    node = n;
+                System.out.println("\\Tree " + node);
+                System.out.println();
+            }
+        }
     }
 
 }

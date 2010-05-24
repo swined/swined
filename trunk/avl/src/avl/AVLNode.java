@@ -25,6 +25,19 @@ public class AVLNode {
             return height(node.right) - height(node.left);
     }
 
+    public AVLNode remove(int v) {
+        if (value == v) {
+            if (height(this) == 1)
+                return null;
+            throw new RuntimeException("shit happened");
+        }
+        if (left != null && v < value)
+            return new AVLNode(value, left.remove(v), right);
+        if (right != null && v > value)
+            return new AVLNode(value, left, right.remove(v));
+        return this;
+    }
+
     public AVLNode rebalance() {
         if (left != null) {
             AVLNode n = left.rebalance();
