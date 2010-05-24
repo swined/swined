@@ -26,45 +26,78 @@ public class AVLNode {
     }
 
     public AVLNode rebalance() {
+        if (left != null) {
+            AVLNode n = left.rebalance();
+            if (n != left)
+                return new AVLNode(value, n, right);
+        }
+        if (right != null) {
+            AVLNode n = right.rebalance();
+            if (n != right)
+                return new AVLNode(value, left, n);
+        }
         if (Math.abs(balance(this)) < 2)
             return this;
         if (balance(this) == -2) {
-            if (balance(right) == 1)
-                return doubleRightRotate();
-            else
-                return singleRightRotate();
-        }
-        if (balance(this) == 2) {
-            if (balance(right) == -1)
+            if (balance(left) == 1)
                 return doubleLeftRotate();
             else
                 return singleLeftRotate();
         }
-
-        System.err.println("shit happened");
-        return this;
+        if (balance(this) == 2) {
+            if (balance(right) == -1)
+                return doubleRightRotate();
+            else
+                return singleRightRotate();
+        }
+        throw new RuntimeException("bad balance : " + balance(this));
     }
 
 
     public AVLNode doubleRightRotate() {
-        System.out.println("double right rotate (" + value + ")");
         AVLNode r = new AVLNode(right.value, right.left.right, right.right);
         AVLNode l = new AVLNode(value, left, right.left.left);
-        return new AVLNode(right.left.value, l, r);
+        AVLNode res = new AVLNode(right.left.value, l, r);
+        System.out.println("двойной правый поворот (" + value + "): ");
+  //      System.out.println("\\Tree " + this);
+        //System.out.println("$\\rightarrow$");
+    //    System.out.println("\\Tree " + res);
+      //  System.out.println();
+        return res;
     }
 
     public AVLNode singleRightRotate() {
-        System.out.println("single right rotate (" + value + ")");
         AVLNode l = new AVLNode(value, left, right.left);
-        return new AVLNode(right.left.value, l, right.right);
+        AVLNode res = new AVLNode(right.value, l, right.right);
+        System.out.println("простой правый поворот (" + value + "): ");
+//        System.out.println("\\Tree " + this);
+        //System.out.println("$\\rightarrow$");
+  //      System.out.println("\\Tree " + res);
+    //    System.out.println();
+        return res;
     }
 
     public AVLNode doubleLeftRotate() {
-        return this;
+        AVLNode r = new AVLNode(value, left.right.right, right);
+        AVLNode l = new AVLNode(left.value, left.left, left.right.left);
+        AVLNode res = new AVLNode(left.right.value, l, r);
+        System.out.println("двойной левый поворот (" + value + "): ");
+//        System.out.println("\\Tree " + this);
+        //System.out.println("$\\rightarrow$");
+  //      System.out.println("\\Tree " + res);
+    //    System.out.println();
+        return res;
     }
 
     public AVLNode singleLeftRotate() {
-        return this;
+        AVLNode r = new AVLNode(value, left.right, right);
+        AVLNode res = new AVLNode(left.value, left.left, r);
+        System.out.println("простой левый поворот (" + value + "): ");
+//        System.out.println("\\Tree " + this);
+        //System.out.println("$\\rightarrow$");
+//        System.out.println("\\Tree " + res);
+  //      System.out.println();
+        return res;
     }
 
     public static int height(AVLNode node) {
@@ -79,31 +112,30 @@ public class AVLNode {
     }
 
 
-    public static AVLNode insert(AVLNode n, int v, String p) {
+    public static AVLNode insert(AVLNode n, int v) {
         if (n == null)
             return new AVLNode(v);
-        System.out.println(p + "inserting " + v + " into " + n);
         AVLNode r = null;
         if (v < n.value)
-            r = new AVLNode(n.value, insert(n.left, v, p + "  "), n.right);
+            r = new AVLNode(n.value, insert(n.left, v), n.right);
         else
-            r = new AVLNode(n.value, n.left, insert(n.right, v, p + "  "));
-        System.out.println(p + r);
-        return r.rebalance();
+            r = new AVLNode(n.value, n.left, insert(n.right, v));
+        //r = r.rebalance();
+        return r;
     }
 
     @Override
     public String toString() {
         if (left == null) {
             if (right == null)
-                return "" + value;
+                return "[." + value + " ]";
             else
-                return "" + value + "->{ R" + right + " }";
+                return "[." + value + " { } " + right + " ]";
         } else {
             if (right == null)
-                return "" + value + "->{ L" + left + " }";
+                return "[." + value + " " + left + " { } ]";
             else
-                return "" + value + "->{ " + left + ", " + right + " }";
+                return "[." + value + " " + left + " " + right + " ]";
         }
     }
 
