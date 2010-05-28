@@ -82,6 +82,8 @@ $\psi \in Z_\lambda$, надо доказать, что $\psi \in dom (A-\lambda
 
 $||\varphi||^2 = \int_0^1\frac{|\psi(q)|^2}{|q-\lambda|^2}dq = \int_0^{\lambda - \epsilon} + \int_{\lambda - \epsilon}^{\lambda + \epsilon} + \int_{\lambda + \epsilon}^1=\int_0^{\lambda - \epsilon}\frac{|\varphi(q)|^2}{|q-\lambda|^2}dq+\int_{\lambda + \epsilon}^1\frac{|\varphi(q)|^2}{|q-\lambda|^2}dq\le\frac{1}{\epsilon^2}\int_0^1|\varphi(q)|^2dq<\infty$
 
+$\sigma_c = [0,1]$
+
 г) $\sigma_p = \varnothing \Rightarrow A$ не компактен
 
 2.3
@@ -106,4 +108,90 @@ $ \sum _1^\infty (x_n)^2 = \sum _1^\infty \frac{1}{a_{n(N)}^2} < \sum _1^\infty 
 
 $ \sum _1^\infty (a_n x_n)^2 = \sum _{n\in(n(N))} (a_n x_n)^2 = \sum _{N=1}^\infty (a_{n(N)} x_{n(N)})^2 = \sum _{N=1}^\infty (\frac{a_{n(N)}}{a_{n(N)}})^2 = \sum 1 = \infty $
 
+2.4 а) $||x||=\sqrt{\sum_n=1^\infty|x_n|^2}$
+
+$(a_n)$ ограничена $ \Rightarrow \exists c < \infty : \forall n : a_n \le c $ 
+
+$||Ax||=\sqrt{\sum_n=1^\infty|a_n x_n|^2}=c\sqrt{\sum_n=1^\infty|x_n|^2}=c||x||$
+
+$||A||=\sup_{x \ne 0} \frac{||Ax||}{||x||} \le c < \infty \Leftrightarrow A $ непрерывен
+
+$||A||=\sup_{x \ne 0} \frac{||Ax||}{||x||} \ge \sup_{e_n=(0, 0, ..., e_n = 1, 0, ...)} \frac{Ae_n}{e_n}=\sup_n \frac{||(0, 0, ..., a_n, 0, ...)||}{||(0, 0, ..., 1, 0, ...)||}=\sup_n |a_n| \Rightarrow ||A||=\sup_n |a_n|$
+
+б) $(\Leftarrow) $ $A$ компактен, если $\exists A_n : l_2 \rightarrow l_2$ : 
+
+1) $\forall n : A_n$ непрерывен
+
+2) $\forall n : dim(im(A_n)) < \infty$
+
+3) $A_n \rightarrow_{n \rightarrow \infty} A$ ($||A_n - A||\rightarrow_{n \rightarrow \infty} 0$)
+
+построим $A_n:l_2\rightarrow l_2$ : 
+
+$A_n (x_1, x_2, ..., x_n, ...)=(a_1 x_1, a_2 x_2, ..., a_n x_n, 0, 0, ...)$
+
+1) $A_n$ непр. по п. (а)
+
+2) $im(A_n)=\{y\in l_2 | \exists x \in l_2 : y = Ax\} \subset \{y \in l_2 | (y_1, y_2, ..., y_n, 0, 0, ...)\}$
+
+$dim(A_n) = n \Rightarrow dim(im(A_n)) \le dim(A_n) < \infty$
+
+3) $||A_n - A|| \le \sup _{k \ge 1} |a_{n+k}|$
+
+$a_n \rightarrow_{n\rightarrow \infty} 0 \Rightarrow ||A_n - A|| \rightarrow_{n \rightarrow \infty} 0$
+
+в) $Ax = \lambda x$
+
+$(a_1 x_1, a_2 x_2, ..., a_n x_n, ...) = (\lambda x_1, \lambda x_2, ..., \lambda x_n, ...)$
+
+$\forall n:\lambda \ne a_n \Rightarrow \forall n : x_n = 0 \Rightarrow \lambda \notin \sigma_p(A)$
+
+$\forall n:\lambda = a_n \Rightarrow (0, 0, ..., x_n = 1, 0, ...)$ - ненулевое решение $\Rightarrow \sigma_p = \{a_n\}$
+
+$\lambda \notin \sigma_p(A) \Rightarrow \exists (A-\lambda I)^{-1} : (A-\lambda I)^{-1}(y) = (\frac{y_1}{a_1-\lambda}, \frac{y_2}{a_2-\lambda}, ..., \frac{y_n}{a_n-\lambda}, ...)$
+
+если $dom(A-\lambda I)^{-1}=l_2$, то $\lambda \in \rho(A) = \Bbb{C} \setminus \sigma(A)$
+
+(а) $ \Rightarrow dom(A-\lambda I)^{-1}=l_2$ при $ \sup_n |\frac{1}{a_n-\lambda}|<C \Rightarrow \forall n : |a_n - \lambda| \ge \delta \Rightarrow \lambda$ не является предельной точкой $(a_n) \Rightarrow \sigma \subset cl\{a_n\}$
+
+Т.: спектр - замкнутое множество $ \Rightarrow cl\{a_n\} \subset \sigma$
+
+$\sigma \subset cl\{a_n\} \subset \sigma \Rightarrow \sigma = cl\{a_n\}$
+
+$\forall \lambda \in Lim\{a_n\} : dom(A-\lambda I)^{-1} \ne l_2$ т.к. $\lambda \in \sigma$
+
+$(A-\lambda I)^{-1}(y) = (\frac{y_1}{a_1-\lambda}, \frac{y_2}{a_2-\lambda}, ..., \frac{y_n}{a_n-\lambda}, ...)$
+
+$dom(A-\lambda I)^{-1}=\{y \in l_2|(A-\lambda I)^{-1}y \in l_2\}$
+
+$L_n = \{y \in l_2 | (y_1, ..., y_n, 0 , ...)\}$
+
+$\forall n : L_n \subset dom(A-\lambda I)^{-1} \Rightarrow \sum _n=1 ^\infty L_n \subset dom(A- \lambda I)^{-1}$
+
+$\forall x \in l_2 : x=(x_1, x_2, ..., x_n, ...)$ рассмотрим $X_n = (x_1, x_2, ..., x_n, 0, 0, ...) \in L_n$
+
+$||x-X_n|| = \sqrt{\sum_{k=1}^\infty |x_{n+k}|^2}\rightarrow_{n\rightarrow \infty} 0$ т.к. это хвост сходящегося ряда $\sum|x_n|^2 \Rightarrow cl(\sum L_n)=l_2 \Rightarrow cl(dom(A-\lambda I)^{-1})=l_2 \Rightarrow \sigma_c = Lim \{a_n\} \Rightarrow \sigma_r = \varnothing$
+
+б) $(\Rightarrow) $
+
+Т.: если $A$ компактен, то $\forall \epsilon > 0 \exists $ лишь конечное число его собственных значений таких, что $|\lambda| \ge \epsilon$
+
+предположим $a_n \to\!\!\!\!\!\!/\ \ 0$ при $n \to \infty \Leftrightarrow \exists \epsilon > 0 \forall n_0 \exists n \ge n_0, a_n \ge \epsilon$ т.е. $\exists $ бесконечно много $n$ таких, что $|a_n| \ge \epsilon$, а это противоречит теореме
+
+г) $(Ax, y) = (x, By)$
+
+$(Ax, y) = (a_1 x_1 \overline{y_1} + a_2 x_2 \overline{y_2} + ... + a_n x_n \overline{y_n} + ...) = (x_1 \overline{\overline{a_1}y_1} + x_2 \overline{\overline{a_2}y_2} + ... + x_n \overline{\overline{a_n}y_n} + ...) = (x, By)$
+
+где $By = (\overline{a_1}y_1, \overline{a_2}y_2, ..., \overline{a_n}y_n, ...)$
+
+д) $A^* = A \Leftrightarrow \forall n : a_n = \overline{a_n} \Leftrightarrow \forall n : a_n \in \Bbb R$
+
+е) $A$ унитарен, если $(Ax, Ay) = (x, y) \forall x,y \in l_2$
+
+$(Ax, Ay) = ((a_1 x_1, a_2 x_2, ...), (a_1 y_1, a_2 y_2, ...)) = a_1 x_1 \overline{a_1} \overline{y_1} + a_2 x_2 \overline{a_2} \overline{y_2} + ... $
+
+$\forall n : a_n \overline{a_n} = 1$
+
+
 \end{document}
+
