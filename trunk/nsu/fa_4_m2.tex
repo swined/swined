@@ -1,7 +1,7 @@
 \documentclass[russian]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{amssymb}
+\usepackage{amsmath, amssymb}
 \usepackage{esint}
 \usepackage{babel}
 \makeatletter
@@ -192,6 +192,177 @@ $(Ax, Ay) = ((a_1 x_1, a_2 x_2, ...), (a_1 y_1, a_2 y_2, ...)) = a_1 x_1 \overli
 
 $\forall n : a_n \overline{a_n} = 1$
 
+2.5 а) $(I\varphi, \psi) = \int_0^1(I\varphi)(x)\overline{\psi(x)}dx=\int_0^1[\int_0^x\varphi(t)dt]\overline{\psi(x)}dx=\iint \varphi(t) \overline{\psi(x)} dt dx = \int_0^1[\int_t^1\overline{\psi(x)}dx]\varphi(t)dt = \int_0^1\varphi(t)\overline{[\int_t^1\psi(x)dx]}dt = (\varphi, I^* \psi) \Rightarrow (I^* \psi) (t) = \int_t^1\psi(x)dx$
+
+$\int_0^1[\int_0^1|\varphi(t)\psi(x)|^2dt]dx=\int_0^1[\int_0^1|\varphi(t)|^2 dt]|\psi(x)|^2 dx = \int|\varphi(t)|^2 dt \int_0^1 |\psi(x)|^2 dx < \infty \Rightarrow \iint | \varphi(t) \psi(x)|^2 dt dx < \infty \Rightarrow \iint \varphi(t) \psi(x) dt dx < \infty $
+
+б) $(E_h \varphi, \psi) = \int_0^1(E_h \varphi)(x)\overline{\psi (x)} dx = \int_0^h\varphi (x) \overline{\psi(x)} dx = \int_0^h\varphi (x) \overline{E_h \psi(x)} dx = \int_0^1\varphi (x) \overline{E_h \psi(x)} dx \Rightarrow E_h = E_h^*$
+
+в) $(A_\alpha \varphi, \psi) = \int_0^1\varphi(x^\alpha)\overline{\psi(x)}dx = _{t=x^\alpha} \int_0^1\varphi(t)\overline{\frac{1}{\alpha} t^{\frac{1}{\alpha}-1}\psi(t^\frac{1}{\alpha})}dt \Rightarrow A_\alpha^* \psi (t)= \frac{1}{\alpha} t^{\frac{1}{\alpha}-1}\psi(t^\frac{1}{\alpha})$
+
+г) $E_h \varphi = \lambda \varphi$
+
+$h \le 0$ : $\lambda = 0 \in \sigma_c$, $\varphi$ - любая
+
+$0 < h < 1$ : $\lambda = 1 \in \sigma_c$, $\varphi$ - любая при $x < h$, $\varphi = 0$ при $x > h$
+
+$h > 1$ : $\lambda = 1$, $\varphi$ - любая
+
+$(E_h - \lambda I) \varphi = \psi$
+
+$x < h$ : $\varphi (x) - \lambda \varphi(x) = \psi (x) \Rightarrow \varphi (x) = \frac{\psi (x)}{1 - \lambda}$
+
+$x > h$ : $-\lambda \varphi (x) = \psi \Rightarrow \varphi (x) = \frac{\psi (x)}{ - \lambda}$
+
+$dom(E_h^*) = L_2 \Rightarrow \rho = \Bbb C \setminus \sigma_p \Rightarrow \sigma_c = \sigma_r = \varnothing$
+
+2.6 Т.: $\sigma (A) \subset \{ \lambda \in \Bbb C | |\lambda| \le ||A||\}$
+
+T.: $cl(\sigma) = \sigma$
+
+$\Rightarrow \sigma $ - ограниченное замкнутое множество на плоскости
+
+$\Leftarrow F $ - ограниченное замкнутое множество на плоскости
+
+построим оператор $A$ такой, что $\sigma(A) = F$
+
+$A:l_2 \to l_2$
+
+$A(x_1, x_2, ..., x_n, ...) = (a_1 x_1, a_2 x_2, ..., a_n x_n, ...)$, $a_n$ всюду плотно в $F$
+
+тогда $\sigma A = F$
+
+т.е. подмножество комплексной плоскости является спектром некоторого оператора, если и только если оно замкнуто и ограничено
+
+2.7 а) $\varphi (1) = 0$
+
+$A \varphi = \lambda \varphi$
+
+$\frac{d\varphi}{dx} = i\lambda \varphi \Rightarrow \varphi(t) = C e^{i\lambda t}$. т.к. $\varphi (1) = 0$, то $\sigma_p = \varnothing$
+
+$(A- \lambda I)\varphi = \psi$
+
+$\frac{1}{i}\frac{d\varphi}{dt} - \lambda \varphi(t) = \psi(t)$
+
+$\varphi'-i \lambda \varphi = i \psi$
+
+$\varphi = C e^{i \lambda t} + C(t)e^{i \lambda t}$
+
+$C'e^{i\lambda t} + C(i \lambda) e ^ {i \lambda t} - C(i \lambda) e ^ {i \lambda t} = i \psi$
+
+$C'e^{i\lambda t} = i \psi$
+
+$C' = \frac{dC}{dt}=i\psi e^{-i \lambda t}$
+
+$C(t) = \int _1^t i\psi(s)e^{-i\lambda s}ds + C_1$
+
+$\varphi(t) = Ce^{i \lambda t} + e ^ {i \lambda t} [ \int _1^t i\psi(s) e ^{-i \lambda s}ds + C_1]$
+
+$\varphi(1) = 0 \Rightarrow e^{i \lambda} [C + \int_1^1 + C_1] = 0 \Rightarrow C_1 = -C \Rightarrow \varphi(t) = ie^{i\lambda t} \int_1^t\psi(s)e^{-i 
+\lambda s} ds$
+
+б) $2\varphi(0)+\varphi(1) = 0$
+
+$2\varphi(0)+\varphi(1) = 0 \Rightarrow 2 C e^{i \lambda 0} + C e^{i \lambda 1} = 0 \Rightarrow 2 C + C e^{i \lambda} = 0 \Rightarrow e^{i \lambda} = -2 \Rightarrow \lambda = -i \ln 2 + 2\pi k$
+
+$\sigma_p = \{-i \ln 2 + 2\pi k \forall k \in \Bbb N\}$
+
+$\varphi(t) = Ce^{i \lambda t} + e ^ {i \lambda t} [ \int _1^t i\psi(s) e ^{-i \lambda s}ds + C_1] = (C + C_1)e^{i \lambda t} + e ^ {i \lambda t} \int _1^t i\psi(s) e ^{-i \lambda s}ds$
+
+$0 = 2\varphi(0)+\varphi(1) = 2 C + 2 [ \int _1^0 i\psi(s) e ^{-i \lambda s}ds + C_1] + Ce^{i \lambda} + e ^ {i \lambda} [ \int _1^1 + C_1] = (C + C_1)(2+e ^ {i \lambda}) - 2 \int _0^1 i\psi(s) e ^{-i \lambda s}ds \Rightarrow C + C_1 = \frac{2}{2+e ^ {i \lambda}} \int _0^1 i\psi(s) e ^{-i \lambda s}ds \Rightarrow \varphi(t) = e^{i \lambda t} (\frac{2}{2+e ^ {i \lambda}} \int _0^1 i\psi(s) e ^{-i \lambda s}ds + \int _1^t i\psi(s) e ^{-i \lambda s}ds) \Rightarrow \sigma_c = \varnothing$
+
+неравенство Коши-Буняковского: $\int_a^b |f(x) g(x)|^2 \le \int _a^b |f(x)|^2 dx \int _a^b |g(x)|^2dx$
+
+2.8 $A\varphi = \lambda \varphi$
+
+$\int_0^1(s t - s^2 t^2) \varphi (t) dt = \lambda \varphi (s)$
+
+$s\int_0^1t\varphi(t)dt - s^2 s\int_0^1t^2\varphi(t)dt = \lambda \varphi (s)$
+
+$\lambda \varphi(s) = a s - b s^2$
+
+1) $\lambda \ne 0 \Rightarrow \varphi(s) = A s - B s^2$
+
+$\int_0^1(s t - s^2 t^2)(A t - B t^2) dt = \lambda (A s - B s^2)$
+
+$s \int _0^1 t(A t - B t^2) dt - s^2\int_0^1t^2(A t - B t^2) dt$
+
+$s[A \frac{1}{3} - B \frac {1}{4}] - s^2 [A\frac{1}{4} - B\frac{1}{5}] = \lambda A s - \lambda B s ^2$
+
+$A \frac{1}{3} - B \frac {1}{4} = \lambda A$, $A\frac{1}{4} - B\frac{1}{5} = \lambda B$
+
+\begin{equation*}
+\begin{pmatrix}
+\frac{1}{3}-\lambda & -\frac{1}{4} \\
+\frac{1}{4} & -\frac{1}{5}-\lambda
+\end{pmatrix} 
+\begin{pmatrix}
+A \\
+B
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 \\
+0
+\end{pmatrix}
+\end{equation*}
+
+ненулевые решения получатся только если
+
+$$
+det
+\begin{pmatrix}
+\frac{1}{3}-\lambda & -\frac{1}{4} \\
+\frac{1}{4} & -\frac{1}{5}-\lambda
+\end{pmatrix} 
+=0
+$$
+
+$15 \lambda ^2 - 2 \lambda - \frac{1}{16} = 0$
+
+$d = 4 + 4 \frac{15}{16} = \frac{31}{4}$
+
+$\lambda = \frac{4 \pm \sqrt{31}}{60} \in \sigma_p$
+
+2) $\lambda = 0 \Rightarrow s\int_0^1t\varphi(t)dt - s^2 \int _0 ^1 t^2 \varphi (t) dt = 0 \Rightarrow \lambda = 0 \in \sigma _p$
+
+$(A-\lambda I)\varphi = \psi$
+
+$s\int_0^1t\varphi(t)dt - s^2 \int_0^1t^2\varphi(t)dt - \lambda \varphi(s)= \psi(s)$
+
+$s a - s^2 b - \lambda \varphi(s)= \psi(s)$
+
+$\lambda \varphi(s) = s a - s^2 b - \psi(s)$
+
+$\varphi(s) = s \frac{a}{\lambda} - s^2 \frac{b}{\lambda} - \frac{\psi(s)}{\lambda}$
+
+$s\int_0^1t(\frac{a}{\lambda} t + \frac{b}{\lambda}t^2 - \frac{\psi(t)}{\lambda})dt - s^2 \int _0^1 t^2(\frac{a}{\lambda} t + \frac{b}{\lambda}t^2 - \frac{\psi(t)}{\lambda})dt - (a s + b s^2 - \psi(s)) = \psi(s)$
+
+$s\int_0^1t(\frac{a}{\lambda} t + \frac{b}{\lambda}t^2 - \frac{\psi(t)}{\lambda})dt - s^2 \int _0^1 t^2(\frac{a}{\lambda} t + \frac{b}{\lambda}t^2 - \frac{\psi(t)}{\lambda})dt - (a s + b s^2) = 0$
+
+$s[\frac{a}{\lambda}\frac{1}{3}-\frac{b}{\lambda}\frac{1}{4} - \frac{1}{\lambda}\int_0^1t\psi(t)dt] - s^2[\frac{a}{\lambda}\frac{1}{4}-\frac{b}{\lambda}\frac{1}{5} - \frac{1}{\lambda}\int_0^1 t^2\psi(t) dt] - (a s - b s ^ 2) = 0$
+
+$\frac{a}{\lambda}\frac{1}{3} - a - \frac{b}{\lambda}\frac{1}{4} = \frac{1}{\lambda}\int_0^1 t \psi (t) dt$
+
+$\frac{1}{\lambda}\frac{1}{4} - \frac{b}{\lambda}\frac{1}{5} = \frac{1}{\lambda}\int_0^1t^2 \psi(t) dt$
+
+\begin{equation*}
+\begin{pmatrix}
+\frac{1}{3}-\lambda & -\frac{1}{4} \\
+\frac{1}{4} & -\frac{1}{5}-\lambda
+\end{pmatrix} 
+\begin{pmatrix}
+A \\
+B
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{1}{\lambda}\int_0^1 t \psi (t) dt \\
+\frac{1}{\lambda}\int_0^1 t^2 \psi(t) dt
+\end{pmatrix}
+\end{equation*}
+
+при $det \ne 0$ существует единственное решение $a,b$ и соответственно $\varphi \in L_2$, т.е. $\rho = \Bbb C \setminus \sigma_p \Rightarrow \sigma_c = \sigma_r = \varnothing$
 
 \end{document}
 
