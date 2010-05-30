@@ -117,7 +117,7 @@ $||A||=\sup_{x \ne 0} \frac{||Ax||}{||x||} = \sup_{x \ne 0} \frac{\sqrt{\int_0^1
 }
 $||A|| \le \sup_{x \ne 0} \frac{\sqrt{\int_0^1 ||2^{t+s}||^2 ||x||^2 dt}}{||x||} = \sqrt{\int_0^1 ||2^{t+s}||^2 dt} = \sqrt{\int_0^1 [\int_0^1 2^{t+s} ds]dt} =\sqrt{\frac{1}{\ln 2} \int_0^1 2^t dt} = \frac{1}{\ln 2}$
 
-т.к. $||\mu A|| = \frac{1}{2} < 1$, то по теореме Неймана \footnote{
+т.к. $||\mu A|| \le \frac{1}{2} < 1$, то по теореме Неймана \footnote{
 	если $||B|| < 1$, то оператор $I-B$ обратим и $(I-B)^{-1} = \sum _{n=0}^\infty B^n$, где $B^0 = I$, $B^{n+1} = B B^n$
 }
 $x=(I-\mu A)^{-1}f=\sum_{n=0}^{\infty}\mu^n A^n f$
