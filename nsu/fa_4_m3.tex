@@ -1,0 +1,142 @@
+\documentclass[russian]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{esint}
+\usepackage{babel}
+\makeatletter
+\makeatother
+
+\begin{document}
+
+\section*{3.1}
+
+$x(t)=\frac{1}{2}\int_0^t y(s)(t-s)^2 d s + 1$
+\footnote{
+	$x(t) = \frac{1}{(n-1)!} \int_a^t y(s)(t-s)^{n-1}ds$
+}
+
+$x'(t) = \int_0^t y(s)(t-s)ds$
+\footnote{
+	$\frac{d}{d x} \int_{\beta(x)}^{\alpha(x)}f(x,y) d y = \int_{\beta(x)}^{\alpha(x)}\frac{\partial}{\partial x}f(x, y) d y + \alpha ' (x) f(x,\alpha(x)) - \beta ' (x) f(x, \beta (x))$
+}
+
+$x''(t) = \int_0^t y(s) ds$
+
+$x'''(t) = y(s)$
+
+$y(t) + t[\frac{1}{2}\int_0^t y(s)(t-s)^2 ds + 1] = e^t$
+
+\section*{3.2}
+
+\paragraph*{а}
+
+$\varphi(t) = \int _ 0 ^ \pi \sin(t-2s)\varphi(s)ds + \cos 2t$
+
+$\varphi(t) = \sin t \int _0^\pi \cos 2s \varphi(s) ds - \cos t \int _0^\pi \sin 2s \varphi(s) ds + \cos 2t$
+
+$q_1 = \int _0^\pi \cos 2s \varphi(s) ds$
+$q_2 = \int _0^\pi \sin 2s \varphi(s) ds$
+
+$\varphi(t) = q_1 \sin t - q_2 \cos t + \cos 2t$
+
+$\varphi(t) = \sin t \int _0^\pi \cos 2s (q_1 \sin s - q_2 \cos s + \cos 2s) ds - \cos t \int _0^\pi \sin 2s (q_1 \sin s - q_2 \cos s + \cos 2s) ds + \cos 2t$
+
+$\begin{cases}
+q_1 = q_1 \int _0^\pi \cos 2s \sin s ds - q_2 \int_0^\pi \cos 2s \cos s ds + \int _0^\pi       \cos ^2 2s ds\\
+q_2 = q_1 \int _0^\pi \sin 2s \sin s ds - q_2 \int _0^\pi \sin 2s \cos s ds + \int _0^\pi \sin 2s \cos 2s ds
+\end{cases}$
+
+$\int _0^\pi \cos 2s \sin s ds = - \frac{2}{3}$
+
+$\int_0^\pi \cos 2s \cos s ds = 0 $
+
+$\int _0^\pi \cos ^2 2s ds = \frac{\pi}{2}$
+
+$\int _0^\pi \sin 2s \sin s ds = 0 $
+
+$\int _0^\pi \sin 2s \cos s ds = \frac{4}{3} $
+
+$\int _0^\pi \sin 2s \cos 2s ds = 0$
+
+$\begin{cases}
+q_1 = - \frac{2}{3} q_1 + \frac{\pi}{2}\\
+q_2 =  - \frac{4}{3} q_2 
+\end{cases}$
+
+$\begin{cases}
+q_1 = \frac{3\pi}{10}\\
+q_2 = 0
+\end{cases}$
+
+$\varphi(t) = \frac{3\pi}{10} \sin t + \cos 2t$
+
+\paragraph*{б}
+
+$\varphi(t) = \int_{-1}^1 [t s + t^2 s^2] \varphi(s) ds + t^2 - t^4$
+
+$\varphi(t) = t \int_{-1}^1 s \varphi(s) ds + t^2 \int_{-1}^1 s^2 \varphi(s) ds + t^2 - t^4$
+
+$q_1 = \int_{-1}^1 s \varphi(s) ds$
+
+$q_2 = \int_{-1}^1 s^2 \varphi(s) ds$
+
+$\varphi(t) = t q_1 + t^2 q_2 + t^2 - t^4$
+
+$\varphi(t) = t \int_{-1}^1 s (s q_1 + s^2 q_2 + s^2 - s^4) ds + t^2 \int_{-1}^1 s^2 (s q_1 + s^2 q_2 + s^2 - s^4) ds + t^2 - t^4$
+
+$t q_1 + t^2 q_2 + t^2 - t^4 = t \int_{-1}^1 s (s q_1 + s^2 q_2 + s^2 - s^4) ds + t^2 \int_{-1}^1 s^2 (s q_1 + s^2 q_2 + s^2 - s^4) ds + t^2 - t^4$
+
+$\begin{cases}
+q_1 = \int_{-1}^1 s (s q_1 + s^2 q_2 + s^2 - s^4) ds \\
+q_2 = \int_{-1}^1 s^2 (s q_1 + s^2 q_2 + s^2 - s^4) ds
+\end{cases}$
+
+$\begin{cases}
+q_1 = 4 q_1 - 8 \\
+q_2 = 8 (q_2+1) - 12
+\end{cases}$
+
+$\begin{cases}
+q_1 = \frac{8}{3} \\
+q_2 = \frac{4}{7}
+\end{cases}$
+
+$\varphi(t) = t \frac{8}{3} + t^2 \frac{4}{7} + t^2 - t^4$
+
+\section*{3.3}
+
+$x(t) - \frac{\ln 2}{2}\int_0^1 2^{t+s} x(s) ds = t$
+
+$(I-\mu A)x = f$
+
+$||A||=\sup_{x \ne 0} \frac{||Ax||}{||x||} = \sup_{x \ne 0} \frac{\sqrt{\int_0^1 |Ax(t)|^2 dt}}{||x||}=\sup_{x \ne 0} \frac{\sqrt{\int_0^1 |\int_0^1 2^{t+s}x(s)ds|^2 dt}}{||x||}$ 
+
+по неравенству Коши-Буняковского \footnote{
+	$\int_0^1|f(t) g(t)| dt \le ||f|| ||g|| $
+}
+$||A|| \le \sup_{x \ne 0} \frac{\sqrt{\int_0^1 ||2^{t+s}||^2 ||x||^2 dt}}{||x||} = \sqrt{\int_0^1 ||2^{t+s}||^2 dt} = \sqrt{\int_0^1 [\int_0^1 2^{t+s} ds]dt} =\sqrt{\frac{1}{\ln 2} \int_0^1 2^t dt} = \frac{1}{\ln 2}$
+
+т.к. $||\mu A|| = \frac{1}{2} < 1$, то по теореме Неймана \footnote{
+	если $||B|| < 1$, то оператор $I-B$ обратим и $(I-B)^{-1} = \sum _{n=0}^\infty B^n$, где $B^0 = I$, $B^{n+1} = B B^n$
+}
+$x=(I-\mu A)^{-1}f=\sum_{n=0}^{\infty}\mu^n A^n f$
+
+по теореме о повторном ядре \footnote{
+	если $(Ax)(t)=\int_a^bK(t,s)x(s)ds$ (оператор Гильберта-Шмидта)
+	и $\iint_{a}^{b}|K(t,s)|^2 dt ds < \infty$, то $A^n$ - оператор Гильберта-Шмидта 
+	и $(A^n x)(t) = \int_a^b K_n(t,s)x(s) ds$, где $K_n(t,s) = \int_a^b K(t,r) K_{n-1}(r,s)dr$ - повторное ядро
+} $x=t + \sum_{n=1}^{\infty}\mu^n \int_0^1 K_n(t,s)s ds=t+\int_0^1[\sum_{n=1}^\infty \mu ^n K_n(t,s)]s ds$
+
+$K_1 = 2^{t+s}$
+
+$K_2 = \int_0^1 2^{t+r} 2^{r+s} dr = 2^{t+s} \int_0^1 2^{2r} dr = \frac{3}{2 \ln 2} 2^{t+s}$
+
+$K_n = (\frac{3}{2 \ln 2})^{n-1} 2^{t+s} $
+
+$R(t,s) = \sum_{n=1}^\infty (\frac{\ln 2}{2})^n (\frac{3}{2 \ln 2})^{n-1} 2^{t+s} = \frac{\ln 2}{2} 2^{t+s} \sum_{n=0}^\infty (\frac{3}{4})^n = 2 \ln 2 2^{t+s}$
+
+$x=t+\int_0^1 s R(t,s) ds$
+
+\end{document}
+
