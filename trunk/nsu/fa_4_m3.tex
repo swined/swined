@@ -138,5 +138,212 @@ $R(t,s) = \sum_{n=1}^\infty (\frac{\ln 2}{2})^n (\frac{3}{2 \ln 2})^{n-1} 2^{t+s
 
 $x=t+\int_0^1 s R(t,s) ds$
 
+\section*{3.4}
+
+$A \to K(t,s)=4 t s^2$
+
+по теореме об операторе сопряженном оператору ГШ \footnote{
+	если $A$ - оператор ГШ с ядром $K(t,s)$, то $A*$ - оператор ГШ и $K*(t,s)=\overline{K(s,t}$
+}
+$A* \to K(t,s)=4 s t^2$
+
+$y(t) - 4 \int_0^1 s t^2 y(s) ds = 0$
+
+$y(t) = t^2$
+
+по теореме Фредгольма \footnote{
+	пусть $H$ - гильбертово пространство, $A:H \to H$ - линейный компактный оператор. разрешимость $x-Ax=f$ устанавливается с помощью однородного уравнения $x-Ax=0$ и однородного сопряженного уравнения $y-A*y=0$:
+	
+	для уравнения (н) возможны два случая:
+	
+	1. если (со) имеет только нулевое решение, то (н) имеет единственное решение для любого $f$
+	
+	2. если (со) имеет $n$ линейно-независимых решений $\{x_n\}$ и (о) имеет ровно $n$ линейно-незавимых решений $\{y_n\}$, то (н) разрешимо если и только если $(y_k,f) = 0 \forall k\in[1,n]$
+}
+уравнение разрешимо если и только если $\int_0^1f(t)t^2 = 0$
+
+\section*{3.5}
+
+достаточное условие экстремальности \footnote{
+	если $y$ - экстремаль функционала $L(y)=\int_a^b F(x,y(x),y'(x))dx$ при $y(a)=y_0$, $y(b)=y_1$, то $y$ - решение уравнения Эйлер $\frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'} = 0$
+}
+
+\paragraph*{а}
+
+$F_y = 2y+2e^x$
+
+$F_{y'} = 2y'(x)$
+
+$\frac{d}{dx}F_{y'} = 2y''(x)$
+
+$y'' - y = e^x$
+
+$y=c e^{\lambda x}$
+
+$(\lambda^2-1)e^{\lambda x} = 0 \Rightarrow \lambda = \pm 1$
+
+$y=C_1 e^x + C_2 e^{-x}$
+
+частное решение неоднородного:
+
+$y=C_1(x) e^x + C_2(x) e^{-x} \Rightarrow y= \frac{1}{2}x e^x $
+
+$y' = C_1' e^x +C_1 e^x + C_2' e^{-x} - C_2 e^{-x}$
+
+$y'' = C_1'' e^x + 2 C_1' e^x + C_1 e^x + C_2'' e^{-x} - 2 C_2 ' e^{-x} + C_2 e^{-x}$
+
+$(C_1'' + 2C_1' + C_1 - C_1) e^x - (C_2''-2C_2' + C_2 - C_2) e^{-x} = e^x$
+
+$\begin{cases}
+C_1 = \frac{1}{2}x \\
+C_1' = \frac{1}{2} \\
+C_1'' = 0 \\
+C_2 = 0
+\end{cases}$
+
+общее решение неоднородного:
+
+$y=C_1 e^x + C_2 e^{-x} + \frac{1}{2}x e^x$
+
+$\begin{cases}
+y(0) = C_1 + C_2 = \frac{1}{2} \\
+y(1) = C_1 e + C_2 \frac{1}{e} + \frac{1}{2} e = e
+\end{cases}
+\Rightarrow 
+\begin{cases}
+C_1 = \frac{1}{2} \\
+C_2 = 0
+\end{cases}$
+
+$y(x)=\frac{1}{2}(x+1)e^x$
+
+\paragraph*{б}
+
+$F = 2xy + (x^2 + e^y)y'$
+
+$F_y = 2x + e^y y'$
+
+$F_{y'} = x^2 + e^y$
+
+$\frac{d}{dx}F_{y'} = 2x + y'e^y$
+
+$2 e^y y' = 0$
+
+$y' = 0$
+
+$y= c_1 x + c_2 $
+
+$\begin{cases}
+y(x_0) = c_1 x_0 + c_2 = y_0 \\
+y(x_1) = c_1 x_1 + c_2 = y_1
+\end{cases}
+\Rightarrow
+\begin{cases}
+c_1 = \frac{x_0 - x_1}{y_0 - y_1}\\
+c_2 = y_0 - \frac{x_0 - x_1}{y_0 - y_1}  x_0
+\end{cases}$
+
+\paragraph*{в}
+
+$F = (y'')^2 - y^2 + x^2 $
+
+$F_y = -2y$
+
+$F_{y'} = 0$
+
+$F_{y''} = 2 y''$
+
+$y'''' - y= 0$
+
+$y=e^{\lambda x} \Rightarrow \lambda ^4 e^{\lambda x} - e^{
+lambda x} = 0 \Rightarrow \lambda^4 = 1 \Rightarrow 
+lambda = \pm 1, \pm i$
+
+$y=c_1 e^x + c_2 e^{-x} + c_3 e^{i x} + c_4 e^{-i x}$
+
+$y=c_1 e^x - c_2 e^{-x} + i c_3 e^{i x} - i c_4 e^{-i x}$
+
+$\begin{cases}
+y(0) = c_1 + c_2 + c_3 + c_4 = 1\\
+y'(0) = c_1 - c_2 + i c_3 - i c_4 = 0\\
+y(\frac{\pi}{2}) = c_1 e^\frac{\pi}{2} + c_2 e^{-\frac{\pi}{2}} + i c_3 - i c_4 = 0\\
+y'(\frac{\pi}{2}) = c_1 e^\frac{\pi}{2} - c_2 e^{-\frac{\pi}{2}} - c_3 - c_4 = -1\\
+\end{cases}
+\Rightarrow
+\begin{cases}
+c_1 = c_2 = 0
+c_3 = c_4 = \frac{1}{2}
+\end{cases}$
+
+$y= \cos x$
+
+\paragraph*{г}
+
+$ F = 2z - 4y^2 + y'^2 - z'^2 $
+
+$\begin{cases}
+4 y + y'' = 0 \\
+1 + z'' = 0
+\end{cases}$
+
+$\begin{cases}
+y = \sin 2x \\
+z = -\frac{1}{2} x^2 + \frac{\pi}{4} x + \frac{4}{\pi}
+\end{cases}$
+
+\section*{3.6}
+
+условие трансверсальности \footnote{
+	$F(x_1)-F_{y'}(x_1)[y'(x_1)-\varphi'(x_1)] = 0$
+}
+для функционалов вида $F=\int f(x,y)\sqrt{1+y'^2}$, где $f(x,y) \ne 0$:
+
+$f(x_1, y(x_1))\sqrt{1+[y'(x_1)]^2} - f(x_1, y(x_1)) \frac{2y'(x_1)}{2\sqrt{1 + [y'(x_1)]^2}}[y'(x_1) - \varphi'(x_1)] = 0$
+
+$y'(x_1)\varphi'(x_1)=-1$
+
+$T=\int_{x_0}^{x^1}\frac{\sqrt{1+(y'(x))^2}}{\sqrt{2g(y_0-y(x))}}$
+
+$\begin{cases}
+x=\frac{c_1}{2}(t-\sin t) + C_2 \\
+y = y_0 - \frac{c_1}{2}(1 - \cos t)
+\end{cases}$
+
+$\begin{cases}
+0 = C_2 \\
+0 = y_0
+\end{cases}$
+
+$\frac{dy}{dx} = \frac{dy}{dt}\frac{dt}{dx} = \frac{\sin t}{\cos t - 1}$
+
+\paragraph*{а}
+
+$-2 \frac{\sin t}{\cos t - 1} = -1$
+
+$2 \sin t = \cos t - 1$
+
+$\frac{2}{\sqrt{5}} \sin t - \frac{1}{\sqrt{5}}\cos t = - \frac{1}{\sqrt{5}}$
+
+$\sin (\alpha + t_1)=-\frac{1}{\sqrt{5}} \Rightarrow t_1 = -2 arcsin \frac{1}{\sqrt{5}}
+\Rightarrow 
+\begin{cases}
+\sin t_1 = \frac{4}{5} \\
+\cos t_1 = \frac{3}{5} \\
+\end{cases}$
+
+$ 2x(t_1)+y(t_1) = 1 \Rightarrow 	c_1 = -\frac{5}{20 arcsin \frac{1}{\sqrt{5}} + 9}$
+
+\paragraph*{б}
+
+$\begin{cases}
+(x(t_1) - 9)^2 + y^2(t_1)=9 \\
+-y(t_1) x'(t_1) + (9 - x(t_1))y'(t_1) = 0
+\end{cases}$
+
+$\begin{cases}
+(\frac{c_1}{2}(t_1-\sin t_1) - 9)^2 + [\frac{c_1}{2}(\cos t_1 - 1)]^2=9 \\
+-\frac{c_1}{2}(\cos t_1 - 1) \frac{c_1}{2}(1-\cos t_1) - (9 - \frac{c_1}{2}(t_1-\sin t_1))\frac{c_1}{2}\sin t_1 = 0
+\end{cases}$
+
 \end{document}
 
