@@ -256,8 +256,8 @@ $F_{y''} = 2 y''$
 $y'''' - y= 0$
 
 $y=e^{\lambda x} \Rightarrow \lambda ^4 e^{\lambda x} - e^{
-lambda x} = 0 \Rightarrow \lambda^4 = 1 \Rightarrow 
-lambda = \pm 1, \pm i$
+\lambda x} = 0 \Rightarrow \lambda^4 = 1 \Rightarrow 
+\lambda = \pm 1, \pm i$
 
 $y=c_1 e^x + c_2 e^{-x} + c_3 e^{i x} + c_4 e^{-i x}$
 
@@ -345,5 +345,86 @@ $\begin{cases}
 -\frac{c_1}{2}(\cos t_1 - 1) \frac{c_1}{2}(1-\cos t_1) - (9 - \frac{c_1}{2}(t_1-\sin t_1))\frac{c_1}{2}\sin t_1 = 0
 \end{cases}$
 
+\section*{3.7}
+
+по теореме Эйлера \footnote{
+	если $y(x)$ является решением $J[y]=\int_{x_0}^{x_1}G(x, y, y')dx = const$ и не является экстремалью функционала $I[y] = \int_{x_0}^{x_1}F(x, y, y')dx$, то $\exists \lambda \in \Bbb R$ такое, что $y$ является экстремалью $\widetilde{I}[y]=\int_{x_0}^{x^1}(F-\lambda G) dx$
+}
+
+$L=\int_0^1 (y^2 + y'^2 - 4 \lambda y e^x) dx$
+
+$2 - 4 \lambda - 2 y'' = 0$
+
+$y = c_2 x + c_1 + \frac{1}{2}(1- 2 \lambda) x^2$
+
+$\begin{cases}
+y(0) = c_1 = 1 \\
+y(1) = c_2 + c_1 + \frac{1}{2}(1- 2 \lambda) = e
+\end{cases}
+\Rightarrow
+\begin{cases}
+c_1 = 1 \\
+c_2 = e - 1 - \frac{1}{2}(1- 2 \lambda)
+\end{cases}
+\Rightarrow
+y = (e - 1 - \frac{1}{2}(1- 2 \lambda)) x + 1 + \frac{1}{2}(1- 2 \lambda) x^2$
+
+$\int_0^1 (4 y e^x) dx = \int_0^1 (4 y e^x) dx = \int_0^1 4 (e - 1 - \frac{1}{2}(1- 2 \lambda)) x + 1 + \frac{1}{2}(1- 2 \lambda) x^2 e^x dx = e(\frac{5}{2} - \lambda) + 4\lambda - 3$
+
+$e(\frac{5}{2} - \lambda) + 4\lambda - 3 = (e^2 + 2)^2 - 5 \Rightarrow \lambda = \frac{2(e^2 + 2)^2 - 4 - 5e}{8 - 2e}$
+
+$y = (e - 1 - \frac{1}{2}(1- 2 (\frac{2(e^2 + 2)^2 - 4 - 5e}{8 - 2e}))) x + 1 + \frac{1}{2}(1- 2 (\frac{2(e^2 + 2)^2 - 4 - 5e}{8 - 2e})) x^2$
+
+\section*{3.8}
+
+$F=\int_0^1(y'^2 + z'^2 + \lambda(x) (y^2 + z^2 - 1))dx$
+
+$\begin{cases}
+2 \lambda y - 2y'' = 0 \\
+2 \lambda z - 2z'' = 0 \\
+y^2 + z^2 - 1 = 0
+\end{cases}$
+
+$\begin{cases}
+y z' - zy' = c \\
+y y' + z z' = 0
+\end{cases}
+\Rightarrow
+\begin{cases}
+y'=\frac {-c z}{y^2+z^2} \\
+z'=\frac {c y}{y^2+z^2}
+\end{cases}$
+
+$y^2 + z^2 = 1 \Rightarrow 
+\begin{cases}
+y = \sin w(x) \\
+z = \cos w(x)
+\end{cases}$
+
+$-w'(x)\sin w(x)=-c \sin w(x)$
+
+$w'(x)=c \Rightarrow w(x)=c x+d$
+
+$\begin{cases}
+y=\cos (cx+d) \\
+z=\sin (cx+d)
+\end{cases}$ 
+
+$\begin{cases}
+y(0) =\cos (d) = 1 \\
+y(1) = \cos (c+d) = 0 \\
+z(0) = \sin (d) = 0 \\
+z(1) = \sin (c + d) = 1
+\end{cases}
+\Rightarrow 
+\begin{cases}
+d = 0 \\
+c = \frac{\pi}{2}
+\end{cases}$
+
+$\begin{cases}
+y = \sin \frac{pi}{2} x \\
+z = \cos \frac{pi}{2} x
+\end{cases}$
 \end{document}
 
