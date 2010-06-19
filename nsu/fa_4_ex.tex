@@ -61,19 +61,42 @@ $||x||=\sqrt{(x,x)}$ - обладает свойствами нормы
 
 норма порождена $(x,y)\Rightarrow\forall x,y \in H : ||x+y||^2 + ||x-y||^2 = 2||x||^2 + 2||y||^2$
 
-
-
 \paragraph{Метрические пространства}
+
+множество точек с функцией расстояния $d:M \times M \to \Bbb R$, где $\forall x,y,z \in M$:
+
+$d(x,y) = 0 \iff x=y$
+
+$d(x,y) = d(y,x)$
+
+$d(x,z) \le d(x,y) + d(y,z)$
+
+например: $\Bbb R$, где $d = |x - y|$
 
 \paragraph{Гильбертовы пространства}
 
 $L$ - $H$, если оно полно относилельно $||x||=\sqrt{(x,x)}$
 
+полное $\iff \forall$ фунд. посл. в нем сх.
+
+$x_1,...,x_n \in L$ - фунд., если $\forall \epsilon > 0 \exists n_0 : \forall m,n \ge n_0 : ||x_n - x_m|| < \epsilon $
+
 \paragraph{Неравенство Коши-Буняковского}
 
 $\forall x,y \in L : |(x,y)|^2 \le (x,x)(y,y)$
 
+или $|(x,y)| \le ||x|| ||y||$
+
 \paragraph{Проектирование на замкнутое подпространство в гильбертовом пространстве}
+
+если $S \subset L$, то $x \in S$ - ортогональная проекция $y \in L$ на $S$, если $\forall z \in S : y-x \perp z$ 
+
+если $S \subset L$, то $x \in S$ - ближайший к $ y \in S$ вектор, если $\forall z \in S : ||y-x||\le||y-z||$
+
+лемма: $S \subset H$, $S=cl(S)$, $y \in H \Rightarrow \exists ! x \in S$ ближайший к $y$
+
+лемма: если $S \subset L$, $y \in L$, то $x \in S$ - ортогональная проекция $y$ на $S$ $\iff$ $x \in S$ - ближайший к $y$ 
+
 
 \paragraph{Ортогональность векторов} $(x,y)=0$
 
@@ -97,25 +120,23 @@ $\sum_{k=1}^{\infty}\lambda _k x_k$ - ряд фурье вектора $x$
 
 \paragraph{Задача о наилучшем приближении, проектирование на конечномерные подпространства}
 
-если $S \subset L$, то $x \in S$ - ближайший к $ y \in S$ вектор, если $\forall z \in S : ||y-x||\le||y-z||$
-
-лемма: $S \subset H$, $S=cl(S)$, $y \in H \Rightarrow \exists ! x \in S$ ближайший к $y$
-
-лемма: если $S \subset L$, $y \in L$, то $x \in S$ - ортогональная проекция $y$ на $S$ $\iff$ $x \in S$ - ближайший к $y$ 
+пусть $S \subset L$, тогда $\forall y \in L : x = \sum _{k=1}^n \lambda_{k,y} x_k$ - ортогональная проекция $y$ на $S$, причем $||y||^2 = ||x||^2 + ||y-x||^2$
 
 \paragraph{Неравенство Бесселя}
 
-$\sum _{k=1}^\infty \lambda _k \le ||x||^2$
+$\sum _{k=1}^\infty |\lambda _k|^2 \le ||x||^2$
 
 \paragraph{Полные ортогональные системы и ряды Фурье}
 
-орт-норм $x, x_1, ..., x_n$ - пополнение $x_1, ..., x_n$
-
-
+$\nexists x \ne 0 \in L : \forall n : x \perp x_n$
 
 \paragraph{Гильбертов базис}
 
 - ортонормированная $x_1,x_2,...,x_n \in L$, такая, что $\forall x \in L : x=\sum _{k=1}^\infty \lambda _k x_k$ 
+
+Т.: во всяком сепарабельном $H \exists $ Г.б., состоящий из конечного или счетного множества векторов
+
+сепарабельное $ \iff \exists $ счетное, плотное подмножество (например $\Bbb R$)
 
 \paragraph{Равенство Парсеваля}
 
@@ -127,115 +148,484 @@ $(x,y) = \sum_{k=1}^\infty \lambda_k \overline{\mu_k}$
 
 \paragraph{Понятие замкнутой ортогональной системы}
 
-$\{x_n \in L\}$ замкнута, если $\forall x \in L : ||x||^2=\sum _{k=1}^\infty \lambda _k$
+$\{x_n \in L\}$ замкнута, если $\forall x \in L : ||x||^2=\sum _{k=1}^\infty |\lambda _k|^2$
 
 \paragraph{Ортогональность и полнота тригонометрической системы функций}
 
-\paragraph{Определение и общие свойства ортогональных многочленов (рекуррентность, расположение нулей)}
+$\frac{1}{\sqrt{2\pi}}, \frac{1}{\sqrt{\pi}}\sin x, \frac{1}{\sqrt{\pi}} \cos x, ..., \frac{1}{\sqrt{\pi}}\sin nx, \frac{1}{\sqrt{\pi}}\cos nx$ 
+
+ортонормирована и полна в $L_2[-\pi, \pi]$ (по равенству Ляпунову)
+
+\paragraph{Ортогональные многочлены}
+
+весовая функция - $h:[a,b]\to \Bbb R : 0 < \int_a^b h(x)ds < +\infty$ 
+
+$L_2^h[a,b]=\{f|\int_a^b f^2(x)h(x) < \infty\}$
+
+$(f,g)_{L_2^h[a,b]}=\int_a^b f(x)g(x)h(x)dx$
+
+ортогонализуем $\{x^n | n \in \Bbb N\}$, получим орт. многочл. с весом $h$ на $[a,b]$
+
+\paragraph{Общие свойства ортогональных многочленов}
+
+1) $\forall Q_n = \sum_0^{n+1} \alpha_k q_k$
+
+2) последовательность орт. мн. опр. весом однозначно
+
+3) $n > m \Rightarrow \int _a^b Q_m(x) q_n(x) h(x) dx = 0$
+
+4) в $L_2^h[-a,a]$ при четной $h$ $\forall n \in \Bbb N,x\in(-a,a):q_n(-x)=(-1)^n q_n(x)$
+
+5) [рекуррентное соотношение] если $q_n = a_n x^n + b_n x^{n-1} + ...$, то $x q_n(x) = \frac{a_n}{a_{n+1}}q_{n+1}(x)+(\frac{b_n}{a_n} - \frac{b_{n+1}}{a_{n+1}}) q_n(x) + \frac{a_{n-1}}{a_n}q_{n-1}(x)$
+
+\paragraph{Расположение нулей}
+
+1) все нули $q_n$ действительны и лежат на $(a,b)$
+
+2) $\forall n : q_n(b) > 0, (-1)^n q_n(a) > 0$
+
+3) $\forall n : q_n, q_{n-1}$ не могут иметь общих корней
+
+4) если $x_0$ - корень $q_n$, то $q_{n-1}(x_0)$ и $q_{n+1}(x_0)$ имеют разные знаки
+
+5) корни $q_n$ и $q_{n+1}$ перемежаются
 
 \paragraph{Основная информация о многочленах Лежандра, Эрмита, Лагерра - производящие функции, рекуррентные соотношения, диффуры, формулы Родрига}
 
+производящая функция - $w(x,t)=\sum _{n=0} ^ {\infty} \frac{q_n(x)}{\alpha_n}t^n$
+
+1) Лежандра: 
+
+$P_n(x)$, $L_2^1[-1,1]$
+
+$w(x,t)=\frac{1}{\sqrt{1 - 2 t x + t^2}} = \sum_{n=0}{\infty}P_n(x)t^n$
+
+$(n+1)P_{n+1}(x) - (2n+1)xP_{n}(x) + n P_{n-1}(x) = 0$
+
+$P'_{n+1}(x) - P'_{n-1}(x)= (2n+1)P_n(x)$
+
+$[(1 -x^2)y']' + n(n+1) y= 0$
+
+$P_n(x) = \frac{1}{2^n n!}\frac{d^n}{dx^n}(x^2 -1 )^n$
+
+2) Эрмита:
+
+$H_n(x)$, $L_2^{e^{-x^2}}[-\infty, +\infty]$
+
+$w(x,t) = e^{2xt-t^2} = \sum_{n=0}{\infty}\frac{H_n(x)}{n!}t^n$
+
+$H_{n+1}(x) - 2xH_n(x) + 2h H_{n-1}(x) = 0$
+
+$H'_n(x)-2nH_{n-1}(x) = 0$
+
+$y'' - 2x y' + 2 n y = 0$
+
+$H_n(x) = (-1)^n e^{x^2} \frac{d^n}{d x^n} e^{-x^2}$
+
+3) Лагерра:
+
+$L_n^\alpha(x)$, $L_2^{x^\alpha e^{-x}}[0,+\infty]$, $\alpha > -1$
+
+$w(x,t) = \frac{1}{(1-t)^{\alpha + 1}}e^{\frac{-xt}{1-t}}=\sum_{n=0}^\infty L_n^\alpha (x) t^n$
+
+$(n+1)L_{n+1}^\alpha (x) + (x-\alpha - 2n -1)L_n^\alpha(x) + (n+\alpha)L_{n-1}^\alpha(x) = 0$
+
+$\frac{d L_n^\alpha}{dx} - \frac{dL_{n-1}^\alpha}{dx} + L_{n-1}^\alpha = 0$
+
+$x y'' + (1 + \alpha - x) y' + n y = 0$
+
+$L_n^\alpha(x) = e^x \frac{x^{-\alpha}}{n!}\frac{d^n}{d x ^n}[e^{-x}x^{n+\alpha}]$
+
 \paragraph{Многочлены Чебышева и их основные свойства}
+
+1) 1 рода: 
+
+$T_n(x)$, $L_2^{\frac{1}{\sqrt{1-x^2}}}[-1,1]$
+
+$w(x,t) = \frac{1-tx}{1 - 2tx + t^2} = \sum_{n=1}^\infty T_n(x)t^n$
+
+$T_0(x) = 1$, $T_1(x) = x$, $T_{n+1}(x) = 2xT_n(x) - T_{n-1}(x)$
+
+$T_n(x) = \cos n \arccos x$
+
+2) 2 рода:
+
+$U_n(x)$, $L_2^{\sqrt{1-x^2}}[-1,1]$
+
+$w(x,t) = \frac{1}{1 - 2tx + t^2} = \sum_{n=1}^\infty U_n(x)t^n$
+
+$U_0 = 1$, $U_1 = 2x$, $U_{n+1}=2xU_n(x)-U_{n-1}(x)$
 
 \section{Операторы в гильбертовых пространствах}
 
 \paragraph{Линейные операторы, их общие свойства, операции над ними}
 
+линейный оператор - $A:H\to H_1:\forall x,y\in H \forall \alpha,\beta \in \Bbb C:A(\alpha x + \beta y) = \alpha A x + \beta A y$
+
+1) $A:H \to H_1, B : H \to H_1 : \forall \alpha, \beta \in \Bbb C : (\alpha A + \beta B)x = \alpha A x + \beta B x$ - линеен
+
+2) $A:H \to H_1, B : H \to H_1 : (BA)x = B(Ax)$ - линеен
+
 \paragraph{Норма оператора, ограниченные операторы}
+
+$||A|| = \sup _{||x|| \le 1} ||Ax|| = \sup _{||x||=1} ||Ax|| = \sup _{||x|| \ne 0} \frac{||Ax||}{||x||}$
+
+Т.: если $A$ линеен, то эквивалентны:
+
+1) $\exists x_0 \in H$, в которой $A$ непрерывен \footnote{$\forall \epsilon > 0 \exists \delta > 0 : \forall x \in H : ||x - x_0|| < \delta : ||Ax - Ax_0|| < \epsilon$}
+
+2) $A$ непрерывен
+
+3) $A$ ограничен \footnote{переводит ограниченное множество в ограниченное. ограниченное множество содержится в шаре конечного радиуса.}
+
+3) $||A|| < \infty$
 
 \paragraph{Обратимость операторов}
 
+$A$ - обратимый $\iff Ax=y$ имеет не более одного решения
+
+образ ($im(A)$) - совокупность $y \in H_1$ таких, что $\exists x \in H$ такой, что $y = Ax$ 
+
+$A^{-1}$ - сопоставляет каждому $y \in im(A)$ единственный $x \in H$ такой, что $Ax=y$
+
+Т. Неймана: если $A:H\to H$ линейный, такой, что $dom(A) = H$ и $||A|| < 1$, то $I-A$ обратим, причем обратный ограничен, определен во всем $H$ и $(I-A)^{-1}=\sum_{n=0}^\infty A^n$, где $A^0 = 0$, $A_{n+1} = AA^n$
+
 \paragraph{Резольвента и спектр}
 
-\paragraph{Классификация точек спектра}
+$y = B^{-1} x = (A-\lambda I) ^ {-1} x$
+
+1) $B$ необратим $\Rightarrow \lambda \in \sigma_p$
+
+2) $B$ обратим, причем $dom(B^{-1}) = H \Rightarrow \lambda \in \rho,B^{-1} = R_\lambda$ 
+
+3) $B$ обратим, но $dom(B^{-1})$ - плотное в $H$ подпространство $\Rightarrow \lambda \in \sigma_c$
+
+4) $B$ обратим, но $dom(B^{-1})$ - не плотное в $H$ подпространство $\Rightarrow \lambda \in \sigma_r$
+
+свойства: 
+
+1) $\sigma = \Bbb C / \rho$
+
+2) $\sigma = \sigma_p \cup \sigma_c \cup \sigma_r$
+
+$\sigma_p \cap \sigma_c = \sigma_p \cap \sigma_r = \sigma_c \cap \sigma_r = \varnothing$
+
+3) $\sigma = cl(\sigma)$
+
+4) $\sigma \subset \{\lambda \in \Bbb C | |\lambda| \le ||A||\}$
 
 \paragraph{Линейные функционалы в гильбертовом пространстве}
 
+$f:H \to \Bbb C$
+
+$ker(f)=\{x\in H | f(x) = 0\}$
+
+свойства:
+
+1) $f$ - лин. ф-л $\Rightarrow ker(f) \subset H$ 
+
+2) $f$ непр $\iff ker(f) = cl(ker(f))$
+
+3) $f \ne 0 \Rightarrow dim(ker^\perp (f)) = 1$
+
 \paragraph{Сопряженное пространство}
+
+$H^*$ - множество всех нлф определенных на $H$
 
 \paragraph{Теорема Рисса}
 
+1) $\forall$ нлф $\exists!x_0\in H : f(x) = (x, x_0)\forall x\in H$, причем $||f||=||x_0||$
+
+2) $\forall x_0 \in H \Rightarrow f(x) = (x,x_0)$ - нлф, $||f||=||x_0||$
+
 \paragraph{Бра- и кет-векторы}
+
+$\langle x|y \rangle = \{\langle x | \} \{ | y \rangle \}$
+
+линейны по второму аргументу
+
+бра-вектор - $\langle x | $ 
+
+кет-вектор - $| y \rangle $
+
+если $x_1,...,x_n,...$ - ортонормированный базис, то $\sum _{n=1}^\infty |x_n \rangle \langle x_n| = I$
 
 \paragraph{Операторная функция Грина}
 
+$A:H \to H$ - линейный оператор
+
+$x_1,...,x_n$ - собственные векторы $A$, образующие ортонормированный базис
+
+$\lambda_j : Ax_j = \lambda_j x_j$
+
+$R_\lambda = \sum_{j=1}^\infty \frac{|x_j \rangle \langle x_j|}{\lambda_j - \lambda}$
+
 \paragraph{Сопряженный оператор и его св-ва}
 
-\paragraph{Ограниченные свмосопряженные (эрмитовы) операторы}
+$\forall x,y \in H : (Ax,y) = (x,By) \iff A^* = B$
 
-\paragraph{Квадратичная форма оператора}
+0) $A^*$ существует и единственный
+
+1) $A^*$ линейный ограниченный оператор
+
+2) $(\alpha A + \beta B)^* = \overline{\alpha}A^* + \overline{\beta}B^*$
+
+3) $(A^*)^* = A$
+
+4) $||A^*|| = ||A||$
+
+5) $I^* = I$
+
+лемма: $A:H \to H$ - лин. огр. оп. и $\lambda \notin \sigma_p(A)$, тогда $\lambda \in \sigma_r (A) \iff \overline{\lambda} \in \sigma_p(A^*)$ 
+
+\paragraph{Ограниченные самосопряженные (эрмитовы) операторы}
+
+$A^* = A$ - линейный самосоп. оп.
+
+Т.: $\sigma_p(A) \subset \Bbb R$, собст. векторы. орт. м-ду собой
+
+$S \subset H$ - инвариантное подпространство, если $\forall x \in S : Ax \in S$
+
+Т. $S$ - инв. подпр. $\Rightarrow S^\perp $ - инв. подпр. 
+
+\paragraph{Квадратичная форма оператора} $(Ax, x)$
 
 \paragraph{Теорема о регулярных значениях эрмитова оператора}
 
 \paragraph{Теорема Рэлея о норме эрмитова оператора}
 
+Т.: $||A|| = \sup _{||x|| \le 1} |(Ax,x)|$
+
 \paragraph{Компактные операторы}
 
+$A:H \to H_1$ - компактный, если $\exists A_n : H \to H_1 , dim(im(A_n)) < \infty, A_n$ непр. и $A_n \to _{n \to \infty} A$
+
+1) $A,B$ - комп. $\Rightarrow \alpha A + \beta B$ - комп.
+
+2) $A$ - комп. $\Rightarrow A$ - ограничен
+
+3) $dim(H) = \infty \Rightarrow I $ - не комп.
+
+4) $A:H \to H_1$ комп. и $B:H_1 \to H_2, C : H_3 \to H$, то $BA, AC$ - комп.
+
+5) $dim(H) = \infty,A$ комп. и огр., тогда $A^{-1}$ не огр., т.е. $0 \in \sigma(A)$
+
+6) $A_n$ - комп., $A_n \to A \Rightarrow A$ - комп.
+
 \paragraph{Дискретность спектра}
+ 
+$A:H\to H$ - комп. $\Rightarrow \forall \epsilon > 0 \exists $ лишь конечное число лин. нез. собст. век. оп. $A$ отвечающих собст. знач. $|\lambda| \ge \epsilon$
+
+следствия:
+
+1) собственному знач. $\lambda \ne 0$ отвечает конечное число лин. нез. собств. век. (геом. кратность собст числа)
+
+2) $\forall \epsilon > 0 \exists $ лишь конечно число собст. чисел таких, что $|\lambda| \ge \epsilon$
+
+3) собст. знач. комп. оп. можно перенумеровать в порядке невозрастания модулей с учетом кратности
 
 \paragraph{Теорема о границах спектра}
 
+$A$ - комп. самосоп. оп., тогда $\sigma \subset [m,M] \subset \Bbb R$, где $m = \inf _{||x||=1}(Ax.x)$ и $M = \sup _{||x||=1}(Ax.x)$
+
+$m,M$ - границы оператора
+
 \paragraph{Теорема Гильберта-Шмидта о собственном базисе (диагонализируемость) компактного эрмитова оператора}
 
+пусть $dim(H) > 0$, $A: H \to H$ - комп. самосоп. оп., тогда в $H \exists $ ортонорм. базис, сост. из собст. векторов оп. $A$
+
 \paragraph{Вариационный метод Куранта отыскания собственных чисел}
+
+$H$ - сепарабельное гильбертово пространство
+
+$A:H \to H$ - комп. самосоп. лин. оп.
+
+$\forall n \ge 1 : \lambda_n = \inf _{H_{n-1}} \sup _{x\ne 0, x \perp H_{n-1}} \frac{(Ax,x)}{||x||^2}, \lambda_{-n} = \sup _{H_{n-1}} \inf _{x\ne 0, x \perp H_{n-1}} \frac{(Ax,x)}{||x||^2}$
+
+$H_{n-1} \subset H : dim(H_{n-1}) = n -1$
 
 \section{Интегральные уравнения}
 
 \paragraph{Интегральные уравнения Фредгольма}
 
+1 рода: $int_a^b K(t,s)x(s) ds + f(t) = 0$
+
+2 рода: $int_a^b K(t,s)x(s) ds + f(t) = x(s)$
+
 \paragraph{Теорема о сжимающем отображении в полном метрическом пространстве}
+
+сжимающее отображение - $f:M \to M:\forall x,y \in M : d(f(x), f(y)) < d(x, y)$
+
+пусть $(M,d)$ - полное, $f:M \to M$ - сжимающее, тогда $\exists ! x_0 \in M : f(x_0) = x(0)$
 
 \paragraph{Уравнения с малым параметром}
 
+$\mu int_a^b K(t,s)x(s) ds + f(t) = x(s)$
+
+$x= \mu A x + f$
+
+$x = (I - \mu A)^{-1} f$
+
+Т. Неймана: при $|\mu| < \frac{1}{||A||}$ оп. $(I - \mu A)$ обратим и $(I - \mu A)^{-1} = \sum_{n=0}^{\infty} \mu^n A^n$, т.е. $x = \sum_{n=0}^{\infty} \mu^n A^n x$
+
 \paragraph{Ряд Неймана}
+
+$x = \sum_{n=0}^{\infty} \mu^n A^n x = f + \mu A f + \mu ^ 2 A(Af) + ...$
 
 \paragraph{Метод последовательных приближений}
 
+$x_n = \mu^n A^n f$
+
+$x_0 = f$
+
+$x_{n+1} = \mu A x_n$
+
+$x = \sum_{n=0}^m x_n$ - частичная сумма ряда Неймана, приближенное решение
+
 \paragraph{Уравнения с вырожденным ядром}
+
+$K(t,s) = \sum_{i=0}^n P_i(t) Q_i(s)$ - вырожденное ядро ур. Ф. 2 рода
+
+$x(t) = \sum_{i=1}^nP_i(t) \int _a^b Q_i(s)x(s)ds + f(t)$
+
+$q_i = \int _a^b Q_i(s)x(s)ds$
+
+$x(t) = \sum_{i=1}^nP_i(t) q_i + f(t)$
+
+$x(t) = \sum_{i=1}^nP_i(t) \int _a^b Q_i(s)[\sum_{i=1}^nP_i(s) q_i + f(s)]ds + f(t)$
+
+$a_{i,k} = \int _a^b Q_i P_k(s)ds, b_i = \int_a^b Q_i(s)f(s) ds$
+
+$\sum _{i=1}^n q_i P_i(t) = \sum _{i=1}^nP_i(t)[\sum_{k=1}^n a_{i.k} q_k + b_i]$
+
+$q_i = \sum_{k=1}^n a_{i.k} q_k + b_i$
 
 \paragraph{Теоремы Фредгольма}
 
-\paragraph{Интегральные уравнения с вырожденными ядрами}
+	пусть $H$ - гильбертово пространство, $A:H \to H$ - линейный компактный оператор. разрешимость $x-Ax=f$ устанавливается с помощью однородного уравнения $x-Ax=0$ и однородного сопряженного уравнения $y-A^*y=0$:
+	
+	для уравнения (н) возможны два случая:
+	
+	1. если (со) имеет только нулевое решение, то (н) имеет единственное решение для любого $f$
+	
+	2. если (со) имеет $n$ линейно-независимых решений $\{x_n\}$ и (о) имеет ровно $n$ линейно-незавимых решений $\{y_n\}$, то (н) разрешимо если и только если $(y_k,f) = 0 \forall k\in[1,n]$	
 
 \paragraph{Теорема Гильберта-Шмидта для интегральных операторов}
 
+если $f\in L_2[a,b]$ представима через симм. ядро $K \in L_2([a,b]x[a,b])$, то она может быть разложена в ряд $f(t) = \sum_n f_n x_n (t)$, где $\{x_n\}$ ортонорм. посл. собст. ф-ций ур. Ф., а $f_n = \int _a^bf(t)\overline{x_n(t)}dt$
+
 \paragraph{Разложение решения интегрального уравнения по собственным функциям ядра}
+
+$x_n = \mu_n A x_n$
+
+$x(t) = f(t) + \mu \sum _n \frac{x_n(t)}{\mu_n - \mu} \int _a^b \overline{x_n(s)}f(s) ds$
 
 \paragraph{Разложение ядра интегрального оператора по его собственным функциям (билинейная форма)}
 
-\paragraph{Интегральные уравнения Вольтерра - теорема о существовании и единственности решения}
+для симметричного ядра в $L_2([a,b]x[a,b])$ имеет место $K_n(t,s) = \sum_i\frac{x_i(t)\overline{x_j(t)}}{\mu_i^n}$
+
+\paragraph{Интегральные уравнения Вольтерра}
+
+1 рода: $int_a^t K(t,s)x(s) ds + f(t) = 0$
+
+2 рода: $int_a^t K(t,s)x(s) ds + f(t) = x(s)$
+
+\paragraph{Теорема о существовании и единственности решения}
+
+если $K \in L_2([a,b]x[a,b])$, то $\forall \mu \forall f \in L_2[a,b]$ ур. В. 2 рода $\exists!x\in L_2[a,b]$ - решение, которое можно найти методом посл. приближений
 
 \section{Вариационное исчисление}
 
 \paragraph{Примеры задач классического вариационного исчисления}
 
+задача о брахистохроне:
+
+минимизировать $I[y]=\int_{x_0}^{x_1}\frac{\sqrt{1+(y'(x))^2}}{\sqrt{2g(y_0-y(x))}}dx$
+
+$\begin{cases}
+x=\frac{c_1}{2}(t-\sin t) + C_2 \\
+y = y_0 - \frac{c_1}{2}(1 - \cos t)
+\end{cases}$
+
+задача о поверхности вращения наименьшей площади:
+
+минимизировать $I[y]=\int_{x_0}^{x_1}y(x)\sqrt{1+(y'(x))^2}dx$
+
+$y(x) = C_1 \ch \frac{x-C_2}{C_1}$
+
 \paragraph{Простейшая задача вариационного исчисления}
 
-\paragraph{Необходимые условия экстремума}
+$I[y]=\int_{x_0}^{x_1}F(x,y(x),y'(x))dx$
 
 \paragraph{Лемма Лагранжа}
 
+если $f:(x_0,x_1) \to \Bbb R$ непр. и $\int_{x_0}^{x_1}f(x)\eta(x)dx=0 \forall$ финитной $\eta : [x_0, x_1] \to \Bbb R$, то $f$ - тождественный нуль
+
 \paragraph{Уравнения Эйлера}
+
+	если $y$ - экстремаль функционала $L(y)=\int_a^b F(x,y(x),y'(x))dx$ при $y(a)=y_0$, $y(b)=y_1$, то $y$ - решение уравнения Эйлера $\frac{\partial F}{\partial y} - \frac{d}{dx}\frac{\partial F}{\partial y'} = 0$
 
 \paragraph{Задачи, допускающие понижение порядка в уравнении Эйлера}
 
-\paragraph{Задачи о брахистохроне и и о поверхности вращения минимальной площади}
+1) $F=F(x,y)$, тогда $F_y(x,y) = 0$
+
+2) $F=F(x,y')$, тогда $\frac{dF_{y'}}{dx} = 0$
+
+3) $F=F(y,y')$, тогда $y'F_{y'}-F=C$
+
+$\frac{d}{dx}[y'F_{y'}-F]=y''F_{y'}+y'\frac{d}{dx}F_{y'}-F_{y}y'-F_{y'}y''=-y'[F_y-\frac{d}{dx}F_{y'}]$
 
 \paragraph{Задачи с несколькими переменными}
 
+записываем ур. Э. для каждой переменной по отдельности
+
 \paragraph{Гармонические функции, как экстремали интеграла Дирихле}
+
+$I[z]=\iint_D F(x,y,z(x,y),z_x(x,y),z_y(x,y)) dx dy$
+
+$F_z - \frac{\partial}{\partial x}F_{z_x}-\frac{\partial}{\partial y}F_{z_y} = 0$
+
+$I[z]=\iint_D [(\frac{\partial z}{\partial x})^2 + (\frac{\partial z}{\partial y})^2] dx dy$
+
+$z_{xx} + z_{yy} = 0$
 
 \paragraph{Уравнение Эйлера для задачи с высшими производными}
 
+$F_y + (-1)^n \frac{d^n}{dx^n}F_{y^{(n)}}=0$
+
 \paragraph{Задача с подвижными концами, условия трансверсальности}
+
+найти экстремум функционала при $y(x_0) = y_0$ и $y(x_1) = \varphi(x_1)$
+
+решаем $F_y - \frac{d}{dx}F_{y'}=0$
+
+$\begin{cases}
+y(x_0, C_1, C_2) = y_0 \\
+y(x_0, C_1, C_2) = \varphi(x_0) \\
+F(x_1)-F_{y'}(x_1)[y'(x_1)-\varphi'(x_1)] = 0
+\end{cases}$
 
 \paragraph{Изопериметрическая задача, теорема Эйлера}
 
+$J[y]=\int_{x_0}^{x^1}G(x,y(x),y'(x))dx=const$
+
+минимизировать $I[y]=\int_{x_0}^{x^1}F(x,y(x),y'(x))dx$
+ 
+если $y(x)$ является решением $J[y]=\int_{x_0}^{x_1}G(x, y, y')dx = const$ и не является экстремалью функционала $I[y] = \int_{x_0}^{x_1}F(x, y, y')dx$, то $\exists \lambda \in \Bbb R$ такое, что $y$ является экстремалью $\widetilde{I}[y]=\int_{x_0}^{x^1}(F-\lambda G) dx$
+
 \paragraph{Условный экстремум}
+
+минимизировать $I[y,z] = \int_{x_0}^{x_1}F(x,y(x),y'(x),z(x),z'(x))dx$ при $G(x,y(x),z(x)) = 0$
 
 \paragraph{Правило множителей Лагранжа}
 
+если функции $y=y(x)$ и $z=z(x)$ являются решением простейшей вариационной задачи на условный экстремум, то $\exists$ непр. диф. ф. $\lambda:(x_0,x_1)\to \Bbb R$ такая, что $y$ и $z$ являются экстремалями $I^*[y,z,\lambda]=\int_{x_0}^{x_1}F^*(x,y,y',z,z',\lambda)dx$, где $F^*=F+\lambda(x)G$
+
 \paragraph{Вывод уравнения колебаний струны}
+
+$y(x,t)$ - отклонение
+
+$ \frac{\partial ^2 y}{\partial t^2} = a^2\frac{\partial ^2 y}{\partial x^2}$
 
 \end{document}
 
