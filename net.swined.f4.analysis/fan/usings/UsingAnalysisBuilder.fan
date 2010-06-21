@@ -44,7 +44,7 @@ class UsingsAnalysisBuilder : IScriptBuilder
     try {
       useless = analyser.analyse
     } catch (Err e) {
-      echo("FAIL")
+      // ignore
     }
     useless.each { report(it, fp.project) }
     reporters.vals.each { it.flush }
@@ -68,7 +68,7 @@ class UsingsAnalysisBuilder : IScriptBuilder
     reporter.reportProblem(
       DefaultProblem(
         resource.getLocation.toString, 
-        "$u is never used", 
+        "${u.podName}${u.typeName == null ? "" : "::" + u.typeName} is never used", 
         0, //id (don't know what this means)
         Str[,], //arguments (don't know what this means)
         ProblemSeverities.Warning, //severity
@@ -78,10 +78,6 @@ class UsingsAnalysisBuilder : IScriptBuilder
         u.loc.col ?: 0
         )
       )
-  }
-  
-  private static UsingDef[] getUsings(FantomProject fp, IModelElement[] model) {
-    return [,]
   }
   
   override DependencyResponse? getDependencies(IScriptProject? project, Int buildType,
@@ -113,7 +109,7 @@ class UsingsAnalysisBuilder : IScriptBuilder
     FantomProjectManager.instance[project.getProject]
   }
 
-    private Str:ProblemReporter reporters := [Str:ProblemReporter][:]
+  private Str:ProblemReporter reporters := [Str:ProblemReporter][:]
   
 }
 
