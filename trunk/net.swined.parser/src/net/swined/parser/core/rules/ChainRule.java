@@ -1,7 +1,11 @@
-package net.swined.parser.core;
+package net.swined.parser.core.rules;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.swined.parser.core.Chain;
+import net.swined.parser.core.IMatch;
+import net.swined.parser.core.IRule;
 
 public class ChainRule implements IRule {
 

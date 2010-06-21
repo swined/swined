@@ -1,4 +1,8 @@
-package net.swined.parser.core;
+package net.swined.parser.core.rules;
+
+import net.swined.parser.core.IMatch;
+import net.swined.parser.core.IRule;
+import net.swined.parser.core.IRuleResolver;
 
 public class RuleRef implements IRule {
 

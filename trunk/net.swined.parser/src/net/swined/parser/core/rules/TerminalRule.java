@@ -1,7 +1,11 @@
-package net.swined.parser.core;
+package net.swined.parser.core.rules;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.swined.parser.core.IMatch;
+import net.swined.parser.core.IRule;
+import net.swined.parser.core.Terminal;
 
 public class TerminalRule implements IRule {
 
