@@ -1,7 +1,6 @@
 using compiler
 using f4core
 using f4builder
-using f4parser
 using [java]java.util::List as JList 
 using [java]java.util::Set as JSet
 using [java]org.eclipse.core.runtime
@@ -15,11 +14,6 @@ using [java]org.eclipse.dltk.core
 using [java]org.eclipse.dltk.core.builder
 using [java]org.eclipse.dltk.core.builder::IScriptBuilder$DependencyResponse as DependencyResponse
 using [java]org.eclipse.core.filesystem::URIUtil
-using [java]org.eclipse.jdt.core::JavaCore
-using [java]org.eclipse.jdt.launching::JavaRuntime
-using [java]org.eclipse.jdt.launching::IRuntimeClasspathEntry
-using [java]org.eclipse.dltk.launching::ScriptRuntime
-using [java]com.xored.fanide.core.utils::FanProjectUtils
 
 class UsingsAnalysisBuilder : IScriptBuilder
 {
