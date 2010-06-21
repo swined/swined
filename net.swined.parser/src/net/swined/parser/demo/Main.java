@@ -1,11 +1,11 @@
 package net.swined.parser.demo;
-import net.swined.parser.core.ChainRule;
 import net.swined.parser.core.IMatch;
 import net.swined.parser.core.IRule;
-import net.swined.parser.core.OrRule;
-import net.swined.parser.core.RuleRef;
 import net.swined.parser.core.RuleResolver;
-import net.swined.parser.core.TerminalRule;
+import net.swined.parser.core.rules.ChainRule;
+import net.swined.parser.core.rules.OrRule;
+import net.swined.parser.core.rules.RuleRef;
+import net.swined.parser.core.rules.TerminalRule;
 
 public class Main {
 
