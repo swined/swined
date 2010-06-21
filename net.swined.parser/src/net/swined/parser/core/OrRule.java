@@ -3,9 +3,9 @@ package net.swined.parser.core;
 public class OrRule implements IRule {
 
 	private final String id;
-	private final String[] rules;
+	private final IRule[] rules;
 	
-	public OrRule(String id, String[] rules) {
+	public OrRule(String id, IRule[] rules) {
 		this.id = id;
 		this.rules = rules;
 	}
@@ -16,10 +16,9 @@ public class OrRule implements IRule {
 	}
 	
 	@Override
-	public IMatch match(IRuleResolver resolver, String source, int offset) throws UnknownRuleException {
-		for (String ruleId : rules) {
-			IRule rule = resolver.getRule(ruleId);
-			IMatch match = rule.match(resolver, source, offset);
+	public IMatch match(String source, int offset) {
+		for (IRule rule : rules) {
+			IMatch match = rule.match(source, offset);
 			if (match != null)
 				return new Chain(id, new IMatch[] { match });
 		}
@@ -28,9 +27,9 @@ public class OrRule implements IRule {
 
 	@Override
 	public String toString() {
-		String r = rules[0];
+		String r = rules[0].getId();
 		for (int i = 1; i < rules.length; i++)
-			r += " | " + rules[i];
+			r += " | " + rules[i].getId();
 		return r;
 	}
 	

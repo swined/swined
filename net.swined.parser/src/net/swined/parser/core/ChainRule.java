@@ -6,9 +6,9 @@ import java.util.List;
 public class ChainRule implements IRule {
 
 	private final String id;
-	private final String[] rules;
+	private final IRule[] rules;
 	
-	public ChainRule(String id, String[] rules) {
+	public ChainRule(String id, IRule[] rules) {
 		this.id = id;
 		this.rules = rules;
 	}
@@ -19,11 +19,10 @@ public class ChainRule implements IRule {
 	}
 	
 	@Override
-	public IMatch match(IRuleResolver resolver, String source, int offset) throws UnknownRuleException {
+	public IMatch match(String source, int offset) {
 		List<IMatch> matches = new ArrayList<IMatch>();
-		for (String ruleId : rules) {
-			IRule rule = resolver.getRule(ruleId);
-			IMatch match = rule.match(resolver, source, offset);
+		for (IRule rule : rules) {
+			IMatch match = rule.match(source, offset);
 			if (match == null) {
 				return null;
 			} else {
