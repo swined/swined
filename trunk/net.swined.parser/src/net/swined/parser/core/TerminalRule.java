@@ -19,7 +19,7 @@ public class TerminalRule implements IRule {
 	}
 
 	@Override
-	public IMatch match(IRuleResolver resolver, String source, int offset) {
+	public IMatch match(String source, int offset) {
 		Matcher matcher = pattern.matcher(source);
 		if (matcher.matches())
 			return new Terminal(id, matcher.group(1), offset);
