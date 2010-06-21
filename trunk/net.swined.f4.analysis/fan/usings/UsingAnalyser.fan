@@ -1,9 +1,6 @@
 using f4core
-using f4parser
-using f4model
 using f4builder
 using compiler
-using [java] org.eclipse.dltk.core
 
 const class UsingAnalyser
 {
