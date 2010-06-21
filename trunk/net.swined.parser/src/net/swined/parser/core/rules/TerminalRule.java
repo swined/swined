@@ -3,8 +3,8 @@ package net.swined.parser.core.rules;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.swined.parser.core.Error;
 import net.swined.parser.core.IMatch;
-import net.swined.parser.core.IRule;
 import net.swined.parser.core.Terminal;
 
 public class TerminalRule implements IRule {
@@ -23,12 +23,24 @@ public class TerminalRule implements IRule {
 	}
 
 	@Override
-	public IMatch match(String source, int offset) {
+	public IMatch match(String source, int offset, boolean all) {
 		Matcher matcher = pattern.matcher(source);
-		if (matcher.matches())
-			return new Terminal(id, matcher.group(1), offset);
-		else
-			return null;
+		if (matcher.matches()) {
+			if (all) {
+				IMatch term = new Terminal(id, matcher.group(1), offset);
+				if (matcher.group(1).length() == source.length())
+					return term;
+				else
+					return new Error(id, offset, source);
+			} else
+				return new Terminal(id, matcher.group(1), offset);
+		} else {
+			if (all)
+				return new Error(id, offset, source);
+			else
+				return new Error(id, offset, source.isEmpty() ? "" : source
+						.substring(0, 1));
+		}
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package net.swined.parser.core.rules;
 
 import net.swined.parser.core.Chain;
 import net.swined.parser.core.IMatch;
-import net.swined.parser.core.IRule;
 
 public class OrRule implements IRule {
 
@@ -20,13 +19,19 @@ public class OrRule implements IRule {
 	}
 	
 	@Override
-	public IMatch match(String source, int offset) {
+	public IMatch match(String source, int offset, boolean all)
+			throws Exception {
+		IMatch best = null;
 		for (IRule rule : rules) {
-			IMatch match = rule.match(source, offset);
-			if (match != null)
-				return new Chain(id, new IMatch[] { match });
+			IMatch match = rule.match(source, offset, all);
+			if (best == null)
+				best = match;
+			else if (match.getErrCount() < best.getErrCount())
+				best = match;
+			if (match.getErrCount() == 0)
+				break;
 		}
-		return null;
+		return new Chain(id, new IMatch[] { best });
 	}
 
 	@Override

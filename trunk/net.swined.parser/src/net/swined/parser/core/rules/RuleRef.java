@@ -1,7 +1,6 @@
 package net.swined.parser.core.rules;
 
 import net.swined.parser.core.IMatch;
-import net.swined.parser.core.IRule;
 import net.swined.parser.core.IRuleResolver;
 
 public class RuleRef implements IRule {
@@ -20,12 +19,9 @@ public class RuleRef implements IRule {
 	}
 
 	@Override
-	public IMatch match(String source, int offset) {
-		try {
-			return resolver.getRule(id).match(source, offset);
-		} catch (Exception e) {
-			return null;
-		}
+	public IMatch match(String source, int offset, boolean all)
+			throws Exception {
+		return resolver.getRule(id).match(source, offset, all);
 	}
 
 }
