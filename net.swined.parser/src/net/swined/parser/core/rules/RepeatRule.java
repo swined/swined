@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.swined.parser.core.Chain;
+import net.swined.parser.core.Error;
 import net.swined.parser.core.IMatch;
-import net.swined.parser.core.IRule;
 import net.swined.parser.core.Nothing;
 
 public class RepeatRule implements IRule {
@@ -40,10 +40,11 @@ public class RepeatRule implements IRule {
 	}
 
 	@Override
-	public IMatch match(String source, int offset) {
+	public IMatch match(String source, int offset, boolean all)
+			throws Exception {
 		List<IMatch> matches = new ArrayList<IMatch>();
 		while (true) {
-			IMatch match = rule.match(source, offset);
+			IMatch match = rule.match(source, offset, false);
 			if (match == null)
 				break;
 			matches.add(match);
@@ -52,8 +53,8 @@ public class RepeatRule implements IRule {
 			if (lt(matches.size(), max))
 				break;
 		}
-		if (!gt(matches.size(), min))
-			return null;
+		if (all && !source.isEmpty())
+			matches.add(new Error(rule.getId(), offset, source));
 		if (matches.size() == 0)
 			return new Nothing(offset);
 		else

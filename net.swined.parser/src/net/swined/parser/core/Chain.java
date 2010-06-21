@@ -46,4 +46,12 @@ public class Chain implements IMatch {
 		return r;
 	}
 	
+	@Override
+	public int getErrCount() {
+		int c = 0;
+		for (IMatch match : matches)
+			c += match.getErrCount();
+		return c;
+	}
+
 }

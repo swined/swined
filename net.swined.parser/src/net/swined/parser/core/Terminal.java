@@ -43,5 +43,10 @@ public class Terminal implements IMatch {
 	public String toString() {
 		return text;
 	}
+
+	@Override
+	public int getErrCount() {
+		return 0;
+	}
 	
 }

@@ -27,4 +27,8 @@ public class Nothing implements IMatch {
 		return offset;
 	}
 
+	@Override
+	public int getErrCount() {
+		return 0;
+	}
 }

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.swined.parser.core.Chain;
+import net.swined.parser.core.Error;
 import net.swined.parser.core.IMatch;
-import net.swined.parser.core.IRule;
+import net.swined.parser.core.Util;
 
 public class ChainRule implements IRule {
 
@@ -23,18 +24,17 @@ public class ChainRule implements IRule {
 	}
 	
 	@Override
-	public IMatch match(String source, int offset) {
+	public IMatch match(String source, int offset, boolean all)
+			throws Exception {
 		List<IMatch> matches = new ArrayList<IMatch>();
 		for (IRule rule : rules) {
-			IMatch match = rule.match(source, offset);
-			if (match == null) {
-				return null;
-			} else {
-				matches.add(match);
-				offset = match.getEnd();
-				source = source.substring(match.getEnd() - match.getStart());
-			}
+			IMatch match = Util.match(rule, source, offset, false);
+			matches.add(match);
+			offset = match.getEnd();
+			source = source.substring(match.getEnd() - match.getStart());
 		}
+		if (all && !source.isEmpty())
+			matches.add(new Error(id, offset, source));
 		return new Chain(id, matches.toArray(new IMatch[0]));
 	}
 	

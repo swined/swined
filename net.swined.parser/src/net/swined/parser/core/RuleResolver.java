@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.swined.parser.core.rules.IRule;
 import net.swined.parser.core.rules.TerminalRule;
 
 public class RuleResolver implements IRuleResolver {
