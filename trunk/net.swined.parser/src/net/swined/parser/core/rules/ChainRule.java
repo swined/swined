@@ -38,4 +38,17 @@ public class ChainRule implements IRule {
 		return new Chain(id, matches.toArray(new IMatch[0]));
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		b.append("[");
+		int c = 0;
+		for (IRule rule : rules) {
+			if (c++ > 0)
+				b.append(" ");
+			b.append(rule);
+		}
+		b.append("]");
+		return b.toString();
+	}
 }
