@@ -1,0 +1,2 @@
+#labels eclipse
+-Xms999m -Xmx999m -XX:MaxPermSize=999m
