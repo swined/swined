@@ -2,7 +2,7 @@
 \usepackage[left=1cm,right=1cm,top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath, amssymb, esint, babel}
+\usepackage{amsmath, amssymb, esint, babel, qtree}
 \makeatletter
 \makeatother
 
@@ -19,6 +19,28 @@
 \paragraph{Алгоритмы быстрой сортировки}
 
 \paragraph{AVL-деревья}
+
+простой правый поворот ($b(A) = 2, b(B) \ne -1$):
+
+\Tree [.A L [.B C R ] ]
+\Tree [.B [.A L C ] R ]
+
+двойной правый поворот ($b(A) = 2, b(B) = -1$):
+
+\Tree [.A L [.B [.C M N ] R ] ]
+\Tree [.C [.A L M ] [.B N R ] ]
+
+простой левый поворот ($b(A) = -2, b(B) \ne 1$):
+
+\Tree [.A [.B L C ] R ]
+\Tree [.B L [.A C R ] ]
+
+двойной левый поворот ($b(A) = -2, b(B) = 1$):
+
+\Tree [.A [.B L [.C M N ] ] R ]
+\Tree [.C [.B L M ] [.A N R ] ]
+
+удаление: если вершина лист, удаляем её и делаем балансировку всех родителей до корня. если нет, найдём самую близкую по значению вершину в поддереве наибольшей высоты и удалим её, поставив на место удаляемой.
 
 \paragraph{Идея динамического программирования на примере распределительной и обратной к ней задач}
 
