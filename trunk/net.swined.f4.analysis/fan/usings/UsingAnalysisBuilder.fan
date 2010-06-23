@@ -38,7 +38,7 @@ class UsingsAnalysisBuilder : IScriptBuilder
     try {
       useless = analyser.analyse
     } catch (Err e) {
-      // ignore
+      echo("using analysis failed : ${e.msg}")
     }
     useless.each { report(it, fp.project) }
     reporters.vals.each { it.flush }

@@ -38,20 +38,43 @@ const class UsingAnalyser
       c.types = it.types
       fpod := Assembler(c).assemblePod
       usings := it.usings.dup
+      used := [,]
       fpod.typeRefs.table.each |FTypeRef r| {
-        usings.findAll |Using u -> Bool| { 
-          matches(fpod, r, u)
-        }.each { usings.remove(it) }
+        rm := (usings.map |Using u -> Match[]| {
+          m := matches(fpod, r, u)
+          return m > 0 ? [Match(m, u)] : [,]
+        }.flatten.sort.last as Match)?.usingDef
+        if (rm != null) used.add(rm)
       }
+      used.each { usings.remove(it) }
       allUsings.addAll(usings)
     }
     return allUsings.unique
   }
   
-  private Bool matches(FPod fpod, FTypeRef ref, Using u) {
-    if (fpod.n(ref.podName) != u.podName) return false
-    if (u.resolvedType != null && fpod.n(ref.typeName) != u.resolvedType.name) return false
-    return true
+  private Int matches(FPod fpod, FTypeRef ref, Using u) {
+    if (fpod.n(ref.podName) != u.podName) return 0
+    if (u.typeName == null) {
+      return 2
+    } else {
+      return fpod.n(ref.typeName) == u.typeName ? 1 : 0
+    }
+  }
+  
+}
+
+class Match {
+  
+  public const Int rank 
+  public readonly Using usingDef
+  
+  public new make(Int rank, Using usingDef) {
+    this.rank = rank
+    this.usingDef = usingDef
+  }
+  
+  override Int compare(Obj o) {
+    return rank <=> (o as Match)?.rank
   }
   
 }
