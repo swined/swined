@@ -57,7 +57,11 @@ const class UsingAnalyser
     if (u.typeName == null) {
       return 2
     } else {
-      return fpod.n(ref.typeName) == u.typeName ? 1 : 0
+      if (u.asName == null) {
+        return fpod.n(ref.typeName) == u.typeName ? 1 : 0
+      } else {
+        return fpod.n(ref.typeName) == u.typeName ? 3 : 0
+      }
     }
   }
   
