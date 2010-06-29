@@ -5,7 +5,7 @@ class Build : build::BuildPod
   {
     podName = "rfb"
     summary = ""
-    srcDirs = [`fan/`, `fan/struct/`, `fan/messages.server/`, `fan/messages.client/`, `fan/encodings/`]
+    srcDirs = [`fan/`, `fan/struct/`, `fan/messages.server/`, `fan/messages.client/`, `fan/handshake.server/`, `fan/handshake.client/`, `fan/encodings/`]
     depends = ["sys 1.0", "inet 1.0"]
   }
 }
