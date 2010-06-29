@@ -1,13 +1,16 @@
+using inet
 
 class Main
 {
 	public static Void main(Str[] args)
 	{
-    SetPixelFormatMsg(PixelFormat { }).buf    
-    SetEncodingsMsg([42, 37]).buf
-    FramebufferUpdateRequestMsg {} .buf
-    KeyEventMsg(true, 42).buf
-    PointerEventMsg(1, 2, 3).buf
-    ClientCutTextMsg("wtf").buf
+    TcpSocket sock := TcpSocket()
+    sock.connect(IpAddr("localhost"), 5900, 1sec)
+    ver := ServerVersionMsg.read(sock.in)
+    echo("ver : $ver")
+    sock.out.writeBuf(ClientVersionMsg(3, 8).buf.seek(0))
+    security := ServerSecurityTypesMsg.read(sock.in)
+    echo("security : ${security.types}")
+    echo("read : ${sock.in.readAllStr}")
 	}
 }
