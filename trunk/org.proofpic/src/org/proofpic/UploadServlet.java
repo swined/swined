@@ -11,22 +11,26 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 public class UploadServlet extends HttpServlet {
 
-	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private static final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private static final UserService userService = UserServiceFactory.getUserService();
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException {
-
-        Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
-        BlobKey blobKey = blobs.get("image");
-        
-
-        if (blobKey == null) {
-            res.sendRedirect("/");
-        } else {
-            res.sendRedirect("/get?key=" + blobKey.getKeyString());
-        }
+		try {
+			Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
+			BlobKey blobKey = blobs.get("image");
+			if (blobKey == null)
+				res.sendRedirect("http://proofpic.org/");
+			Image img = Image.create(blobKey.getKeyString(), userService.getCurrentUser());
+			res.sendRedirect("http://" + img.getKey() + "." + DomainUtils.guessDomain(req) + "/");
+		} catch (Throwable e) {
+			res.setContentType("text/plain");
+			e.printStackTrace(res.getWriter());
+		}
     }
 }

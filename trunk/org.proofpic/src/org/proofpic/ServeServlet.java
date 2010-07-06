@@ -16,7 +16,11 @@ public class ServeServlet extends HttpServlet {
 
 public void doGet(HttpServletRequest req, HttpServletResponse res)
     throws IOException {
-        BlobKey blobKey = new BlobKey(req.getParameter("key"));
+		String id = DomainUtils.guessSubdomain(req);
+		Image img = Image.load(id);
+		if (img == null)
+			res.sendRedirect("/404.jpg");
+        BlobKey blobKey = new BlobKey(img.getBlobKey());
         blobstoreService.serve(blobKey, res);
     }
 }
