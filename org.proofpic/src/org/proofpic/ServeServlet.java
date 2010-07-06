@@ -9,18 +9,52 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
 
 public class ServeServlet extends HttpServlet {
 
-	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private final static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private final static ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
 public void doGet(HttpServletRequest req, HttpServletResponse res)
     throws IOException {
-		String id = DomainUtils.guessSubdomain(req);
-		Image img = Image.load(id);
-		if (img == null)
+        BlobKey blob = load(req);
+		if (blob == null)
 			res.sendRedirect("/404.jpg");
-        BlobKey blobKey = new BlobKey(img.getBlobKey());
-        blobstoreService.serve(blobKey, res);
+        Image resized = resize(blob, req.getParameter("w"), req.getParameter("h")); 
+        if (resized != null) {
+        	res.setContentType("image/" + resized.getFormat().name());
+        	res.getOutputStream().write(resized.getImageData());
+        } else
+        	blobstoreService.serve(blob, res);
     }
+
+	public BlobKey load(HttpServletRequest req) {
+		String id = DomainUtils.guessSubdomain(req);
+		ImageInfo img = ImageInfo.load(id);
+		if (img == null)
+			return null;
+		else
+			return new BlobKey(img.getBlobKey());
+	}
+
+	public Image resize(BlobKey blob, String sw, String sh) {
+		int w = 0;
+		if (sw != null)
+			w = Integer.parseInt("0" + sw.replaceAll("[^0-9]", ""));
+		int h = 0;		
+		if (sh != null)
+			h = Integer.parseInt("0" + sh.replaceAll("[^0-9]", ""));
+    	Image image = ImagesServiceFactory.makeImageFromBlob(blob);
+    	if (w == 0 & h == 0)
+    		return null;
+    	else {
+    		Transform resize = ImagesServiceFactory.makeResize(w, h);
+    		return imagesService.applyTransform(resize, image);
+    	}
+	}
+	
 }

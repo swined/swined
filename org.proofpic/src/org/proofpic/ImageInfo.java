@@ -12,7 +12,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.users.User;
 
 @PersistenceCapable
-public class Image {
+public class ImageInfo {
 	
 	private final static char[] DIGITS = "1234567890qwertyuiopasdfghjklzxcvbnm".toCharArray();
 	
@@ -29,7 +29,7 @@ public class Image {
     @Persistent
     private String blobKey;
 
-    private Image(String blobKey, User owner) {
+    private ImageInfo(String blobKey, User owner) {
         this.key = generateKey();
         this.blobKey = blobKey;
         this.owner = owner;
@@ -58,14 +58,14 @@ public class Image {
         return r.toString();
     }
 
-    public static Image create(String blobKey, User owner) {
+    public static ImageInfo create(String blobKey, User owner) {
         PersistenceManager pm = PMUtils.pm();
-        Query query = pm.newQuery(Image.class, "blobKey == blobKeyParam");
+        Query query = pm.newQuery(ImageInfo.class, "blobKey == blobKeyParam");
         query.declareParameters("String blobKeyParam");
         query.setRange(0, 1);
-        for (Image url : (List<Image>)query.execute(blobKey))
+        for (ImageInfo url : (List<ImageInfo>)query.execute(blobKey))
             return url;
-        Image url = new Image(blobKey, owner);
+        ImageInfo url = new ImageInfo(blobKey, owner);
         pm.makePersistent(url);
         return url;
     }
@@ -74,12 +74,12 @@ public class Image {
     	return owner;
     }
     
-    public static Image load(String key) {
+    public static ImageInfo load(String key) {
         PersistenceManager pm = PMUtils.pm();
-        Query query = pm.newQuery(Image.class, "key == keyParam");
+        Query query = pm.newQuery(ImageInfo.class, "key == keyParam");
         query.declareParameters("String keyParam");
         query.setRange(0, 1);
-        for (Image img : (List<Image>)query.execute(key))
+        for (ImageInfo img : (List<ImageInfo>)query.execute(key))
             return img;
         return null;
     }
