@@ -17,6 +17,15 @@
       </builder>
    </extension>
    <extension
+         point="org.eclipse.dltk.core.builder">
+      <builder
+            class="org.fantom.FanExtension:f4analysis::DynamicAnalysisBuilder"
+            nature="com.xored.fanide.core.nature">
+      </builder>
+   </extension>
+   
+   
+   <extension
          point="org.fantom.pod">
       <pod
             location="/f4analysis.pod"
