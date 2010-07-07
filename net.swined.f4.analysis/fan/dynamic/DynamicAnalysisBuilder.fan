@@ -1,6 +1,6 @@
-using compiler
 using f4core
 using f4builder
+using f4parser
 using [java]java.util::List as JList 
 using [java]java.util::Set as JSet
 using [java]org.eclipse.core.runtime
@@ -15,7 +15,7 @@ using [java]org.eclipse.dltk.core.builder
 using [java]org.eclipse.dltk.core.builder::IScriptBuilder$DependencyResponse as DependencyResponse
 using [java]org.eclipse.core.filesystem::URIUtil
 
-class UsingsAnalysisBuilder : IScriptBuilder
+class DynamicAnalysisBuilder : IScriptBuilder
 {
   override Void initialize(IScriptProject? project)
   {
@@ -29,18 +29,16 @@ class UsingsAnalysisBuilder : IScriptBuilder
   
   private Void scan(FantomProject fp, IModelElement[] model) {
     if(fp.hasErrs)
-    {
       return
+    model.each |m| {
+      unit := Parser(m->getSourceContents, fp.ns).cunit
+      a := DynamicAnalyser()
+      unit.accept(a) 
+      a.nodes.each |n| { 
+        l := SourceLocation(m->getSourceContents, n.start, n.end)
+        report(m.getUnderlyingResource, l, fp.project)
+      }
     }
-
-    analyser := UsingAnalyser(fp)
-    Using[] useless := [,]
-    try {
-      useless = analyser.analyse
-    } catch (Err e) {
-      echo("using analysis failed : ${e.msg}")
-    }
-    useless.each { report(it, fp.project) }
   }
 
   private IResource resource(IProject project, Str? file)
@@ -54,24 +52,23 @@ class UsingsAnalysisBuilder : IScriptBuilder
     return project
   }
   
-  private Void report(Using u, IProject p) {
-    resource := resource(p, u.loc.file)
+  private Void report(IResource resource, SourceLocation l, IProject p) {
     reporter := reporters.getOrAdd(resource.getLocationURI.toString) |->Obj| { ProblemReporter(resource) }
     reporter.reportProblem(
       DefaultProblem(
         resource.getLocation.toString, 
-        "${u.podName}${u.typeName == null ? "" : "::" + u.typeName} is never used", 
+        "Redundant dynamic call", 
         0, //id (don't know what this means)
         Str[,], //arguments (don't know what this means)
         ProblemSeverities.Warning, //severity
         -1, //start position
         -1, //end position
-        u.loc.line ?: 0,
-        u.loc.col ?: 0
+        l.line,
+        -1
         )
       )
   }
-
+  
   override DependencyResponse? getDependencies(IScriptProject? project, Int buildType,
       JSet? localElements, JSet? externalElements, JSet? oldExternalFolders,
       JSet? externalFolders)
@@ -87,7 +84,7 @@ class UsingsAnalysisBuilder : IScriptBuilder
   {
   }
   
-  static const Str pluginId := "net.swined.f4.analyser"
+  static const Str pluginId := "net.swined.f4.analyser.dynamic"
 
   override IStatus? buildModelElements(IScriptProject? project, JList? elements,
       IProgressMonitor? monitor, Int status)
