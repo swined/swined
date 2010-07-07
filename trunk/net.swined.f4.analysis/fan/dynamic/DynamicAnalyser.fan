@@ -8,8 +8,7 @@ class DynamicAnalyser : AstVisitor {
     i := n as InvokeExpr
     if (i == null) return true
     if (i.id != ExprId.dynamicInvoke) return true
-    if (i.caller isnot UnresolvedRef)
-    nodes.add(n)
+    if (i.caller is SlotRef) nodes.add(n)
     return true
   }
   
