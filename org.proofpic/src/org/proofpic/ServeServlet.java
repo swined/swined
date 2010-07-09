@@ -49,10 +49,10 @@ public void doGet(HttpServletRequest req, HttpServletResponse res)
 		int h = 0;		
 		if (sh != null)
 			h = Integer.parseInt("0" + sh.replaceAll("[^0-9]", ""));
-    	Image image = ImagesServiceFactory.makeImageFromBlob(blob);
     	if (w == 0 & h == 0)
     		return null;
     	else {
+    		Image image = ImagesServiceFactory.makeImageFromBlob(blob);
     		Transform resize = ImagesServiceFactory.makeResize(w, h);
     		return imagesService.applyTransform(resize, image);
     	}
