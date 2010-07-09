@@ -59,9 +59,8 @@ public class ImageInfo {
     }
 
     public static ImageInfo create(String blobKey, User owner) {
-        PersistenceManager pm = PMUtils.pm();
         ImageInfo url = new ImageInfo(blobKey, owner);
-        pm.makePersistent(url);
+        PMUtils.pm.makePersistent(url);
         return url;
     }
 
@@ -70,8 +69,7 @@ public class ImageInfo {
     }
     
     public static ImageInfo load(String key) {
-        PersistenceManager pm = PMUtils.pm();
-        Query query = pm.newQuery(ImageInfo.class, "key == keyParam");
+        Query query = PMUtils.pm.newQuery(ImageInfo.class, "key == keyParam");
         query.declareParameters("String keyParam");
         query.setRange(0, 1);
         for (ImageInfo img : (List<ImageInfo>)query.execute(key))
