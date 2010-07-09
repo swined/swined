@@ -60,11 +60,6 @@ public class ImageInfo {
 
     public static ImageInfo create(String blobKey, User owner) {
         PersistenceManager pm = PMUtils.pm();
-        Query query = pm.newQuery(ImageInfo.class, "blobKey == blobKeyParam");
-        query.declareParameters("String blobKeyParam");
-        query.setRange(0, 1);
-        for (ImageInfo url : (List<ImageInfo>)query.execute(blobKey))
-            return url;
         ImageInfo url = new ImageInfo(blobKey, owner);
         pm.makePersistent(url);
         return url;
