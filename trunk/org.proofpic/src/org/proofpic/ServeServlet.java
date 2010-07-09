@@ -14,6 +14,7 @@ import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 
+@SuppressWarnings("serial")
 public class ServeServlet extends HttpServlet {
 
 	private final static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
