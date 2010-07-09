@@ -14,6 +14,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+@SuppressWarnings("serial")
 public class UploadServlet extends HttpServlet {
 
 	private static final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
