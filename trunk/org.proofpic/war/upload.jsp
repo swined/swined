@@ -8,7 +8,7 @@
 
 <html>
     <head>
-        <title>Upload Test</title>
+        <title>Upload</title>
     </head>
     <body>
         <form action="<%= blobstoreService.createUploadUrl("/put") %>" method="post" enctype="multipart/form-data">
