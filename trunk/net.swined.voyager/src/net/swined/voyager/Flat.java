@@ -14,7 +14,7 @@ public class Flat {
 	}
 	
 	public int[] getPath() {
-		double[][] w = map();
+		int[][] w = map();
         List<Integer> r = new ArrayList<Integer>();
         r.add(0);
         r = h(w, r);
@@ -25,8 +25,8 @@ public class Flat {
 		return path;
 	}
 	
-	private double[][] map() {
-		double[][] map = new double[points.length][points.length];
+	private int[][] map() {
+		int[][] map = new int[points.length][points.length];
 		for (int i = 0; i < points.length; i++)
 			for (int j = 0; j < points.length; j++)
 				if (i == j)
@@ -36,8 +36,8 @@ public class Flat {
 		return map;
 	}
 	
-    private static double[] a(double[][] l) {
-    	double[] a = new double[l.length];
+    private static int[] a(int[][] l) {
+    	int[] a = new int[l.length];
         for (int i = 0; i < l.length; i++)
             a[i] = INF;
         for (int i = 0; i < l.length; i++)
@@ -47,9 +47,9 @@ public class Flat {
         return a;
     }
 
-    private static double[] b(double[][] l) {
-    	double[] a = a(l);
-    	double[] b = new double[l.length];
+    private static int[] b(int[][] l) {
+    	int[] a = a(l);
+    	int[] b = new int[l.length];
         for (int i = 0; i < l.length; i++)
             b[i] = INF;
         for (int i = 0; i < l.length; i++)
@@ -59,23 +59,23 @@ public class Flat {
         return b;
     }
 
-    private static double c(double[][] l) {
-    	double c = 0;
-        double[] a = a(l);
-        double[] b = b(l);
+    private static int c(int[][] l) {
+    	int c = 0;
+        int[] a = a(l);
+        int[] b = b(l);
         for (int i = 0; i < l.length; i++)
             c += a[i] + b[i];
         return c;
     }
 
-    private static double l(double[][] w, List<Integer> u) {
-    	double l = 0;
+    private static int l(int[][] w, List<Integer> u) {
+    	int l = 0;
         for (int i = 1; i < u.size(); i++)
                 l += w[u.get(i - 1)][u.get(i)];
         return l;
     }
 
-    private static List<Integer> h(double[][] w, List<Integer> p) {
+    private static List<Integer> h(int[][] w, List<Integer> p) {
         List<Integer> u = new ArrayList<Integer>();
         u.addAll(p);
         while (true) {
@@ -98,7 +98,7 @@ public class Flat {
         return u;
     }
 
-    private static List<Integer> solve(double[][] w, double rec, List<Integer> rc, List<Integer> path) {
+    private static List<Integer> solve(int[][] w, int rec, List<Integer> rc, List<Integer> path) {
         if (path.size() < 2) {
             for (int i = 0; i < w.length; i++) {
                 if (path.contains(i))
@@ -125,7 +125,7 @@ public class Flat {
                 List<Integer> np = new ArrayList<Integer>();
                 np.addAll(path);
                 np.add(i);
-                double[][] nw = clone(w);
+                int[][] nw = clone(w);
                 cleanup(nw, np);
                 List<Integer> solution = solve(nw, rec, rc, np);
 				if (solution != null)
@@ -134,7 +134,7 @@ public class Flat {
         return null;
     }
 
-    private static void cleanup(double[][] w, List<Integer> p) {
+    private static void cleanup(int[][] w, List<Integer> p) {
         for (int i = 1; i < p.size(); i++) {
             int prev = p.get(i - 1);
             int cur = p.get(i);
@@ -148,8 +148,8 @@ public class Flat {
         w[p.get(p.size() - 1)][p.get(0)] = INF;
     }
 
-    private static double[][] clone(double[][] w) {
-    	double[][] n = new double[w.length][w.length];
+    private static int[][] clone(int[][] w) {
+    	int[][] n = new int[w.length][w.length];
         for (int i = 0; i < w.length; i++)
             for (int j = 0; j < w.length; j++)
                 n[i][j] = w[i][j];
