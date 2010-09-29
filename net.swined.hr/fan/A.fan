@@ -23,5 +23,9 @@ const class A : E
     e.each { x = x.and(it.not) }
     return A(v.not, e)
   }
+ 
+  override Str toStr() {
+    "$v->$e"
+  }
   
 }

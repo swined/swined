@@ -31,4 +31,8 @@ const class C : E
       return TRUE
   }
   
+  override Str toStr() {
+    value ? "1" : "0"
+  }
+  
 }

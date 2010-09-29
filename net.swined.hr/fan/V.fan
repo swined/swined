@@ -22,4 +22,11 @@ const class V : E
     make(name, !inverse)
   }
   
+  override Str toStr() {
+    if (inverse)
+      return "(!$name)"
+    else
+      return name
+  }
+  
 }
