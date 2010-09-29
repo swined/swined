@@ -1,5 +1,5 @@
 
-const class C : E
+const class C : E, S
 {
  
   public static const C TRUE := make(true)

@@ -1,5 +1,5 @@
 
-mixin E
+const mixin E
 {
 
   public abstract E and(E e)

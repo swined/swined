@@ -1,5 +1,5 @@
 
-const class V : E
+const class V : E, S
 {
   
   public const Bool inverse
@@ -15,7 +15,7 @@ const class V : E
   }
 
   override E or(E e) {
-    A(this, [this, e])
+    A(C.TRUE, [this, e])
   }
 
   override E not() {
