@@ -2,10 +2,10 @@
 const class A : E
 {
   
-  public const V v
+  public const S v
   public const E[] e
   
-  public new make(V v, E[] e) {
+  public new make(S v, E[] e) {
     this.v = v
     this.e = e
   }
@@ -15,7 +15,7 @@ const class A : E
   }
 
   override E or(E e) {
-    A(v, [e])
+    A(C.TRUE, [this, e])
   }
 
   override E not() {
