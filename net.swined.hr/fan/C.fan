@@ -10,21 +10,21 @@ const class C : E, S
     this.value = value
   }
   
-  override E and(E e) {
+  override E andImpl(E e) {
     if (value)
       return e
     else
       return FALSE
   }
 
-  override E or(E e) {
+  override E orImpl(E e) {
     if (value)
       return TRUE
     else
       return e
   }
 
-  override E not() {
+  override E notImpl() {
     if (value)
       return FALSE
     else

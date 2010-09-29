@@ -10,15 +10,15 @@ const class V : E, S
     this.inverse = inverse
   }
   
-  override E and(E e) {
+  override E andImpl(E e) {
     A(this, [e])
   }
 
-  override E or(E e) {
+  override E orImpl(E e) {
     A(C.TRUE, [this, e])
   }
 
-  override E not() {
+  override E notImpl() {
     make(name, !inverse)
   }
   
@@ -27,6 +27,14 @@ const class V : E, S
       return "(!$name)"
     else
       return name
+  }
+  
+  override Bool equals(Obj? o) {
+    v := o as V
+    if (v == null)
+      return false
+    else
+      return (v.name.equals(name)) && (v.inverse == inverse)
   }
   
 }
