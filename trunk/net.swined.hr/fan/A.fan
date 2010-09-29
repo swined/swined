@@ -10,15 +10,15 @@ const class A : E
     this.e = e
   }
 
-  override E and(E e) {
+  override E andImpl(E e) {
     A(v, this.e.map |E x| { x.and(e) })
   }
 
-  override E or(E e) {
+  override E orImpl(E e) {
     A(C.TRUE, [this, e])
   }
 
-  override E not() {
+  override E notImpl() {
     x := C.TRUE
     e.each { x = x.and(it.not) }
     return A(v.not, e)
