@@ -36,5 +36,17 @@ const class V : E, S
     else
       return (v.name.equals(name)) && (v.inverse == inverse)
   }
+
+  override E optImpl() {
+    this
+  }
+
+  override E subImpl(V v) {
+    if (equals(v))
+      return C.TRUE
+    if (equals(v.not))
+      return C.FALSE
+    return this
+  }
   
 }
