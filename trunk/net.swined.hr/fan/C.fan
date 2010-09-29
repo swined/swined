@@ -35,4 +35,12 @@ const class C : E, S
     value ? "1" : "0"
   }
   
+  override E optImpl() {
+    this
+  }
+  
+  override E subImpl(V v) {
+    this
+  }
+  
 }

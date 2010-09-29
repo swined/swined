@@ -27,5 +27,17 @@ const class A : E
   override Str toStr() {
     "$v->$e"
   }
+
+  override E optImpl() {
+    if (v == C.FALSE)
+      return C.FALSE
+    if (v is V)
+      return A(v, e.map |E x| { x.subImpl(v) })
+    return this
+  }
+  
+  override E subImpl(V v) {
+    A(this.v.subImpl(v), e.map |E x| { x.subImpl(v) })
+  }
   
 }
