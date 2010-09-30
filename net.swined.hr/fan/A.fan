@@ -11,7 +11,7 @@ const class A : E
   }
 
   override E andImpl(E e) {
-    A(v, this.e.map |E x| { x.and(e) })
+    A(v, this.e.map |E x->E| { x.and(e) })
   }
 
   override E orImpl(E e) {
@@ -32,12 +32,12 @@ const class A : E
     if (v == C.FALSE)
       return C.FALSE
     if (v is V)
-      return A(v, e.map |E x| { x.subImpl(v) })
+      return A(v, e.map |E x->E| { x.subImpl(v) })
     return this
   }
   
   override E subImpl(V v) {
-    A(this.v.subImpl(v), e.map |E x| { x.subImpl(v) })
+    A(this.v.subImpl(v), e.map |E x->E| { x.subImpl(v) })
   }
   
 }

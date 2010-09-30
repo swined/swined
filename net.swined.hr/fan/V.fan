@@ -5,7 +5,7 @@ const class V : E, S
   public const Bool inverse
   public const Str name
   
-  public new make(Str name, Bool inverse) {
+  public new make(Str name, Bool inverse := false) {
     this.name = name
     this.inverse = inverse
   }
