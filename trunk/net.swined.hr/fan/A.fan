@@ -29,7 +29,6 @@ const class A : E
   }
 
   override E optImpl() {
-    echo("opt $this")
     if (v == C.FALSE)
       return C.FALSE
     if (e.contains(C.TRUE))
