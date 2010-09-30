@@ -29,10 +29,15 @@ const class A : E
   }
 
   override E optImpl() {
+    echo("opt $this")
     if (v == C.FALSE)
       return C.FALSE
+    if (e.contains(C.TRUE))
+      return v
+    if (e.contains(C.FALSE) && e.size == 1)
+      return C.FALSE
     if (v is V)
-      return A(v, e.map |E x->E| { x.subImpl(v) })
+      return A(v, e.map |E x->E| { x.subImpl(v).optImpl })
     return this
   }
   
