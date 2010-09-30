@@ -42,5 +42,13 @@ const class C : E, S
   override E subImpl(V v) {
     this
   }
+
+  override Bool equals(Obj? o) {
+    c := o as C
+    if (c == null)
+      return false
+    else
+      return c.value == value
+  }
   
 }

@@ -9,19 +9,19 @@ const mixin E
   protected abstract E subImpl(V v)
   
   public E xor(E e) {
-    not.and(e).or(and(e.not)).optImpl
+    not.and(e).or(and(e.not))
   }
 
   public E and(E e) {
-    andImpl(e).optImpl
+    andImpl(e).optImpl.optImpl
   }
   
   public E or(E e) {
-    orImpl(e).optImpl
+    orImpl(e).optImpl.optImpl
   }
   
   public E not() {
-    notImpl.optImpl
+    notImpl.optImpl.optImpl
   }
   
 }
