@@ -14,7 +14,7 @@ public class E {
     int l = l(c, mod);
     for (int i = 0; i < l; i++)
       for (int j = 0; j < l; j++)
-        m.add(new M(BigInteger.TEN.pow(i + j), new int[] { i, i + l} ));
+        m.add(new M(BigInteger.TEN.pow(i + j), new Integer[] { i, i + l} ));
     this.m = m.toArray(new M[0]);
     this.c = c;
   }
