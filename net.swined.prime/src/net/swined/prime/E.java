@@ -14,7 +14,7 @@ public class E {
     int l = l(c, mod);
     for (int i = 0; i < l; i++)
       for (int j = 0; j < l; j++)
-        m.add(new M(BigInteger.TEN.pow(i + j), new Integer[] { i, i + l} ));
+        m.add(new M(mod.pow(i + j), new Integer[] { i, i + l } ));
     this.m = m.toArray(new M[0]);
     this.c = c;
   }
@@ -24,6 +24,19 @@ public class E {
     this.c = c;
   }
 
+  public E sub(int v, int s) {
+    List<M> nm = new ArrayList<M>();
+    BigInteger nc = c;
+    for (M x : m) {
+      x = x.sub(v, s);
+      if (x.v.length == 0)
+        nc = nc.subtract(x.k);
+      else
+        nm.add(x);
+    }
+    return new E(nm.toArray(new M[0]), nc);
+  }
+  
   private static int l(BigInteger c, BigInteger mod) {
     for (int l = 0; ; l++)
       if (c.equals(BigInteger.ZERO))
