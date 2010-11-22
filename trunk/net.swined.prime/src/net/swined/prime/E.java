@@ -16,7 +16,7 @@ public class E {
     int l = l(c, mod);
     for (int i = 0; i < l; i++)
       for (int j = 0; j < l; j++)
-        m.add(new M(mod.pow(i + j), new Integer[] { i, i + l } ));
+        m.add(new M(mod.pow(i + j), new Integer[] { i, j + l } ));
     return new E(m.toArray(new M[0]), c);
   }
 
@@ -100,6 +100,9 @@ public class E {
     List<Map> solutions = new ArrayList();
     for (int i = 0; i < mod.intValue(); i++) {
       E sub = sub(var, i);
+      if (sub.c.compareTo(BigInteger.ZERO) < 0)
+        continue;
+      System.out.println(sub);
       for (Map<Integer, Integer> solution : sub.brute(mod)) {
         solution.put(var, i);
         solutions.add(solution);
