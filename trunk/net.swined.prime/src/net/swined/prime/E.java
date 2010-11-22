@@ -16,7 +16,7 @@ public class E {
     List<M> m = new ArrayList<M>();
     int l = l(c, mod);
     for (int i = 0; i < l; i++)
-      for (int j = 0; j < l; j++)
+      for (int j = 0; i + j < l; j++)
         m.add(new M(mod.pow(i + j), new Integer[] { i, j + l } ));
     return new E(m.toArray(new M[0]), c);
   }
