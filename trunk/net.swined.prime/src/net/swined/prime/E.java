@@ -55,6 +55,16 @@ public class E {
     return new E(m.toArray(new M[0]), c.mod(mod));
   }
   
+  public E div(BigInteger mod) {
+    List<M> m = new ArrayList<M>();
+    for (M x : this.m) {
+      BigInteger r = x.k.divide(mod);
+      if (!r.equals(BigInteger.ZERO))
+        m.add(new M(r, x.v));
+    }
+    return new E(m.toArray(new M[0]), c.divide(mod));
+  }
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
