@@ -118,7 +118,7 @@ public class E {
   
   public Map<Integer,Integer> solve(BigInteger mod) [] {
     if (m.length == 0) {
-      if (c.mod(mod).equals(BigInteger.ZERO))
+      if (c.equals(BigInteger.ZERO))
         return new Map [] { new HashMap() };
       else
         return new Map [] { };
