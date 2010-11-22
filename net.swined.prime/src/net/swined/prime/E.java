@@ -2,26 +2,30 @@ package net.swined.prime;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class E {
 
   public final M[] m;
   public final BigInteger c;
   
-  public E(BigInteger c, BigInteger mod) {
+  public static E create(BigInteger c, BigInteger mod) {
     List<M> m = new ArrayList<M>();
     int l = l(c, mod);
     for (int i = 0; i < l; i++)
       for (int j = 0; j < l; j++)
         m.add(new M(mod.pow(i + j), new Integer[] { i, i + l } ));
-    this.m = m.toArray(new M[0]);
-    this.c = c;
+    return new E(m.toArray(new M[0]), c);
   }
 
   public E(M[] m, BigInteger c) {
     this.m = m;
     this.c = c;
+    for (M x : this.m)
+      if (x.v.length == 0)
+        throw new IllegalArgumentException();
   }
 
   public E sub(int v, int s) {
@@ -76,5 +80,31 @@ public class E {
     sb.append(" = ");
     sb.append(c);
     return sb.toString();
+  }
+  
+  public Integer getVar() {
+    for (M m : this.m)
+      for (int v : m.v)
+        return v;
+    return null;
+  }
+  
+  public Map<Integer,Integer> brute(BigInteger mod) [] {
+    if (m.length == 0) {
+      if (c.equals(BigInteger.ZERO))
+        return new Map [] { new HashMap() };
+      else
+        return new Map [] { };
+    }
+    Integer var = getVar();
+    List<Map> solutions = new ArrayList();
+    for (int i = 0; i < mod.intValue(); i++) {
+      E sub = sub(var, i);
+      for (Map<Integer, Integer> solution : sub.brute(mod)) {
+        solution.put(var, i);
+        solutions.add(solution);
+      }
+    }
+    return solutions.toArray(new Map[0]);
   }
 }
