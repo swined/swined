@@ -7,9 +7,9 @@ public class Main {
 
   public static void main(String[] args) {
     final BigInteger mod = BigInteger.TEN;
-    E e = E.create(BigInteger.valueOf(55), mod);
+    E e = E.create(BigInteger.valueOf(12), mod);
     System.out.println(e);
-    for (Map<Integer, Integer> solution : e.brute(mod)) {
+    for (Map<Integer, Integer> solution : e.solve(mod)) {
       System.out.println(solution);
     }
   }
