@@ -3,6 +3,7 @@ package net.swined.prime;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,13 @@ public class E {
         nm.add(x);
     }
     return new E(nm.toArray(new M[0]), nc);
+  }
+  
+  public E sub(Map<Integer, Integer> s) {
+    E x = this;
+    for (Integer k : s.keySet())
+      x = x.sub(k, s.get(k));
+    return x;
   }
   
   private static int l(BigInteger c, BigInteger mod) {
@@ -91,7 +99,7 @@ public class E {
   
   public Map<Integer,Integer> brute(BigInteger mod) [] {
     if (m.length == 0) {
-      if (c.equals(BigInteger.ZERO))
+      if (c.mod(mod).equals(BigInteger.ZERO))
         return new Map [] { new HashMap() };
       else
         return new Map [] { };
@@ -100,9 +108,6 @@ public class E {
     List<Map> solutions = new ArrayList();
     for (int i = 0; i < mod.intValue(); i++) {
       E sub = sub(var, i);
-      if (sub.c.compareTo(BigInteger.ZERO) < 0)
-        continue;
-      System.out.println(sub);
       for (Map<Integer, Integer> solution : sub.brute(mod)) {
         solution.put(var, i);
         solutions.add(solution);
@@ -110,4 +115,25 @@ public class E {
     }
     return solutions.toArray(new Map[0]);
   }
+  
+  public Map<Integer,Integer> solve(BigInteger mod) [] {
+    if (m.length == 0) {
+      if (c.mod(mod).equals(BigInteger.ZERO))
+        return new Map [] { new HashMap() };
+      else
+        return new Map [] { };
+    }
+    E m = mod(mod);
+    List<Map> solutions = new ArrayList();
+    for (Map<Integer, Integer> solution : m.brute(mod)) {
+      for (Map s : sub(solution).div(mod).solve(mod)) {
+        Map<Integer, Integer> x = new HashMap();
+        x.putAll(solution);
+        x.putAll(s);
+        solutions.add(x);
+      }
+    }    
+    return solutions.toArray(new Map[0]);
+  }
+
 }
