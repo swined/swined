@@ -29,6 +29,8 @@ public class Var implements IExpression {
   public IExpression or(IExpression e) {
 	if (e instanceof Const)
 		return e.or(this);
+	if (neg.equals(e))
+		return Const.ONE;
     return new Or(this, e);
   }
 
@@ -50,5 +52,13 @@ public class Var implements IExpression {
 			return this;			
 		}
 	}
-  
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Var))
+			return false;
+		Var v = (Var)o;
+		return (v.negative == negative) && (v.name.equals(name));
+	}
+	
 }
