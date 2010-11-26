@@ -22,7 +22,7 @@ public class Var implements IExpression {
   public IExpression and(IExpression e) {
 	if (e instanceof Const)
 		return e.and(this);
-    return new And(this, e);
+    return new And(this, e, null);
   }
 
   @Override
@@ -31,7 +31,7 @@ public class Var implements IExpression {
 		return e.or(this);
 	if (neg.equals(e))
 		return Const.ONE;
-    return new Or(this, e);
+    return new Or(this, e, null);
   }
 
   @Override

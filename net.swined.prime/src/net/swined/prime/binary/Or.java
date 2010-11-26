@@ -4,12 +4,14 @@ public class Or implements IExpression {
 
   private final IExpression a;
   private final IExpression b;
+  private final IExpression not;
   
-  public Or(IExpression a, IExpression b) {
+  public Or(IExpression a, IExpression b, IExpression not) {
 	if (a instanceof Const || b instanceof Const)
 		throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
+    this.not = not == null ? new And(a.not(), b.not(), this) : not;
   }
 
   @Override
@@ -18,7 +20,7 @@ public class Or implements IExpression {
       return Const.ZERO;
     if (e.equals(Const.ONE))
       return this;
-    return new And(this, e);
+    return new And(this, e, null);
   }
 
   @Override
@@ -27,12 +29,12 @@ public class Or implements IExpression {
       return this;
     if (e.equals(Const.ONE))
       return Const.ONE;
-    return new Or(this, e);
+    return new Or(this, e, null);
   }
 
   @Override
   public IExpression not() {
-    return new And(a.not(), b.not());
+    return not;
   }
   
   @Override
