@@ -2,7 +2,7 @@ package net.swined.prime.binary;
 
 public enum Const implements IExpression {
 
-  TRUE {
+  ONE {
 
     @Override
     public IExpression and(IExpression e) {
@@ -11,21 +11,21 @@ public enum Const implements IExpression {
 
     @Override
     public IExpression or(IExpression e) {
-      return TRUE;
+      return ONE;
     }
 
     @Override
     public IExpression not() {
-      return FALSE;
+      return ZERO;
     }
     
   },
   
-  FALSE {
+  ZERO {
 
     @Override
     public IExpression and(IExpression e) {
-      return FALSE;
+      return ZERO;
     }
 
     @Override
@@ -35,7 +35,7 @@ public enum Const implements IExpression {
 
     @Override
     public IExpression not() {
-      return TRUE;
+      return ONE;
     }
     
   };
