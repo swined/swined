@@ -82,7 +82,7 @@ public class Main {
   }
   
   private static IExpression eq(BigInteger n) {
-	int l = n.bitLength() / 2 + 1;
+	int l = n.bitLength() / 2 + n.bitLength() % 2;
     Var[] a = var("a", l);
     Var[] b = var("b", l);
     IExpression[] m = mul(a, b);
@@ -96,7 +96,7 @@ public class Main {
   
   public static void main(String[] args) {
 	System.out.println(new Date());
-    System.out.println("1 == " + eq(BigInteger.valueOf(4096)));
+    System.out.println("1 == " + eq(BigInteger.valueOf(65536)));
     System.out.println(new Date());
   }
 
