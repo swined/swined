@@ -25,4 +25,9 @@ public class Or implements IExpression {
     return new And(a.not(), b.not());
   }
   
+  @Override
+  public String toString() {
+    return "(" + a + " | " + b + ")";
+  }
+  
 }
