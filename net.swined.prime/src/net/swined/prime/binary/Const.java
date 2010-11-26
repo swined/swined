@@ -18,6 +18,11 @@ public enum Const implements IExpression {
     public IExpression not() {
       return ZERO;
     }
+
+    @Override
+    public String toString() {
+      return "1";
+    }
     
   },
   
@@ -36,6 +41,11 @@ public enum Const implements IExpression {
     @Override
     public IExpression not() {
       return ONE;
+    }
+
+    @Override
+    public String toString() {
+      return "0";
     }
     
   };

@@ -24,5 +24,10 @@ public class Var implements IExpression {
   public IExpression not() {
     return new Var(name, !negative);
   }
+
+  @Override
+  public String toString() {
+    return (negative ? "!" : "") + name;
+  }
   
 }
