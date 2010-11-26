@@ -6,6 +6,8 @@ public class Or implements IExpression {
   private final IExpression b;
   
   public Or(IExpression a, IExpression b) {
+	if (a instanceof Const || b instanceof Const)
+		throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
   }
