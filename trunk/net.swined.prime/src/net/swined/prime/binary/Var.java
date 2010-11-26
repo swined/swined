@@ -29,7 +29,7 @@ public class Var implements IExpression {
   }
 
   @Override
-  public IExpression not() {
+  public Var not() {
     return neg;
   }
 
@@ -37,5 +37,14 @@ public class Var implements IExpression {
   public String toString() {
     return (negative ? "!" : "") + name;
   }
+
+	@Override
+	public IExpression sub(Var v, Const c) {
+		if (v.name.equals(name)) {
+			return v.negative == negative ? Const.ONE : Const.ZERO;
+		} else {
+			return this;			
+		}
+	}
   
 }

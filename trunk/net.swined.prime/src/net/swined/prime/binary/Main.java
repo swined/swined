@@ -4,8 +4,8 @@ import java.math.BigInteger;
 
 public class Main {
 
-  private static IExpression[] var(String n, int l) {
-    IExpression[] e = new IExpression[l];
+  private static Var[] var(String n, int l) {
+	Var[] e = new Var[l];
     for (int i = 0; i < l; i++)
       e[i] = new Var(n + i, false);
     return e;
@@ -61,12 +61,19 @@ public class Main {
 	  return r;
   }
   
-  public static void main(String[] args) {
-    IExpression[] a = var("a", 2);
-    IExpression[] b = var("b", 2);
-    IExpression[] c = mul(a, b);
-    IExpression e = eq(c, BigInteger.valueOf(2));
-    System.out.println("0 == " + e);
+  private static IExpression split(IExpression e, Var v) {
+	  return v.and(e.sub(v, Const.ONE)).or(v.not().and(e.sub(v.not(), Const.ZERO)));
   }
   
+  public static void main(String[] args) {
+    Var[] a = var("a", 3);
+    Var[] b = var("b", 3);
+    IExpression e = eq(mul(a, b), new BigInteger("42"));
+    for (Var x : a)
+    	e = split(e, x);
+    for (Var x : b)
+    	e = split(e, x);
+    System.out.println("0 == " + e);
+  }
+ 
 }

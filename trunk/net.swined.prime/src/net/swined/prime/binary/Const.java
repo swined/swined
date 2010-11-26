@@ -50,4 +50,8 @@ public enum Const implements IExpression {
     
   };
   
+  public IExpression sub(Var v, Const c) {
+	return this;
+  }
+  
 }
