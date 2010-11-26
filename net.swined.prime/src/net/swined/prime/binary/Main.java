@@ -50,7 +50,11 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    
+    IExpression[] a = var("a", 2);
+    IExpression[] b = var("b", 2);
+    IExpression[] c = mul(a, b);
+    for (IExpression e : c)
+      System.out.println(e);
   }
   
 }
