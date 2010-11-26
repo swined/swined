@@ -1,6 +1,7 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 public class Main {
 
@@ -41,13 +42,15 @@ public class Main {
     return xor(xor(a, b), q);
   }
   
-  private static IExpression[] mul(IExpression[] a, IExpression[] b) {
+  private static IExpression[] mul(Var[] a, Var[] b) {
     IExpression[] r = zero(a.length + b.length);
     for (int i = 0; i < a.length; i++) {
       IExpression[] t = zero(r.length);
       for (int j = 0; j < b.length; j++)
         t[i + j] = a[i].and(b[j]);
       r = sum(r, t);
+      r = split(r, a);
+      r = split(r, b);
     }
     return r;
   }
@@ -65,20 +68,36 @@ public class Main {
 	  return v.and(e.sub(v, Const.ONE)).or(v.not().and(e.sub(v.not(), Const.ZERO)));
   }
   
+  private static IExpression split(IExpression e, Var[] v) {
+	  for (Var x : v)
+	   	e = split(e, x);
+	  return e;
+  }
+
+  private static IExpression[] split(IExpression[] e, Var[] v) {
+	  IExpression[] r = new IExpression[e.length];
+	  for (int i = 0; i < r.length; i++)
+		  r[i] = split(e[i], v);
+	  return r;
+  }
+  
   private static IExpression eq(BigInteger n) {
 	int l = n.bitLength() / 2 + 1;
     Var[] a = var("a", l);
     Var[] b = var("b", l);
-    IExpression e = eq(mul(a, b), n);
-    for (Var x : a)
-    	e = split(e, x);
-    for (Var x : b)
-    	e = split(e, x);
+    IExpression[] m = mul(a, b);
+    m = split(m, a);
+    m = split(m, b);
+	IExpression e = eq(m, n);
+    e = split(e, a);
+    e = split(e, b);
     return e;
   }
   
   public static void main(String[] args) {
+	System.out.println(new Date());
     System.out.println("1 == " + eq(BigInteger.valueOf(4096)));
+    System.out.println(new Date());
   }
- 
+
 }
