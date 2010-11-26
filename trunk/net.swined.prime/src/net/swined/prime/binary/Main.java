@@ -20,11 +20,8 @@ public class Main {
     if (a.length != b.length)
       throw new IllegalArgumentException();
     IExpression[] r = new IExpression[a.length];
-    for (int i = 0; i < r.length; i++) {
-        And x = new And(a[i], b[i].not());
-        And y = new And(a[i].not(), b[i]);
-        r[i] = new Or(x, y);
-    }
+    for (int i = 0; i < r.length; i++)
+      r[i] = a[i].and(b[i].not()).or(a[i].not().and(b[i]));
     return r;
   }
   
@@ -34,7 +31,7 @@ public class Main {
     IExpression[] q = new IExpression[a.length];
     q[0] = Const.ZERO;
     for (int i = 0; i < q.length - 1; i++)
-        q[i + 1] = new Or(new And(a[i], b[i]), new And(q[i], new Or(a[i], b[i])));
+        q[i + 1] = a[i].and(b[i]).or(q[i].and(a[i].or(b[i])));
     return xor(xor(a, b), q);
   }
   
@@ -43,7 +40,7 @@ public class Main {
     for (int i = 0; i < a.length; i++) {
       IExpression[] t = zero(r.length);
       for (int j = 0; j < b.length; j++)
-        t[i + j] = new And(a[i], b[j]);
+        t[i + j] = a[i].and(b[j]);
       r = sum(r, t);
     }
     return r;

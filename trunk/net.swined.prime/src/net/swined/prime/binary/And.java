@@ -12,11 +12,19 @@ public class And implements IExpression {
 
   @Override
   public IExpression and(IExpression e) {
+    if (e.equals(Const.ZERO))
+      return Const.ZERO;
+    if (e.equals(Const.ONE))
+      return this;
     return new And(this, e);
   }
 
   @Override
   public IExpression or(IExpression e) {
+    if (e.equals(Const.ZERO))
+      return this;
+    if (e.equals(Const.ONE))
+      return Const.ONE;
     return new Or(this, e);
   }
 
