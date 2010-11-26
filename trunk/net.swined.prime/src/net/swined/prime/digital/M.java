@@ -1,4 +1,4 @@
-package net.swined.prime;
+package net.swined.prime.digital;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
