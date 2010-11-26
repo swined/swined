@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
+
 public class Main {
 
   private static IExpression[] var(String n, int l) {
@@ -16,12 +18,16 @@ public class Main {
     return e;
   }
   
+  private static IExpression xor(IExpression a, IExpression b) {
+    return a.and(b.not()).or(a.not().and(b));
+  }
+  
   private static IExpression[] xor(IExpression[] a, IExpression[] b) {
     if (a.length != b.length)
       throw new IllegalArgumentException();
     IExpression[] r = new IExpression[a.length];
     for (int i = 0; i < r.length; i++)
-      r[i] = a[i].and(b[i].not()).or(a[i].not().and(b[i]));
+      r[i] = xor(a[i], b[i]);
     return r;
   }
   
@@ -46,13 +52,21 @@ public class Main {
     return r;
   }
   
+  private static IExpression eq(IExpression[] e, BigInteger n) {
+	  IExpression r = Const.ZERO;
+	  for (int i = 0; i <  e.length; i++) {
+		  IExpression b = n.testBit(i) ? Const.ONE : Const.ZERO;
+		  r = r.or(xor(e[i], b));
+	  }
+	  return r;
+  }
+  
   public static void main(String[] args) {
-    IExpression[] a = var("a", 10);
-    IExpression[] b = var("b", 10);
+    IExpression[] a = var("a", 2);
+    IExpression[] b = var("b", 2);
     IExpression[] c = mul(a, b);
-    System.out.println(c);
-//    for (IExpression e : c)
-//      System.out.println(e);
+    IExpression e = eq(c, BigInteger.valueOf(2));
+    System.out.println("0 == " + e);
   }
   
 }
