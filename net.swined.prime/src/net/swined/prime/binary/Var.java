@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
+
 public class Var implements IExpression {
 
   private final String name;
@@ -20,6 +22,8 @@ public class Var implements IExpression {
 
   @Override
   public IExpression and(IExpression e) {
+	e = e.sub(this, Const.ONE);
+	e = e.sub(not(), Const.ZERO);
 	if (e instanceof Const)
 		return e.and(this);
     return new And(this, e, null);
@@ -59,6 +63,11 @@ public class Var implements IExpression {
 			return false;
 		Var v = (Var)o;
 		return (v.negative == negative) && (v.name.equals(name));
+	}
+	
+	@Override
+	public BigInteger complexity() {
+		return BigInteger.ONE;
 	}
 	
 }

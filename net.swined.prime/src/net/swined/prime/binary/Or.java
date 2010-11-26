@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
+
 public class Or implements IExpression {
 
   private final IExpression a;
@@ -44,7 +46,17 @@ public class Or implements IExpression {
 
 	@Override
 	public IExpression sub(Var v, Const c) {
-		return a.sub(v, c).or(b.sub(v, c));
+		IExpression sa = a.sub(v, c);
+		IExpression sb = b.sub(v, c);
+		if (sa != a || sb != b)
+			return sa.or(sb);
+		else
+			return this;
 	}
   
+	@Override
+	public BigInteger complexity() {
+		return a.complexity().add(b.complexity());
+	}
+	
 }
