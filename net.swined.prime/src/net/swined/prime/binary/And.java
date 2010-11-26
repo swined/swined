@@ -37,6 +37,11 @@ public class And implements IExpression {
   public String toString() {
     return "(" + a + " & " + b + ")";
   }
+
+	@Override
+	public IExpression sub(Var v, Const c) {
+		return a.sub(v, c).and(b.sub(v, c));
+	}
   
 }
 

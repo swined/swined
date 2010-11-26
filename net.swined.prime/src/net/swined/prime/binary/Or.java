@@ -37,5 +37,10 @@ public class Or implements IExpression {
   public String toString() {
     return "(" + a + " | " + b + ")";
   }
+
+	@Override
+	public IExpression sub(Var v, Const c) {
+		return a.sub(v, c).or(b.sub(v, c));
+	}
   
 }
