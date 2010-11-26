@@ -47,11 +47,12 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    IExpression[] a = var("a", 2);
-    IExpression[] b = var("b", 2);
+    IExpression[] a = var("a", 10);
+    IExpression[] b = var("b", 10);
     IExpression[] c = mul(a, b);
-    for (IExpression e : c)
-      System.out.println(e);
+    System.out.println(c);
+//    for (IExpression e : c)
+//      System.out.println(e);
   }
   
 }

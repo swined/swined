@@ -4,10 +4,18 @@ public class Var implements IExpression {
 
   private final String name;
   private final boolean negative;
+  private final Var neg;
+  
+  private Var(Var neg) {
+    this.name = neg.name;
+    this.negative = !neg.negative;
+    this.neg = neg;
+  }
   
   public Var(String name, boolean negative) {
     this.name = name;
     this.negative = negative;
+    this.neg = new Var(this);
   }
 
   @Override
@@ -22,7 +30,7 @@ public class Var implements IExpression {
 
   @Override
   public IExpression not() {
-    return new Var(name, !negative);
+    return neg;
   }
 
   @Override
