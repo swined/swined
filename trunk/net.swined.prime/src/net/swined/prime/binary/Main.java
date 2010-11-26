@@ -58,22 +58,27 @@ public class Main {
 		  IExpression b = n.testBit(i) ? Const.ONE : Const.ZERO;
 		  r = r.or(xor(e[i], b));
 	  }
-	  return r;
+	  return r.not();
   }
   
   private static IExpression split(IExpression e, Var v) {
 	  return v.and(e.sub(v, Const.ONE)).or(v.not().and(e.sub(v.not(), Const.ZERO)));
   }
   
-  public static void main(String[] args) {
-    Var[] a = var("a", 3);
-    Var[] b = var("b", 3);
-    IExpression e = eq(mul(a, b), new BigInteger("42"));
+  private static IExpression eq(BigInteger n) {
+	int l = n.bitLength() / 2 + 1;
+    Var[] a = var("a", l);
+    Var[] b = var("b", l);
+    IExpression e = eq(mul(a, b), n);
     for (Var x : a)
     	e = split(e, x);
     for (Var x : b)
     	e = split(e, x);
-    System.out.println("0 == " + e);
+    return e;
+  }
+  
+  public static void main(String[] args) {
+    System.out.println("1 == " + eq(BigInteger.valueOf(4096)));
   }
  
 }
