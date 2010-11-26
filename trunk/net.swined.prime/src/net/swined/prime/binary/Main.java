@@ -49,8 +49,8 @@ public class Main {
       for (int j = 0; j < b.length; j++)
         t[i + j] = a[i].and(b[j]);
       r = sum(r, t);
-      r = split(r, a);
-      r = split(r, b);
+//      r = split(r, a);
+//      r = split(r, b);
     }
     return r;
   }
@@ -64,13 +64,9 @@ public class Main {
 	  return r.not();
   }
   
-  private static IExpression split(IExpression e, Var v) {
-	  return v.and(e.sub(v, Const.ONE)).or(v.not().and(e.sub(v.not(), Const.ZERO)));
-  }
-  
   private static IExpression split(IExpression e, Var[] v) {
 	  for (Var x : v)
-	   	e = split(e, x);
+	   	e = x.and(e.sub(x, Const.ONE)).or(x.not().and(e.sub(x.not(), Const.ZERO)));
 	  return e;
   }
 
@@ -83,21 +79,27 @@ public class Main {
   
   private static IExpression eq(BigInteger n) {
 	int l = n.bitLength() / 2 + n.bitLength() % 2;
+	System.out.println(new Date());
     Var[] a = var("a", l);
     Var[] b = var("b", l);
     IExpression[] m = mul(a, b);
-    m = split(m, a);
-    m = split(m, b);
+    System.out.println(new Date());
+//    m = split(m, a);
+//    m = split(m, b);
+//    System.out.println(new Date());
 	IExpression e = eq(m, n);
-    e = split(e, a);
-    e = split(e, b);
+	System.out.println(new Date());
+	System.out.println(e.complexity());
+//    e = split(e, a);
+//    e = split(e, b);
     return e;
   }
   
   public static void main(String[] args) {
-	System.out.println(new Date());
-    System.out.println("1 == " + eq(BigInteger.valueOf(65536)));
-    System.out.println(new Date());
+    BigInteger n = new BigInteger("917350");//9173503");
+    System.out.println(n.bitLength());
+	IExpression e = eq(n);
+//	System.out.println("1 == " + e);
   }
 
 }
