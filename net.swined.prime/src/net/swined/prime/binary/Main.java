@@ -92,23 +92,23 @@ public class Main {
 //	System.out.println(e.complexity());
 //    e = split(e, a);
 //    e = split(e, b);
-	for (int i = 0; i < a.length; i++) {
-		System.out.println(new Date() + " " + i);
-		e = e.sub(a[i], Const.ZERO);
-		e = e.sub(b[i], Const.ZERO);
-		if (e == Const.ZERO) {
-			System.out.println("GOTCHA!");
-			return null;
-		}
-	}
+//	for (int i = 0; i < a.length; i++) {
+//		System.out.println(new Date() + " " + i);
+//		e = e.sub(a[i], Const.ZERO);
+//		e = e.sub(b[i], Const.ZERO);
+//		if (e == Const.ZERO) {
+//			System.out.println("GOTCHA!");
+//			return null;
+//		}
+//	}
     return e;
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("1111");//9173503");
+    BigInteger n = new BigInteger("91");//9173503");
     System.out.println(n.bitLength());
 	IExpression e = eq(n);
-//	System.out.println("1 == " + e);
+	System.out.println("1 == " + e);
   }
 
 }

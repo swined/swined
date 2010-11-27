@@ -23,7 +23,6 @@ public class Var implements IExpression {
   @Override
   public IExpression and(IExpression e) {
 	e = e.sub(this, Const.ONE);
-	e = e.sub(not(), Const.ZERO);
 	if (e instanceof Const)
 		return e.and(this);
     return new And(this, e, null);

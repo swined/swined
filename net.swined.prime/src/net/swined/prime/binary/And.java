@@ -22,6 +22,8 @@ public class And implements IExpression {
       return Const.ZERO;
     if (e.equals(Const.ONE))
       return this;
+    if (e instanceof Var)
+    	return e.and(this);
     return new And(this, e, null);
   }
 
