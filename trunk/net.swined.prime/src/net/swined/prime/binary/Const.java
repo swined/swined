@@ -1,6 +1,5 @@
 package net.swined.prime.binary;
 
-import java.math.BigInteger;
 
 public enum Const implements IExpression {
 
@@ -55,10 +54,5 @@ public enum Const implements IExpression {
   public IExpression sub(Var v, Const c) {
 	return this;
   }
-  
-	@Override
-	public BigInteger complexity() {
-		return BigInteger.ONE;
-	}
   
 }

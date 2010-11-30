@@ -1,6 +1,5 @@
 package net.swined.prime.binary;
 
-import java.math.BigInteger;
 
 public class And implements IExpression {
 
@@ -56,10 +55,5 @@ public class And implements IExpression {
 			return this;
 	}
 
-	@Override
-	public BigInteger complexity() {
-		return a.complexity().add(b.complexity());
-	}
-  
 }
 

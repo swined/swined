@@ -49,8 +49,6 @@ public class Main {
       for (int j = 0; j < b.length; j++)
         t[i + j] = a[i].and(b[j]);
       r = sum(r, t);
-//      r = split(r, a);
-//      r = split(r, b);
     }
     return r;
   }
@@ -70,45 +68,25 @@ public class Main {
 	  return e;
   }
 
-  private static IExpression[] split(IExpression[] e, Var[] v) {
-	  IExpression[] r = new IExpression[e.length];
-	  for (int i = 0; i < r.length; i++)
-		  r[i] = split(e[i], v);
-	  return r;
-  }
-  
   private static IExpression eq(BigInteger n) {
-	int l = n.bitLength() / 2 + n.bitLength() % 2;
-	System.out.println(new Date());
+    int l = n.bitLength() / 2 + n.bitLength() % 2;
+    System.out.println(new Date());
     Var[] a = var("a", l);
     Var[] b = var("b", l);
     IExpression[] m = mul(a, b);
     System.out.println(new Date());
-//    m = split(m, a);
-//    m = split(m, b);
-//    System.out.println(new Date());
-	IExpression e = eq(m, n);
-	System.out.println(new Date());
-//	System.out.println(e.complexity());
-//    e = split(e, a);
-//    e = split(e, b);
-//	for (int i = 0; i < a.length; i++) {
-//		System.out.println(new Date() + " " + i);
-//		e = e.sub(a[i], Const.ZERO);
-//		e = e.sub(b[i], Const.ZERO);
-//		if (e == Const.ZERO) {
-//			System.out.println("GOTCHA!");
-//			return null;
-//		}
-//	}
+  	IExpression e = eq(m, n);
+	  System.out.println(new Date());
+    e = split(e, a);
+    e = split(e, b);
     return e;
   }
   
   public static void main(String[] args) {
     BigInteger n = new BigInteger("91");//9173503");
     System.out.println(n.bitLength());
-	IExpression e = eq(n);
-	System.out.println("1 == " + e);
+    IExpression e = eq(n);
+    System.out.println("1 == " + e);
   }
 
 }
