@@ -1,6 +1,5 @@
 package net.swined.prime.binary;
 
-import java.math.BigInteger;
 
 public class Var implements IExpression {
 
@@ -62,11 +61,6 @@ public class Var implements IExpression {
 			return false;
 		Var v = (Var)o;
 		return (v.negative == negative) && (v.name.equals(name));
-	}
-	
-	@Override
-	public BigInteger complexity() {
-		return BigInteger.ONE;
 	}
 	
 }
