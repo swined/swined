@@ -56,8 +56,11 @@ public class Main {
   }
   
   private static IExpression split(IExpression e, Var[] v) {
-	  for (Var x : v)
-	   	e = x.and(e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>())).or(x.not().and(e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>())));
+	  for (Var x : v) {
+      IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
+      IExpression nx = e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>());
+      e = x.and(px).or(x.not().and(nx));
+    }
 	  return e;
   }
 
