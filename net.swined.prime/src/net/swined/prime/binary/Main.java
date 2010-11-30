@@ -22,23 +22,16 @@ public class Main {
     return a.and(b.not()).or(a.not().and(b));
   }
   
-  private static IExpression[] xor(IExpression[] a, IExpression[] b) {
-    if (a.length != b.length)
-      throw new IllegalArgumentException();
-    IExpression[] r = new IExpression[a.length];
-    for (int i = 0; i < r.length; i++)
-      r[i] = xor(a[i], b[i]);
-    return r;
-  }
-  
   private static IExpression[] sum(IExpression[] a, IExpression[] b) {
     if (a.length != b.length)
       throw new IllegalArgumentException();
     IExpression[] q = new IExpression[a.length];
-    q[0] = Const.ZERO;
-    for (int i = 0; i < q.length - 1; i++)
-        q[i + 1] = a[i].and(b[i]).or(q[i].and(a[i].or(b[i])));
-    return xor(xor(a, b), q);
+    IExpression f = Const.ZERO;
+    for (int i = 0; i < q.length; i++) {
+      q[i] = xor(xor(a[i], b[i]), f);
+      f = a[i].and(b[i]).or(a[i].and(f)).or(b[i].and(f));
+    }
+    return q;
   }
   
   private static IExpression[] mul(Var[] a, Var[] b) {
@@ -79,7 +72,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("91");//9173503");
+    BigInteger n = new BigInteger("917");//9173503");
     System.out.println(n.bitLength() + " bit");
     IExpression e = eq(n);
     System.out.println("1 == " + e);
