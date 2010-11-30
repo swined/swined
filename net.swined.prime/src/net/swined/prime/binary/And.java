@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 
 public class And implements IExpression {
 
@@ -46,13 +48,18 @@ public class And implements IExpression {
   }
 
 	@Override
-	public IExpression sub(Var v, Const c) {
-		IExpression sa = a.sub(v, c);
-		IExpression sb = b.sub(v, c);
-		if (sa != a || sb != b)
-			return sa.and(sb);
-		else
-			return this;
+	public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
+	  IExpression sub = map.get(this);
+	  if (sub == null) {
+  		IExpression sa = a.sub(v, c, map);
+  		IExpression sb = b.sub(v, c, map);
+  		if (sa != a || sb != b)
+  			sub = sa.and(sb);
+  		else
+  			sub = this;
+  		map.put(this, sub);
+	  }
+	  return sub;
 	}
 
 }
