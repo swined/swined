@@ -1,7 +1,6 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
-import java.util.Date;
 
 public class Main {
 
@@ -70,13 +69,10 @@ public class Main {
 
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
-    System.out.println(new Date());
     Var[] a = var("a", l);
     Var[] b = var("b", l);
     IExpression[] m = mul(a, b);
-    System.out.println(new Date());
   	IExpression e = eq(m, n);
-	  System.out.println(new Date());
     e = split(e, a);
     e = split(e, b);
     return e;
@@ -84,7 +80,7 @@ public class Main {
   
   public static void main(String[] args) {
     BigInteger n = new BigInteger("91");//9173503");
-    System.out.println(n.bitLength());
+    System.out.println(n.bitLength() + " bit");
     IExpression e = eq(n);
     System.out.println("1 == " + e);
   }
