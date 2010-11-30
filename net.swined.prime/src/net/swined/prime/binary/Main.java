@@ -48,35 +48,30 @@ public class Main {
   
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ZERO;
-	  for (int i = 0; i <  e.length; i++) {
-		  IExpression b = n.testBit(i) ? Const.ONE : Const.ZERO;
-		  r = r.or(xor(e[i], b));
-	  }
+	  for (int i = 0; i <  e.length; i++)
+		  r = r.or(n.testBit(i) ? e[i].not() : e[i]);
 	  return r.not();
   }
   
-  private static IExpression split(IExpression e, Var[] v) {
-	  for (Var x : v) {
-      IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
-      IExpression nx = e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>());
-      e = x.and(px).or(x.not().and(nx));
-    }
-	  return e;
+  private static IExpression split(IExpression e, Var[]... v) {
+	for (Var[] z : v)
+	  for (Var x : z) {
+	    IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
+	    IExpression nx = e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>());
+	    e = x.and(px).or(x.not().and(nx));
+	  }
+	return e;
   }
 
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
     Var[] a = var("a", l);
     Var[] b = var("b", l);
-    IExpression[] m = mul(a, b);
-  	IExpression e = eq(m, n);
-    e = split(e, a);
-    e = split(e, b);
-    return e;
+    return split(eq(mul(a, b), n), a, b);
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9173");//9173503");
+    BigInteger n = new BigInteger("3503");//9173503");
     System.out.println(n.bitLength() + " bit");
     IExpression e = eq(n);
     System.out.println("1 == " + e);
