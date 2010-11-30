@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 
 public enum Const implements IExpression {
 
@@ -51,8 +53,8 @@ public enum Const implements IExpression {
     
   };
   
-  public IExpression sub(Var v, Const c) {
-	return this;
+  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
+    return this;
   }
   
 }

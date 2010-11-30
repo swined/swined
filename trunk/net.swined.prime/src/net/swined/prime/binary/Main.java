@@ -1,6 +1,7 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 
 public class Main {
 
@@ -56,7 +57,7 @@ public class Main {
   
   private static IExpression split(IExpression e, Var[] v) {
 	  for (Var x : v)
-	   	e = x.and(e.sub(x, Const.ONE)).or(x.not().and(e.sub(x.not(), Const.ZERO)));
+	   	e = x.and(e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>())).or(x.not().and(e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>())));
 	  return e;
   }
 
@@ -72,7 +73,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("917");//9173503");
+    BigInteger n = new BigInteger("9173");//9173503");
     System.out.println(n.bitLength() + " bit");
     IExpression e = eq(n);
     System.out.println("1 == " + e);

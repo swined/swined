@@ -1,5 +1,8 @@
 package net.swined.prime.binary;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Var implements IExpression {
 
@@ -21,7 +24,7 @@ public class Var implements IExpression {
 
   @Override
   public IExpression and(IExpression e) {
-	e = e.sub(this, Const.ONE);
+	e = e.sub(this, Const.ONE, new HashMap<IExpression, IExpression>());
 	if (e instanceof Const)
 		return e.and(this);
     return new And(this, e, null);
@@ -47,7 +50,7 @@ public class Var implements IExpression {
   }
 
 	@Override
-	public IExpression sub(Var v, Const c) {
+	public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
 		if (v.name.equals(name)) {
 			return v.negative == negative ? Const.ONE : Const.ZERO;
 		} else {
