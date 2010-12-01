@@ -35,7 +35,7 @@ public class Conjunction implements IExpression {
         return Const.ZERO;
       }
     }
-    return new And(this, e, null);
+    return new And(this, e);
   }
 
   @Override
@@ -43,7 +43,7 @@ public class Conjunction implements IExpression {
     if (e instanceof Const)
       return e.or(this);
     else
-      return new Or(this, e, null);
+      return new Or(this, e);
   }
 
   @Override

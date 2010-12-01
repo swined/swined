@@ -78,10 +78,9 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9");//9173503");
+    BigInteger n = new BigInteger("917");//9173503");
     System.out.println(n.bitLength() + " bit");
-    IExpression eq = eq(n);
-    System.out.println(split(eq));
+    System.out.println(split(eq(n)));
   }
 
 }
