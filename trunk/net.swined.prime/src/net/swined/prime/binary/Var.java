@@ -2,6 +2,7 @@ package net.swined.prime.binary;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class Var implements IExpression {
@@ -65,5 +66,10 @@ public class Var implements IExpression {
 		Var v = (Var)o;
 		return (v.negative == negative) && (v.name.equals(name));
 	}
+
+  @Override
+  public void getVars(Set<Var> vars) {
+    vars.add(this);
+  }
 	
 }
