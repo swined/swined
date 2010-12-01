@@ -38,7 +38,7 @@ public class Or implements IExpression {
 
   @Override
   public IExpression not() {
-    return a.not().or(b.not());
+    return a.not().and(b.not());
   }
   
   @Override
