@@ -7,10 +7,10 @@ import java.util.Set;
 
 public class Main {
 
-  private static Var[] var(int n, int l) {
-	Var[] e = new Var[l];
+  private static IExpression[] var(int n, int l) {
+    IExpression[] e = new IExpression[l];
     for (int i = 0; i < l; i++)
-      e[i] = new Var(n + i, false);
+      e[i] = Conjunction.var(n + i, false);
     return e;
   }
 
@@ -37,7 +37,7 @@ public class Main {
     return q;
   }
   
-  private static IExpression[] mul(Var[] a, Var[] b) {
+  private static IExpression[] mul(IExpression[] a, IExpression[] b) {
     IExpression[] r = zero(a.length + b.length);
     for (int i = 0; i < a.length; i++) {
       IExpression[] t = zero(r.length);
@@ -52,6 +52,7 @@ public class Main {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i <  e.length; i++) {
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
+      System.out.println(x);
       r = r.and(x);
     }
 	  return r;
@@ -67,20 +68,29 @@ public class Main {
 	  for (Integer x : vars(e)) {
 	    IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
 	    IExpression nx = e.sub(x, Const.ZERO, new HashMap<IExpression, IExpression>());
-	    e = new Var(x, false).and(px).or(new Var(x, true).and(nx));
+	    e = Conjunction.var(x, false).and(px).or(Conjunction.var(x, true).and(nx));
 	  }
 	  return e;
   }
 
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
-    return eq(mul(var(0, l), var(l, l)), n);
+    IExpression[] var = var(0, l);
+    for (IExpression x : var) {
+      System.out.println(x);
+    }
+    IExpression[] var2 = var(l, l);
+    for (IExpression x : var2) {
+      System.out.println(x);
+    }
+    return eq(mul(var, var2), n);
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("91");//9173503");
+    BigInteger n = new BigInteger("9");//9173503");
     System.out.println(n.bitLength() + " bit");
     IExpression eq = eq(n);
+    System.out.println(eq);
     System.out.println(split(eq));
   }
 
