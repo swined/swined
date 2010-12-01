@@ -49,7 +49,7 @@ public class And implements IExpression {
   }
 
 	@Override
-	public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
+	public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
 	  IExpression sub = map.get(this);
 	  if (sub == null) {
   		IExpression sa = a.sub(v, c, map);
@@ -64,7 +64,7 @@ public class And implements IExpression {
 	}
 
   @Override
-  public void getVars(Set<Var> vars) {
+  public void getVars(Set<Integer> vars) {
     a.getVars(vars);
     b.getVars(vars);
   }

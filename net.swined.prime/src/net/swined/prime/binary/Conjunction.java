@@ -30,12 +30,12 @@ public class Conjunction implements IExpression {
   }
 
   @Override
-  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
+  public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public void getVars(Set<Var> vars) {
+  public void getVars(Set<Integer> vars) {
     throw new UnsupportedOperationException();
   }
   
