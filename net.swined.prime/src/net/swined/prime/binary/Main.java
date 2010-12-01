@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Main {
 
-  private static Var[] var(String n, int l) {
+  private static Var[] var(int n, int l) {
 	Var[] e = new Var[l];
     for (int i = 0; i < l; i++)
       e[i] = new Var(n + i, false);
@@ -52,7 +52,6 @@ public class Main {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i <  e.length; i++) {
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
-      System.out.println(split(x));
       r = r.and(x);
     }
 	  return r;
@@ -75,11 +74,11 @@ public class Main {
 
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
-    return eq(mul(var("a", l), var("b", l)), n);
+    return eq(mul(var(0, l), var(l, l)), n);
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("91");//9173503");
+    BigInteger n = new BigInteger("9");//9173503");
     System.out.println(n.bitLength() + " bit");
     IExpression eq = eq(n);
     System.out.println(split(eq));

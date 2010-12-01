@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Var implements IExpression {
 
-  private final String name;
+  private final int name;
   private final boolean negative;
   private final Var neg;
   
@@ -17,7 +17,7 @@ public class Var implements IExpression {
     this.neg = neg;
   }
   
-  public Var(String name, boolean negative) {
+  public Var(int name, boolean negative) {
     this.name = name;
     this.negative = negative;
     this.neg = new Var(this);
@@ -52,7 +52,7 @@ public class Var implements IExpression {
 
 	@Override
 	public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
-		if (v.name.equals(name)) {
+		if (v.name == name) {
 			return v.negative == negative ? Const.ONE : Const.ZERO;
 		} else {
 			return this;			
@@ -64,7 +64,7 @@ public class Var implements IExpression {
 		if (!(o instanceof Var))
 			return false;
 		Var v = (Var)o;
-		return (v.negative == negative) && (v.name.equals(name));
+		return (v.negative == negative) && (v.name == name);
 	}
 
   @Override
