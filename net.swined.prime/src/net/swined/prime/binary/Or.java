@@ -12,6 +12,8 @@ public class Or implements IExpression {
   public Or(IExpression a, IExpression b) {
 	if (a instanceof Const || b instanceof Const)
 		throw new IllegalArgumentException();
+    if (a instanceof Disjunction && b instanceof Disjunction)
+        throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
   }
