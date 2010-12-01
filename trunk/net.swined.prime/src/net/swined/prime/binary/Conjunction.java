@@ -27,8 +27,15 @@ public class Conjunction implements IExpression {
   public IExpression and(IExpression e) {
     if (e instanceof Const)
       return e.and(this);
-    else
-      return new And(this, e, null);
+    if (e instanceof Conjunction) {
+      Conjunction c = (Conjunction) e;
+      if (vars.and(c.vars).and(sign.xor(c.sign)).equals(BigInteger.ZERO)) {
+        throw new UnsupportedOperationException();
+      } else {
+        return Const.ZERO;
+      }
+    }
+    return new And(this, e, null);
   }
 
   @Override
