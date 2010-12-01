@@ -53,12 +53,12 @@ public class Disjunction implements IExpression {
   @Override
   public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
     if (vars.testBit(v)) {
-      if (Const.get(sign.testBit(v)) == c)
-        return Const.ZERO;
+      if (Const.get(sign.testBit(v)) != c)
+        return Const.ONE;
       else {
         BigInteger n = vars.clearBit(v);
         if (n.bitLength() == 0)
-          return Const.ONE;
+          return Const.ZERO;
         else
           return new Disjunction(n, sign);
       }
