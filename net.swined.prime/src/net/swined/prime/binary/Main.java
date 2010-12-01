@@ -2,6 +2,8 @@ package net.swined.prime.binary;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
 
@@ -47,34 +49,40 @@ public class Main {
   }
   
   private static IExpression eq(IExpression[] e, BigInteger n) {
-	  IExpression r = Const.ZERO;
-	  for (int i = 0; i <  e.length; i++)
-		  r = r.or(n.testBit(i) ? e[i].not() : e[i]);
-	  return r.not();
+	  IExpression r = Const.ONE;
+	  for (int i = 0; i <  e.length; i++) {
+      IExpression x = n.testBit(i) ? e[i] : e[i].not();
+      System.out.println(split(x));
+      r = r.and(x);
+    }
+	  return r;
   }
   
-  private static IExpression split(IExpression e, Var[]... v) {
-	for (Var[] z : v)
-	  for (Var x : z) {
+  private static Set<Var> vars(IExpression e) {
+    Set<Var> vars = new HashSet<Var>();
+    e.getVars(vars);
+    return vars;
+  }
+  
+  private static IExpression split(IExpression e) {
+	  for (Var x : vars(e)) {
 	    IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
 	    IExpression nx = e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>());
 	    e = x.and(px).or(x.not().and(nx));
 	  }
-	return e;
+	  return e;
   }
 
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
-    Var[] a = var("a", l);
-    Var[] b = var("b", l);
-    return split(eq(mul(a, b), n), a, b);
+    return eq(mul(var("a", l), var("b", l)), n);
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("3503");//9173503");
+    BigInteger n = new BigInteger("91");//9173503");
     System.out.println(n.bitLength() + " bit");
-    IExpression e = eq(n);
-    System.out.println("1 == " + e);
+    IExpression eq = eq(n);
+    System.out.println(split(eq));
   }
 
 }
