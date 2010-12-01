@@ -75,6 +75,8 @@ public class Conjunction implements IExpression {
       if (vars.testBit(i)) {
         if (sb.length() > 0)
           sb.append(" & ");
+        if (sign.testBit(i))
+          sb.append("!");
         sb.append("x");
         sb.append(i);
       }
