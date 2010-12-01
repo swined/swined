@@ -33,7 +33,10 @@ public class Conjunction implements IExpression {
 
   @Override
   public IExpression or(IExpression e) {
-    return new Or(this, e, null);
+    if (e instanceof Const)
+      return e.or(this);
+    else
+      return new Or(this, e, null);
   }
 
   @Override
@@ -54,7 +57,7 @@ public class Conjunction implements IExpression {
       else {
         BigInteger n = vars.clearBit(v);
         if (n.bitLength() == 0)
-          return Const.ZERO;
+          return Const.ONE;
         else
           return new Conjunction(n, sign);
       }
