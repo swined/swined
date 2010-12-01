@@ -11,8 +11,10 @@ public class And implements IExpression {
   private final IExpression not;
   
   public And(IExpression a, IExpression b, IExpression not) {
-	if (a instanceof Const || b instanceof Const)
-		throw new IllegalArgumentException();
+    if (a instanceof Const || b instanceof Const)
+      throw new IllegalArgumentException();
+    if (a instanceof Conjunction || b instanceof Conjunction)
+      throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
     this.not = not == null ? new Or(a.not(), b.not(), this) : not;
