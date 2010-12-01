@@ -48,12 +48,7 @@ public class Conjunction implements IExpression {
 
   @Override
   public IExpression not() {
-    IExpression r = Const.ZERO;
-    for (int i = 0; i < vars.bitLength(); i++) {
-      if (vars.testBit(i))
-        r = r.or(var(i, !sign.testBit(i)));
-    }
-    return r;
+	return new Disjunction(vars, sign.not().and(vars));
   }
 
   @Override
