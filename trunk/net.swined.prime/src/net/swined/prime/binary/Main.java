@@ -57,17 +57,17 @@ public class Main {
 	  return r;
   }
   
-  private static Set<Var> vars(IExpression e) {
-    Set<Var> vars = new HashSet<Var>();
+  private static Set<Integer> vars(IExpression e) {
+    Set<Integer> vars = new HashSet<Integer>();
     e.getVars(vars);
     return vars;
   }
   
   private static IExpression split(IExpression e) {
-	  for (Var x : vars(e)) {
+	  for (Integer x : vars(e)) {
 	    IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
-	    IExpression nx = e.sub(x.not(), Const.ZERO, new HashMap<IExpression, IExpression>());
-	    e = x.and(px).or(x.not().and(nx));
+	    IExpression nx = e.sub(x, Const.ZERO, new HashMap<IExpression, IExpression>());
+	    e = new Var(x, false).and(px).or(new Var(x, true).and(nx));
 	  }
 	  return e;
   }
@@ -78,7 +78,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9");//9173503");
+    BigInteger n = new BigInteger("91");//9173503");
     System.out.println(n.bitLength() + " bit");
     IExpression eq = eq(n);
     System.out.println(split(eq));

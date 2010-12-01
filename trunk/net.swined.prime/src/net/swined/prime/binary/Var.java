@@ -25,7 +25,7 @@ public class Var implements IExpression {
 
   @Override
   public IExpression and(IExpression e) {
-	e = e.sub(this, Const.ONE, new HashMap<IExpression, IExpression>());
+	e = e.sub(name, negative ? Const.ZERO : Const.ONE, new HashMap<IExpression, IExpression>());
 	if (e instanceof Const)
 		return e.and(this);
     return new And(this, e, null);
@@ -51,9 +51,9 @@ public class Var implements IExpression {
   }
 
 	@Override
-	public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
-		if (v.name == name) {
-			return v.negative == negative ? Const.ONE : Const.ZERO;
+	public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
+		if (v == name) {
+			return negative ? c.not() : c;
 		} else {
 			return this;			
 		}
@@ -68,8 +68,8 @@ public class Var implements IExpression {
 	}
 
   @Override
-  public void getVars(Set<Var> vars) {
-    vars.add(this);
+  public void getVars(Set<Integer> vars) {
+    vars.add(name);
   }
 	
 }
