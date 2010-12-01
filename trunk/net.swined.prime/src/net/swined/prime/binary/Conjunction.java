@@ -30,7 +30,7 @@ public class Conjunction implements IExpression {
     if (e instanceof Conjunction) {
       Conjunction c = (Conjunction) e;
       if (vars.and(c.vars).and(sign.xor(c.sign)).equals(BigInteger.ZERO)) {
-        throw new UnsupportedOperationException();
+        return new Conjunction(vars.or(c.vars), sign.or(c.sign));
       } else {
         return Const.ZERO;
       }
