@@ -54,6 +54,10 @@ public enum Const implements IExpression {
     
   };
 
+  public static Const get(boolean value) {
+    return value ? ONE : ZERO;
+  }
+  
   @Override
   public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
     return this;
