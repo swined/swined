@@ -1,6 +1,8 @@
 package net.swined.prime.binary.tests;
 
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.Assert;
 import net.swined.prime.binary.Conjunction;
@@ -43,51 +45,23 @@ public class DisjunctionTest {
     IExpression v1 = Disjunction.var(0, true);
     IExpression v2 = Disjunction.var(0, false);
     IExpression v3 = Disjunction.var(1, false);
+    IExpression v4 = Conjunction.var(1, false);
     Assert.assertEquals("1", v1.or(Const.ONE).toString());
     Assert.assertEquals("1", v1.or(v2).toString());
     Assert.assertEquals("(x0 | x1)", v2.or(v3).toString());
+    Assert.assertEquals("((x1) | x1)", v3.or(v4).toString());
   }
   
-//  @Override
-//  public IExpression not() {
-//    return new Conjunction(vars, sign.not().and(vars));
-//  }
-//
-//  @Override
-//  public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
-//    if (vars.testBit(v)) {
-//      if (Const.get(sign.testBit(v)) != c)
-//        return Const.ONE;
-//      else {
-//        BigInteger n = vars.clearBit(v);
-//        if (n.bitLength() == 0)
-//          return Const.ZERO;
-//        else
-//          return new Disjunction(n, sign);
-//      }
-//    } else return this;
-//  }
-//
-//  @Override
-//  public void getVars(Set<Integer> vars) {
-//    for (int i = 0; i < this.vars.bitLength(); i++)
-//      if (this.vars.testBit(i))
-//        vars.add(i);
-//  }
-//  
-//  @Override
-//  public String toString() {
-//    StringBuilder sb = new StringBuilder();
-//    for (int i = 0; i < vars.bitLength(); i++)
-//      if (vars.testBit(i)) {
-//        if (sb.length() > 0)
-//          sb.append(" | ");
-//        if (sign.testBit(i))
-//          sb.append("!");
-//        sb.append("x");
-//        sb.append(i);
-//      }
-//    return sb.toString();
-//  }
+  @Test
+  public void testNot() {
+    Assert.assertEquals("!x0", Disjunction.var(0, false).not().toString());
+  }
   
+  @Test
+  public void testGetVars() {
+    IExpression v1 = Disjunction.var(0, true);
+    Set<Integer> vars = new HashSet<Integer>();
+    v1.getVars(vars);
+    Assert.assertEquals("[0]", vars.toString());
+  }
 }
