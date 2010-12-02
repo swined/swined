@@ -24,7 +24,7 @@ public class Or implements IExpression {
       return Const.ZERO;
     if (e.equals(Const.ONE))
       return this;
-    return new And(this, e);
+    return a.and(e).or(b.and(e));
   }
 
   @Override
