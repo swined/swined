@@ -13,7 +13,7 @@ public class Conjunction implements IExpression {
     if (vars.bitLength() == 0)
       throw new IllegalArgumentException();
     this.vars = vars;
-    this.sign = sign;
+    this.sign = sign.and(vars);
   }
 
   public static Conjunction var(int var, boolean negative) {
@@ -46,8 +46,13 @@ public class Conjunction implements IExpression {
   public IExpression or(IExpression e) {
     if (e instanceof Const)
       return e.or(this);
-    else
-      return new Or(this, e);
+    if (e instanceof Conjunction) {
+      Conjunction c = (Conjunction)e;
+      if (vars.equals(c.vars) && sign.equals(c.sign)) {
+        return this;
+      }
+    }
+    return new Or(this, e);
   }
 
   @Override

@@ -78,8 +78,9 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("2");//9173503");
+    BigInteger n = new BigInteger("91");//9173503");
     System.out.println(n.bitLength() + " bit");
     System.out.println(eq(n));
+    System.out.println(split(eq(n)));
   }
 }
