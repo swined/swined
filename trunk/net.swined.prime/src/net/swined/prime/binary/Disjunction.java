@@ -27,7 +27,12 @@ public class Disjunction implements IExpression {
   public IExpression and(IExpression e) {
     if (e instanceof Const)
       return e.and(this);
-    return new And(this, e);
+    if (e instanceof Or)
+      return e.and(this);
+    IExpression r = Const.ZERO;
+    for (int i = 0; i < vars.bitLength(); i++)
+      r = r.or(e.and(new Conjunction(BigInteger.ZERO.setBit(i), sign)));
+    return r;
   }
 
   @Override

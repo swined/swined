@@ -27,6 +27,10 @@ public class Conjunction implements IExpression {
   public IExpression and(IExpression e) {
     if (e instanceof Const)
       return e.and(this);
+    if (e instanceof Or)
+      return e.and(this);
+    if (e instanceof Disjunction)
+      return e.and(this);
     if (e instanceof Conjunction) {
       Conjunction c = (Conjunction) e;
       if (vars.and(c.vars).and(sign.xor(c.sign)).equals(BigInteger.ZERO)) {
@@ -35,7 +39,7 @@ public class Conjunction implements IExpression {
         return Const.ZERO;
       }
     }
-    return new And(this, e);
+    throw new UnsupportedOperationException();
   }
 
   @Override
