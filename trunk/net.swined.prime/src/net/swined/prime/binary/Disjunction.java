@@ -52,7 +52,7 @@ public class Disjunction implements IExpression {
 
   @Override
   public IExpression not() {
-    return new Conjunction(vars, sign.not().and(vars));
+    return new Conjunction(vars, sign.not());
   }
 
   @Override
