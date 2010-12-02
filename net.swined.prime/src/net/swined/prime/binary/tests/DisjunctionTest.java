@@ -3,8 +3,11 @@ package net.swined.prime.binary.tests;
 import java.math.BigInteger;
 
 import junit.framework.Assert;
+import net.swined.prime.binary.Conjunction;
+import net.swined.prime.binary.Const;
 import net.swined.prime.binary.Disjunction;
 import net.swined.prime.binary.IExpression;
+import net.swined.prime.binary.Or;
 
 import org.junit.Test;
 
@@ -28,13 +31,18 @@ public class DisjunctionTest {
   public void testAnd() {
     IExpression v1 = Disjunction.var(0, true);
     IExpression v2 = Disjunction.var(0, false);
+    IExpression v3 = Conjunction.var(0, true);    
     Assert.assertEquals("0", v1.and(v2).toString());
+    Assert.assertEquals("0", v1.and(Const.ZERO).toString());
+    Assert.assertEquals("!x0", v1.and(Const.ONE).toString());
+    Assert.assertEquals("!x0", v1.and(new Or(v2, v3)).toString());
   }
 
   @Test
   public void testOr() {
     IExpression v1 = Disjunction.var(0, true);
     IExpression v2 = Disjunction.var(0, false);
+    Assert.assertEquals("1", v1.or(Const.ONE).toString());
     Assert.assertEquals("1", v1.or(v2).toString());
   }
   
