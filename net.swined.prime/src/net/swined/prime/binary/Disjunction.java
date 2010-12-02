@@ -42,9 +42,9 @@ public class Disjunction implements IExpression {
     if (e instanceof Disjunction) {
         Disjunction c = (Disjunction) e;
         if (vars.and(c.vars).and(sign.xor(c.sign)).equals(BigInteger.ZERO)) {
-          return Const.ONE;
-        } else {
           return new Disjunction(vars.or(c.vars), sign.or(c.sign));
+        } else {
+          return Const.ONE;
         }
     }
     return new Or(this, e);
@@ -89,7 +89,7 @@ public class Disjunction implements IExpression {
         sb.append("x");
         sb.append(i);
       }
-    return sb.toString();
+    return "(" + sb.toString() + ")";
   }
   
 }
