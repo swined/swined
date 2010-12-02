@@ -1,5 +1,7 @@
 package net.swined.prime.binary.tests;
 
+import java.math.BigInteger;
+
 import junit.framework.Assert;
 import net.swined.prime.binary.Disjunction;
 import net.swined.prime.binary.IExpression;
@@ -9,6 +11,11 @@ import org.junit.Test;
 
 public class DisjunctionTest {
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructor() {
+    new Disjunction(BigInteger.ZERO, BigInteger.ZERO);
+  }
+  
   @Test
   public void testVar() {
     Assert.assertEquals("x0", Disjunction.var(0, false).toString());
