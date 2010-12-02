@@ -64,4 +64,15 @@ public class DisjunctionTest {
     v1.getVars(vars);
     Assert.assertEquals("[0]", vars.toString());
   }
+  
+  @Test
+  public void testSub() {
+    IExpression e1 = new Disjunction(BigInteger.valueOf(3), BigInteger.ZERO);
+    IExpression e2 = new Disjunction(BigInteger.valueOf(1), BigInteger.ZERO);
+    Assert.assertEquals("1", e1.sub(0, Const.ONE, null).toString());
+    Assert.assertEquals("(x1)", e1.sub(0, Const.ZERO, null).toString());
+    Assert.assertEquals("(x0 | x1)", e1.sub(2, Const.ONE, null).toString());
+    Assert.assertEquals("0", e2.sub(0, Const.ZERO, null).toString());
+  }
+  
 }
