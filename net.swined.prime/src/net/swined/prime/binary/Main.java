@@ -1,8 +1,11 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Main {
@@ -52,6 +55,7 @@ public class Main {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i <  e.length; i++) {
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
+      System.out.println(solve(x));
       r = r.and(x);
     }
 	  return r;
@@ -76,11 +80,40 @@ public class Main {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
     return eq(mul(var(0, l), var(l, l)), n);
   }
+
+  private static String toBinary(BigInteger n) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = n.bitLength(); i > 0; i--)
+      sb.append(n.testBit(i - 1) ? "1" : "0");
+    sb.append("b");
+    return sb.toString();
+  }
+  
+  private static List<Map<Integer, Const>> solve(IExpression eq) {
+    List<Map<Integer, Const>> solutions = new ArrayList<Map<Integer, Const>>();
+    if (eq instanceof Const) {
+      if (eq == Const.ONE)
+        solutions.add(new HashMap<Integer, Const>());
+      return solutions;
+    }
+    Set<Integer> vars = vars(eq);
+    int var = vars.iterator().next();
+    for (Const c : Const.values()) {
+      IExpression x = eq.sub(var, c, new HashMap<IExpression, IExpression>());
+      List<Map<Integer, Const>> s = solve(x);
+      for (Map<Integer, Const> t : s)
+        t.put(var, c);
+      solutions.addAll(s);
+    }
+    return solutions;
+  }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("91");//9173503");
-    System.out.println(n.bitLength() + " bit");
-    System.out.println(eq(n));
-    System.out.println(split(eq(n)));
+    BigInteger n = new BigInteger("9");//9173503");
+    System.out.println(toBinary(n));
+    System.out.println(solve(eq(n)));
+//    System.out.println(n.bitLength() + " bit");
+//    System.out.println(eq(n));
+//    System.out.println(split(eq(n)));
   }
 }
