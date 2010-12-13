@@ -50,10 +50,7 @@ public class Or implements IExpression {
 	  if (sub == null) {
   		IExpression sa = a.sub(v, c, map);
   		IExpression sb = b.sub(v, c, map);
-  		if (sa != a || sb != b)
-  			sub = sa.or(sb);
-  		else
-  			sub = this;
+			sub = sa.or(sb);
   		map.put(this, sub);
 	  }
 	  return sub;

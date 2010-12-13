@@ -30,7 +30,13 @@ public class Not implements IExpression {
 
   @Override
   public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
-    return x.sub(v, c, map).not();
+    IExpression sub = map.get(this);
+    if (sub == null) {
+      IExpression sx = x.sub(v, c, map);
+      sub = sx.not();
+      map.put(this, sub);
+    }
+    return sub;    
   }
 
   @Override

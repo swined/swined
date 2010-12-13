@@ -32,7 +32,14 @@ public class And implements IExpression {
 
   @Override
   public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
-    return a.sub(v, c, map).and(b.sub(v, c, map));
+    IExpression sub = map.get(this);
+    if (sub == null) {
+      IExpression sa = a.sub(v, c, map);
+      IExpression sb = b.sub(v, c, map);
+      sub = sa.and(sb);
+      map.put(this, sub);
+    }
+    return sub;    
   }
 
   @Override

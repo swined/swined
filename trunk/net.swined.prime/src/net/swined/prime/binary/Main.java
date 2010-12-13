@@ -110,7 +110,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("917");//9173503");
+    BigInteger n = new BigInteger("9173503");//9173503");
     System.out.println(toBinary(n));
     System.out.println(solve(eq(n)));
 //    System.out.println(n.bitLength() + " bit");
