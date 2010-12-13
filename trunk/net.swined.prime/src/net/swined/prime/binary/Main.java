@@ -64,20 +64,18 @@ public class Main {
 	    System.out.println(i + "/" + (e.length - 1));
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
       r = r.and(x);
-//      if (i == 0) {
-//        List<Map<Var, Const>> solution = solve(r);
-//        if (solution.size() == 1) {
-//          Map<Var, Const> s = solution.get(0);
-//          System.out.println(s);
-//          for (Var v : s.keySet()) {
-//            r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-//            for (int j = 0; j < e.length; j++)
-//              e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-//          }
-//        } else {
-//          System.out.println(solution.size());
-//        }
-//      }
+      List<Map<Var, Const>> solution = solve(r);
+      if (solution.size() == 1) {
+        Map<Var, Const> s = solution.get(0);
+        System.out.println(s);
+        for (Var v : s.keySet()) {
+          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+          for (int j = 0; j < e.length; j++)
+            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+        }
+      } else {
+        System.out.println(solution.size());
+      }
     }
 	  return r;
   }
