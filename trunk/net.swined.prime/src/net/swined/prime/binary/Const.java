@@ -18,7 +18,7 @@ public enum Const implements IExpression {
     }
 
     @Override
-    public IExpression not() {
+    public Const not() {
       return ZERO;
     }
 
@@ -42,7 +42,7 @@ public enum Const implements IExpression {
     }
 
     @Override
-    public IExpression not() {
+    public Const not() {
       return ONE;
     }
 
@@ -66,5 +66,8 @@ public enum Const implements IExpression {
   public Var getVar() {
     return null;
   }
+  
+  @Override
+  public abstract Const not();
   
 }
