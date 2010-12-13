@@ -53,7 +53,7 @@ public class Main {
   
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
-	  for (int i = 0; i < 3; i++) {
+	  for (int i = 0; i < e.length; i++) {
 	    System.out.println(i + "/" + e.length);
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
       r = r.and(x);
@@ -67,8 +67,7 @@ public class Main {
             e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
         }
       } else {
-        System.out.println(r);
-        System.out.println(solution);
+        System.out.println(solution.size());
       }
     }
 	  return r;
