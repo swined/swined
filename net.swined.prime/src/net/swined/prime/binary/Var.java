@@ -1,7 +1,6 @@
 package net.swined.prime.binary;
 
 import java.util.Map;
-import java.util.Set;
 
 public class Var implements IExpression {
 
@@ -36,11 +35,6 @@ public class Var implements IExpression {
       return c;
     else
       return this;
-  }
-
-  @Override
-  public void getVars(Set<Var> vars) {
-    vars.add(this);
   }
 
   @Override

@@ -3,10 +3,8 @@ package net.swined.prime.binary;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Main {
 
@@ -84,12 +82,6 @@ public class Main {
 	  return r;
   }
   
-  private static Set<Var> vars(IExpression e) {
-    Set<Var> vars = new HashSet<Var>();
-    e.getVars(vars);
-    return vars;
-  }
-  
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
     return eq(mul(var("x", l), var("y", l)), n);
@@ -111,8 +103,7 @@ public class Main {
         solutions.add(new HashMap<Var, Const>());
       return solutions;
     }
-    Set<Var> vars = vars(eq);
-    Var var = vars.iterator().next();
+    Var var = eq.getVar();
     for (Const c : Const.values()) {
       IExpression x = eq.sub(var, c, new HashMap<IExpression, IExpression>());
       List<Map<Var, Const>> s = solve(x);
