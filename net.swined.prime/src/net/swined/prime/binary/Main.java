@@ -58,14 +58,14 @@ public class Main {
     return r;
   }
   
-  private static IExpression split(IExpression e) {
-    Var var = e.getVar();
-    if (var == null)
-      return e;
-    IExpression p = e.sub(var, Const.ONE, new HashMap<IExpression, IExpression>());
-    IExpression n = e.sub(var, Const.ZERO, new HashMap<IExpression, IExpression>());
-    return var.and(split(p)).or(var.not().and(split(n)));
-  }
+//  private static IExpression split(IExpression e) {
+//    Var var = e.getVar();
+//    if (var == null)
+//      return e;
+//    IExpression p = e.sub(var, Const.ONE, new HashMap<IExpression, IExpression>());
+//    IExpression n = e.sub(var, Const.ZERO, new HashMap<IExpression, IExpression>());
+//    return var.and(split(p)).or(var.not().and(split(n)));
+//  }
   
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
@@ -122,9 +122,9 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9173503");//9173503");
+    BigInteger n = new BigInteger("91735039173503");//9173503");
     System.out.println(toBinary(n));
-    List<Map<Var, Const>> solutions = solve(split(eq(n)));
+    List<Map<Var, Const>> solutions = solve(eq(n));
     for (Map<Var, Const> solution : solutions) {
       BigInteger x = extract("x", solution);
       BigInteger y = extract("y", solution);
