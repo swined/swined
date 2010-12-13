@@ -8,7 +8,7 @@ public interface IExpression {
   IExpression and(IExpression e);
   IExpression or(IExpression e);
   IExpression not();
-  IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map);
-  void getVars(Set<Integer> vars);
+  IExpression sub(Var v, Const c, Map<IExpression, IExpression> map);
+  void getVars(Set<Var> vars);
   
 }

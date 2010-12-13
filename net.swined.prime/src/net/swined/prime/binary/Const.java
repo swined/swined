@@ -59,12 +59,12 @@ public enum Const implements IExpression {
   }
   
   @Override
-  public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
+  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
     return this;
   }
 
   @Override
-  public void getVars(Set<Integer> vars) {
+  public void getVars(Set<Var> vars) {
   }
   
 }

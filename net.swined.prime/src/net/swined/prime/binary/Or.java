@@ -10,10 +10,8 @@ public class Or implements IExpression {
   private final IExpression b;
   
   public Or(IExpression a, IExpression b) {
-	if (a instanceof Const || b instanceof Const)
-		throw new IllegalArgumentException();
-    if (a instanceof Disjunction && b instanceof Disjunction)
-        throw new IllegalArgumentException();
+    if (a instanceof Const || b instanceof Const)
+      throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
   }
@@ -47,7 +45,7 @@ public class Or implements IExpression {
   }
 
 	@Override
-	public IExpression sub(Integer v, Const c, Map<IExpression, IExpression> map) {
+	public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
 	  IExpression sub = map.get(this);
 	  if (sub == null) {
   		IExpression sa = a.sub(v, c, map);
@@ -62,7 +60,7 @@ public class Or implements IExpression {
 	}
 
   @Override
-  public void getVars(Set<Integer> vars) {
+  public void getVars(Set<Var> vars) {
     a.getVars(vars);
     b.getVars(vars);
   }
