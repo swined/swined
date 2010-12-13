@@ -66,6 +66,9 @@ public class Main {
           for (int j = 0; j < e.length; j++)
             e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
         }
+      } else {
+        System.out.println(r);
+        System.out.println(solution);
       }
     }
 	  return r;

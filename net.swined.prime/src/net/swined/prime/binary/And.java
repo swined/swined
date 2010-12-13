@@ -9,12 +9,16 @@ public class And implements IExpression {
   private final IExpression b;
   
   public And(IExpression a, IExpression b) {
+    if (a instanceof Const || b instanceof Const)
+      throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
   }
   
   @Override
   public IExpression and(IExpression e) {
+    if (e instanceof Const)
+      return e.and(this);
     return new And(this, e);
   }
 
@@ -48,4 +52,9 @@ public class And implements IExpression {
     b.getVars(vars);
   }
 
+  @Override
+  public String toString() {
+    return "(" + a + " & " + b + ")";
+  }
+  
 }

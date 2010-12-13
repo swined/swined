@@ -13,6 +13,8 @@ public class Not implements IExpression {
   
   @Override
   public IExpression and(IExpression e) {
+    if (e instanceof Const)
+      return e.and(this);
     return new And(this, e);
   }
 
@@ -44,4 +46,9 @@ public class Not implements IExpression {
     x.getVars(vars);
   }
 
+  @Override
+  public String toString() {
+    return "!" + x;
+  }
+  
 }
