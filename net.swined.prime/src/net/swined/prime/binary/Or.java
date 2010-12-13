@@ -18,25 +18,21 @@ public class Or implements IExpression {
 
   @Override
   public IExpression and(IExpression e) {
-    if (e.equals(Const.ZERO))
-      return Const.ZERO;
-    if (e.equals(Const.ONE))
-      return this;
-    return a.and(e).or(b.and(e));
+    if (e instanceof Const)
+      return e.and(this);
+    return new And(this, e);
   }
 
   @Override
   public IExpression or(IExpression e) {
-    if (e.equals(Const.ZERO))
-      return this;
-    if (e.equals(Const.ONE))
-      return Const.ONE;
+    if (e instanceof Const)
+      return e.or(this);
     return new Or(this, e);
   }
 
   @Override
   public IExpression not() {
-    return a.not().and(b.not());
+    return new Not(this);
   }
   
   @Override
