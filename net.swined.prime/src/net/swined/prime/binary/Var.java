@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Var implements IExpression {
 
-  private final String name;
+  public final String name;
   
   public Var(String name) {
     this.name = name;

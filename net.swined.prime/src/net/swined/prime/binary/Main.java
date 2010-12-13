@@ -49,6 +49,15 @@ public class Main {
     return r;
   }
   
+  private static BigInteger extract(String n, Map<Var, Const> s) {
+    BigInteger r = BigInteger.ZERO;
+    for (Var v : s.keySet())
+      if (v.name.startsWith(n))
+        if (s.get(v) == Const.ONE)
+          r = r.setBit(Integer.parseInt(v.name.replace(n, "")));
+    return r;
+  }
+  
   private static IExpression split(IExpression e) {
     Var var = e.getVar();
     if (var == null)
@@ -61,21 +70,21 @@ public class Main {
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i < e.length; i++) {
-	    System.out.println(i + "/" + (e.length - 1));
+//	    System.out.println(i + "/" + (e.length - 1));
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
       r = r.and(x);
-      List<Map<Var, Const>> solution = solve(r);
-      if (solution.size() == 1) {
-        Map<Var, Const> s = solution.get(0);
-        System.out.println(s);
-        for (Var v : s.keySet()) {
-          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-          for (int j = 0; j < e.length; j++)
-            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-        }
-      } else {
-        System.out.println(solution.size());
-      }
+//      List<Map<Var, Const>> solution = solve(r);
+//      if (solution.size() == 1) {
+//        Map<Var, Const> s = solution.get(0);
+//        System.out.println(s);
+//        for (Var v : s.keySet()) {
+//          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+//          for (int j = 0; j < e.length; j++)
+//            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+//        }
+//      } else {
+//        System.out.println(solution.size());
+//      }
     }
 	  return r;
   }
@@ -115,6 +124,11 @@ public class Main {
   public static void main(String[] args) {
     BigInteger n = new BigInteger("9173503");//9173503");
     System.out.println(toBinary(n));
-    System.out.println(solve(split(eq(n))));
+    List<Map<Var, Const>> solutions = solve(split(eq(n)));
+    for (Map<Var, Const> solution : solutions) {
+      BigInteger x = extract("x", solution);
+      BigInteger y = extract("y", solution);
+      System.out.println(x + " * " + y + " = " + n);
+    }
   }
 }
