@@ -51,12 +51,22 @@ public class Main {
     return r;
   }
   
+  private static IExpression split(IExpression e) {
+    Set<Var> vars = vars(e);
+    if (vars.isEmpty())
+      return e;
+    Var var = vars.iterator().next();
+    IExpression p = e.sub(var, Const.ONE, new HashMap<IExpression, IExpression>());
+    IExpression n = e.sub(var, Const.ZERO, new HashMap<IExpression, IExpression>());
+    return var.and(split(p)).or(var.not().and(split(n)));
+  }
+  
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i < e.length; i++) {
 	    System.out.println(i + "/" + e.length);
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
-      r = r.and(x);
+      r = split(r.and(x));
       List<Map<Var, Const>> solution = solve(r);
       if (solution.size() == 1) {
         Map<Var, Const> s = solution.get(0);
