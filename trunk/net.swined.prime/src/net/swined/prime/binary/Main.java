@@ -53,7 +53,7 @@ public class Main {
   
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
-	  for (int i = 0; i <  e.length; i++) {
+	  for (int i = 0; i < 3; i++) {
 	    System.out.println(i + "/" + e.length);
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
       r = r.and(x);
@@ -115,9 +115,6 @@ public class Main {
   public static void main(String[] args) {
     BigInteger n = new BigInteger("9173503");//9173503");
     System.out.println(toBinary(n));
-    System.out.println(solve(eq(n)));
-//    System.out.println(n.bitLength() + " bit");
-//    System.out.println(eq(n));
-//    System.out.println(split(eq(n)));
+    solve(eq(n));
   }
 }
