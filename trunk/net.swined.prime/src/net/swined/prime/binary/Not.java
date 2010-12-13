@@ -1,7 +1,6 @@
 package net.swined.prime.binary;
 
 import java.util.Map;
-import java.util.Set;
 
 public class Not implements IExpression {
 
@@ -41,11 +40,6 @@ public class Not implements IExpression {
       map.put(this, sub);
     }
     return sub;    
-  }
-
-  @Override
-  public void getVars(Set<Var> vars) {
-    x.getVars(vars);
   }
 
   @Override
