@@ -8,6 +8,8 @@ public class Not implements IExpression {
   private final IExpression x;
   
   public Not(IExpression x) {
+    if (x instanceof Const)
+      throw new IllegalArgumentException();
     this.x = x;
   }
   
