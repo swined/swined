@@ -10,10 +10,10 @@ import java.util.Set;
 
 public class Main {
 
-  private static IExpression[] var(int n, int l) {
-    IExpression[] e = new IExpression[l];
+  private static Var[] var(String n, int l) {
+    Var[] e = new Var[l];
     for (int i = 0; i < l; i++)
-      e[i] = Conjunction.var(n + i, false);
+      e[i] = new Var(n + i);
     return e;
   }
 
@@ -61,24 +61,24 @@ public class Main {
 	  return r;
   }
   
-  private static Set<Integer> vars(IExpression e) {
-    Set<Integer> vars = new HashSet<Integer>();
+  private static Set<Var> vars(IExpression e) {
+    Set<Var> vars = new HashSet<Var>();
     e.getVars(vars);
     return vars;
   }
   
   private static IExpression split(IExpression e) {
-	  for (Integer x : vars(e)) {
+	  for (Var x : vars(e)) {
 	    IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
 	    IExpression nx = e.sub(x, Const.ZERO, new HashMap<IExpression, IExpression>());
-	    e = Conjunction.var(x, false).and(px).or(Conjunction.var(x, true).and(nx));
+	    e = x.and(px).or(x.not().and(nx));
 	  }
 	  return e;
   }
 
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
-    return eq(mul(var(0, l), var(l, l)), n);
+    return eq(mul(var("x", l), var("y", l)), n);
   }
 
   private static String toBinary(BigInteger n) {
@@ -89,19 +89,19 @@ public class Main {
     return sb.toString();
   }
   
-  private static List<Map<Integer, Const>> solve(IExpression eq) {
-    List<Map<Integer, Const>> solutions = new ArrayList<Map<Integer, Const>>();
+  private static List<Map<Var, Const>> solve(IExpression eq) {
+    List<Map<Var, Const>> solutions = new ArrayList<Map<Var, Const>>();
     if (eq instanceof Const) {
       if (eq == Const.ONE)
-        solutions.add(new HashMap<Integer, Const>());
+        solutions.add(new HashMap<Var, Const>());
       return solutions;
     }
-    Set<Integer> vars = vars(eq);
-    int var = vars.iterator().next();
+    Set<Var> vars = vars(eq);
+    Var var = vars.iterator().next();
     for (Const c : Const.values()) {
       IExpression x = eq.sub(var, c, new HashMap<IExpression, IExpression>());
-      List<Map<Integer, Const>> s = solve(x);
-      for (Map<Integer, Const> t : s)
+      List<Map<Var, Const>> s = solve(x);
+      for (Map<Var, Const> t : s)
         t.put(var, c);
       solutions.addAll(s);
     }

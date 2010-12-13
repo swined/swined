@@ -1,0 +1,56 @@
+package net.swined.prime.binary;
+
+import java.util.Map;
+import java.util.Set;
+
+public class Var implements IExpression {
+
+  private final String name;
+  
+  public Var(String name) {
+    this.name = name;
+  }
+  
+  @Override
+  public IExpression and(IExpression e) {
+    return new And(this, e);
+  }
+
+  @Override
+  public IExpression or(IExpression e) {
+    return new Or(this, e);
+  }
+
+  @Override
+  public IExpression not() {
+    return new Not(this);
+  }
+
+  @Override
+  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
+    if (equals(v))
+      return c;
+    else
+      return this;
+  }
+
+  @Override
+  public void getVars(Set<Var> vars) {
+    vars.add(this);
+  }
+
+  @Override
+  public boolean equals(Object e) {
+    if (this == e)
+      return true;
+    if (!(e instanceof Var))
+      return false;
+    return name.equals(((Var)e).name);
+  }
+  
+  @Override
+  public String toString() {
+    return name;
+  }
+  
+}
