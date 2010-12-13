@@ -54,9 +54,19 @@ public class Main {
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i <  e.length; i++) {
+	    System.out.println(i + "/" + e.length);
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
-      System.out.println(solve(x));
       r = r.and(x);
+      List<Map<Var, Const>> solution = solve(r);
+      if (solution.size() == 1) {
+        Map<Var, Const> s = solution.get(0);
+        System.out.println(s);
+        for (Var v : s.keySet()) {
+          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+          for (int j = 0; j < e.length; j++)
+            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+        }
+      }
     }
 	  return r;
   }
@@ -67,15 +77,6 @@ public class Main {
     return vars;
   }
   
-  private static IExpression split(IExpression e) {
-	  for (Var x : vars(e)) {
-	    IExpression px = e.sub(x, Const.ONE, new HashMap<IExpression, IExpression>());
-	    IExpression nx = e.sub(x, Const.ZERO, new HashMap<IExpression, IExpression>());
-	    e = x.and(px).or(x.not().and(nx));
-	  }
-	  return e;
-  }
-
   private static IExpression eq(BigInteger n) {
     int l = n.bitLength() / 2 + n.bitLength() % 2;
     return eq(mul(var("x", l), var("y", l)), n);
@@ -109,7 +110,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9");//9173503");
+    BigInteger n = new BigInteger("917");//9173503");
     System.out.println(toBinary(n));
     System.out.println(solve(eq(n)));
 //    System.out.println(n.bitLength() + " bit");

@@ -18,6 +18,8 @@ public class Not implements IExpression {
 
   @Override
   public IExpression or(IExpression e) {
+    if (e instanceof Const)
+      return e.or(this);
     return new Or(this, e);
   }
 
