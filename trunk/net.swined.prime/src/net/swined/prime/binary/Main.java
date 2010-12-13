@@ -51,34 +51,34 @@ public class Main {
     return r;
   }
   
-  private static IExpression split(IExpression e) {
-    Set<Var> vars = vars(e);
-    if (vars.isEmpty())
+  private static IExpression split(IExpression e, String t) {
+    Var var = e.getVar();
+    if (var == null)
       return e;
-    Var var = vars.iterator().next();
+    System.out.println(var);
     IExpression p = e.sub(var, Const.ONE, new HashMap<IExpression, IExpression>());
     IExpression n = e.sub(var, Const.ZERO, new HashMap<IExpression, IExpression>());
-    return var.and(split(p)).or(var.not().and(split(n)));
+    return var.and(split(p, t + " ")).or(var.not().and(split(n, t + " ")));
   }
   
   private static IExpression eq(IExpression[] e, BigInteger n) {
 	  IExpression r = Const.ONE;
 	  for (int i = 0; i < e.length; i++) {
-	    System.out.println(i + "/" + e.length);
+	    System.out.println(i + "/" + (e.length - 1));
       IExpression x = n.testBit(i) ? e[i] : e[i].not();
-      r = split(r.and(x));
-      List<Map<Var, Const>> solution = solve(r);
-      if (solution.size() == 1) {
-        Map<Var, Const> s = solution.get(0);
-        System.out.println(s);
-        for (Var v : s.keySet()) {
-          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-          for (int j = 0; j < e.length; j++)
-            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-        }
-      } else {
-        System.out.println(solution.size());
-      }
+      r = (r.and(x)); // split
+//      List<Map<Var, Const>> solution = solve(r);
+//      if (solution.size() == 1) {
+//        Map<Var, Const> s = solution.get(0);
+//        System.out.println(s);
+//        for (Var v : s.keySet()) {
+//          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+//          for (int j = 0; j < e.length; j++)
+//            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
+//        }
+//      } else {
+//        System.out.println(solution.size());
+//      }
     }
 	  return r;
   }
@@ -122,8 +122,8 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9173503109612304981237094773");//9173503");
+    BigInteger n = new BigInteger("9173503");//9173503");
     System.out.println(toBinary(n));
-    solve(eq(n));
+    System.out.println(solve(split(eq(n), "")));
   }
 }

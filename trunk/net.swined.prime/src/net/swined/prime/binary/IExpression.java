@@ -10,5 +10,6 @@ public interface IExpression {
   IExpression not();
   IExpression sub(Var v, Const c, Map<IExpression, IExpression> map);
   void getVars(Set<Var> vars);
+  Var getVar();
   
 }

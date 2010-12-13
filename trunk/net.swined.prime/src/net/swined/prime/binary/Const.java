@@ -66,5 +66,10 @@ public enum Const implements IExpression {
   @Override
   public void getVars(Set<Var> vars) {
   }
+
+  @Override
+  public Var getVar() {
+    return null;
+  }
   
 }

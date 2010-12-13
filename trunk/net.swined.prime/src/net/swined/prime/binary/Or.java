@@ -57,5 +57,16 @@ public class Or implements IExpression {
     a.getVars(vars);
     b.getVars(vars);
   }
+  
+  @Override
+  public Var getVar() {
+    Var va = a.getVar();
+    if (va != null)
+      return va;
+    Var vb = b.getVar();
+    if (vb != null)
+      return vb;
+    return null;
+  }
 	
 }

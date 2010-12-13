@@ -53,4 +53,9 @@ public class Not implements IExpression {
     return "!" + x;
   }
   
+  @Override
+  public Var getVar() {
+    return x.getVar();
+  }
+  
 }
