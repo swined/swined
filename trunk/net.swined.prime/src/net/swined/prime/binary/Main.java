@@ -122,7 +122,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("9173503");//9173503");
+    BigInteger n = new BigInteger("9173503109612304981237094773");//9173503");
     System.out.println(toBinary(n));
     solve(eq(n));
   }
