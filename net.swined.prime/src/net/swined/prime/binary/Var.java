@@ -56,5 +56,10 @@ public class Var implements IExpression {
   public String toString() {
     return name;
   }
+
+  @Override
+  public Var getVar() {
+    return this;
+  }
   
 }

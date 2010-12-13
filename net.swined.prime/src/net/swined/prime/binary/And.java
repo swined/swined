@@ -56,5 +56,16 @@ public class And implements IExpression {
   public String toString() {
     return "(" + a + " & " + b + ")";
   }
+
+  @Override
+  public Var getVar() {
+    Var va = a.getVar();
+    if (va != null)
+      return va;
+    Var vb = b.getVar();
+    if (vb != null)
+      return vb;
+    return null;
+  }
   
 }
