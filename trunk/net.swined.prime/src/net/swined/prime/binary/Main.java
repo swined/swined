@@ -2,7 +2,9 @@ package net.swined.prime.binary;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
 
@@ -104,9 +106,23 @@ public class Main {
         return null;
     }
 
+    private static IExpression split(IExpression e) {
+      Set<Var> vars = new HashSet<Var>();
+      e.getVars(vars);
+      for (Var var : vars) {
+        System.out.println(var);
+        IExpression p = e.sub(var, Const.ONE, new SubContext());
+        IExpression n = e.sub(var, Const.ZERO, new SubContext());
+        e = var.and(p).or(var.not().and(n));
+      }
+      return e;
+    }
+    
     private static BigInteger eu(BigInteger n) {
       System.out.println("building eq");
         IExpression eq = eq(n);
+        System.out.println("splitting");
+        eq = split(eq);
         System.out.println("solving");
         Map<Var, Const> solution = solve(eq);
         System.out.println("analyzing solution");
