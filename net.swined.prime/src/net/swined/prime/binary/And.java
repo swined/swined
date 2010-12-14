@@ -1,5 +1,6 @@
 package net.swined.prime.binary;
 
+
 public class And extends Expression {
 
   private final IExpression a;
@@ -10,6 +11,8 @@ public class And extends Expression {
       throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
+    a.getVars(vars);
+    b.getVars(vars);
   }
   
   @Override
@@ -44,5 +47,5 @@ public class And extends Expression {
       return vb;
     return null;
   }
-  
+
 }

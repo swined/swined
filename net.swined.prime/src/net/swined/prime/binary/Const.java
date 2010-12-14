@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Set;
+
 
 public enum Const implements IExpression {
 
@@ -79,6 +81,11 @@ public enum Const implements IExpression {
   @Override
   public Var getVar() {
     return null;
+  }
+  
+  @Override
+  public void getVars(Set<Var> vars) {
+    
   }
   
 }

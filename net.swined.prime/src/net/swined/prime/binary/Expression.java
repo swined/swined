@@ -1,7 +1,12 @@
 package net.swined.prime.binary;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public abstract class Expression implements IExpression {
 
+  protected final Set<Var> vars = new HashSet<Var>();
+  
   @Override
   public final IExpression and(IExpression e) {
     if (e instanceof Const)
@@ -32,4 +37,9 @@ public abstract class Expression implements IExpression {
     return new M2(this, x, y);
   }
 
+  @Override
+  public final void getVars(Set<Var> vars) {
+    vars.addAll(this.vars);
+  }
+  
 }

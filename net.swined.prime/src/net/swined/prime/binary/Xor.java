@@ -10,6 +10,8 @@ public class Xor extends Expression {
       throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
+    a.getVars(vars);
+    b.getVars(vars);
   }
 
   @Override

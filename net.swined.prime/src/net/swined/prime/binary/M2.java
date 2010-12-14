@@ -1,5 +1,6 @@
 package net.swined.prime.binary;
 
+
 public class M2 extends Expression {
 
     private final IExpression a;
@@ -12,6 +13,9 @@ public class M2 extends Expression {
         this.a = a;
         this.b = b;
         this.c = c;
+        a.getVars(vars);
+        b.getVars(vars);
+        c.getVars(vars);
     }
 
   @Override

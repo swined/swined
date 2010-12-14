@@ -105,7 +105,11 @@ public class Main {
     }
 
     private static BigInteger eu(BigInteger n) {
-        Map<Var, Const> solution = solve(eq(n));
+      System.out.println("building eq");
+        IExpression eq = eq(n);
+        System.out.println("solving");
+        Map<Var, Const> solution = solve(eq);
+        System.out.println("analyzing solution");
         if (solution == null) {
             return null;
         } else {
@@ -119,7 +123,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        BigInteger n = new BigInteger("100000").nextProbablePrime();//9173503");
+        BigInteger n = new BigInteger("1000000").nextProbablePrime();//9173503");
         n = n.multiply(n.nextProbablePrime());
         System.out.println(toBinary(n));
         System.out.println(eu(n));

@@ -6,6 +6,7 @@ public class Var extends Expression {
   
   public Var(String name) {
     this.name = name;
+    vars.add(this);
   }
   
   @Override
