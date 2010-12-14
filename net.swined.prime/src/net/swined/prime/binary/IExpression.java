@@ -1,13 +1,13 @@
 package net.swined.prime.binary;
 
-import java.util.Map;
-
 public interface IExpression {
 
   IExpression and(IExpression e);
   IExpression or(IExpression e);
+  IExpression xor(IExpression e);
   IExpression not();
-  IExpression sub(Var v, Const c, Map<IExpression, IExpression> map);
+  IExpression m2(IExpression x, IExpression y);
+  IExpression sub(Var v, Const c, SubContext ctx);
   Var getVar();
   
 }

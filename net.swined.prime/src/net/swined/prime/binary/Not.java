@@ -1,43 +1,27 @@
 package net.swined.prime.binary;
 
-import java.util.Map;
-
-public class Not implements IExpression {
+public class Not extends Expression {
 
   private final IExpression x;
   
   public Not(IExpression x) {
-    if (x instanceof Const)
+    if (x instanceof Const || x instanceof Not)
       throw new IllegalArgumentException();
     this.x = x;
   }
   
-  @Override
-  public IExpression and(IExpression e) {
-    if (e instanceof Const)
-      return e.and(this);
-    return new And(this, e);
-  }
-
-  @Override
-  public IExpression or(IExpression e) {
-    if (e instanceof Const)
-      return e.or(this);
-    return new Or(this, e);
-  }
-
   @Override
   public IExpression not() {
     return x;
   }
 
   @Override
-  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
-    IExpression sub = map.get(this);
+  public IExpression sub(Var v, Const c, SubContext ctx) {
+    IExpression sub = ctx.not.get(this);
     if (sub == null) {
-      IExpression sx = x.sub(v, c, map);
+      IExpression sx = x.sub(v, c, ctx);
       sub = sx.not();
-      map.put(this, sub);
+      ctx.not.put(this, sub);
     }
     return sub;    
   }
