@@ -1,7 +1,5 @@
 package net.swined.prime.binary;
 
-import java.util.Map;
-
 
 public enum Const implements IExpression {
 
@@ -15,6 +13,16 @@ public enum Const implements IExpression {
     @Override
     public IExpression or(IExpression e) {
       return ONE;
+    }
+
+    @Override
+    public IExpression xor(IExpression e) {
+      return e.not();
+    }
+
+    @Override
+    public IExpression m2(IExpression x, IExpression y) {
+        return x.or(y);
     }
 
     @Override
@@ -42,6 +50,16 @@ public enum Const implements IExpression {
     }
 
     @Override
+    public IExpression xor(IExpression e) {
+      return e;
+    }
+
+    @Override
+    public IExpression m2(IExpression x, IExpression y) {
+        return x.and(y);
+    }
+
+    @Override
     public Const not() {
       return ONE;
     }
@@ -53,12 +71,8 @@ public enum Const implements IExpression {
     
   };
 
-  public static Const get(boolean value) {
-    return value ? ONE : ZERO;
-  }
-  
   @Override
-  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
+  public IExpression sub(Var v, Const c, SubContext ctx) {
     return this;
   }
 
@@ -66,8 +80,5 @@ public enum Const implements IExpression {
   public Var getVar() {
     return null;
   }
-  
-  @Override
-  public abstract Const not();
   
 }

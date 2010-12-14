@@ -1,134 +1,127 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
 
-  private static Var[] var(String n, int l) {
-    Var[] e = new Var[l];
-    for (int i = 0; i < l; i++)
-      e[i] = new Var(n + i);
-    return e;
-  }
+    private static BigInteger counter = BigInteger.ZERO;
 
-  private static IExpression[] zero(int l) {
-    IExpression[] e = new IExpression[l];
-    for (int i = 0; i < l; i++)
-      e[i] = Const.ZERO;
-    return e;
-  }
-  
-  private static IExpression xor(IExpression a, IExpression b) {
-    return a.and(b.not()).or(a.not().and(b));
-  }
-  
-  private static IExpression[] sum(IExpression[] a, IExpression[] b) {
-    if (a.length != b.length)
-      throw new IllegalArgumentException();
-    IExpression[] q = new IExpression[a.length];
-    IExpression f = Const.ZERO;
-    for (int i = 0; i < q.length; i++) {
-      q[i] = xor(xor(a[i], b[i]), f);
-      f = a[i].and(b[i]).or(a[i].and(f)).or(b[i].and(f));
+    private static Var[] var(String n, int l) {
+        Var[] e = new Var[l];
+        for (int i = 0; i < l; i++) {
+            e[i] = new Var(n + i);
+        }
+        return e;
     }
-    return q;
-  }
-  
-  private static IExpression[] mul(IExpression[] a, IExpression[] b) {
-    IExpression[] r = zero(a.length + b.length);
-    for (int i = 0; i < a.length; i++) {
-      IExpression[] t = zero(r.length);
-      for (int j = 0; j < b.length; j++)
-        t[i + j] = a[i].and(b[j]);
-      r = sum(r, t);
-    }
-    return r;
-  }
-  
-  private static BigInteger extract(String n, Map<Var, Const> s) {
-    BigInteger r = BigInteger.ZERO;
-    for (Var v : s.keySet())
-      if (v.name.startsWith(n))
-        if (s.get(v) == Const.ONE)
-          r = r.setBit(Integer.parseInt(v.name.replace(n, "")));
-    return r;
-  }
-  
-//  private static IExpression split(IExpression e) {
-//    Var var = e.getVar();
-//    if (var == null)
-//      return e;
-//    IExpression p = e.sub(var, Const.ONE, new HashMap<IExpression, IExpression>());
-//    IExpression n = e.sub(var, Const.ZERO, new HashMap<IExpression, IExpression>());
-//    return var.and(split(p)).or(var.not().and(split(n)));
-//  }
-  
-  private static IExpression eq(IExpression[] e, BigInteger n) {
-	  IExpression r = Const.ONE;
-	  for (int i = 0; i < e.length; i++) {
-//	    System.out.println(i + "/" + (e.length - 1));
-      IExpression x = n.testBit(i) ? e[i] : e[i].not();
-      r = r.and(x);
-//      List<Map<Var, Const>> solution = solve(r);
-//      if (solution.size() == 1) {
-//        Map<Var, Const> s = solution.get(0);
-//        System.out.println(s);
-//        for (Var v : s.keySet()) {
-//          r = r.sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-//          for (int j = 0; j < e.length; j++)
-//            e[j] = e[j].sub(v, s.get(v), new HashMap<IExpression, IExpression>());
-//        }
-//      } else {
-//        System.out.println(solution.size());
-//      }
-    }
-	  return r;
-  }
-  
-  private static IExpression eq(BigInteger n) {
-    int l = n.bitLength() / 2 + n.bitLength() % 2;
-    return eq(mul(var("x", l), var("y", l)), n);
-  }
 
-  private static String toBinary(BigInteger n) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = n.bitLength(); i > 0; i--)
-      sb.append(n.testBit(i - 1) ? "1" : "0");
-    sb.append("b/");
-    sb.append(n.bitLength());
-    return sb.toString();
-  }
-  
-  private static List<Map<Var, Const>> solve(IExpression eq) {
-    List<Map<Var, Const>> solutions = new ArrayList<Map<Var, Const>>();
-    if (eq instanceof Const) {
-      if (eq == Const.ONE)
-        solutions.add(new HashMap<Var, Const>());
-      return solutions;
+    private static IExpression[] zero(int l) {
+        IExpression[] e = new IExpression[l];
+        for (int i = 0; i < l; i++) {
+            e[i] = Const.ZERO;
+        }
+        return e;
     }
-    Var var = eq.getVar();
-    for (Const c : Const.values()) {
-      IExpression x = eq.sub(var, c, new HashMap<IExpression, IExpression>());
-      List<Map<Var, Const>> s = solve(x);
-      for (Map<Var, Const> t : s)
-        t.put(var, c);
-      solutions.addAll(s);
+
+    private static IExpression[] sum(IExpression[] a, IExpression[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException();
+        }
+        IExpression[] q = new IExpression[a.length];
+        IExpression f = Const.ZERO;
+        for (int i = 0; i < q.length; i++) {
+            q[i] = f.xor(a[i].xor(b[i]));
+            f = f.m2(a[i], b[i]);
+        }
+        return q;
     }
-    return solutions;
-  }
-  
-  public static void main(String[] args) {
-    BigInteger n = new BigInteger("91735039173503");//9173503");
-    System.out.println(toBinary(n));
-    List<Map<Var, Const>> solutions = solve(eq(n));
-    for (Map<Var, Const> solution : solutions) {
-      BigInteger x = extract("x", solution);
-      BigInteger y = extract("y", solution);
-      System.out.println(x + " * " + y + " = " + n);
+
+    private static IExpression[] mul(IExpression[] a, IExpression[] b) {
+        IExpression[] r = zero(a.length + b.length);
+        for (int i = 0; i < a.length; i++) {
+            IExpression[] t = zero(r.length);
+            for (int j = 0; j < b.length; j++) {
+                t[i + j] = a[i].and(b[j]);
+            }
+            r = sum(r, t);
+        }
+        return r;
     }
-  }
+
+    private static BigInteger extract(String n, Map<Var, Const> s) {
+        BigInteger r = BigInteger.ZERO;
+        for (Var v : s.keySet()) {
+            if (v.name.startsWith(n)) {
+                if (s.get(v) == Const.ONE) {
+                    r = r.setBit(Integer.parseInt(v.name.replace(n, "")));
+                }
+            }
+        }
+        return r;
+    }
+
+    private static IExpression eq(IExpression[] e, BigInteger n) {
+        IExpression r = Const.ONE;
+        for (int i = 0; i < e.length; i++) {
+            IExpression x = n.testBit(i) ? e[i] : e[i].not();
+            r = r.and(x);
+        }
+        return r;
+    }
+
+    private static IExpression eq(BigInteger n) {
+        int l = n.bitLength() / 2 + n.bitLength() % 2;
+        return eq(mul(var("x", l), var("y", l)), n);
+    }
+
+    private static String toBinary(BigInteger n) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = n.bitLength(); i > 0; i--) {
+            sb.append(n.testBit(i - 1) ? "1" : "0");
+        }
+        sb.append("b/");
+        sb.append(n.bitLength());
+        return sb.toString();
+    }
+
+    private static Map<Var, Const> solve(IExpression eq) {
+        counter = counter.add(BigInteger.ONE);
+        if (eq == Const.ONE) {
+            return new HashMap<Var, Const>();
+        }
+        if (eq == Const.ZERO) {
+            return null;
+        }
+        Var var = eq.getVar();
+        for (Const c : Const.values()) {
+            Map<Var, Const> s = solve(eq.sub(var, c, new SubContext()));
+            if (s != null) {
+                s.put(var, c);
+                return s;
+            }
+        }
+        return null;
+    }
+
+    private static BigInteger eu(BigInteger n) {
+        Map<Var, Const> solution = solve(eq(n));
+        if (solution == null) {
+            return null;
+        } else {
+            BigInteger x = extract("x", solution);
+            BigInteger y = extract("y", solution);
+            if (!x.multiply(y).equals(n))
+                throw new AssertionError();
+            System.out.println(x + " * " + y + " = " + n);
+            return x.subtract(BigInteger.ONE).multiply(y.subtract(BigInteger.ONE));
+        }
+    }
+
+    public static void main(String[] args) {
+        BigInteger n = new BigInteger("100000").nextProbablePrime();//9173503");
+        n = n.multiply(n.nextProbablePrime());
+        System.out.println(toBinary(n));
+        System.out.println(eu(n));
+    }
 }

@@ -1,8 +1,6 @@
 package net.swined.prime.binary;
 
-import java.util.Map;
-
-public class And implements IExpression {
+public class And extends Expression {
 
   private final IExpression a;
   private final IExpression b;
@@ -15,32 +13,18 @@ public class And implements IExpression {
   }
   
   @Override
-  public IExpression and(IExpression e) {
-    if (e instanceof Const)
-      return e.and(this);
-    return new And(this, e);
-  }
-
-  @Override
-  public IExpression or(IExpression e) {
-    if (e instanceof Const)
-      return e.or(this);
-    return new Or(this, e);
-  }
-
-  @Override
   public IExpression not() {
     return new Not(this);
   }
 
   @Override
-  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> map) {
-    IExpression sub = map.get(this);
+  public IExpression sub(Var v, Const c, SubContext ctx) {
+    IExpression sub = ctx.and.get(this);
     if (sub == null) {
-      IExpression sa = a.sub(v, c, map);
-      IExpression sb = b.sub(v, c, map);
+      IExpression sa = a.sub(v, c, ctx);
+      IExpression sb = b.sub(v, c, ctx);
       sub = sa.and(sb);
-      map.put(this, sub);
+      ctx.and.put(this, sub);
     }
     return sub;    
   }
