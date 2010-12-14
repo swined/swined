@@ -11,6 +11,8 @@ public class Or extends Expression {
         }
         this.a = a;
         this.b = b;
+        a.getVars(vars);
+        b.getVars(vars);
     }
 
     @Override

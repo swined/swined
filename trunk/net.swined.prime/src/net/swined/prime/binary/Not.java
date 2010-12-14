@@ -8,6 +8,7 @@ public class Not extends Expression {
     if (x instanceof Const || x instanceof Not)
       throw new IllegalArgumentException();
     this.x = x;
+    x.getVars(vars);
   }
   
   @Override
