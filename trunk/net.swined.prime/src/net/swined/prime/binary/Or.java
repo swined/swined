@@ -31,7 +31,10 @@ public class Or extends Expression {
         if (sub == null) {
             IExpression sa = a.sub(v, c, ctx);
             IExpression sb = b.sub(v, c, ctx);
-            sub = sa.or(sb);
+            if (sa == a && sb == b)
+              sub = this;
+            else
+              sub = sa.or(sb);
             ctx.or.put(this, sub);
         }
         return sub;

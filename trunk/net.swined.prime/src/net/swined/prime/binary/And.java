@@ -26,7 +26,10 @@ public class And extends Expression {
     if (sub == null) {
       IExpression sa = a.sub(v, c, ctx);
       IExpression sb = b.sub(v, c, ctx);
-      sub = sa.and(sb);
+      if (sa == a && sb == b)
+        sub = this;
+      else
+        sub = sa.and(sb);
       ctx.and.put(this, sub);
     }
     return sub;    
