@@ -25,7 +25,10 @@ public class Xor extends Expression {
     if (sub == null) {
       IExpression sa = a.sub(v, c, ctx);
       IExpression sb = b.sub(v, c, ctx);
-      sub = sa.xor(sb);
+      if (sa == a && sb == b)
+        sub = this;
+      else
+        sub = sa.xor(sb);
       ctx.xor.put(this, sub);
     }
     return sub;
