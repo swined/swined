@@ -109,11 +109,7 @@ public class Main {
     private static IExpression split(IExpression e) {
       Set<Var> vars = new HashSet<Var>();
       e.getVars(vars);
-      int c = 0;
       for (Var var : vars) {
-        System.out.println(var);
-        if (c++ > 5)
-          break;
         IExpression p = e.sub(var, Const.ONE, new SubContext());
         IExpression n = e.sub(var, Const.ZERO, new SubContext());
         e = var.and(p).or(var.not().and(n));
@@ -142,7 +138,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        BigInteger n = new BigInteger("1000000").nextProbablePrime();//9173503");
+        BigInteger n = new BigInteger("1000").nextProbablePrime();//9173503");
         n = n.multiply(n.nextProbablePrime());
         System.out.println(toBinary(n));
         System.out.println(eu(n));
