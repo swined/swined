@@ -35,6 +35,16 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.or(this);
         }
+        if (this instanceof Disjunction && e instanceof Disjunction) {
+            Disjunction a = (Disjunction)this;
+            Disjunction b = (Disjunction)e;
+            BigInteger x = a.vars.and(b.vars);
+            if (x.and(a.sign.xor(b.sign)).equals(BigInteger.ZERO)) {
+                return new Disjunction(a.vars.or(b.vars), a.sign.or(b.sign));
+            } else {
+                return Const.ONE;
+            }
+        }
         return new Or(this, e);
     }
 
