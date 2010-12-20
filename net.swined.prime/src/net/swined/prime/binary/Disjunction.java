@@ -3,20 +3,20 @@ package net.swined.prime.binary;
 import java.math.BigInteger;
 import java.util.Map;
 
-public class Conjunction extends Expression {
+public class Disjunction extends Expression {
 
     public final BigInteger sign;
 
-    public Conjunction(BigInteger vars, BigInteger sign) {
+    public Disjunction(BigInteger vars, BigInteger sign) {
         super(vars);
         if (vars.equals(BigInteger.ZERO))
             throw new IllegalArgumentException();
         this.sign = sign;
     }
 
-    public static Conjunction var(int name, boolean negative) {
+    public static Disjunction var(int name, boolean negative) {
         BigInteger sign = negative ? BigInteger.ZERO.setBit(name) : BigInteger.ZERO;
-        return new Conjunction(BigInteger.ZERO.setBit(name), sign);
+        return new Disjunction(BigInteger.ZERO.setBit(name), sign);
     }
 
     @Override
@@ -24,19 +24,19 @@ public class Conjunction extends Expression {
         if (!vars.testBit(v))
             return this;
         BigInteger nv = vars.clearBit(v);
-        if (sign.testBit(v) ^ (c == Const.ZERO)) {
-            return Const.ZERO;
+        if (sign.testBit(v) ^ (c == Const.ONE)) {
+            return Const.ONE;
         } else {
             if (nv.equals(BigInteger.ZERO))
-                return Const.ONE;
+                return Const.ZERO;
             else
-                return new Conjunction(nv, sign);
+                return new Disjunction(nv, sign);
         }
     }
 
     @Override
     public IExpression not() {
-        return new Disjunction(vars, sign.setBit(vars.bitLength()).not());
+        return new Conjunction(vars, sign.setBit(vars.bitLength()).not());
     }
 
 
