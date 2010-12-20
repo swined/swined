@@ -5,10 +5,12 @@ import java.util.Map;
 
 public class Conjunction extends Expression {
 
-    private final BigInteger sign;
+    public final BigInteger sign;
 
     public Conjunction(BigInteger vars, BigInteger sign) {
         super(vars);
+        if (vars.equals(BigInteger.ZERO))
+            throw new IllegalArgumentException();
         this.sign = sign;
     }
 
@@ -19,10 +21,17 @@ public class Conjunction extends Expression {
 
     @Override
     protected IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx) {
-        if (vars.bitCount() == 1) {
-            return sign.testBit(v) ? c.not() : c;
+        if (!vars.testBit(v))
+            return this;
+        BigInteger nv = vars.clearBit(v);
+        if (sign.testBit(v) ^ (c == Const.ZERO)) {
+            return Const.ZERO;
+        } else {
+            if (nv.equals(BigInteger.ZERO))
+                return Const.ONE;
+            else
+                return new Conjunction(nv, sign);
         }
-        return null;
     }
 
     @Override
