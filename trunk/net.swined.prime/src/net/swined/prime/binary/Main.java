@@ -95,7 +95,7 @@ public class Main {
         if (eq == Const.ZERO) {
             return null;
         }
-        Var var = eq.getVar();
+        Var var = new Var(eq.getVars().getLowestSetBit());
         for (Const c : Const.values()) {
             Map<Var, Const> s = solve(eq.sub(var, c));
             if (s != null) {
@@ -107,9 +107,10 @@ public class Main {
     }
 
     private static IExpression split(IExpression e) {
-      Set<Var> vars = new HashSet<Var>();
-      e.getVars(vars);
-      for (Var var : vars) {
+      BigInteger vars = e.getVars();
+      for (int i = 0; i < vars.bitLength(); i++)
+       if (vars.testBit(i)) {
+        Var var = new Var(i);
         IExpression p = e.sub(var, Const.ONE);
         IExpression n = e.sub(var, Const.ZERO);
         e = var.and(p).or(var.not().and(n));
