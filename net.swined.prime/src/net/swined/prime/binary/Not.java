@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 public class Not extends Expression {
 
   private final IExpression x;
@@ -17,14 +19,9 @@ public class Not extends Expression {
   }
 
   @Override
-  public IExpression sub(Var v, Const c, SubContext ctx) {
-    IExpression sub = ctx.not.get(this);
-    if (sub == null) {
-      IExpression sx = x.sub(v, c, ctx);
-      sub = sx.not();
-      ctx.not.put(this, sub);
-    }
-    return sub;    
+  protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
+    IExpression sx = x.sub(v, c, ctx);
+    return sx.not();
   }
 
   @Override

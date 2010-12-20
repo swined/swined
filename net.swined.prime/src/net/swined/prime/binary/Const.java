@@ -1,5 +1,6 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
 import java.util.Set;
 
 
@@ -74,10 +75,15 @@ public enum Const implements IExpression {
   };
 
   @Override
-  public IExpression sub(Var v, Const c, SubContext ctx) {
+  public IExpression sub(Var v, Const c, Map<IExpression, IExpression> ctx) {
     return this;
   }
 
+  @Override
+  public IExpression sub(Var v, Const c) {
+    return this;
+  }
+  
   @Override
   public Var getVar() {
     return null;

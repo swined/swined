@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 public class Var extends Expression {
 
   public final String name;
@@ -15,7 +17,7 @@ public class Var extends Expression {
   }
 
   @Override
-  public IExpression sub(Var v, Const c, SubContext ctx) {
+  protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
     if (name.equals(v.name))
       return c;
     else

@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 
 public class M2 extends Expression {
 
@@ -24,16 +26,11 @@ public class M2 extends Expression {
   }
 
   @Override
-  public IExpression sub(Var v, Const c, SubContext ctx) {
-    IExpression sub = ctx.m2.get(this);
-    if (sub == null) {
-      IExpression sa = a.sub(v, c, ctx);
-      IExpression sb = b.sub(v, c, ctx);
-      IExpression sc = this.c.sub(v, c, ctx);
-      sub = sa.m2(sb, sc);
-      ctx.m2.put(this, sub);
-    }
-    return sub;
+  protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
+    IExpression sa = a.sub(v, c, ctx);
+    IExpression sb = b.sub(v, c, ctx);
+    IExpression sc = this.c.sub(v, c, ctx);
+    return sa.m2(sb, sc);
   }
 
   @Override
