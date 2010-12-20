@@ -2,7 +2,6 @@ package net.swined.prime.binary;
 
 import java.math.BigInteger;
 import java.util.Map;
-import java.util.Set;
 
 
 public enum Const implements IExpression {
