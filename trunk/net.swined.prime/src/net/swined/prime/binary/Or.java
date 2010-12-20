@@ -28,9 +28,8 @@ public class Or extends Expression {
 
     @Override
     protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
-      IExpression sa = a.sub(v, c, ctx);
-      IExpression sb = b.sub(v, c, ctx);
-      return sa.or(sb);
+        IExpression sa = a.sub(v, c, ctx);
+        IExpression sb = b.sub(v, c, ctx);
+        return sa.or(sb);
     }
-
 }

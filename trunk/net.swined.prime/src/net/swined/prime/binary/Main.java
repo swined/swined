@@ -105,19 +105,20 @@ public class Main {
     }
 
     private static IExpression split(IExpression e) {
-      BigInteger vars = e.getVars();
-      for (int i = 0; i < vars.bitLength(); i++)
-       if (vars.testBit(i)) {
-        Var var = new Var(i);
-        IExpression p = e.sub(var, Const.ONE);
-        IExpression n = e.sub(var, Const.ZERO);
-        e = var.and(p).or(var.not().and(n));
-      }
-      return e;
+        BigInteger vars = e.getVars();
+        for (int i = 0; i < vars.bitLength(); i++) {
+            if (vars.testBit(i)) {
+                Var var = new Var(i);
+                IExpression p = e.sub(var, Const.ONE);
+                IExpression n = e.sub(var, Const.ZERO);
+                e = var.and(p).or(var.not().and(n));
+            }
+        }
+        return e;
     }
-    
+
     private static BigInteger eu(BigInteger n) {
-      System.out.println("building eq");
+        System.out.println("building eq");
         IExpression eq = eq(n);
 //        System.out.println(eq);
         System.out.println("splitting");
@@ -131,8 +132,9 @@ public class Main {
         } else {
             BigInteger x = extract(0, n.bitLength(), solution);
             BigInteger y = extract(n.bitLength(), n.bitLength(), solution);
-            if (!x.multiply(y).equals(n))
+            if (!x.multiply(y).equals(n)) {
                 throw new AssertionError();
+            }
             System.out.println(x + " * " + y + " = " + n);
             return x.subtract(BigInteger.ONE).multiply(y.subtract(BigInteger.ONE));
         }
