@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class Main {
 
-    private static BigInteger counter = BigInteger.ZERO;
-
     private static IExpression[] var(int n, int l) {
         IExpression[] e = new IExpression[l];
         for (int i = 0; i < l; i++) {
@@ -86,7 +84,6 @@ public class Main {
     }
 
     private static Map<Integer, Const> solve(IExpression eq) {
-        counter = counter.add(BigInteger.ONE);
         if (eq == Const.ONE) {
             return new HashMap<Integer, Const>();
         }
