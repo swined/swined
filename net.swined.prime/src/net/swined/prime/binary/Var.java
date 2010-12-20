@@ -4,9 +4,9 @@ import java.util.Map;
 
 public class Var extends Expression {
 
-  public final String name;
+  public final int name;
   
-  public Var(String name) {
+  public Var(int name) {
     this.name = name;
     vars.add(this);
   }
@@ -18,7 +18,7 @@ public class Var extends Expression {
 
   @Override
   protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
-    if (name.equals(v.name))
+    if (name == v.name)
       return c;
     else
       return this;
@@ -26,7 +26,7 @@ public class Var extends Expression {
   
   @Override
   public String toString() {
-    return name;
+    return "x" + name;
   }
 
 }

@@ -10,7 +10,7 @@ public class Main {
 
     private static BigInteger counter = BigInteger.ZERO;
 
-    private static Var[] var(String n, int l) {
+    private static Var[] var(int n, int l) {
         Var[] e = new Var[l];
         for (int i = 0; i < l; i++) {
             e[i] = new Var(n + i);
@@ -51,12 +51,12 @@ public class Main {
         return r;
     }
 
-    private static BigInteger extract(String n, Map<Var, Const> s) {
+    private static BigInteger extract(int n, int l, Map<Var, Const> s) {
         BigInteger r = BigInteger.ZERO;
         for (Var v : s.keySet()) {
-            if (v.name.startsWith(n)) {
+            if (v.name >= n && v.name < n + l) {
                 if (s.get(v) == Const.ONE) {
-                    r = r.setBit(Integer.parseInt(v.name.replace(n, "")));
+                    r = r.setBit(v.name - n);
                 }
             }
         }
@@ -74,7 +74,7 @@ public class Main {
 
     private static IExpression eq(BigInteger n) {
         int l = n.bitLength() / 2 + n.bitLength() % 2;
-        return eq(mul(var("x", l), var("y", l)), n);
+        return eq(mul(var(0, l), var(n.bitLength(), l)), n);
     }
 
     private static String toBinary(BigInteger n) {
@@ -130,8 +130,8 @@ public class Main {
         if (solution == null) {
             return null;
         } else {
-            BigInteger x = extract("x", solution);
-            BigInteger y = extract("y", solution);
+            BigInteger x = extract(0, n.bitLength(), solution);
+            BigInteger y = extract(n.bitLength(), n.bitLength(), solution);
             if (!x.multiply(y).equals(n))
                 throw new AssertionError();
             System.out.println(x + " * " + y + " = " + n);
