@@ -7,10 +7,10 @@ public class Not extends Expression {
   private final IExpression x;
   
   public Not(IExpression x) {
+    super(x.getVars());
     if (x instanceof Const || x instanceof Not)
       throw new IllegalArgumentException();
     this.x = x;
-    x.getVars(vars);
   }
   
   @Override

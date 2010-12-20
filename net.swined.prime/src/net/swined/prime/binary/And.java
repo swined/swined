@@ -9,12 +9,11 @@ public class And extends Expression {
   private final IExpression b;
   
   public And(IExpression a, IExpression b) {
+    super(a.getVars().or(b.getVars()));
     if (a instanceof Const || b instanceof Const)
       throw new IllegalArgumentException();
     this.a = a;
     this.b = b;
-    a.getVars(vars);
-    b.getVars(vars);
   }
   
   @Override

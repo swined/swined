@@ -1,14 +1,18 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public abstract class Expression implements IExpression {
 
-  protected final Set<Var> vars = new HashSet<Var>();
-  
+  protected final BigInteger vars;
+
+  public Expression(BigInteger vars) {
+      this.vars = vars;
+  }
+
   @Override
   public final IExpression and(IExpression e) {
     if (e instanceof Const)
@@ -40,21 +44,13 @@ public abstract class Expression implements IExpression {
   }
 
   @Override
-  public final void getVars(Set<Var> vars) {
-    vars.addAll(this.vars);
-  }
-  
-  @Override
-  public final Var getVar() {
-    if (vars.isEmpty())
-      return null;
-    else
-      return vars.iterator().next();
+  public final BigInteger getVars() {
+    return vars;
   }
   
   @Override
   public final IExpression sub(Var v, Const c, Map<IExpression, IExpression> ctx) {
-    if (!vars.contains(v))
+    if (!vars.testBit(v.name))
       return this;
     IExpression sub = ctx.get(this);
     if (sub == null)

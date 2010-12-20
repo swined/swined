@@ -10,14 +10,12 @@ public class M2 extends Expression {
     private final IExpression c;
 
     public M2(IExpression a, IExpression b, IExpression c) {
+        super(a.getVars().or(b.getVars()).or(c.getVars()));
     if (a instanceof Const || b instanceof Const || c instanceof Const)
       throw new IllegalArgumentException();
         this.a = a;
         this.b = b;
         this.c = c;
-        a.getVars(vars);
-        b.getVars(vars);
-        c.getVars(vars);
     }
 
   @Override

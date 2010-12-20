@@ -1,5 +1,6 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
 import java.util.Map;
 import java.util.Set;
 
@@ -85,13 +86,8 @@ public enum Const implements IExpression {
   }
   
   @Override
-  public Var getVar() {
-    return null;
-  }
-  
-  @Override
-  public void getVars(Set<Var> vars) {
-    
+  public BigInteger getVars() {
+    return BigInteger.ZERO;
   }
   
 }

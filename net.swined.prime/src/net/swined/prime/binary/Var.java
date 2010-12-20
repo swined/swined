@@ -1,5 +1,6 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class Var extends Expression {
@@ -7,8 +8,8 @@ public class Var extends Expression {
   public final int name;
   
   public Var(int name) {
+      super(BigInteger.ZERO.setBit(name));
     this.name = name;
-    vars.add(this);
   }
   
   @Override

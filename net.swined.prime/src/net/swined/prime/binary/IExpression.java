@@ -1,7 +1,7 @@
 package net.swined.prime.binary;
 
+import java.math.BigInteger;
 import java.util.Map;
-import java.util.Set;
 
 public interface IExpression {
 
@@ -12,7 +12,6 @@ public interface IExpression {
   IExpression m2(IExpression x, IExpression y);
   IExpression sub(Var v, Const c, Map<IExpression, IExpression> ctx);
   IExpression sub(Var v, Const c);
-  Var getVar();
-  void getVars(Set<Var> vars); 
+  BigInteger getVars();
   
 }
