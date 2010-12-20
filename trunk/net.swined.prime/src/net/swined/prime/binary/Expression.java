@@ -58,7 +58,7 @@ public abstract class Expression implements IExpression {
       return this;
     IExpression sub = ctx.get(this);
     if (sub == null)
-      ctx.put(this, sub = subImpl(v, c, ctx)); 
+      ctx.put(this, sub = subImpl(v, c, ctx));
     return sub;
   }
 
