@@ -42,4 +42,11 @@ public abstract class Expression implements IExpression {
     vars.addAll(this.vars);
   }
   
+  @Override
+  public final Var getVar() {
+    if (vars.isEmpty())
+      return null;
+    else
+      return vars.iterator().next();
+  }
 }

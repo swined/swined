@@ -41,18 +41,4 @@ public class M2 extends Expression {
     return "2(" + a + ", " + b + ", " + c + ")";
   }
 
-  @Override
-  public Var getVar() {
-    Var va = a.getVar();
-    if (va != null)
-      return va;
-    Var vb = b.getVar();
-    if (vb != null)
-      return vb;
-    Var vc = c.getVar();
-    if (vc != null)
-      return vc;
-    return null;
-  }
-
 }

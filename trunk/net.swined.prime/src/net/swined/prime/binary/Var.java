@@ -27,9 +27,4 @@ public class Var extends Expression {
     return name;
   }
 
-  @Override
-  public Var getVar() {
-    return this;
-  }
-  
 }
