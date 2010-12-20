@@ -18,8 +18,11 @@ public class Conjunction extends Expression {
     }
 
     @Override
-    protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx) {
+        if (vars.bitCount() == 1) {
+            return sign.testBit(v) ? c.not() : c;
+        }
+        return null;
     }
 
     @Override

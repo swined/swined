@@ -20,9 +20,9 @@ public class Var extends Expression {
     }
 
     @Override
-    protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
-        if (name == v.name) {
-            return negative == v.negative ? c : c.not();
+    protected IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx) {
+        if (name == v) {
+            return negative ? c.not() : c;
         } else {
             return this;
         }

@@ -53,8 +53,8 @@ public abstract class Expression implements IExpression {
     }
 
     @Override
-    public final IExpression sub(Var v, Const c, Map<IExpression, IExpression> ctx) {
-        if (!vars.testBit(v.name)) {
+    public final IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
+        if (!vars.testBit(v)) {
             return this;
         }
         IExpression sub = ctx.get(this);
@@ -65,9 +65,9 @@ public abstract class Expression implements IExpression {
     }
 
     @Override
-    public final IExpression sub(Var v, Const c) {
+    public final IExpression sub(int v, Const c) {
         return sub(v, c, new HashMap<IExpression, IExpression>());
     }
 
-    protected abstract IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx);
+    protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
 }
