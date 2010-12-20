@@ -12,6 +12,9 @@ public class And extends Expression {
         if (a instanceof Const || b instanceof Const) {
             throw new IllegalArgumentException();
         }
+        if (a instanceof Conjunction && b instanceof Conjunction) {
+            throw new IllegalArgumentException();
+        }
         this.a = a;
         this.b = b;
     }
