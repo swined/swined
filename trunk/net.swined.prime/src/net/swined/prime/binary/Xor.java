@@ -18,7 +18,7 @@ public class Xor extends Expression {
 
     @Override
     public IExpression not() {
-        return new Not(this);
+        return new Xor(a, b.not());
     }
 
     @Override

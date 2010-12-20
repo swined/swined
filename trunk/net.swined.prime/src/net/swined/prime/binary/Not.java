@@ -8,7 +8,7 @@ public class Not extends Expression {
 
     public Not(IExpression x) {
         super(x.getVars());
-        if (x instanceof Const || x instanceof Not) {
+        if (x instanceof Const || x instanceof Not || x instanceof Xor || x instanceof Conjunction || x instanceof Disjunction) {
             throw new IllegalArgumentException();
         }
         this.x = x;
