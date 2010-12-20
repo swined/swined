@@ -1,6 +1,8 @@
 package net.swined.prime.binary;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class Expression implements IExpression {
@@ -49,4 +51,22 @@ public abstract class Expression implements IExpression {
     else
       return vars.iterator().next();
   }
+  
+  @Override
+  public final IExpression sub(Var v, Const c, Map<IExpression, IExpression> ctx) {
+    if (!vars.contains(v))
+      return this;
+    IExpression sub = ctx.get(this);
+    if (sub == null)
+      ctx.put(this, sub = subImpl(v, c, ctx)); 
+    return sub;
+  }
+
+  @Override
+  public final IExpression sub(Var v, Const c) {
+    return sub(v, c, new HashMap<IExpression, IExpression>());
+  }
+  
+  protected abstract IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx);
+  
 }

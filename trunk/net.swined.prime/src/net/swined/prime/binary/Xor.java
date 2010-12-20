@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 public class Xor extends Expression {
 
   private final IExpression a;
@@ -20,18 +22,10 @@ public class Xor extends Expression {
   }
 
   @Override
-  public IExpression sub(Var v, Const c, SubContext ctx) {
-    IExpression sub = ctx.xor.get(this);
-    if (sub == null) {
-      IExpression sa = a.sub(v, c, ctx);
-      IExpression sb = b.sub(v, c, ctx);
-      if (sa == a && sb == b)
-        sub = this;
-      else
-        sub = sa.xor(sb);
-      ctx.xor.put(this, sub);
-    }
-    return sub;
+  protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
+    IExpression sa = a.sub(v, c, ctx);
+    IExpression sb = b.sub(v, c, ctx);
+    return sa.xor(sb);
   }
 
   @Override

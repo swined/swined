@@ -97,7 +97,7 @@ public class Main {
         }
         Var var = eq.getVar();
         for (Const c : Const.values()) {
-            Map<Var, Const> s = solve(eq.sub(var, c, new SubContext()));
+            Map<Var, Const> s = solve(eq.sub(var, c));
             if (s != null) {
                 s.put(var, c);
                 return s;
@@ -110,8 +110,8 @@ public class Main {
       Set<Var> vars = new HashSet<Var>();
       e.getVars(vars);
       for (Var var : vars) {
-        IExpression p = e.sub(var, Const.ONE, new SubContext());
-        IExpression n = e.sub(var, Const.ZERO, new SubContext());
+        IExpression p = e.sub(var, Const.ONE);
+        IExpression n = e.sub(var, Const.ZERO);
         e = var.and(p).or(var.not().and(n));
       }
       return e;
@@ -120,8 +120,10 @@ public class Main {
     private static BigInteger eu(BigInteger n) {
       System.out.println("building eq");
         IExpression eq = eq(n);
+//        System.out.println(eq);
         System.out.println("splitting");
         eq = split(eq);
+//        System.out.println(eq);
         System.out.println("solving");
         Map<Var, Const> solution = solve(eq);
         System.out.println("analyzing solution");
