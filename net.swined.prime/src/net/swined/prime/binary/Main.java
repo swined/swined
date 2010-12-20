@@ -11,7 +11,7 @@ public class Main {
     private static Var[] var(int n, int l) {
         Var[] e = new Var[l];
         for (int i = 0; i < l; i++) {
-            e[i] = new Var(n + i);
+            e[i] = new Var(n + i, false);
         }
         return e;
     }
@@ -93,7 +93,7 @@ public class Main {
         if (eq == Const.ZERO) {
             return null;
         }
-        Var var = new Var(eq.getVars().getLowestSetBit());
+        Var var = new Var(eq.getVars().getLowestSetBit(), false);
         for (Const c : Const.values()) {
             Map<Var, Const> s = solve(eq.sub(var, c));
             if (s != null) {
@@ -108,7 +108,7 @@ public class Main {
         BigInteger vars = e.getVars();
         for (int i = 0; i < vars.bitLength(); i++) {
             if (vars.testBit(i)) {
-                Var var = new Var(i);
+                Var var = new Var(i, false);
                 IExpression p = e.sub(var, Const.ONE);
                 IExpression n = e.sub(var, Const.ZERO);
                 e = var.and(p).or(var.not().and(n));
