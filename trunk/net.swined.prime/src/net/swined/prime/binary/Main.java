@@ -8,10 +8,10 @@ public class Main {
 
     private static BigInteger counter = BigInteger.ZERO;
 
-    private static Var[] var(int n, int l) {
-        Var[] e = new Var[l];
+    private static IExpression[] var(int n, int l) {
+        IExpression[] e = new IExpression[l];
         for (int i = 0; i < l; i++) {
-            e[i] = new Var(n + i, false);
+            e[i] = Conjunction.var(n + i, false);
         }
         return e;
     }
@@ -49,12 +49,12 @@ public class Main {
         return r;
     }
 
-    private static BigInteger extract(int n, int l, Map<Var, Const> s) {
+    private static BigInteger extract(int n, int l, Map<Integer, Const> s) {
         BigInteger r = BigInteger.ZERO;
-        for (Var v : s.keySet()) {
-            if (v.name >= n && v.name < n + l) {
+        for (int v : s.keySet()) {
+            if (v >= n && v < n + l) {
                 if (s.get(v) == Const.ONE) {
-                    r = r.setBit(v.name - n);
+                    r = r.setBit(v - n);
                 }
             }
         }
@@ -85,17 +85,17 @@ public class Main {
         return sb.toString();
     }
 
-    private static Map<Var, Const> solve(IExpression eq) {
+    private static Map<Integer, Const> solve(IExpression eq) {
         counter = counter.add(BigInteger.ONE);
         if (eq == Const.ONE) {
-            return new HashMap<Var, Const>();
+            return new HashMap<Integer, Const>();
         }
         if (eq == Const.ZERO) {
             return null;
         }
-        Var var = new Var(eq.getVars().getLowestSetBit(), false);
+        int var = eq.getVars().getLowestSetBit();
         for (Const c : Const.values()) {
-            Map<Var, Const> s = solve(eq.sub(var.name, c));
+            Map<Integer, Const> s = solve(eq.sub(var, c));
             if (s != null) {
                 s.put(var, c);
                 return s;
@@ -108,7 +108,7 @@ public class Main {
         BigInteger vars = e.getVars();
         for (int i = 0; i < vars.bitLength(); i++) {
             if (vars.testBit(i)) {
-                Var var = new Var(i, false);
+                Conjunction var = Conjunction.var(i, false);
                 IExpression p = e.sub(i, Const.ONE);
                 IExpression n = e.sub(i, Const.ZERO);
                 e = var.and(p).or(var.not().and(n));
@@ -125,7 +125,7 @@ public class Main {
         eq = split(eq);
 //        System.out.println(eq);
         System.out.println("solving");
-        Map<Var, Const> solution = solve(eq);
+        Map<Integer, Const> solution = solve(eq);
         System.out.println("analyzing solution");
         if (solution == null) {
             return null;
