@@ -115,7 +115,7 @@ public class Main {
     }
 
     private static BigInteger eu(BigInteger n) {
-        System.out.println("building eq");
+        System.out.println("building");
         IExpression eq = eq(n);
 //        System.out.println(eq);
         System.out.println("splitting");
@@ -123,7 +123,7 @@ public class Main {
 //        System.out.println(eq);
         System.out.println("solving");
         Map<Integer, Const> solution = solve(eq);
-        System.out.println("analyzing solution");
+        System.out.println("analyzing");
         if (solution == null) {
             return null;
         } else {
