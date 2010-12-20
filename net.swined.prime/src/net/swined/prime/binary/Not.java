@@ -32,9 +32,4 @@ public class Not extends Expression {
     return "!" + x;
   }
   
-  @Override
-  public Var getVar() {
-    return x.getVar();
-  }
-  
 }

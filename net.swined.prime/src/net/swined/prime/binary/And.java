@@ -40,15 +40,4 @@ public class And extends Expression {
     return "(" + a + " & " + b + ")";
   }
 
-  @Override
-  public Var getVar() {
-    Var va = a.getVar();
-    if (va != null)
-      return va;
-    Var vb = b.getVar();
-    if (vb != null)
-      return vb;
-    return null;
-  }
-
 }
