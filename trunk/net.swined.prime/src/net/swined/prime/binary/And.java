@@ -22,7 +22,7 @@ public class And extends Expression {
     }
 
     @Override
-    protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
+    protected IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx) {
         IExpression sa = a.sub(v, c, ctx);
         IExpression sb = b.sub(v, c, ctx);
         return sa.and(sb);

@@ -95,7 +95,7 @@ public class Main {
         }
         Var var = new Var(eq.getVars().getLowestSetBit(), false);
         for (Const c : Const.values()) {
-            Map<Var, Const> s = solve(eq.sub(var, c));
+            Map<Var, Const> s = solve(eq.sub(var.name, c));
             if (s != null) {
                 s.put(var, c);
                 return s;
@@ -109,8 +109,8 @@ public class Main {
         for (int i = 0; i < vars.bitLength(); i++) {
             if (vars.testBit(i)) {
                 Var var = new Var(i, false);
-                IExpression p = e.sub(var, Const.ONE);
-                IExpression n = e.sub(var, Const.ZERO);
+                IExpression p = e.sub(i, Const.ONE);
+                IExpression n = e.sub(i, Const.ZERO);
                 e = var.and(p).or(var.not().and(n));
             }
         }

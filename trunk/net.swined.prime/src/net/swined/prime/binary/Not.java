@@ -20,7 +20,7 @@ public class Not extends Expression {
     }
 
     @Override
-    protected IExpression subImpl(Var v, Const c, Map<IExpression, IExpression> ctx) {
+    protected IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx) {
         IExpression sx = x.sub(v, c, ctx);
         return sx.not();
     }

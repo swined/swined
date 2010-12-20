@@ -15,9 +15,9 @@ public interface IExpression {
 
     IExpression m2(IExpression x, IExpression y);
 
-    IExpression sub(Var v, Const c, Map<IExpression, IExpression> ctx);
+    IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx);
 
-    IExpression sub(Var v, Const c);
+    IExpression sub(int v, Const c);
 
     BigInteger getVars();
 }
