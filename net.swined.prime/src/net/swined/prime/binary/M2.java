@@ -33,6 +33,6 @@ public class M2 extends Expression {
 
     @Override
     public String toString() {
-        return "2(" + a + ", " + b + ", " + c + ")";
+        return "2<" + a + ", " + b + ", " + c + ">";
     }
 }
