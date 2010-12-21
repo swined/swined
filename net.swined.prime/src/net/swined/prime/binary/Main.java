@@ -22,6 +22,10 @@ public class Main {
         return e;
     }
 
+    private static IExpression xor(IExpression a, IExpression b) {
+      return a.and(b.not()).or(b.and(a.not()));
+    }
+    
     private static IExpression[] sum(IExpression[] a, IExpression[] b) {
         if (a.length != b.length) {
             throw new IllegalArgumentException();
@@ -29,8 +33,10 @@ public class Main {
         IExpression[] q = new IExpression[a.length];
         IExpression f = Const.ZERO;
         for (int i = 0; i < q.length; i++) {
-            q[i] = f.xor(a[i].xor(b[i]));
-            f = f.m2(a[i], b[i]);
+            //q[i] = f.xor(a[i].xor(b[i]));
+            q[i] = xor(f, xor(a[i], b[i]));
+            //f = f.m2(a[i], b[i]);
+            f = f.and(a[i]).or(f.and(b[i])).or(a[i].and(b[i]));
         }
         return q;
     }
@@ -43,6 +49,7 @@ public class Main {
                 t[i + j] = a[i].and(b[j]);
             }
             r = sum(r, t);
+          //  System.out.println(Arrays.toString(r));
         }
         return r;
     }
@@ -117,7 +124,7 @@ public class Main {
     private static BigInteger eu(BigInteger n) {
         System.out.println("building");
         IExpression eq = eq(n);
-//        System.out.println(eq);
+        System.out.println(eq);
         System.out.println("splitting");
         eq = split(eq);
 //        System.out.println(eq);
@@ -138,7 +145,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        BigInteger n = new BigInteger("1000").nextProbablePrime();//9173503");
+        BigInteger n = new BigInteger("10").nextProbablePrime();//9173503");
         n = n.multiply(n.nextProbablePrime());
         System.out.println(toBinary(n));
         System.out.println(eu(n));
