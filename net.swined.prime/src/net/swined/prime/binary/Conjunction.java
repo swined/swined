@@ -39,6 +39,20 @@ public class Conjunction extends Expression {
         return new Disjunction(vars, sign.setBit(vars.bitLength()).not());
     }
 
-
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < vars.bitLength(); i++) {
+        if (vars.testBit(i)) {
+          if (sb.length() > 0)
+            sb.append(" & ");
+          if (sign.testBit(i))
+            sb.append("!");
+          sb.append("x");
+          sb.append(i);
+        }
+      }
+      return "(" + sb.toString() + ")";
+    }
 
 }
