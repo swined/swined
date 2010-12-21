@@ -17,6 +17,18 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.and(this);
         }
+        if (this instanceof Conjunction && e instanceof Disjunction) {
+          Conjunction a = (Conjunction)this;
+          Disjunction b = (Disjunction)e;
+          IExpression r = Const.ZERO;
+          for (int i = 0; i < b.vars.bitLength(); i++)
+            if (b.vars.testBit(i))
+              r = r.or(a.and(Conjunction.var(i, b.sign.testBit(i))));
+          return r;
+        }
+        if (this instanceof Disjunction && e instanceof Conjunction) {
+          return e.and(this);
+        }
         if (this instanceof Conjunction && e instanceof Conjunction) {
             Conjunction a = (Conjunction)this;
             Conjunction b = (Conjunction)e;
