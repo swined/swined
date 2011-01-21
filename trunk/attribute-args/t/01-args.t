@@ -33,4 +33,3 @@ eval { foo() }; ok !$@;
 eval 'sub bar :ARGS { Attribute::Args::check([], \@_) }'; ok $@;
 eval { Attribute::Args::ARGS(__PACKAGE__, \*foo, \&foo, undef, 'null') }; ok !$@;
 eval { Attribute::Args::ARGS(__PACKAGE__, \*foo, \&foo, undef, ['null']) }; ok !$@;
-sub baz :ARGS { } eval { baz(1) }; ok $@;
