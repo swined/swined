@@ -74,38 +74,18 @@ public class Main {
     	return r;
     }
     
-    private static IExpression[] pad(IExpression[] a, int l) {
-    	if (a.length == l)
-    		return a;
-    	IExpression[] r = Arrays.copyOf(a, l);
-    	if (l > a.length)
-    		for (int i = a.length; i < l; i++)
-    			r[i] = Const.ZERO;
-   		return r;
-    }
-
     private static IExpression[] negate(IExpression[] a) {
     	IExpression[] r = new IExpression[a.length];
     	for (int i = 0; i < a.length; i++)
     		r[i] = a[i].not();
-    	return sum(r, pad(new IExpression[] { Const.ONE }, r.length));
-    }
-    
-    private static IExpression ge(IExpression[] a, IExpression[] b) {
-    	if (a.length != b.length)
-    		throw new IllegalArgumentException();
-    	int l = a.length - 1;
-    	IExpression g = Const.ONE;
-    	if (l > 1)
-    		g = ge(Arrays.copyOf(a, l - 1), Arrays.copyOf(b, l - 1)); 
-    	return a[l].and(b[l].not()).or(a[l].xor(b[l].not()).and(g));
+    	return sum(r, Int.pad(new IExpression[] { Const.ONE }, r.length));
     }
     
     private static IExpression[] mod(IExpression[] a, IExpression[] b) {
     	IExpression[] r = Arrays.copyOf(a, a.length);
     	for (int i = a.length - b.length; i >= 0; i--) {
-    		IExpression[] p = shl(pad(b, r.length), i);
-			IExpression ge = ge(r, p);
+    		IExpression[] p = shl(Int.pad(b, r.length), i);
+			IExpression ge = Int.ge(r, p);
 			for (int j = 0; j < p.length; j++)
 				p[j] = ge.and(p[j]);
 			r = sum(r, negate(p));
