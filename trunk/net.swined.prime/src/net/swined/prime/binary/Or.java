@@ -12,6 +12,9 @@ public class Or extends Expression {
         if (a instanceof Const || b instanceof Const) {
             throw new IllegalArgumentException();
         }
+        if (a instanceof Var && b instanceof Var) {
+            throw new IllegalArgumentException();
+        }
         if (a instanceof Disjunction && b instanceof Disjunction) {
             throw new IllegalArgumentException();
         }

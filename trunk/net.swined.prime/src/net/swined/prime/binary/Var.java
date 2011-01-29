@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class Var extends Expression {
 
-	private final boolean sign;
-	private final int name;
+	public final boolean sign;
+	public final int name;
 	
 	public Var(int name, boolean sign) {
 		super(BigInteger.ZERO.setBit(name));

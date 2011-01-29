@@ -29,8 +29,14 @@ public class Disjunction extends Expression {
         } else {
             if (nv.equals(BigInteger.ZERO))
                 return Const.ZERO;
-            else
-                return new Disjunction(nv, sign);
+            else {
+            	if (nv.bitCount() == 1) {
+            		int name = nv.getLowestSetBit();
+					return new Var(name, sign.testBit(name));
+            	} else {
+            		return new Disjunction(nv, sign);
+            	}
+            }
         }
     }
 
