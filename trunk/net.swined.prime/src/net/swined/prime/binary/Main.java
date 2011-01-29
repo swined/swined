@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
+
 public class Main {
 
     private static IExpression[] var(int n, int l) {
@@ -172,15 +174,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	IExpression[] two = new IExpression[] { Const.ONE };
-    	IExpression[] four = new IExpression[] { Const.ZERO, Const.ZERO, Const.ONE };
-    	IExpression[] m = mod(four, two);
-    	for (IExpression e : m)
-    		System.out.println(e);
-		//System.out.println(eq(m, BigInteger.ZERO));
-//        BigInteger n = new BigInteger("10").nextProbablePrime();//9173503");
-//        n = n.multiply(n.nextProbablePrime());
-//        System.out.println(toBinary(n));
-//        System.out.println(eu(n));
+		BigInteger a = BigInteger.valueOf(807); 
+		BigInteger b = BigInteger.valueOf(678);
+		IExpression[] x = Int.pad(Int.toExp(a), 10);
+		IExpression[] y = Int.pad(Int.toExp(b), 10);
+		Int.ge(x, y);
     }
 }
