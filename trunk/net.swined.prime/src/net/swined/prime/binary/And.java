@@ -8,10 +8,7 @@ public class And extends Expression {
     private final IExpression b;
 
     public And(IExpression a, IExpression b) {
-        super(a.complexity().add(b.complexity()), a.getVars().or(b.getVars()));
-        if (a instanceof Const || b instanceof Const) {
-            throw new IllegalArgumentException();
-        }
+        super(a, b);
         this.a = a;
         this.b = b;
     }
@@ -23,9 +20,7 @@ public class And extends Expression {
 
     @Override
     protected IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx) {
-        IExpression sa = a.sub(v, c, ctx);
-        IExpression sb = b.sub(v, c, ctx);
-        return sa.and(sb);
+        return a.sub(v, c, ctx).and(b.sub(v, c, ctx));
     }
 
     @Override

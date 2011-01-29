@@ -11,6 +11,14 @@ public abstract class Expression implements IExpression {
     protected final BigInteger vars;
     private IExpression not = null;
 
+    public Expression(IExpression a, IExpression b) {
+    	this.complexity = a.complexity().add(b.complexity());
+        this.vars = a.getVars().or(b.getVars());
+        if (a instanceof Const || b instanceof Const) {
+            throw new IllegalArgumentException();
+        }
+    }
+    
     public Expression(BigInteger complexity, BigInteger vars) {
     	this.complexity = complexity;
         this.vars = vars;
@@ -21,14 +29,11 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.and(this);
         }
-//        if (this instanceof Var) {
-//        	Var var = (Var)this;
-//        	if (e.getVars().testBit(var.name))
-//        		return and(e.sub(var.name, var.sign ? Const.ZERO : Const.ONE));
-//        } else {
-//        	if (e instanceof Var)
-//        		return e.and(this);
-//        }
+        if (this instanceof Var) {
+        	Var var = (Var)this;
+        	if (e.getVars().testBit(var.name))
+        		return and(e.sub(var.name, var.sign ? Const.ZERO : Const.ONE));
+        }
         return new And(this, e);
     }
 
@@ -37,14 +42,11 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.or(this);
         }
-//        if (this instanceof Var) {
-//        	Var var = (Var)this;
-//        	if (e.getVars().testBit(var.name))
-//        		return or(e.sub(var.name, var.sign ? Const.ONE : Const.ZERO));
-//        } else {
-//        	if (e instanceof Var)
-//        		return e.or(this);
-//        }
+        if (this instanceof Var) {
+        	Var var = (Var)this;
+        	if (e.getVars().testBit(var.name))
+        		return or(e.sub(var.name, var.sign ? Const.ONE : Const.ZERO));
+        }
         return new Or(this, e);
     }
 
