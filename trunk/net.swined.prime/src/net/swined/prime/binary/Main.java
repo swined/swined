@@ -111,6 +111,9 @@ public class Main {
     	BigInteger n = key(3);
     	System.out.println(n);
     	System.out.println(toBinary(n));
-		System.out.println(divisor(n));
+		BigInteger d = divisor(n);
+		System.out.println(d);
+		if (!n.mod(d).equals(BigInteger.ZERO))
+			System.err.println("wrong solution");
     }
 }
