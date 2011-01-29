@@ -7,7 +7,7 @@ import java.util.Map;
 public abstract class Expression implements IExpression {
 
 	private static final BigInteger SUB_THRESHOLD = BigInteger.valueOf(10);
-	private static final BigInteger VAR_SUB_THRESHOLD = new BigInteger("10000000000000");
+	private static final BigInteger VAR_SUB_THRESHOLD = new BigInteger("1000000000000");
 	protected final BigInteger complexity;
     protected final BigInteger vars;
     private IExpression not = null;
