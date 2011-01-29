@@ -7,6 +7,7 @@ import java.util.Map;
 public abstract class Expression implements IExpression {
 
     protected final BigInteger vars;
+    private IExpression not = null;
 
     public Expression(BigInteger vars) {
         this.vars = vars;
@@ -69,21 +70,19 @@ public abstract class Expression implements IExpression {
     }
 
     @Override
-    public final IExpression m2(IExpression x, IExpression y) {
-        if (x instanceof Const) {
-            return x.m2(this, y);
-        }
-        if (y instanceof Const) {
-            return y.m2(this, x);
-        }
-        return new M2(this, x, y);
-    }
-
-    @Override
     public final BigInteger getVars() {
         return vars;
     }
 
+    @Override 
+    public final IExpression not() {
+    	if (not == null) {
+    		return not = notImpl();
+    	} else {
+    		return not;
+    	}
+    }
+    
     @Override
     public final IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
         if (!vars.testBit(v)) {
@@ -101,5 +100,6 @@ public abstract class Expression implements IExpression {
         return sub(v, c, new HashMap<IExpression, IExpression>());
     }
 
+    protected abstract IExpression notImpl();
     protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
 }

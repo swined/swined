@@ -13,8 +13,6 @@ public interface IExpression {
 
     IExpression not();
 
-    IExpression m2(IExpression x, IExpression y);
-
     IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx);
 
     IExpression sub(int v, Const c);

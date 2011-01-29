@@ -20,8 +20,8 @@ public class And extends Expression {
     }
 
     @Override
-    public IExpression not() {
-        return new Not(this);
+    protected IExpression notImpl() {
+    	return a.not().or(b.not());
     }
 
     @Override

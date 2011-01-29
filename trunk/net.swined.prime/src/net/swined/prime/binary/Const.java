@@ -23,11 +23,6 @@ public enum Const implements IExpression {
         }
 
         @Override
-        public IExpression m2(IExpression x, IExpression y) {
-            return x.or(y);
-        }
-
-        @Override
         public Const not() {
             return ZERO;
         }
@@ -52,11 +47,6 @@ public enum Const implements IExpression {
         @Override
         public IExpression xor(IExpression e) {
             return e;
-        }
-
-        @Override
-        public IExpression m2(IExpression x, IExpression y) {
-            return x.and(y);
         }
 
         @Override
