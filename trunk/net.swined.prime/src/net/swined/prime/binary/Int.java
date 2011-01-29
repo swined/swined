@@ -72,7 +72,7 @@ public class Int {
     }
 
     private static IExpression xor(IExpression a, IExpression b) {
-    	return (a.and(b.not()).or(a.not().and(b)));
+    	return a.and(b.not()).or(a.not().and(b));
     }
     
     public static IExpression[] sum(IExpression[] a, IExpression[] b) {

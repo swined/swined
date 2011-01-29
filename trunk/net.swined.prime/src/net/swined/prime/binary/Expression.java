@@ -6,8 +6,6 @@ import java.util.Map;
 
 public abstract class Expression implements IExpression {
 
-	private static final BigInteger SUB_THRESHOLD = BigInteger.valueOf(10);
-	private static final BigInteger VAR_SUB_THRESHOLD = new BigInteger("1000000000000");
 	protected final BigInteger complexity;
     protected final BigInteger vars;
     private IExpression not = null;
@@ -30,14 +28,6 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.and(this);
         }
-        if (this instanceof Var) {
-        	Var var = (Var)this;
-        	if (e.getVars().testBit(var.name))
-        		return and(e.sub(var.name, var.sign ? Const.ZERO : Const.ONE));
-        } else {
-        	if (e instanceof Var && complexity().compareTo(VAR_SUB_THRESHOLD) < 0)
-        		return e.and(this);
-        }
         return new And(this, e);
     }
 
@@ -45,14 +35,6 @@ public abstract class Expression implements IExpression {
     public final IExpression or(IExpression e) {
         if (e instanceof Const) {
             return e.or(this);
-        }
-        if (this instanceof Var) {
-        	Var var = (Var)this;
-        	if (e.getVars().testBit(var.name))
-        		return or(e.sub(var.name, var.sign ? Const.ONE : Const.ZERO));
-        } else {
-        	if (e instanceof Var && complexity().compareTo(VAR_SUB_THRESHOLD) < 0)
-        		return e.or(this);
         }
         return new Or(this, e);
     }
@@ -78,7 +60,7 @@ public abstract class Expression implements IExpression {
         if (!vars.testBit(v)) {
             return this;
         }
-        if (complexity().compareTo(SUB_THRESHOLD) < 0)
+        if (complexity().equals(BigInteger.ONE))
         	return subImpl(v, c, ctx);
         IExpression sub = ctx.get(this);
         if (sub == null) {
