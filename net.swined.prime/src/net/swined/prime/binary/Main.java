@@ -1,6 +1,7 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +67,52 @@ public class Main {
         return r;
     }
 
+    private static IExpression[] shl(IExpression[] a, int l) {
+    	IExpression[] r = zero(a.length);
+    	for (int i = l; i < a.length; i++)
+    		r[i] = a[i - l];
+    	return r;
+    }
+    
+    private static IExpression[] pad(IExpression[] a, int l) {
+    	if (a.length == l)
+    		return a;
+    	IExpression[] r = Arrays.copyOf(a, l);
+    	if (l > a.length)
+    		for (int i = a.length; i < l; i++)
+    			r[i] = Const.ZERO;
+   		return r;
+    }
+
+    private static IExpression[] negate(IExpression[] a) {
+    	IExpression[] r = new IExpression[a.length];
+    	for (int i = 0; i < a.length; i++)
+    		r[i] = a[i].not();
+    	return sum(r, pad(new IExpression[] { Const.ONE }, r.length));
+    }
+    
+    private static IExpression ge(IExpression[] a, IExpression[] b) {
+    	if (a.length != b.length)
+    		throw new IllegalArgumentException();
+    	int l = a.length - 1;
+    	IExpression g = Const.ONE;
+    	if (l > 1)
+    		g = ge(Arrays.copyOf(a, l - 1), Arrays.copyOf(b, l - 1)); 
+    	return a[l].and(b[l].not()).or(a[l].xor(b[l].not()).and(g));
+    }
+    
+    private static IExpression[] mod(IExpression[] a, IExpression[] b) {
+    	IExpression[] r = Arrays.copyOf(a, a.length);
+    	for (int i = a.length - b.length; i >= 0; i--) {
+    		IExpression[] p = shl(pad(b, r.length), i);
+			IExpression ge = ge(r, p);
+			for (int j = 0; j < p.length; j++)
+				p[j] = ge.and(p[j]);
+			r = sum(r, negate(p));
+    	}
+    	return r;
+    }
+    
     private static IExpression eq(IExpression[] e, BigInteger n) {
         IExpression r = Const.ONE;
         for (int i = 0; i < e.length; i++) {
@@ -145,9 +192,15 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        BigInteger n = new BigInteger("10").nextProbablePrime();//9173503");
-        n = n.multiply(n.nextProbablePrime());
-        System.out.println(toBinary(n));
-        System.out.println(eu(n));
+    	IExpression[] two = new IExpression[] { Const.ONE };
+    	IExpression[] four = new IExpression[] { Const.ZERO, Const.ZERO, Const.ONE };
+    	IExpression[] m = mod(four, two);
+    	for (IExpression e : m)
+    		System.out.println(e);
+		//System.out.println(eq(m, BigInteger.ZERO));
+//        BigInteger n = new BigInteger("10").nextProbablePrime();//9173503");
+//        n = n.multiply(n.nextProbablePrime());
+//        System.out.println(toBinary(n));
+//        System.out.println(eu(n));
     }
 }
