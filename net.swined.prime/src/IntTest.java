@@ -10,21 +10,22 @@ import org.junit.Test;
 
 public class IntTest {
 
+	private static Random random = new Random();
+	
+	private static BigInteger genInt() {
+		return BigInteger.valueOf(random.nextInt()).abs().mod(BigInteger.valueOf(1000));
+	}
+	
 	@Test
 	public void testGe() {
-		Random random = new Random();
-		for (int i = 0; i < 1000; i++) {
-			BigInteger a = BigInteger.valueOf(random.nextInt()).abs();
-			BigInteger b = BigInteger.valueOf(random.nextInt()).abs();
-			IExpression[] x = Int.toExp(a);
-			IExpression[] y = Int.toExp(b);
-			if (x.length < y.length)
-				x = Int.pad(x, y.length);
-			if (y.length < x.length)
-				y = Int.pad(y, x.length);
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(); 
+			BigInteger b = genInt();
+			IExpression[] x = Int.pad(Int.toExp(a), 10);
+			IExpression[] y = Int.pad(Int.toExp(b), 10);
 			Const ge = (Const)Int.ge(x, y);
 			Const p = a.compareTo(b) >= 0 ? Const.ONE : Const.ZERO;
-			Assert.assertEquals("" + a + " vs " + b, ge, p);
+			Assert.assertEquals("" + a + " vs " + b, p, ge);
 		}
 	}
 	

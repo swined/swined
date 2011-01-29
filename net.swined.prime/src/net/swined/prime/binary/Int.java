@@ -30,8 +30,8 @@ public class Int {
     		throw new IllegalArgumentException();
     	int l = a.length - 1;
     	IExpression g = Const.ONE;
-    	if (l > 1)
-    		g = ge(Arrays.copyOf(a, l - 1), Arrays.copyOf(b, l - 1)); 
+    	if (l > 0)
+    		g = ge(Arrays.copyOf(a, l), Arrays.copyOf(b, l)); 
     	return a[l].and(b[l].not()).or(a[l].xor(b[l].not()).and(g));
     }
 
