@@ -18,28 +18,6 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.and(this);
         }
-        if (this instanceof Conjunction && e instanceof Disjunction) {
-          Conjunction a = (Conjunction)this;
-          Disjunction b = (Disjunction)e;
-          IExpression r = Const.ZERO;
-          for (int i = 0; i < b.vars.bitLength(); i++)
-            if (b.vars.testBit(i))
-              r = r.or(a.and(new Var(i, b.sign.testBit(i))));
-          return r;
-        }
-        if (this instanceof Disjunction && e instanceof Conjunction) {
-          return e.and(this);
-        }
-        if (this instanceof Conjunction && e instanceof Conjunction) {
-            Conjunction a = (Conjunction)this;
-            Conjunction b = (Conjunction)e;
-            BigInteger x = a.vars.and(b.vars);
-            if (x.and(a.sign.xor(b.sign)).equals(BigInteger.ZERO)) {
-                return new Conjunction(a.vars.or(b.vars), a.sign.or(b.sign));
-            } else {
-                return Const.ZERO;
-            }
-        }
         return new And(this, e);
     }
 
@@ -47,39 +25,6 @@ public abstract class Expression implements IExpression {
     public final IExpression or(IExpression e) {
         if (e instanceof Const) {
             return e.or(this);
-        }
-        if (this instanceof Var && e instanceof Var) {
-            Var a = (Var)this;
-            Var b = (Var)e;
-            if (a.name == b.name) {
-            	if (a.sign == b.sign) {
-            		return a;
-            	} else {
-            		return Const.ONE;
-            	}
-            }
-            BigInteger x = a.vars.and(b.vars);
-            BigInteger sa = BigInteger.ZERO;
-            if (a.sign)
-            	sa = sa.setBit(a.name);
-            BigInteger sb = BigInteger.ZERO;
-            if (b.sign)
-            	sb = sb.setBit(b.name);
-            if (x.and(sa.xor(sb)).equals(BigInteger.ZERO)) {
-                return new Disjunction(a.vars.or(b.vars), sa.or(sb));
-            } else {
-                return Const.ONE;
-            }
-        }
-        if (this instanceof Disjunction && e instanceof Disjunction) {
-            Disjunction a = (Disjunction)this;
-            Disjunction b = (Disjunction)e;
-            BigInteger x = a.vars.and(b.vars);
-            if (x.and(a.sign.xor(b.sign)).equals(BigInteger.ZERO)) {
-                return new Disjunction(a.vars.or(b.vars), a.sign.or(b.sign));
-            } else {
-                return Const.ONE;
-            }
         }
         return new Or(this, e);
     }
@@ -89,7 +34,7 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.xor(this);
         }
-        return new Xor(this, e);
+        return and(e.not()).or(not().and(e));
     }
 
     @Override
