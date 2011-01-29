@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class Or extends Expression {
 
-    private final IExpression a;
-    private final IExpression b;
+    public final IExpression a;
+    public final IExpression b;
 
     public Or(IExpression a, IExpression b) {
         super(a, b);
