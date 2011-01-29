@@ -100,6 +100,7 @@ public class Main {
     	if (solution == null)
     		return null;
 		return extract(0, l, solution);
+//    	return BigInteger.ONE;
     }
 
     private static BigInteger key(int l) {
@@ -108,7 +109,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(3);
+    	BigInteger n = key(1);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		BigInteger d = divisor(n);
