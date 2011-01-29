@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 
 public class Or extends Expression {
 
@@ -21,5 +23,11 @@ public class Or extends Expression {
     public String toString() {
         return "(" + a + " | " + b + ")";
     }
+
+	@Override
+	protected IExpression subImpl(int v, Const c,
+			Map<IExpression, IExpression> ctx) {
+		return a.sub(v, c, ctx).or(b.sub(v, c, ctx));
+	}
 
 }

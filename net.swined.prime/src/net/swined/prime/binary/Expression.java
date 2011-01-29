@@ -48,7 +48,7 @@ public abstract class Expression implements IExpression {
     	if (not == null) {
     		not = notImpl();
     		if (not instanceof Expression) {
-    			((Expression) not).not = not; 
+    			((Expression) not).not = this; 
     		}
     	}
     	return not;
@@ -59,28 +59,9 @@ public abstract class Expression implements IExpression {
         if (!vars.testBit(v)) {
             return this;
         }
-        if (this instanceof Var) {
-        	Var var = (Var)this;
-			if (v == var.name) {
-				return var.sign ? c.not() : c;
-			} else {
-				return this;
-			}
-        }
         IExpression sub = ctx.get(this);
-        if (sub == null) {
-        	if (this instanceof And) {
-        		And and = (And)this;
-				sub = and.a.sub(v, c, ctx).and(and.b.sub(v, c, ctx));        	
-        	} 
-        	if (this instanceof Or) {
-        		Or and = (Or)this;
-				sub = and.a.sub(v, c, ctx).or(and.b.sub(v, c, ctx));        	
-        	} 
-        	if (sub == null)
-        		throw new IllegalArgumentException();
-            ctx.put(this, sub);
-        }
+        if (sub == null)
+            ctx.put(this, sub = subImpl(v, c, ctx));
         return sub;
     }
 
@@ -90,5 +71,5 @@ public abstract class Expression implements IExpression {
     }
 
     protected abstract IExpression notImpl();
-    //protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
+    protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
 }
