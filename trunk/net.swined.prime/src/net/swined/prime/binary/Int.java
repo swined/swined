@@ -28,11 +28,10 @@ public class Int {
     public static IExpression ge(IExpression[] a, IExpression[] b) {
     	if (a.length != b.length)
     		throw new IllegalArgumentException();
-    	int l = a.length - 1;
     	IExpression g = Const.ONE;
-    	if (l > 0)
-    		g = ge(Arrays.copyOf(a, l), Arrays.copyOf(b, l)); 
-    	return a[l].and(b[l].not()).or(xor(a[l], b[l].not()).and(g));
+    	for (int i = 0; i < a.length; i++)
+    		g = a[i].and(b[i].not()).or(xor(a[i], b[i].not()).and(g));
+    	return g;
     }
 
     public static IExpression[] pad(IExpression[] a, int l) {
