@@ -117,11 +117,25 @@ public class Main {
         }
     }
 
+    private static BigInteger divisor(BigInteger n) {
+    	int l = n.bitLength() / 2;
+    	IExpression[] d = Int.toExp(n);
+    	IExpression e = eq(Int.mod(d, var(0, l)), BigInteger.ZERO);
+    	Map<Integer, Const> solution = solve(e);
+    	if (solution == null)
+    		return null;
+		return extract(0, l, solution);
+    }
+
+    private static BigInteger key(int l) {
+    	BigInteger n = BigInteger.ZERO.setBit(l / 2).nextProbablePrime();
+    	return n.multiply(n.nextProbablePrime());
+    }
+    
     public static void main(String[] args) {
-		BigInteger a = BigInteger.valueOf(807); 
-		BigInteger b = BigInteger.valueOf(678);
-		IExpression[] x = Int.pad(Int.toExp(a), 10);
-		IExpression[] y = Int.pad(Int.toExp(b), 10);
-		Int.ge(x, y);
+    	BigInteger n = key(70);
+    	System.out.println(n);
+    	System.out.println(toBinary(n));
+		System.out.println(divisor(n));
     }
 }
