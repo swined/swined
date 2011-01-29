@@ -90,7 +90,7 @@ public class Main {
     }
 
     private static BigInteger divisor(BigInteger n) {
-    	int l = n.bitLength() / 2 + 1;
+    	int l = n.bitLength() / 2 + n.bitLength() % 2;
     	IExpression[] d = Int.toExp(n);
     	System.out.println("building (" + l + ")");
     	IExpression e = eq(Int.mod(d, var(l)), BigInteger.ZERO);
@@ -110,7 +110,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(1);
+    	BigInteger n = key(22);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		BigInteger d = divisor(n);
