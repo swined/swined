@@ -68,7 +68,7 @@ public class Main {
     	IExpression[] d = Int.toExp(n);
     	System.out.println("building (" + l + ")");
     	IExpression e = eq(Int.mod(d, var(l)), BigInteger.ZERO);
-    	//System.out.println(e);
+    	System.out.println(e);
     	System.out.println("solving");
     	Map<Integer, Const> solution = solve(e);
     	if (solution == null)
@@ -82,7 +82,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(5);
+    	BigInteger n = key(0);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		BigInteger d = divisor(n);
