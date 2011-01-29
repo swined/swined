@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class Main {
 
-    private static IExpression[] var(int n, int l) {
+    private static IExpression[] var(int l) {
         IExpression[] e = new IExpression[l];
         for (int i = 0; i < l; i++) {
-            e[i] = Conjunction.var(n + i, false);
+            e[i] = new Var(i, false);
         }
         return e;
     }
@@ -48,11 +48,6 @@ public class Main {
         return r;
     }
 
-    private static IExpression eq(BigInteger n) {
-        int l = n.bitLength() / 2 + n.bitLength() % 2;
-        return eq(mul(var(0, l), var(n.bitLength(), l)), n);
-    }
-
     private static String toBinary(BigInteger n) {
         StringBuilder sb = new StringBuilder();
         for (int i = n.bitLength(); i > 0; i--) {
@@ -85,7 +80,7 @@ public class Main {
         BigInteger vars = e.getVars();
         for (int i = 0; i < vars.bitLength(); i++) {
             if (vars.testBit(i)) {
-                Conjunction var = Conjunction.var(i, false);
+                Var var = new Var(i, false);
                 IExpression p = e.sub(i, Const.ONE);
                 IExpression n = e.sub(i, Const.ZERO);
                 e = var.and(p).or(var.not().and(n));
@@ -94,34 +89,11 @@ public class Main {
         return e;
     }
 
-    private static BigInteger eu(BigInteger n) {
-        System.out.println("building");
-        IExpression eq = eq(n);
-        System.out.println(eq);
-        System.out.println("splitting");
-        eq = split(eq);
-//        System.out.println(eq);
-        System.out.println("solving");
-        Map<Integer, Const> solution = solve(eq);
-        System.out.println("analyzing");
-        if (solution == null) {
-            return null;
-        } else {
-            BigInteger x = extract(0, n.bitLength(), solution);
-            BigInteger y = extract(n.bitLength(), n.bitLength(), solution);
-            if (!x.multiply(y).equals(n)) {
-                throw new AssertionError();
-            }
-            System.out.println(x + " * " + y + " = " + n);
-            return x.subtract(BigInteger.ONE).multiply(y.subtract(BigInteger.ONE));
-        }
-    }
-
     private static BigInteger divisor(BigInteger n) {
     	int l = n.bitLength() / 2 + 1;
     	IExpression[] d = Int.toExp(n);
     	System.out.println("building (" + l + ")");
-    	IExpression e = eq(Int.mod(d, var(0, l)), BigInteger.ZERO);
+    	IExpression e = eq(Int.mod(d, var(l)), BigInteger.ZERO);
     	System.out.println(e);
     	System.out.println("solving");
     	Map<Integer, Const> solution = solve(e);
