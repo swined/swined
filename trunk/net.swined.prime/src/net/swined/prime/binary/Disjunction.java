@@ -9,7 +9,7 @@ public class Disjunction extends Expression {
 
     public Disjunction(BigInteger vars, BigInteger sign) {
         super(vars);
-        if (vars.equals(BigInteger.ZERO))
+        if (vars.bitCount() < 2)
             throw new IllegalArgumentException();
         this.sign = sign;
     }

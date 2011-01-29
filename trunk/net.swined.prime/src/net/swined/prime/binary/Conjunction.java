@@ -9,14 +9,9 @@ public class Conjunction extends Expression {
 
     public Conjunction(BigInteger vars, BigInteger sign) {
         super(vars);
-        if (vars.equals(BigInteger.ZERO))
+        if (vars.bitCount() < 2)
             throw new IllegalArgumentException();
         this.sign = sign;
-    }
-
-    public static Conjunction var(int name, boolean negative) {
-        BigInteger sign = negative ? BigInteger.ZERO.setBit(name) : BigInteger.ZERO;
-        return new Conjunction(BigInteger.ZERO.setBit(name), sign);
     }
 
     @Override

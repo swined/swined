@@ -24,7 +24,7 @@ public abstract class Expression implements IExpression {
           IExpression r = Const.ZERO;
           for (int i = 0; i < b.vars.bitLength(); i++)
             if (b.vars.testBit(i))
-              r = r.or(a.and(Conjunction.var(i, b.sign.testBit(i))));
+              r = r.or(a.and(new Var(i, b.sign.testBit(i))));
           return r;
         }
         if (this instanceof Disjunction && e instanceof Conjunction) {
@@ -77,10 +77,12 @@ public abstract class Expression implements IExpression {
     @Override 
     public final IExpression not() {
     	if (not == null) {
-    		return not = notImpl();
-    	} else {
-    		return not;
+    		not = notImpl();
+    		if (not instanceof Expression) {
+    			((Expression) not).not = this; 
+    		}
     	}
+    	return not;
     }
     
     @Override
