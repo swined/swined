@@ -118,9 +118,12 @@ public class Main {
     }
 
     private static BigInteger divisor(BigInteger n) {
-    	int l = n.bitLength() / 2;
+    	int l = n.bitLength() / 2 + 1;
     	IExpression[] d = Int.toExp(n);
+    	System.out.println("building (" + l + ")");
     	IExpression e = eq(Int.mod(d, var(0, l)), BigInteger.ZERO);
+    	System.out.println(e);
+    	System.out.println("solving");
     	Map<Integer, Const> solution = solve(e);
     	if (solution == null)
     		return null;
@@ -131,9 +134,9 @@ public class Main {
     	BigInteger n = BigInteger.ZERO.setBit(l / 2).nextProbablePrime();
     	return n.multiply(n.nextProbablePrime());
     }
-    
+
     public static void main(String[] args) {
-    	BigInteger n = key(70);
+    	BigInteger n = key(3);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		System.out.println(divisor(n));

@@ -17,8 +17,8 @@ public class Xor extends Expression {
     }
 
     @Override
-    public IExpression not() {
-        return new Xor(a, b.not());
+    protected IExpression notImpl() {
+        return a.xor(b.not());
     }
 
     @Override

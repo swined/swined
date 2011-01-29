@@ -35,7 +35,7 @@ public class Conjunction extends Expression {
     }
 
     @Override
-    public IExpression not() {
+    protected IExpression notImpl() {
         return new Disjunction(vars, sign.setBit(vars.bitLength()).not());
     }
 
