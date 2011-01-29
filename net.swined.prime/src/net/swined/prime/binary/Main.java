@@ -14,19 +14,6 @@ public class Main {
         return e;
     }
 
-    private static IExpression[] mul(IExpression[] a, IExpression[] b) {
-        IExpression[] r = Int.zero(a.length + b.length);
-        for (int i = 0; i < a.length; i++) {
-            IExpression[] t = Int.zero(r.length);
-            for (int j = 0; j < b.length; j++) {
-                t[i + j] = a[i].and(b[j]);
-            }
-            r = Int.sum(r, t);
-          //  System.out.println(Arrays.toString(r));
-        }
-        return r;
-    }
-
     private static BigInteger extract(int n, int l, Map<Integer, Const> s) {
         BigInteger r = BigInteger.ZERO;
         for (int v : s.keySet()) {
@@ -74,19 +61,6 @@ public class Main {
             }
         }
         return null;
-    }
-
-    private static IExpression split(IExpression e) {
-        BigInteger vars = e.getVars();
-        for (int i = 0; i < vars.bitLength(); i++) {
-            if (vars.testBit(i)) {
-                Var var = new Var(i, false);
-                IExpression p = e.sub(i, Const.ONE);
-                IExpression n = e.sub(i, Const.ZERO);
-                e = var.and(p).or(var.not().and(n));
-            }
-        }
-        return e;
     }
 
     private static BigInteger divisor(BigInteger n) {
