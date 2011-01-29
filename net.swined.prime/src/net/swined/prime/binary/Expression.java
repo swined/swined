@@ -6,12 +6,11 @@ import java.util.Map;
 
 public abstract class Expression implements IExpression {
 
-	protected final BigInteger complexity;
     protected final BigInteger vars;
     private IExpression not = null;
 
     public Expression(IExpression a, IExpression b) {
-    	this.complexity = a.complexity().add(b.complexity());
+    	//this.complexity = a.complexity().add(b.complexity());
         this.vars = a.getVars().or(b.getVars());
         if (a instanceof Const || b instanceof Const) {
             throw new IllegalArgumentException();
@@ -19,7 +18,7 @@ public abstract class Expression implements IExpression {
     }
     
     public Expression(BigInteger complexity, BigInteger vars) {
-    	this.complexity = complexity;
+    	//this.complexity = complexity;
         this.vars = vars;
     }
 
@@ -49,7 +48,7 @@ public abstract class Expression implements IExpression {
     	if (not == null) {
     		not = notImpl();
     		if (not instanceof Expression) {
-    			((Expression) not).not = this; 
+    			((Expression) not).not = not; 
     		}
     	}
     	return not;
@@ -60,11 +59,27 @@ public abstract class Expression implements IExpression {
         if (!vars.testBit(v)) {
             return this;
         }
-        if (complexity().equals(BigInteger.ONE))
-        	return subImpl(v, c, ctx);
+        if (this instanceof Var) {
+        	Var var = (Var)this;
+			if (v == var.name) {
+				return var.sign ? c.not() : c;
+			} else {
+				return this;
+			}
+        }
         IExpression sub = ctx.get(this);
         if (sub == null) {
-            ctx.put(this, sub = subImpl(v, c, ctx));
+        	if (this instanceof And) {
+        		And and = (And)this;
+				sub = and.a.sub(v, c, ctx).and(and.b.sub(v, c, ctx));        	
+        	} 
+        	if (this instanceof Or) {
+        		Or and = (Or)this;
+				sub = and.a.sub(v, c, ctx).or(and.b.sub(v, c, ctx));        	
+        	} 
+        	if (sub == null)
+        		throw new IllegalArgumentException();
+            ctx.put(this, sub);
         }
         return sub;
     }
@@ -74,11 +89,6 @@ public abstract class Expression implements IExpression {
         return sub(v, c, new HashMap<IExpression, IExpression>());
     }
 
-    @Override
-    public final BigInteger complexity() {
-    	return complexity;
-    }
-    
     protected abstract IExpression notImpl();
-    protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
+    //protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
 }

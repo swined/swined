@@ -65,9 +65,4 @@ public enum Const implements IExpression {
         return BigInteger.ZERO;
     }
 
-    @Override
-    public BigInteger complexity() {
-        return BigInteger.ZERO;
-    }
-
 }
