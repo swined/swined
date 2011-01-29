@@ -9,7 +9,7 @@ public class Var extends Expression {
 	public final int name;
 	
 	public Var(int name, boolean sign) {
-		super(BigInteger.ZERO.setBit(name));
+		super(BigInteger.ONE, BigInteger.ZERO.setBit(name));
 		this.name = name;
 		this.sign = sign;
 	}

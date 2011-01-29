@@ -32,7 +32,7 @@ public class Int {
     	IExpression g = Const.ONE;
     	if (l > 0)
     		g = ge(Arrays.copyOf(a, l), Arrays.copyOf(b, l)); 
-    	return a[l].and(b[l].not()).or(a[l].xor(b[l].not()).and(g));
+    	return a[l].and(b[l].not()).or(xor(a[l], b[l].not()).and(g));
     }
 
     public static IExpression[] pad(IExpression[] a, int l) {
@@ -71,6 +71,10 @@ public class Int {
     	return r;
     }
 
+    private static IExpression xor(IExpression a, IExpression b) {
+    	return a.and(b.not()).or(a.not().and(b));
+    }
+    
     public static IExpression[] sum(IExpression[] a, IExpression[] b) {
         if (a.length != b.length) {
             throw new IllegalArgumentException();
@@ -78,7 +82,7 @@ public class Int {
         IExpression[] q = new IExpression[a.length];
         IExpression f = Const.ZERO;
         for (int i = 0; i < q.length; i++) {
-            q[i] = f.xor(a[i].xor(b[i]));
+            q[i] = xor(f, xor(a[i], b[i]));
             f = f.and(a[i]).or(f.and(b[i])).or(a[i].and(b[i]));
         }
         return q;

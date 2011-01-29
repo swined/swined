@@ -8,7 +8,7 @@ public class Or extends Expression {
     private final IExpression b;
 
     public Or(IExpression a, IExpression b) {
-        super(a.getVars().or(b.getVars()));
+        super(a.complexity().add(b.complexity()), a.getVars().or(b.getVars()));
         if (a instanceof Const || b instanceof Const) {
             throw new IllegalArgumentException();
         }

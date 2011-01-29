@@ -18,11 +18,6 @@ public enum Const implements IExpression {
         }
 
         @Override
-        public IExpression xor(IExpression e) {
-            return e.not();
-        }
-
-        @Override
         public Const not() {
             return ZERO;
         }
@@ -41,11 +36,6 @@ public enum Const implements IExpression {
 
         @Override
         public IExpression or(IExpression e) {
-            return e;
-        }
-
-        @Override
-        public IExpression xor(IExpression e) {
             return e;
         }
 
@@ -74,4 +64,10 @@ public enum Const implements IExpression {
     public BigInteger getVars() {
         return BigInteger.ZERO;
     }
+
+    @Override
+    public BigInteger complexity() {
+        return BigInteger.ZERO;
+    }
+
 }
