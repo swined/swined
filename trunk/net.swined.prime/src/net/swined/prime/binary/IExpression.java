@@ -9,8 +9,6 @@ public interface IExpression {
 
     IExpression or(IExpression e);
 
-    IExpression xor(IExpression e);
-
     IExpression not();
 
     IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx);
@@ -18,4 +16,6 @@ public interface IExpression {
     IExpression sub(int v, Const c);
 
     BigInteger getVars();
+    
+    BigInteger complexity();
 }

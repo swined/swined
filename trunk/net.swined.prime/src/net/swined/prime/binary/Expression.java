@@ -6,10 +6,12 @@ import java.util.Map;
 
 public abstract class Expression implements IExpression {
 
+	protected final BigInteger complexity;
     protected final BigInteger vars;
     private IExpression not = null;
 
-    public Expression(BigInteger vars) {
+    public Expression(BigInteger complexity, BigInteger vars) {
+    	this.complexity = complexity;
         this.vars = vars;
     }
 
@@ -46,14 +48,6 @@ public abstract class Expression implements IExpression {
     }
 
     @Override
-    public final IExpression xor(IExpression e) {
-        if (e instanceof Const) {
-            return e.xor(this);
-        }
-        return and(e.not()).or(not().and(e));
-    }
-
-    @Override
     public final BigInteger getVars() {
         return vars;
     }
@@ -86,6 +80,11 @@ public abstract class Expression implements IExpression {
         return sub(v, c, new HashMap<IExpression, IExpression>());
     }
 
+    @Override
+    public final BigInteger complexity() {
+    	return complexity;
+    }
+    
     protected abstract IExpression notImpl();
     protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
 }
