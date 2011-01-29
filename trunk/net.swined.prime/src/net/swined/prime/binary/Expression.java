@@ -27,6 +27,15 @@ public abstract class Expression implements IExpression {
         if (e instanceof Const) {
             return e.and(this);
         }
+        if (this instanceof Var && e instanceof Var) {
+        	Var a = (Var)this;
+        	Var b = (Var)e;
+        	if (a.name == b.name)
+        		if (a.sign == b.sign)
+        			return this;
+        		else
+        			return Const.ZERO;
+        }
         return new And(this, e);
     }
 
@@ -34,6 +43,15 @@ public abstract class Expression implements IExpression {
     public final IExpression or(IExpression e) {
         if (e instanceof Const) {
             return e.or(this);
+        }
+        if (this instanceof Var && e instanceof Var) {
+        	Var a = (Var)this;
+        	Var b = (Var)e;
+        	if (a.name == b.name)
+        		if (a.sign == b.sign)
+        			return this;
+        		else
+        			return Const.ONE;
         }
         return new Or(this, e);
     }
