@@ -44,5 +44,52 @@ public class Int {
     			r[i] = Const.ZERO;
    		return r;
     }
+
+    public static IExpression[] shl(IExpression[] a, int l) {
+    	IExpression[] r = zero(a.length);
+    	for (int i = l; i < a.length; i++)
+    		r[i] = a[i - l];
+    	return r;
+    }
+    
+    public static IExpression[] negate(IExpression[] a) {
+    	IExpression[] r = new IExpression[a.length];
+    	for (int i = 0; i < a.length; i++)
+    		r[i] = a[i].not();
+    	return sum(r, Int.pad(new IExpression[] { Const.ONE }, r.length));
+    }
+    
+    public static IExpression[] mod(IExpression[] a, IExpression[] b) {
+    	IExpression[] r = Arrays.copyOf(a, a.length);
+    	for (int i = a.length - b.length; i >= 0; i--) {
+    		IExpression[] p = shl(Int.pad(b, r.length), i);
+			IExpression ge = Int.ge(r, p);
+			for (int j = 0; j < p.length; j++)
+				p[j] = ge.and(p[j]);
+			r = sum(r, negate(p));
+    	}
+    	return r;
+    }
+
+    public static IExpression[] sum(IExpression[] a, IExpression[] b) {
+        if (a.length != b.length) {
+            throw new IllegalArgumentException();
+        }
+        IExpression[] q = new IExpression[a.length];
+        IExpression f = Const.ZERO;
+        for (int i = 0; i < q.length; i++) {
+            q[i] = f.xor(a[i].xor(b[i]));
+            f = f.and(a[i]).or(f.and(b[i])).or(a[i].and(b[i]));
+        }
+        return q;
+    }
+
+    public static IExpression[] zero(int l) {
+        IExpression[] e = new IExpression[l];
+        for (int i = 0; i < l; i++) {
+            e[i] = Const.ZERO;
+        }
+        return e;
+    }
     
 }

@@ -1,11 +1,8 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.Assert;
 
 public class Main {
 
@@ -17,41 +14,14 @@ public class Main {
         return e;
     }
 
-    private static IExpression[] zero(int l) {
-        IExpression[] e = new IExpression[l];
-        for (int i = 0; i < l; i++) {
-            e[i] = Const.ZERO;
-        }
-        return e;
-    }
-
-    private static IExpression xor(IExpression a, IExpression b) {
-      return a.and(b.not()).or(b.and(a.not()));
-    }
-    
-    private static IExpression[] sum(IExpression[] a, IExpression[] b) {
-        if (a.length != b.length) {
-            throw new IllegalArgumentException();
-        }
-        IExpression[] q = new IExpression[a.length];
-        IExpression f = Const.ZERO;
-        for (int i = 0; i < q.length; i++) {
-            //q[i] = f.xor(a[i].xor(b[i]));
-            q[i] = xor(f, xor(a[i], b[i]));
-            //f = f.m2(a[i], b[i]);
-            f = f.and(a[i]).or(f.and(b[i])).or(a[i].and(b[i]));
-        }
-        return q;
-    }
-
     private static IExpression[] mul(IExpression[] a, IExpression[] b) {
-        IExpression[] r = zero(a.length + b.length);
+        IExpression[] r = Int.zero(a.length + b.length);
         for (int i = 0; i < a.length; i++) {
-            IExpression[] t = zero(r.length);
+            IExpression[] t = Int.zero(r.length);
             for (int j = 0; j < b.length; j++) {
                 t[i + j] = a[i].and(b[j]);
             }
-            r = sum(r, t);
+            r = Int.sum(r, t);
           //  System.out.println(Arrays.toString(r));
         }
         return r;
@@ -69,32 +39,6 @@ public class Main {
         return r;
     }
 
-    private static IExpression[] shl(IExpression[] a, int l) {
-    	IExpression[] r = zero(a.length);
-    	for (int i = l; i < a.length; i++)
-    		r[i] = a[i - l];
-    	return r;
-    }
-    
-    private static IExpression[] negate(IExpression[] a) {
-    	IExpression[] r = new IExpression[a.length];
-    	for (int i = 0; i < a.length; i++)
-    		r[i] = a[i].not();
-    	return sum(r, Int.pad(new IExpression[] { Const.ONE }, r.length));
-    }
-    
-    private static IExpression[] mod(IExpression[] a, IExpression[] b) {
-    	IExpression[] r = Arrays.copyOf(a, a.length);
-    	for (int i = a.length - b.length; i >= 0; i--) {
-    		IExpression[] p = shl(Int.pad(b, r.length), i);
-			IExpression ge = Int.ge(r, p);
-			for (int j = 0; j < p.length; j++)
-				p[j] = ge.and(p[j]);
-			r = sum(r, negate(p));
-    	}
-    	return r;
-    }
-    
     private static IExpression eq(IExpression[] e, BigInteger n) {
         IExpression r = Const.ONE;
         for (int i = 0; i < e.length; i++) {
