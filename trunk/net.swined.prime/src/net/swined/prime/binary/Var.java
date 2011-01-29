@@ -1,6 +1,7 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 public class Var extends Expression {
 
@@ -21,6 +22,16 @@ public class Var extends Expression {
 	@Override
 	public String toString() {
 		return (sign ? "!" : "") + "x" + name;
+	}
+
+	@Override
+	protected IExpression subImpl(int v, Const c,
+			Map<IExpression, IExpression> ctx) {
+		if (v == name) {
+			return sign ? c.not() : c;
+		} else {
+			return this;
+		}
 	}
 	
 }

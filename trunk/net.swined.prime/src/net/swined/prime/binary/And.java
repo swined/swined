@@ -1,5 +1,7 @@
 package net.swined.prime.binary;
 
+import java.util.Map;
+
 
 public class And extends Expression {
 
@@ -21,4 +23,10 @@ public class And extends Expression {
     public String toString() {
         return "(" + a + " & " + b + ")";
     }
+
+	@Override
+	protected IExpression subImpl(int v, Const c,
+			Map<IExpression, IExpression> ctx) {
+		return a.sub(v, c, ctx).and(b.sub(v, c, ctx));
+	}
 }
