@@ -14,12 +14,12 @@ public class Main {
         return e;
     }
 
-    private static BigInteger extract(int n, int l, Map<Integer, Const> s) {
+    private static BigInteger extract(int l, Map<Integer, Const> s) {
         BigInteger r = BigInteger.ZERO;
         for (int v : s.keySet()) {
-            if (v >= n && v < n + l) {
+            if (v < l) {
                 if (s.get(v) == Const.ONE) {
-                    r = r.setBit(v - n);
+                    r = r.setBit(v);
                 }
             }
         }
@@ -73,7 +73,7 @@ public class Main {
     	Map<Integer, Const> solution = solve(e);
     	if (solution == null)
     		return null;
-		return extract(0, l, solution);
+		return extract(l, solution);
     }
 
     private static BigInteger key(int l) {
@@ -82,7 +82,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(0);
+    	BigInteger n = key(1);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		BigInteger d = divisor(n);
