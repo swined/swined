@@ -82,7 +82,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(1);
+    	BigInteger n = key(0);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		BigInteger d = divisor(n);
