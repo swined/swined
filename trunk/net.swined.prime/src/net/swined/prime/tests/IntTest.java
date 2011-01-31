@@ -75,6 +75,27 @@ public class IntTest {
 	}
 
 	@Test
+	public void testModN() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(10); 
+			BigInteger b = genInt(4);
+			BigInteger r = Int.toInt(Int.mod(Int.toExp(a), b)); 
+			Assert.assertEquals("" + a + " mod " + b, a.mod(b), r);
+		}
+	}
+	
+	@Test
+	public void testModPow() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(2); 
+			BigInteger b = genInt(2);
+			BigInteger c = genInt(2);
+			BigInteger r = Int.toInt(Int.modPow(a, Int.toExp(b), c)); 
+			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.modPow(b, c), r);
+		}
+	}
+	
+	@Test
 	public void testWtf() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
