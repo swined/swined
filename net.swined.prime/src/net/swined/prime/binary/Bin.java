@@ -11,7 +11,7 @@ public class Bin {
 			if (vars.testBit(i)) {
 				Var v = new Var(i);
         IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
-				IExpression n = andNot(e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()), v);
+				IExpression n = and(not(v), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
 				e = or(p, n);
 			}
 		return e;
@@ -25,10 +25,6 @@ public class Bin {
     return new BinOp(BinOpType.AND, a, b);
   }
 
-  public static IExpression andNot(IExpression a, IExpression b) {
-    return and(a, not(b));
-  }
-  
   public static IExpression or(IExpression a, IExpression b) {
     if (a instanceof Const)
       return ((Const) a).or(b);
