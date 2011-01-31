@@ -1,4 +1,4 @@
-package net.swined.prime.binary;
+package net.swined.prime.nodes;
 
 import java.math.BigInteger;
 import java.util.Map;

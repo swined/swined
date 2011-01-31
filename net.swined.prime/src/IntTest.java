@@ -1,11 +1,12 @@
 import java.math.BigInteger;
 import java.util.Random;
 
-import net.swined.prime.binary.Const;
 import net.swined.prime.binary.Int;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.swined.prime.nodes.*;
 
 public class IntTest {
 
