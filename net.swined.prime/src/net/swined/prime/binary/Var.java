@@ -15,7 +15,7 @@ public class Var implements IExpression {
 
 	@Override
 	public String toString() {
-		return "x" + name;
+		return (sign ? "!" : "") + "x" + name;
 	}
 
 	@Override
