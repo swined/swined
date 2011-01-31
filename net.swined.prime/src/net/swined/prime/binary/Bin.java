@@ -37,6 +37,8 @@ public class Bin {
   public static IExpression not(IExpression a) {
     if (a instanceof Const)
       return ((Const) a).not();
+    if (a instanceof Not)
+      return ((Not) a).a;
     return new Not(a);
   }
   
