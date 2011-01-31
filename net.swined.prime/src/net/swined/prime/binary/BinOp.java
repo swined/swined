@@ -13,6 +13,9 @@ public class BinOp implements IExpression {
   private final BigInteger vars;
 
   public BinOp(BinOpType type, IExpression a, IExpression b) {
+    if (a instanceof Const || b instanceof Const)
+      throw new IllegalArgumentException();
+    type.checkConstraints(a, b);
     this.vars = a.getVars().or(b.getVars());
     this.type = type;
     this.a = a;
