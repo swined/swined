@@ -30,7 +30,7 @@ public class Int {
     		throw new IllegalArgumentException();
     	IExpression g = Const.ONE;
     	for (int i = 0; i < a.length; i++)
-    		g = Bin.or(Bin.and(a[i], Bin.not(b[i])), Bin.and(Bin.xor(a[i], Bin.not(b[i])), g));
+    		g = Bin.ge(a[i], b[i], g);
     	return g;
     }
 
