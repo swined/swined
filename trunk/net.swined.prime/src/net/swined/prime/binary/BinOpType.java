@@ -45,6 +45,8 @@ public enum BinOpType {
       Var vb = (Var)b;
       if (va.name == vb.name)
         throw new IllegalArgumentException();
+      if (va.sign && vb.sign)
+        throw new IllegalArgumentException();
     }
   }
   
