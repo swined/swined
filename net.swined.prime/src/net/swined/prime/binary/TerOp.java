@@ -9,29 +9,29 @@ import java.util.Map;
 public class TerOp implements IExpression {
 
   private final TerOpType type;
-  private final IExpression a;
-  private final IExpression b;
-  private final IExpression c;
+  private final IExpression x;
+  private final IExpression y;
+  private final IExpression z;
   private SoftReference<BigInteger> vars;
 
-  public TerOp(TerOpType type, IExpression a, IExpression b, IExpression c) {
-    type.checkConstraints(a, b, c);
+  public TerOp(TerOpType type, IExpression x, IExpression y, IExpression z) {
+    type.checkConstraints(x, y, z);
     this.type = type;
-    this.a = a;
-    this.b = b;
-    this.c = c;
+    this.x = x;
+    this.y = y;
+    this.z = z;
   }
 
   @Override
   public String toString() {
-      return type.sign + "(" + a + ", " + b + ", " + c + ")";
+      return type.sign + "(" + x + ", " + y + ", " + z + ")";
   }
 
   @Override
   public BigInteger getVars() {
     BigInteger v = vars == null ? null : vars.get();
     if (v == null) {
-      v = a.getVars().or(b.getVars()).or(c.getVars());
+      v = x.getVars().or(y.getVars()).or(z.getVars());
       vars = new SoftReference<BigInteger>(v);
     }
     return v;
@@ -43,14 +43,14 @@ public class TerOp implements IExpression {
 	    return this;
 	  IExpression s = ctx.get(this);
 	  if (s == null) {
-  		IExpression sa = a.sub(v, c, ctx);
-      IExpression sb = b.sub(v, c, ctx);
-      IExpression sc = c.sub(v, c, ctx);
-      if (sa != a || sb != b || sc != c)
-        s = type.apply(sa, sb, sc);
-      else
-        s = this;
-      ctx.put(this, s);
+		  IExpression sa = x.sub(v, c, ctx);
+	      IExpression sb = y.sub(v, c, ctx);
+	      IExpression sc = z.sub(v, c, ctx);
+	      if (sa != x || sb != y || sc != z)
+	        s = type.apply(sa, sb, sc);
+	      else
+	        s = this;
+	      ctx.put(this, s);
 	  }
 	  return s;
 	}
