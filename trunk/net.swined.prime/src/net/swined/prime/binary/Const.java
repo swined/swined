@@ -24,7 +24,7 @@ public enum Const implements IExpression {
       }
       
       @Override
-      public IExpression not() {
+      public Const not() {
         return ZERO;
       }
       
@@ -52,7 +52,7 @@ public enum Const implements IExpression {
       }
       
       @Override
-      public IExpression not() {
+      public Const not() {
         return ONE;
       }
       
@@ -73,7 +73,7 @@ public enum Const implements IExpression {
         return BigInteger.ZERO;
     }
 
-    public abstract IExpression not();
+    public abstract Const not();
     public abstract IExpression and(IExpression a);
     public abstract IExpression or(IExpression a);
     public abstract IExpression xor(IExpression a);

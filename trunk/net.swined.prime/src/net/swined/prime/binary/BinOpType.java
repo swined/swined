@@ -8,8 +8,9 @@ public enum BinOpType {
     public IExpression apply(IExpression a, IExpression b) {
       return Bin.and(a, b);
     }    
+    
   },
-  
+
   OR("|") {
     @Override
     public IExpression apply(IExpression a, IExpression b) {
@@ -32,4 +33,10 @@ public enum BinOpType {
   
   public abstract IExpression apply(IExpression a, IExpression b);
   
+  public void checkConstraints(IExpression a, IExpression b) {
+    
+  }
+  
 }
+
+
