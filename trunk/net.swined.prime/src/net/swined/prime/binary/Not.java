@@ -19,6 +19,6 @@ public class Not extends Expression {
 	@Override
 	protected IExpression subImpl(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
-		return BinOps.not(a.sub(v, c, ctx));
+		return Bin.not(a.sub(v, c, ctx));
 	}
 }
