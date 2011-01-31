@@ -5,9 +5,7 @@ import net.swined.prime.binary.Int;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.swined.prime.nodes.*;
-
+import net.swined.prime.binary.*;
 public class IntTest {
 
 	private static Random random = new Random();
