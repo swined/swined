@@ -26,6 +26,25 @@ public class IntTest {
 	}
 
 	@Test
+	public void testSum() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(10); 
+			BigInteger b = genInt(10);
+			BigInteger r = Int.toInt(Int.sum(Int.pad(Int.toExp(a), 10), Int.pad(Int.toExp(b), 10)));
+			Assert.assertEquals("" + a + " + " + b, a.add(b).mod(BigInteger.ZERO.setBit(10)), r);
+		}
+	}
+
+	@Test
+	public void testNegate() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(10); 
+			BigInteger r = Int.toInt(Int.negate(Int.toExp(a)));
+			Assert.assertEquals("-" + a, a.negate(), r);
+		}
+	}
+	
+	@Test
 	public void testMod() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
