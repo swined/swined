@@ -30,6 +30,8 @@ public class Bin {
       if (va.name == vb.name) {
         return va.sign == vb.sign ? a : Const.ZERO;
       }
+      if (va.sign && vb.sign)
+        return not(or(not(a), not(b)));
     }
     return new BinOp(BinOpType.AND, a, b);
   }
@@ -47,6 +49,8 @@ public class Bin {
       if (va.name == vb.name) {
         return va.sign == vb.sign ? a : Const.ONE;
       }
+      if (va.sign && vb.sign)
+        return not(and(not(a), not(b)));
     }
     return new BinOp(BinOpType.OR, a, b);
   }
@@ -74,6 +78,8 @@ public class Bin {
       if (va.name == vb.name) {
         return va.sign == vb.sign ? Const.ZERO : Const.ONE;
       }
+      if (va.sign && vb.sign)
+        return xor(not(va), not(vb));
     }
     return new BinOp(BinOpType.XOR, a, b);
   }
