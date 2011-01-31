@@ -11,6 +11,7 @@ public enum BinOpType {
     
     @Override
     public void checkConstraints(IExpression a, IExpression b) {
+      super.checkConstraints(a, b);
       if (a instanceof Not && b instanceof Not)
         throw new IllegalArgumentException();
     }
@@ -25,6 +26,7 @@ public enum BinOpType {
     
     @Override
     public void checkConstraints(IExpression a, IExpression b) {
+      super.checkConstraints(a, b);
       if (a instanceof Not && b instanceof Not)
         throw new IllegalArgumentException();
     }
@@ -38,6 +40,7 @@ public enum BinOpType {
     
     @Override
     public void checkConstraints(IExpression a, IExpression b) {
+      super.checkConstraints(a, b);
       if (a instanceof Not && b instanceof Not)
         throw new IllegalArgumentException();
     }
@@ -53,7 +56,8 @@ public enum BinOpType {
   public abstract IExpression apply(IExpression a, IExpression b);
   
   public void checkConstraints(IExpression a, IExpression b) {
-    
+    if (a instanceof Const || b instanceof Const)
+      throw new IllegalArgumentException();
   }
   
 }
