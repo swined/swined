@@ -107,12 +107,22 @@ public class IntTest {
 	}
 	
 	@Test
-	public void testWtf() {
+	public void testWtf0() { // ((a mod m) ^ b) mod m == (a ^ b) mod m 
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
 			BigInteger b = genInt(10);
 			BigInteger c = genInt(5);
 			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.pow(b.intValue()).mod(c), a.mod(c).pow(b.intValue()).mod(c));
+		}
+	}
+
+	@Test
+	public void testWtf1() { // (a mod m + b mod m) mod m == (a + b) mod m 
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(100); 
+			BigInteger b = genInt(100);
+			BigInteger c = genInt(100);
+			Assert.assertEquals("" + a + " + " + b + " mod " + c, a.add(b).mod(c), a.mod(c).add(b.mod(c)).mod(c));
 		}
 	}
 	
