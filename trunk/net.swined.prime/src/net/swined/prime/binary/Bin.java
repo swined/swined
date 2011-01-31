@@ -84,4 +84,9 @@ public class Bin {
     return new BinOp(BinOpType.XOR, a, b);
   }
 	
+  public static IExpression ge(IExpression a, IExpression b, IExpression g) {
+    IExpression nb = Bin.not(b);
+    return Bin.or(Bin.and(a, nb), Bin.and(Bin.xor(a, nb), g));
+  }
+  
 }
