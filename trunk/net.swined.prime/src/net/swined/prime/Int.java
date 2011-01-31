@@ -35,6 +35,8 @@ public class Int {
     }
 
     public static IExpression ge(IExpression[] a, BigInteger b) {
+    	if (a.length < b.bitLength())
+    		return Const.ZERO;
     	IExpression g = Const.ONE;
     	for (int i = 0; i < a.length; i++) {
     		if (b.testBit(i)) {
@@ -129,6 +131,8 @@ public class Int {
     }
     
     public static IExpression[] pow(BigInteger a, IExpression[] b) {
+    	if (BigInteger.ZERO.equals(a))
+    		return new IExpression[] { Const.ZERO };
     	IExpression[] r = new IExpression[] { Const.ONE };
     	for (int i = 0; i < b.length; i++) {
     		IExpression[] t = new IExpression[a.bitLength()];
@@ -142,7 +146,7 @@ public class Int {
     }
         
     public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
-    	return mod(pow(a, x), m);
+    	return mod(pow(a.mod(m), x), m);
     }
     
 }
