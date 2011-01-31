@@ -70,11 +70,6 @@ public enum Const implements IExpression {
     }
 
     @Override
-    public IExpression sub(int v, Const c) {
-        return this;
-    }
-
-    @Override
     public BigInteger getVars() {
         return BigInteger.ZERO;
     }

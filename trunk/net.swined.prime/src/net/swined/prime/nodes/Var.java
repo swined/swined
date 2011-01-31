@@ -3,12 +3,11 @@ package net.swined.prime.nodes;
 import java.math.BigInteger;
 import java.util.Map;
 
-public class Var extends Expression {
+public class Var implements IExpression {
 
 	public final int name;
 	
 	public Var(int name) {
-		super(BigInteger.ZERO.setBit(name));
 		this.name = name;
 	}
 
@@ -18,7 +17,12 @@ public class Var extends Expression {
 	}
 
 	@Override
-	protected IExpression subImpl(int v, Const c,
+	public BigInteger getVars() {
+	  return BigInteger.ZERO.setBit(name);
+	}
+	
+	@Override
+	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
 		if (v == name) {
 			return c;
