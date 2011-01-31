@@ -71,6 +71,7 @@ public class Main {
     	System.out.println(new Date());
     	IExpression e = eq(Int.mod(d, var(l)), BigInteger.ZERO);
     	System.out.println(new Date());
+    	e = Bin.split(e);
     	//System.out.println(e);
     	System.out.println("solving");
     	Map<Integer, Const> solution = solve(e);
@@ -85,7 +86,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(100);
+    	BigInteger n = key(32);
     	System.out.println(n);
     	System.out.println(toBinary(n));
   		BigInteger d = divisor(n);

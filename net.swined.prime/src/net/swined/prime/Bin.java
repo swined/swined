@@ -6,9 +6,12 @@ import java.util.HashMap;
 public class Bin {
 
 	public static IExpression split(IExpression e) {
+		System.out.println("splitting");
 		BigInteger vars = e.getVars();
+		int c = 0;
 		for (int i = 0; i < vars.bitLength(); i++)
 			if (vars.testBit(i)) {
+				System.out.println("" + c++ + "/" + vars.bitCount());
 				Var v = new Var(i, false);
         IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
 				IExpression n = and(not(v), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
