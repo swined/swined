@@ -2,11 +2,10 @@ package net.swined.prime.tests;
 import java.math.BigInteger;
 import java.util.Random;
 
-import net.swined.prime.binary.Int;
+import net.swined.prime.*;
 
 import org.junit.Assert;
 import org.junit.Test;
-import net.swined.prime.binary.*;
 public class IntTest {
 
 	private static Random random = new Random();
