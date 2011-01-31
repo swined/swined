@@ -22,6 +22,6 @@ public class And extends Expression {
 	@Override
 	protected IExpression subImpl(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
-		return BinOps.and(a.sub(v, c, ctx), b.sub(v, c, ctx));
+		return Bin.and(a.sub(v, c, ctx), b.sub(v, c, ctx));
 	}
 }

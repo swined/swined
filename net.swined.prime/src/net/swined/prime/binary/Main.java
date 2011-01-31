@@ -29,8 +29,8 @@ public class Main {
     private static IExpression eq(IExpression[] e, BigInteger n) {
         IExpression r = Const.ONE;
         for (int i = 0; i < e.length; i++) {
-            IExpression x = n.testBit(i) ? e[i] : BinOps.not(e[i]);
-            r = BinOps.and(r, x);
+            IExpression x = n.testBit(i) ? e[i] : Bin.not(e[i]);
+            r = Bin.and(r, x);
         }
         return r;
     }

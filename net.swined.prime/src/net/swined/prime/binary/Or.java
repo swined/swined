@@ -22,7 +22,7 @@ public class Or extends Expression {
 	@Override
 	protected IExpression subImpl(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
-		return BinOps.or(a.sub(v, c, ctx), b.sub(v, c, ctx));
+		return Bin.or(a.sub(v, c, ctx), b.sub(v, c, ctx));
 	}
 
 }

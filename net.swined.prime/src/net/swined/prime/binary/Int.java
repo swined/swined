@@ -30,7 +30,7 @@ public class Int {
     		throw new IllegalArgumentException();
     	IExpression g = Const.ONE;
     	for (int i = 0; i < a.length; i++)
-    		g = BinOps.or(BinOps.and(a[i], BinOps.not(b[i])), BinOps.and(BinOps.xor(a[i], BinOps.not(b[i])), g));
+    		g = Bin.or(Bin.and(a[i], Bin.not(b[i])), Bin.and(Bin.xor(a[i], Bin.not(b[i])), g));
     	return g;
     }
 
@@ -54,7 +54,7 @@ public class Int {
     public static IExpression[] negate(IExpression[] a) {
     	IExpression[] r = new IExpression[a.length];
     	for (int i = 0; i < a.length; i++)
-    		r[i] = BinOps.not(a[i]);
+    		r[i] = Bin.not(a[i]);
     	return sum(r, Int.pad(new IExpression[] { Const.ONE }, r.length));
     }
     
@@ -64,7 +64,7 @@ public class Int {
     		IExpression[] p = shl(Int.pad(b, r.length), i);
   			for (int j = 0; j < p.length; j++) {
   			  IExpression t = Int.ge(r, p);
-  			  p[j] = BinOps.and(t, p[j]);
+  			  p[j] = Bin.and(t, p[j]);
   			}
   			r = sum(r, negate(p));
     	}
@@ -78,8 +78,8 @@ public class Int {
         IExpression[] q = new IExpression[a.length];
         IExpression f = Const.ZERO;
         for (int i = 0; i < q.length; i++) {
-            q[i] = BinOps.xor(f, BinOps.xor(a[i], b[i]));
-            f = BinOps.or(BinOps.or(BinOps.and(f, a[i]), BinOps.and(f, b[i])), BinOps.and(a[i], b[i]));
+            q[i] = Bin.xor(f, Bin.xor(a[i], b[i]));
+            f = Bin.or(Bin.or(Bin.and(f, a[i]), Bin.and(f, b[i])), Bin.and(a[i], b[i]));
         }
         return q;
     }
