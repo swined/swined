@@ -32,11 +32,6 @@ public class Var implements IExpression {
 	}
 	
 	@Override
-	public boolean knownVars() {
-	  return true;
-	}
-	
-	@Override
 	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
 		if (v == name) {

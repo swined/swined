@@ -1,5 +1,6 @@
 package net.swined.prime.binary;
 
+import java.lang.ref.SoftReference;
 import java.math.BigInteger;
 import java.util.Map;
 
@@ -10,11 +11,10 @@ public class BinOp implements IExpression {
   private final BinOpType type;
   private final IExpression a;
   private final IExpression b;
-  private final BigInteger vars;
+  private SoftReference<BigInteger> vars;
 
   public BinOp(BinOpType type, IExpression a, IExpression b) {
     type.checkConstraints(a, b);
-    this.vars = a.knownVars() || b.knownVars() ? null : a.getVars().or(b.getVars());
     this.type = type;
     this.a = a;
     this.b = b;
@@ -26,13 +26,13 @@ public class BinOp implements IExpression {
   }
 
   @Override
-  public boolean knownVars() {
-    return vars != null;
-  }
-  
-  @Override
   public BigInteger getVars() {
-    return knownVars() ? vars : a.getVars().or(b.getVars());
+    BigInteger v = vars == null ? null : vars.get();
+    if (v == null) {
+      v = a.getVars().or(b.getVars());
+      vars = new SoftReference<BigInteger>(v);
+    }
+    return v;
   }
     
 	@Override

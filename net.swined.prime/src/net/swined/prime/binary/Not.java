@@ -24,11 +24,6 @@ public class Not implements IExpression {
     return a.getVars();
   }
   
-  @Override
-  public boolean knownVars() {
-    return a.knownVars();
-  }
-  
 	@Override
 	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
