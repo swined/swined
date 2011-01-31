@@ -49,10 +49,9 @@ public class Int {
     public static IExpression[] pad(IExpression[] a, int l) {
     	if (a.length == l)
     		return a;
-    	IExpression[] r = Arrays.copyOf(a, l);
-    	if (l > a.length)
-    		for (int i = a.length; i < l; i++)
-    			r[i] = Const.ZERO;
+    	IExpression[] r = new IExpression[l];
+		for (int i = 0; i < l; i++)
+			r[i] = i < a.length ? a[i] : Const.ZERO;
    		return r;
     }
 
@@ -86,7 +85,8 @@ public class Int {
     public static IExpression[] mod(IExpression[] a, BigInteger m) {
     	IExpression[] r = Arrays.copyOf(a, a.length);
     	for (int i = a.length - m.bitLength(); i >= 0; i--) {
-    		IExpression[] p = shl(Int.pad(toExp(m), r.length), i);
+    		BigInteger s = m.shiftLeft(i);
+			IExpression[] p = (IExpression[])pad(toExp(s), r.length);
     		IExpression ge = Int.ge(r, p);
   			for (int j = 0; j < p.length; j++) {
   				p[j] = Bin.and(ge, p[j]);
