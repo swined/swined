@@ -90,7 +90,13 @@ public class Bin {
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {
-    return Bin.or(Bin.or(Bin.and(a, b), Bin.and(b, c)), Bin.and(a, c));
+    if (a instanceof Const)
+      return ((Const) a).m2(b, c);
+    if (b instanceof Const)
+      return ((Const) b).m2(a, c);
+    if (c instanceof Const)
+      return ((Const) c).m2(b, a);
+    return new TerOp(TerOpType.M2, a, b, c);
   }  
 
   public static IExpression xor(IExpression a, IExpression b, IExpression c) {
