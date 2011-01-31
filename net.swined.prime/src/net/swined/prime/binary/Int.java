@@ -78,8 +78,8 @@ public class Int {
         IExpression[] q = new IExpression[a.length];
         IExpression f = Const.ZERO;
         for (int i = 0; i < q.length; i++) {
-            q[i] = Bin.xor(f, Bin.xor(a[i], b[i]));
-            f = Bin.or(Bin.or(Bin.and(f, a[i]), Bin.and(f, b[i])), Bin.and(a[i], b[i]));
+            q[i] = Bin.xor(a[i], b[i], f);
+            f = Bin.m2(a[i], b[i], f);
         }
         return q;
     }
