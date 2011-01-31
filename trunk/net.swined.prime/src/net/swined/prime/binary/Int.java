@@ -62,9 +62,9 @@ public class Int {
     	IExpression[] r = Arrays.copyOf(a, a.length);
     	for (int i = a.length - b.length; i >= 0; i--) {
     		IExpression[] p = shl(Int.pad(b, r.length), i);
+    		IExpression ge = Int.ge(r, p);
   			for (int j = 0; j < p.length; j++) {
-  			  IExpression t = Int.ge(r, p);
-  			  p[j] = Bin.and(t, p[j]);
+  				p[j] = Bin.and(ge, p[j]);
   			}
   			r = sum(r, negate(p));
     	}

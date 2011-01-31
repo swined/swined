@@ -66,22 +66,23 @@ public class Bin {
   }
   
   public static IExpression xor(IExpression a, IExpression b) {
-    if (a instanceof Const)
-      return ((Const) a).xor(b);
-    if (b instanceof Const)
-      return ((Const) b).xor(a);
-    if (a instanceof Not && b instanceof Not)
-      return xor(not(a), not(b));
-    if (a instanceof Var && b instanceof Var) {
-      Var va = (Var)a;
-      Var vb = (Var)b;
-      if (va.name == vb.name) {
-        return va.sign == vb.sign ? Const.ZERO : Const.ONE;
-      }
-      if (va.sign && vb.sign)
-        return xor(not(va), not(vb));
-    }
-    return new BinOp(BinOpType.XOR, a, b);
+//    if (a instanceof Const)
+//      return ((Const) a).xor(b);
+//    if (b instanceof Const)
+//      return ((Const) b).xor(a);
+//    if (a instanceof Not && b instanceof Not)
+//      return xor(not(a), not(b));
+//    if (a instanceof Var && b instanceof Var) {
+//      Var va = (Var)a;
+//      Var vb = (Var)b;
+//      if (va.name == vb.name) {
+//        return va.sign == vb.sign ? Const.ZERO : Const.ONE;
+//      }
+//      if (va.sign && vb.sign)
+//        return xor(not(va), not(vb));
+//    }
+//    return new BinOp(BinOpType.XOR, a, b);
+	  return or(and(a, not(b)), and(b, not(a)));
   }
 	
   public static IExpression ge(IExpression a, IExpression b, IExpression g) {
@@ -99,14 +100,14 @@ public class Bin {
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {
-//    if (a instanceof Const)
-//      return ((Const) a).m2(b, c);
-//    if (b instanceof Const)
-//      return ((Const) b).m2(a, c);
-//    if (c instanceof Const)
-//      return ((Const) c).m2(b, a);
-//    return new TerOp(TerOpType.M2, a, b, c);
-	  return or(and(a, b), or(and(b, c), and(a, c)));
+    if (a instanceof Const)
+      return ((Const) a).m2(b, c);
+    if (b instanceof Const)
+      return ((Const) b).m2(a, c);
+    if (c instanceof Const)
+      return ((Const) c).m2(b, a);
+    return new TerOp(TerOpType.M2, a, b, c);
+//	  return or(and(a, b), or(and(b, c), and(a, c)));
   }  
 
   public static IExpression xor(IExpression a, IExpression b, IExpression c) {

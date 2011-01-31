@@ -39,8 +39,8 @@ public class IntTest {
 	public void testNegate() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
-			BigInteger r = Int.toInt(Int.negate(Int.toExp(a)));
-			Assert.assertEquals("-" + a, a.negate(), r);
+			BigInteger r = Int.toInt(Int.negate(Int.negate(Int.toExp(a))));
+			Assert.assertEquals(a, r);
 		}
 	}
 	
