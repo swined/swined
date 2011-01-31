@@ -29,6 +29,11 @@ public enum Const implements IExpression {
       }
       
       @Override
+      public IExpression m2(IExpression a, IExpression b) {
+        return Bin.or(a, b);
+      }
+      
+      @Override
       public String toString() {
           return "1";
       }
@@ -57,6 +62,11 @@ public enum Const implements IExpression {
       }
       
       @Override
+      public IExpression m2(IExpression a, IExpression b) {
+        return Bin.and(a, b);
+      }
+      
+      @Override
       public String toString() {
           return "0";
       }
@@ -77,5 +87,6 @@ public enum Const implements IExpression {
     public abstract IExpression and(IExpression a);
     public abstract IExpression or(IExpression a);
     public abstract IExpression xor(IExpression a);
+    public abstract IExpression m2(IExpression a, IExpression b);
     
 }
