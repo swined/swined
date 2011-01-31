@@ -103,8 +103,17 @@ public class Int {
     	return r;
     }
     
-    public static IExpression[] pow(Const[] a, IExpression[] b) {
-    	return null;
+    public static IExpression[] pow(BigInteger a, IExpression[] b) {
+    	IExpression[] r = new IExpression[] { Const.ONE };
+    	for (int i = 0; i < b.length; i++) {
+    		IExpression[] t = new IExpression[a.bitLength()];
+    		for (int j = 0; j < t.length; j++) 
+    			t[j] = a.testBit(j) ? b[i] : Const.ZERO;
+    		t[0] = Bin.or(t[0], Bin.not(b[i]));
+    		r = mul(r, t);
+    		a = a.multiply(a);
+    	}
+    	return r;
     }
         
 }

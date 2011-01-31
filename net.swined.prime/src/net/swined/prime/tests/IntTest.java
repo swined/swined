@@ -44,6 +44,16 @@ public class IntTest {
 			Assert.assertEquals("" + a + " * " + b, a.multiply(b), r);
 		}
 	}
+
+	@Test
+	public void testPow() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(4); 
+			BigInteger b = genInt(4);
+			BigInteger r = Int.toInt(Int.pow(a, Int.toExp(b)));
+			Assert.assertEquals("" + a + " ^ " + b, a.pow(b.intValue()), r);
+		}
+	}
 	
 	@Test
 	public void testNegate() {
@@ -61,6 +71,16 @@ public class IntTest {
 			BigInteger b = genInt(4);
 			BigInteger r = Int.toInt(Int.mod(Int.toExp(a), Int.toExp(b))); 
 			Assert.assertEquals("" + a + " mod " + b, a.mod(b), r);
+		}
+	}
+
+	@Test
+	public void testWtf() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(10); 
+			BigInteger b = genInt(10);
+			BigInteger c = genInt(5);
+			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.pow(b.intValue()).mod(c), a.mod(c).pow(b.intValue()).mod(c));
 		}
 	}
 	
