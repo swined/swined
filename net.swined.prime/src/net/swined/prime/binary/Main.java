@@ -3,7 +3,6 @@ package net.swined.prime.binary;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-import net.swined.prime.nodes.*;
 
 public class Main {
 

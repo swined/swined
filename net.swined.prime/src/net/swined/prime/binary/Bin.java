@@ -3,8 +3,6 @@ package net.swined.prime.binary;
 import java.math.BigInteger;
 import java.util.HashMap;
 
-import net.swined.prime.nodes.*;
-
 public class Bin {
 
 	public static IExpression split(IExpression e) {
