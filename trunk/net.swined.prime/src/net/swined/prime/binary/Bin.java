@@ -85,30 +85,28 @@ public class Bin {
   }
 	
   public static IExpression ge(IExpression a, IExpression b, IExpression g) {
-    // a & !b | (a ^ !b) & g
-    if (a == Const.ZERO) // !b & g
-      return and(not(b), g);
-    if (a == Const.ONE) // !b | b & g
-      return or(not(b), and(b, g));
-    if (b == Const.ZERO) // a | !a & g
-      return or(a, and(not(b), g));
-    if (b == Const.ONE) //a & g
-      return and(a, g);
-    if (g == Const.ZERO) // a & !b
-        return or(a, not(b));
-    if (g == Const.ONE) //a | !a !b 
-        return or(a, and(not(a), not(b)));
-    return new TerOp(TerOpType.GE, a, b, g);
+  //   a & !b | (a ^ !b) & g
+//    if (a == Const.ZERO)
+//      return and(not(b), g);
+//    if (a == Const.ONE)
+//      return or(not(b), g);
+//    if (b == Const.ZERO)
+//      return or(a, and(not(b), g));
+//    if (g == Const.ONE)
+//        return or(a, not(b));
+//    return new TerOp(TerOpType.GE, a, b, g);
+    return or(and(a, not(b)), and(xor(a, not(b)), g));
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {
-    if (a instanceof Const)
-      return ((Const) a).m2(b, c);
-    if (b instanceof Const)
-      return ((Const) b).m2(a, c);
-    if (c instanceof Const)
-      return ((Const) c).m2(b, a);
-    return new TerOp(TerOpType.M2, a, b, c);
+//    if (a instanceof Const)
+//      return ((Const) a).m2(b, c);
+//    if (b instanceof Const)
+//      return ((Const) b).m2(a, c);
+//    if (c instanceof Const)
+//      return ((Const) c).m2(b, a);
+//    return new TerOp(TerOpType.M2, a, b, c);
+	  return or(and(a, b), or(and(b, c), and(a, c)));
   }  
 
   public static IExpression xor(IExpression a, IExpression b, IExpression c) {
