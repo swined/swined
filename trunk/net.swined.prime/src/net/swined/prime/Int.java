@@ -34,6 +34,13 @@ public class Int {
     	return g;
     }
 
+    public static IExpression ge(IExpression[] a, BigInteger b) {
+    	IExpression g = Const.ONE;
+    	for (int i = 0; i < a.length; i++)
+    		g = Bin.ge(a[i], b.testBit(i) ? Const.ONE : Const.ZERO, g);
+    	return g;
+    }
+    
     public static IExpression[] pad(IExpression[] a, int l) {
     	if (a.length == l)
     		return a;
@@ -71,6 +78,20 @@ public class Int {
     	return r;
     }
 
+    public static IExpression[] mod(IExpression[] a, BigInteger m) {
+    	IExpression[] r = Arrays.copyOf(a, a.length);
+    	for (int i = a.length - m.bitLength(); i >= 0; i--) {
+    		BigInteger s = m.shiftLeft(i);
+    		IExpression ge = Int.ge(r, s);
+			IExpression[] p = zero(r.length);
+  			for (int j = 0; j < p.length; j++)
+  				if (s.testBit(j))
+  					p[j] = ge;
+  			r = sum(r, negate(p));
+    	}
+    	return r;
+    }
+    
     public static IExpression[] sum(IExpression[] a, IExpression[] b) {
         if (a.length != b.length) {
             throw new IllegalArgumentException();
@@ -119,7 +140,7 @@ public class Int {
     }
         
     public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
-    	return mod(pow(a, x), toExp(m));
+    	return mod(pow(a, x), m);
     }
     
 }
