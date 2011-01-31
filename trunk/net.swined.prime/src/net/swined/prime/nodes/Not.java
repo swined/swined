@@ -10,6 +10,8 @@ public class Not implements IExpression {
   public final IExpression a;
 
   public Not(IExpression a) {
+    if (a instanceof Not || a instanceof Const)
+      throw new IllegalArgumentException();
     this.a = a;
   }
 
