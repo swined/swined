@@ -15,11 +15,6 @@ public class And extends Expression {
     }
 
     @Override
-    protected IExpression notImpl() {
-    	return a.not().or(b.not());
-    }
-
-    @Override
     public String toString() {
         return "(" + a + " & " + b + ")";
     }
@@ -27,6 +22,6 @@ public class And extends Expression {
 	@Override
 	protected IExpression subImpl(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
-		return a.sub(v, c, ctx).and(b.sub(v, c, ctx));
+		return BinOps.and(a.sub(v, c, ctx), b.sub(v, c, ctx));
 	}
 }
