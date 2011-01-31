@@ -88,11 +88,11 @@ public class Int {
     	IExpression[] r = Arrays.copyOf(a, a.length);
     	for (int i = a.length - m.bitLength(); i >= 0; i--) {
     		BigInteger s = m.shiftLeft(i);
-			IExpression[] p = (IExpression[])pad(toExp(s), r.length);
-    		IExpression ge = Int.ge(r, s);
-  			for (int j = 0; j < p.length; j++) {
+    		IExpression ge = Bin.split(Int.ge(r, s));
+    		System.out.println("ge = " + ge);
+    		IExpression[] p = (IExpression[])pad(toExp(s), r.length);
+  			for (int j = 0; j < p.length; j++)
   				p[j] = Bin.and(ge, p[j]);
-  			}
   			r = sum(r, negate(p));
     	}
     	return r;
@@ -135,6 +135,7 @@ public class Int {
     		return new IExpression[] { Const.ZERO };
     	IExpression[] r = new IExpression[] { Const.ONE };
     	for (int i = 0; i < b.length; i++) {
+    		System.out.println("pow " + i + " / " + (b.length - 1));
     		IExpression[] t = new IExpression[a.bitLength()];
     		for (int j = 0; j < t.length; j++) 
     			t[j] = a.testBit(j) ? b[i] : Const.ZERO;

@@ -16,6 +16,8 @@ public class Main {
     }
 
     private static BigInteger extract(int l, Map<Integer, Const> s) {
+    	if (s == null)
+    		return null;
         BigInteger r = BigInteger.ZERO;
         for (int v : s.keySet()) {
             if (v < l) {
@@ -86,10 +88,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	IExpression[] x = Int.modPow(BigInteger.valueOf(2), var(2), BigInteger.valueOf(4));
+    	IExpression[] x = Int.pow(BigInteger.valueOf(3), var(3));
     	for (IExpression y : x)
     		System.out.println(y);
-    	IExpression eq = eq(x, BigInteger.valueOf(0));
-    	System.out.println(eq);
+    	//IExpression eq = eq(x, BigInteger.valueOf(4));
+    	//eq = Bin.split(eq);
+    	//System.out.println(extract(2, solve(eq)));
     }
 }
