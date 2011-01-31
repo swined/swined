@@ -6,9 +6,11 @@ import java.util.Map;
 public class Var implements IExpression {
 
 	public final int name;
+	public final boolean sign;
 	
-	public Var(int name) {
+	public Var(int name, boolean sign) {
 		this.name = name;
+		this.sign = sign;
 	}
 
 	@Override
@@ -25,7 +27,7 @@ public class Var implements IExpression {
 	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
 		if (v == name) {
-			return c;
+			return sign ? c.not() : c;
 		} else {
 			return this;
 		}

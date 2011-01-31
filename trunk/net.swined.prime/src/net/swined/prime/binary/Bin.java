@@ -9,7 +9,7 @@ public class Bin {
 		BigInteger vars = e.getVars();
 		for (int i = 0; i < vars.bitLength(); i++)
 			if (vars.testBit(i)) {
-				Var v = new Var(i);
+				Var v = new Var(i, false);
         IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
 				IExpression n = and(not(v), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
 				e = or(p, n);
