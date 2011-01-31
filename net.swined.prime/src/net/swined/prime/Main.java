@@ -37,7 +37,7 @@ public class Main {
         }
         return r;
     }
-
+    
     private static String toBinary(BigInteger n) {
         StringBuilder sb = new StringBuilder();
         for (int i = n.bitLength(); i > 0; i--) {
@@ -88,11 +88,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	IExpression[] x = Int.pow(BigInteger.valueOf(3), var(3));
-    	for (IExpression y : x)
-    		System.out.println(y);
-    	//IExpression eq = eq(x, BigInteger.valueOf(4));
+    	IExpression[] x = Int.modPow(BigInteger.valueOf(5), var(50), BigInteger.valueOf(4));
+//    	for (IExpression y : x)
+//    		System.out.println(y);
+    	IExpression eq = eq(x, BigInteger.valueOf(1));
     	//eq = Bin.split(eq);
-    	//System.out.println(extract(2, solve(eq)));
+    	System.out.println(extract(15, solve(eq)));
     }
 }

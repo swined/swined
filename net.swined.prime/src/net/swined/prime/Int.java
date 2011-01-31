@@ -88,11 +88,10 @@ public class Int {
     	IExpression[] r = Arrays.copyOf(a, a.length);
     	for (int i = a.length - m.bitLength(); i >= 0; i--) {
     		BigInteger s = m.shiftLeft(i);
-    		IExpression ge = Bin.split(Int.ge(r, s));
-    		System.out.println("ge = " + ge);
-    		IExpression[] p = (IExpression[])pad(toExp(s), r.length);
+    		IExpression ge = Int.ge(r, s);
+    		IExpression[] p = new IExpression[r.length];//(IExpression[])pad(toExp(s), r.length);
   			for (int j = 0; j < p.length; j++)
-  				p[j] = Bin.and(ge, p[j]);
+  				p[j] = Bin.and(ge, s.testBit(j) ? Const.ONE : Const.ZERO);
   			r = sum(r, negate(p));
     	}
     	return r;
@@ -135,7 +134,6 @@ public class Int {
     		return new IExpression[] { Const.ZERO };
     	IExpression[] r = new IExpression[] { Const.ONE };
     	for (int i = 0; i < b.length; i++) {
-    		System.out.println("pow " + i + " / " + (b.length - 1));
     		IExpression[] t = new IExpression[a.bitLength()];
     		for (int j = 0; j < t.length; j++) 
     			t[j] = a.testBit(j) ? b[i] : Const.ZERO;
@@ -145,9 +143,21 @@ public class Int {
     	}
     	return r;
     }
-        
+
     public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
-    	return mod(pow(a.mod(m), x), m);
+    	if (BigInteger.ZERO.equals(a))
+    		return new IExpression[] { Const.ZERO };
+    	IExpression[] r = new IExpression[] { Const.ONE };
+    	for (int i = 0; i < x.length; i++) {
+    		IExpression[] t = new IExpression[a.bitLength()];
+    		for (int j = 0; j < t.length; j++) 
+    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
+    		if (t.length > 0)
+    			t[0] = Bin.or(t[0], Bin.not(x[i]));
+    		r = mul(r, mod(t, m));
+    		a = a.multiply(a).mod(m);
+    	}
+    	return mod(r, m);
     }
     
 }
