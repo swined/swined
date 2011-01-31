@@ -111,9 +111,15 @@ public class Int {
     			t[j] = a.testBit(j) ? b[i] : Const.ZERO;
     		t[0] = Bin.or(t[0], Bin.not(b[i]));
     		r = mul(r, t);
+    		for (int j = 0; j < r.length; j++)
+    			r[j] = Bin.split(r[j]);
     		a = a.multiply(a);
     	}
     	return r;
     }
         
+    public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
+    	return mod(pow(a, x), toExp(m));
+    }
+    
 }
