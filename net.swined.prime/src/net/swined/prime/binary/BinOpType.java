@@ -9,13 +9,6 @@ public enum BinOpType {
       return Bin.and(a, b);
     }    
     
-    @Override
-    public void checkConstraints(IExpression a, IExpression b) {
-      super.checkConstraints(a, b);
-      if (a instanceof Not && b instanceof Not)
-        throw new IllegalArgumentException();
-    }
-    
   },
 
   OR("|") {
@@ -24,25 +17,12 @@ public enum BinOpType {
       return Bin.or(a, b);
     }
     
-    @Override
-    public void checkConstraints(IExpression a, IExpression b) {
-      super.checkConstraints(a, b);
-      if (a instanceof Not && b instanceof Not)
-        throw new IllegalArgumentException();
-    }
   },
   
   XOR("^") {
     @Override
     public IExpression apply(IExpression a, IExpression b) {
       return Bin.xor(a, b);
-    }
-    
-    @Override
-    public void checkConstraints(IExpression a, IExpression b) {
-      super.checkConstraints(a, b);
-      if (a instanceof Not && b instanceof Not)
-        throw new IllegalArgumentException();
     }
     
   };
@@ -58,6 +38,14 @@ public enum BinOpType {
   public void checkConstraints(IExpression a, IExpression b) {
     if (a instanceof Const || b instanceof Const)
       throw new IllegalArgumentException();
+    if (a instanceof Not && b instanceof Not)
+      throw new IllegalArgumentException();
+    if (a instanceof Var && b instanceof Var) {
+      Var va = (Var)a;
+      Var vb = (Var)b;
+      if (va.name == vb.name)
+        throw new IllegalArgumentException();
+    }
   }
   
 }

@@ -24,6 +24,13 @@ public class Bin {
       return ((Const) b).and(a);
     if (a instanceof Not && b instanceof Not)
       return not(or(not(a), not(b)));
+    if (a instanceof Var && b instanceof Var) {
+      Var va = (Var)a;
+      Var vb = (Var)b;
+      if (va.name == vb.name) {
+        return va.sign == vb.sign ? a : Const.ZERO;
+      }
+    }
     return new BinOp(BinOpType.AND, a, b);
   }
 
@@ -34,6 +41,13 @@ public class Bin {
       return ((Const) b).or(a);
     if (a instanceof Not && b instanceof Not)
       return not(and(not(a), not(b)));
+    if (a instanceof Var && b instanceof Var) {
+      Var va = (Var)a;
+      Var vb = (Var)b;
+      if (va.name == vb.name) {
+        return va.sign == vb.sign ? a : Const.ONE;
+      }
+    }
     return new BinOp(BinOpType.OR, a, b);
   }
   
@@ -54,6 +68,13 @@ public class Bin {
       return ((Const) b).xor(a);
     if (a instanceof Not && b instanceof Not)
       return xor(not(a), not(b));
+    if (a instanceof Var && b instanceof Var) {
+      Var va = (Var)a;
+      Var vb = (Var)b;
+      if (va.name == vb.name) {
+        return va.sign == vb.sign ? Const.ZERO : Const.ONE;
+      }
+    }
     return new BinOp(BinOpType.XOR, a, b);
   }
 	
