@@ -86,12 +86,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(32);
-    	System.out.println(n);
-    	System.out.println(toBinary(n));
-  		BigInteger d = divisor(n);
-  		System.out.println(d);
-  		if (!n.mod(d).equals(BigInteger.ZERO))
-  			System.err.println("wrong solution");
+    	IExpression[] x = Int.modPow(BigInteger.valueOf(2), var(2), BigInteger.valueOf(4));
+    	for (IExpression y : x)
+    		System.out.println(y);
+    	IExpression eq = eq(x, BigInteger.valueOf(0));
+    	System.out.println(eq);
     }
 }
