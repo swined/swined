@@ -88,10 +88,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	IExpression[] x = Int.modPow(BigInteger.valueOf(5), var(50), BigInteger.valueOf(4));
+    	IExpression[] x = Int.modPow(BigInteger.valueOf(5), var(5), BigInteger.valueOf(400));
 //    	for (IExpression y : x)
 //    		System.out.println(y);
-    	IExpression eq = eq(x, BigInteger.valueOf(1));
+    	IExpression eq = eq(x, BigInteger.valueOf(10));
     	//eq = Bin.split(eq);
     	System.out.println(extract(15, solve(eq)));
     }
