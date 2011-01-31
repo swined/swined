@@ -8,9 +8,9 @@ public class Bin {
 		BigInteger vars = e.getVars();
 		for (int i = 0; i < vars.bitLength(); i++)
 			if (vars.testBit(i)) {
-				IExpression p = new Var(i, false).and(e.sub(i, Const.ONE));
-				IExpression n = new Var(i, true).and(e.sub(i, Const.ZERO));
-				e = p.or(n);
+				IExpression p = BinOps.and(new Var(i), e.sub(i, Const.ONE));
+				IExpression n = BinOps.and(BinOps.not(new Var(i)), e.sub(i, Const.ZERO));
+				e = BinOps.or(p, n);
 			}
 		return e;
 	}
