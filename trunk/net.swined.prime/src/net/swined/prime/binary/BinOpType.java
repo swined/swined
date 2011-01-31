@@ -1,6 +1,5 @@
 package net.swined.prime.binary;
 
-import net.swined.prime.nodes.*;
 
 public enum BinOpType {
 
