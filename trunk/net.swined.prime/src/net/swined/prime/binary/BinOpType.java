@@ -21,14 +21,27 @@ public enum BinOpType {
     @Override
     public IExpression apply(IExpression a, IExpression b) {
       return Bin.or(a, b);
-    }    
+    }
+    
+    @Override
+    public void checkConstraints(IExpression a, IExpression b) {
+      if (a instanceof Not && b instanceof Not)
+        throw new IllegalArgumentException();
+    }
   },
   
   XOR("^") {
     @Override
     public IExpression apply(IExpression a, IExpression b) {
       return Bin.xor(a, b);
-    }    
+    }
+    
+    @Override
+    public void checkConstraints(IExpression a, IExpression b) {
+      if (a instanceof Not && b instanceof Not)
+        throw new IllegalArgumentException();
+    }
+    
   };
   
   public final String sign;

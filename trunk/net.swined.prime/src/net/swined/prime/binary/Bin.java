@@ -32,6 +32,8 @@ public class Bin {
       return ((Const) a).or(b);
     if (b instanceof Const)
       return ((Const) b).or(a);
+    if (a instanceof Not && b instanceof Not)
+      return not(and(not(a), not(b)));
     return new BinOp(BinOpType.OR, a, b);
   }
   
@@ -48,6 +50,8 @@ public class Bin {
       return ((Const) a).xor(b);
     if (b instanceof Const)
       return ((Const) b).xor(a);
+    if (a instanceof Not && b instanceof Not)
+      return xor(not(a), not(b));
     return new BinOp(BinOpType.XOR, a, b);
   }
 	
