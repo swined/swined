@@ -94,6 +94,10 @@ public class Bin {
       return or(a, and(not(b), g));
     if (b == Const.ONE) //a & g
       return and(a, g);
+    if (g == Const.ZERO) // a & !b
+        return or(a, not(b));
+    if (g == Const.ONE) //a | !a !b 
+        return or(a, and(not(a), not(b)));
     return new TerOp(TerOpType.GE, a, b, g);
   }
 
