@@ -38,7 +38,7 @@ public class Int {
     	IExpression g = Const.ONE;
     	for (int i = 0; i < a.length; i++) {
     		if (b.testBit(i)) {
-    		    g = Bin.and(Bin.not(a[i]), g);
+    		    g = Bin.and(a[i], g);
     		} else {
     			g = Bin.or(a[i], g);    			
     		}
@@ -87,7 +87,7 @@ public class Int {
     	for (int i = a.length - m.bitLength(); i >= 0; i--) {
     		BigInteger s = m.shiftLeft(i);
 			IExpression[] p = (IExpression[])pad(toExp(s), r.length);
-    		IExpression ge = Int.ge(r, p);
+    		IExpression ge = Int.ge(r, s);
   			for (int j = 0; j < p.length; j++) {
   				p[j] = Bin.and(ge, p[j]);
   			}
