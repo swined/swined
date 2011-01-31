@@ -38,7 +38,11 @@ public class Bin {
   }
   
   public static IExpression xor(IExpression a, IExpression b) {
-    return or(and(a, not(b)), and(not(a), b));
+    if (a instanceof Const)
+      return ((Const) a).xor(b);
+    if (b instanceof Const)
+      return ((Const) b).xor(a);
+    return new Xor(a, b);
   }
 	
 }
