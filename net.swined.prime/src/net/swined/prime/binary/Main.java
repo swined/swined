@@ -55,7 +55,7 @@ public class Main {
         }
         int var = eq.getVars().getLowestSetBit();
         for (Const c : Const.values()) {
-            Map<Integer, Const> s = solve(eq.sub(var, c));
+            Map<Integer, Const> s = solve(eq.sub(var, c, new HashMap<IExpression, IExpression>()));
             if (s != null) {
                 s.put(var, c);
                 return s;
@@ -83,7 +83,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(1000);
+    	BigInteger n = key(10);
     	System.out.println(n);
     	System.out.println(toBinary(n));
 		BigInteger d = divisor(n);

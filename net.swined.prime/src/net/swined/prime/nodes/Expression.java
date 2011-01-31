@@ -1,7 +1,6 @@
 package net.swined.prime.nodes;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Expression implements IExpression {
@@ -40,11 +39,6 @@ public abstract class Expression implements IExpression {
         if (sub == null)
             ctx.put(this, sub = subImpl(v, c, ctx));
         return sub;
-    }
-
-    @Override
-    public final IExpression sub(int v, Const c) {
-        return sub(v, c, new HashMap<IExpression, IExpression>());
     }
 
     protected abstract IExpression subImpl(int v, Const c, Map<IExpression, IExpression> ctx);
