@@ -88,5 +88,13 @@ public class Bin {
     IExpression nb = Bin.not(b);
     return Bin.or(Bin.and(a, nb), Bin.and(Bin.xor(a, nb), g));
   }
+
+  public static IExpression m2(IExpression a, IExpression b, IExpression c) {
+    return Bin.or(Bin.or(Bin.and(a, b), Bin.and(b, c)), Bin.and(a, c));
+  }  
+
+  public static IExpression xor(IExpression a, IExpression b, IExpression c) {
+    return Bin.xor(Bin.xor(a, b), c);
+  }  
   
 }
