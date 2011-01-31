@@ -36,8 +36,13 @@ public class Int {
 
     public static IExpression ge(IExpression[] a, BigInteger b) {
     	IExpression g = Const.ONE;
-    	for (int i = 0; i < a.length; i++)
-    		g = Bin.ge(a[i], b.testBit(i) ? Const.ONE : Const.ZERO, g);
+    	for (int i = 0; i < a.length; i++) {
+    		if (b.testBit(i)) {
+    		    g = Bin.and(Bin.not(a[i]), g);
+    		} else {
+    			g = Bin.or(a[i], g);    			
+    		}
+    	}
     	return g;
     }
     
@@ -81,12 +86,11 @@ public class Int {
     public static IExpression[] mod(IExpression[] a, BigInteger m) {
     	IExpression[] r = Arrays.copyOf(a, a.length);
     	for (int i = a.length - m.bitLength(); i >= 0; i--) {
-    		BigInteger s = m.shiftLeft(i);
-    		IExpression ge = Int.ge(r, s);
-			IExpression[] p = zero(r.length);
-  			for (int j = 0; j < p.length; j++)
-  				if (s.testBit(j))
-  					p[j] = ge;
+    		IExpression[] p = shl(Int.pad(toExp(m), r.length), i);
+    		IExpression ge = Int.ge(r, p);
+  			for (int j = 0; j < p.length; j++) {
+  				p[j] = Bin.and(ge, p[j]);
+  			}
   			r = sum(r, negate(p));
     	}
     	return r;
@@ -132,8 +136,6 @@ public class Int {
     			t[j] = a.testBit(j) ? b[i] : Const.ZERO;
     		t[0] = Bin.or(t[0], Bin.not(b[i]));
     		r = mul(r, t);
-    		for (int j = 0; j < r.length; j++)
-    			r[j] = Bin.split(r[j]);
     		a = a.multiply(a);
     	}
     	return r;
