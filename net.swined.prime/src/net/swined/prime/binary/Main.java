@@ -1,6 +1,7 @@
 package net.swined.prime.binary;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,13 +68,15 @@ public class Main {
     	int l = n.bitLength() / 2 + n.bitLength() % 2;
     	IExpression[] d = Int.toExp(n);
     	System.out.println("building (" + l + ")");
+    	System.out.println(new Date());
     	IExpression e = eq(Int.mod(d, var(l)), BigInteger.ZERO);
-    	System.out.println(e);
+    	System.out.println(new Date());
+    	//System.out.println(e);
     	System.out.println("solving");
     	Map<Integer, Const> solution = solve(e);
     	if (solution == null)
     		return null;
-		return extract(l, solution);
+    	return extract(l, solution);
     }
 
     private static BigInteger key(int l) {
@@ -82,12 +85,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	BigInteger n = key(0);
+    	BigInteger n = key(170);
     	System.out.println(n);
     	System.out.println(toBinary(n));
-		BigInteger d = divisor(n);
-		System.out.println(d);
-		if (!n.mod(d).equals(BigInteger.ZERO))
-			System.err.println("wrong solution");
+  		BigInteger d = divisor(n);
+  		System.out.println(d);
+  		if (!n.mod(d).equals(BigInteger.ZERO))
+  			System.err.println("wrong solution");
     }
 }

@@ -73,6 +73,11 @@ public enum Const implements IExpression {
         return BigInteger.ZERO;
     }
 
+    @Override
+    public boolean knownVars() {
+      return true;
+    }
+    
     public abstract Const not();
     public abstract IExpression and(IExpression a);
     public abstract IExpression or(IExpression a);

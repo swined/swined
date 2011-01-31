@@ -14,7 +14,7 @@ public class BinOp implements IExpression {
 
   public BinOp(BinOpType type, IExpression a, IExpression b) {
     type.checkConstraints(a, b);
-    this.vars = a.getVars().or(b.getVars());
+    this.vars = a.knownVars() || b.knownVars() ? null : a.getVars().or(b.getVars());
     this.type = type;
     this.a = a;
     this.b = b;
@@ -26,13 +26,18 @@ public class BinOp implements IExpression {
   }
 
   @Override
+  public boolean knownVars() {
+    return vars != null;
+  }
+  
+  @Override
   public BigInteger getVars() {
-    return vars;
+    return knownVars() ? vars : a.getVars().or(b.getVars());
   }
     
 	@Override
 	public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
-	  if (!vars.testBit(v))
+	  if (!getVars().testBit(v))
 	    return this;
 	  IExpression s = ctx.get(this);
 	  if (s == null) {
