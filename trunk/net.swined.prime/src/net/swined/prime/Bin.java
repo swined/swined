@@ -95,8 +95,8 @@ public class Bin {
     	return or(not(b), g);
     if (b == Const.ZERO) // a | g
         return or(a, g);
-    if (b == Const.ONE) // !a & g
-        return and(not(a), g);
+    if (b == Const.ONE) // a & g
+        return and(a, g);
     if (g == Const.ZERO) // a & !b
         return and(a, not(g));
     if (g == Const.ONE) // a | !b

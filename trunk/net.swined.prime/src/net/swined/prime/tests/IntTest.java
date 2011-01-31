@@ -26,6 +26,17 @@ public class IntTest {
 	}
 
 	@Test
+	public void testGeN() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(10); 
+			BigInteger b = genInt(10);
+			Const ge = (Const)Int.ge(Int.pad(Int.toExp(a), 10), b);
+			Const p = a.compareTo(b) >= 0 ? Const.ONE : Const.ZERO;
+			Assert.assertEquals("" + a + " vs " + b, p, ge);
+		}
+	}
+	
+	@Test
 	public void testSum() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
