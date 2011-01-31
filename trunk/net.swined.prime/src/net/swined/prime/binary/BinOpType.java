@@ -9,6 +9,12 @@ public enum BinOpType {
       return Bin.and(a, b);
     }    
     
+    @Override
+    public void checkConstraints(IExpression a, IExpression b) {
+      if (a instanceof Not && b instanceof Not)
+        throw new IllegalArgumentException();
+    }
+    
   },
 
   OR("|") {

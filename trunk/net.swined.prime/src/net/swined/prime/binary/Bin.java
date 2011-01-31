@@ -22,6 +22,8 @@ public class Bin {
       return ((Const) a).and(b);
     if (b instanceof Const)
       return ((Const) b).and(a);
+    if (a instanceof Not && b instanceof Not)
+      return not(or(not(a), not(b)));
     return new BinOp(BinOpType.AND, a, b);
   }
 
