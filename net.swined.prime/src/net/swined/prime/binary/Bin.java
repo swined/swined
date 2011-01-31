@@ -86,16 +86,20 @@ public class Bin {
 	
   public static IExpression ge(IExpression a, IExpression b, IExpression g) {
   //   a & !b | (a ^ !b) & g
-//    if (a == Const.ZERO)
-//      return and(not(b), g);
-//    if (a == Const.ONE)
-//      return or(not(b), g);
-//    if (b == Const.ZERO)
-//      return or(a, and(not(b), g));
-//    if (g == Const.ONE)
-//        return or(a, not(b));
-//    return new TerOp(TerOpType.GE, a, b, g);
-    return or(and(a, not(b)), and(xor(a, not(b)), g));
+    if (a == Const.ZERO) // !b & g
+    	return and(not(b), g);
+    if (a == Const.ONE) // !b | g
+    	return or(not(b), g);
+    if (b == Const.ZERO) // a | g
+        return or(a, g);
+    if (b == Const.ONE) // !a & g
+        return and(not(a), g);
+    if (g == Const.ZERO) // a & !b
+        return and(a, not(g));
+    if (g == Const.ONE) // a | !b
+        return or(a, not(b));
+    return new TerOp(TerOpType.GE, a, b, g);
+//    return or(and(a, not(b)), and(xor(a, not(b)), g));
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {
