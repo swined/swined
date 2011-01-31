@@ -99,7 +99,6 @@ public class Bin {
     if (g == Const.ONE) // a | !b
         return or(a, not(b));
     return new TerOp(TerOpType.GE, a, b, g);
-//    return or(and(a, not(b)), and(xor(a, not(b)), g));
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {
@@ -113,7 +112,13 @@ public class Bin {
   }  
 
   public static IExpression xor(IExpression a, IExpression b, IExpression c) {
-    return Bin.xor(Bin.xor(a, b), c);
+	  if (a instanceof Const)
+		  return ((Const) a).xor(xor(b, c));
+	  if (b instanceof Const)
+		  return ((Const) b).xor(xor(a, c));
+	  if (c instanceof Const)
+		  return ((Const) c).xor(xor(a, b));
+	  return new TerOp(TerOpType.XOR, a, b, c);
   }  
   
 }
