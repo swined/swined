@@ -85,8 +85,16 @@ public class Bin {
   }
 	
   public static IExpression ge(IExpression a, IExpression b, IExpression g) {
-    IExpression nb = Bin.not(b);
-    return Bin.or(Bin.and(a, nb), Bin.and(Bin.xor(a, nb), g));
+    // a & !b | (a ^ !b) & g
+    if (a == Const.ZERO) // !b & g
+      return and(not(b), g);
+    if (a == Const.ONE) // !b | b & g
+      return or(not(b), and(b, g));
+    if (b == Const.ZERO) // a | !a & g
+      return or(a, and(not(b), g));
+    if (b == Const.ONE) //a & g
+      return and(a, g);
+    return new TerOp(TerOpType.GE, a, b, g);
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {

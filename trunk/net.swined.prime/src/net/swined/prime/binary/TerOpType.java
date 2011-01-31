@@ -9,8 +9,17 @@ public enum TerOpType {
       return Bin.m2(a, b, c);
     }    
     
-  };
+  },
   
+  GE("ge") { // a & !b | (a ^ !b) & g
+    
+    @Override
+    public IExpression apply(IExpression a, IExpression b, IExpression c) {
+      return Bin.ge(a, b, c);
+    }    
+    
+  };
+
   public final String sign;
   
   private TerOpType(String sign) {
