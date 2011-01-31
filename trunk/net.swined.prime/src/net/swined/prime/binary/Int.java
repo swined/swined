@@ -2,6 +2,7 @@ package net.swined.prime.binary;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import net.swined.prime.nodes.*;
 
 public class Int {
 

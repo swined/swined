@@ -1,6 +1,8 @@
-package net.swined.prime.binary;
+package net.swined.prime.nodes;
 
 import java.util.Map;
+
+import net.swined.prime.binary.Bin;
 
 
 public class Or extends Expression {
