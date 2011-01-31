@@ -61,7 +61,7 @@ public class Bin {
     if (a instanceof Not)
       return ((Not) a).a;
     if (a instanceof Var)
-      return new Var(((Var) a).name, !((Var) a).sign);
+      return ((Var) a).not;
     return new Not(a);
   }
   
