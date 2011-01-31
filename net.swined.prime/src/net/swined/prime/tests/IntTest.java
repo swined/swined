@@ -36,6 +36,16 @@ public class IntTest {
 	}
 
 	@Test
+	public void testMul() {
+		for (int i = 0; i < 10000; i++) {
+			BigInteger a = genInt(10); 
+			BigInteger b = genInt(10);
+			BigInteger r = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
+			Assert.assertEquals("" + a + " * " + b, a.multiply(b), r);
+		}
+	}
+	
+	@Test
 	public void testNegate() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 

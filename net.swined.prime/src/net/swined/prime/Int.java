@@ -91,5 +91,20 @@ public class Int {
         }
         return e;
     }
+
+    public static IExpression[] mul(IExpression[] a, IExpression[] b) {
+        IExpression[] r = zero(a.length + b.length);
+        for (int i = 0; i < a.length; i++) {
+        	IExpression[] t = zero(r.length);
+        	for (int j = 0; j < b.length; j++)
+        		t[i + j] = Bin.and(a[i], b[j]);
+        	r = sum(r, t);
+        }
+    	return r;
+    }
     
+    public static IExpression[] pow(Const[] a, IExpression[] b) {
+    	return null;
+    }
+        
 }
