@@ -3,8 +3,8 @@ package org.swined.dsa;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import org.swined.dsa.integer.Bit;
 import org.swined.dsa.integer.BitAnd;
-import org.swined.dsa.integer.Bits;
 import org.swined.dsa.integer.IInteger;
 import org.swined.dsa.integer.IntConst;
 import org.swined.dsa.integer.Mod;
@@ -112,24 +112,6 @@ public class Int {
         return e;
     }
 
-    public static IExpression[] mulMod(IExpression[] a, IExpression[] b, BigInteger m) {
-        IExpression[] r = zero(a.length + b.length);
-        for (int i = 0; i < a.length; i++) {
-        	IExpression[] t = zero(r.length);
-        	for (int j = 0; j < b.length; j++)
-        		t[i + j] = Bin.and(a[i], b[j]);
-        	r = sum(r, t);
-        	r = split(r, getVars(r)); // FIXME explosive!
-        }
-    	return r;
-    }
-    
-    // cmb(A, b) = mb(A, b) | [!b]
-    // mb(c1, f1) * mb(c2, f2) = mb(c1 * c2, f1 & f2)
-    // *{cmb(C_i, x_i)} = *{mb(C_i >> 1, x_i) << 1 + (C_i & 1) ^ [x_i]}
-    // (mb(C_i >> 1, x_i) << 1 + (C_i & 1) ^ [x_i]) * (mb(C_j >> 1, x_j) << 1 + (C_j & 1) ^ [x_j]) = 
-    // 
-
     public static IExpression[] mul(IExpression[] a, IExpression[] b) {
         IExpression[] r = zero(a.length + b.length);
         for (int i = 0; i < a.length; i++) {
@@ -146,13 +128,7 @@ public class Int {
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
-    		//IExpression[] t = new IExpression[a.bitLength()];
-        //if (t.length > 0)
-//            t[0] = a.testBit(0) ? Const.ONE : Bin.not(x[i]);
-//    		for (int j = 1; j < t.length; j++) 
-//    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
-//    		t = mod(t, m);
-    		r = new Mul(r, new Sum(new BitAnd(new IntConst(a.clearBit(0)), x[i]), new Bits(new IExpression[] { a.testBit(0) ? Const.ONE : Bin.not(x[i]) })));
+    		r = new Mul(r, new Sum(new BitAnd(new IntConst(a.clearBit(0)), x[i]), new Bit(a.testBit(0) ? Const.ONE : Bin.not(x[i]))));
     		a = a.multiply(a).mod(m);
     	}
     	return new Mod(r, m);
