@@ -7,10 +7,19 @@ import java.util.List;
 
 public class Int {
 
-	public static IExpression[] split(IExpression[] e) {
+	public static BigInteger getVars(IExpression[] e) {
+		BigInteger r = BigInteger.ZERO;
+		for (IExpression x : e)
+			r = r.or(x.getVars());
+		return r;
+	}
+
+	public static IExpression[] split(IExpression[] e, BigInteger vars) {
 		IExpression[] r = new IExpression[e.length];
-		for (int i = 0; i < r.length; i++)
-			r[i] = Bin.split(e[i]);
+		for (int i = 0; i < r.length; i++) {
+			System.out.println("" + i + "/" + r.length);
+			r[i] = Bin.split(e[i], vars);
+		}
 		return r;
 	}
 	
@@ -114,25 +123,31 @@ public class Int {
     	for (IExpression[] e : x)
     		y.add(e);
     	while (true) {
-    	//for (int i = 0; i < 1; i++) {
     		IExpression[] p = y.remove(0);
     		if (y.size() == 0)
        			return p;
     		IExpression[] q = y.remove(0);
+    		System.out.println("vars");
+    		BigInteger vars = getVars(p).or(getVars(q));
+    		if (vars.bitCount() > 2) {
+    			y.add(p);
+    			y.add(q);
+    			break;
+    		}
     		System.out.println("mul");
     		IExpression[] z = mulMod(p, q, m);
     		System.out.println("split");
-    		z = split(z);
+    		z = split(z, vars);
     		System.out.println("mod");
     		z = mod(z, m);
     		System.out.println("split");
-    		z = split(z);
+    		z = split(z, vars);
     		System.out.println("done");
 			y.add(z);
     	}
-//    	for (IExpression[] z : y)
-//    		System.out.println(Arrays.toString(z));
-//    	throw new UnsupportedOperationException();
+    	for (IExpression[] z : y)
+    		System.out.println(Arrays.toString(z));
+    	throw new UnsupportedOperationException();
     }
     
     public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
