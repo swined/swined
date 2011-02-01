@@ -122,15 +122,21 @@ public class Int {
     	return r;
     }
     
+    public static BigInteger mpc(BigInteger a, BigInteger m, int ix) {
+    	for (int i = 0; i < ix; i++)
+    		a = a.multiply(a).mod(m);
+    	return a;
+    }
+    
     public static IInteger modPow(BigInteger a, IExpression[] x, BigInteger m) {
     	IInteger r = new IntConst(BigInteger.ONE);
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
-    		Mul p = new Mul(new IntConst(a.clearBit(0)), new Bit(x[i]));
-			Bit q = new Bit(a.testBit(0) ? Const.ONE : Bin.not(x[i]));
+    		BigInteger c = mpc(a, m, i);
+    		Mul p = new Mul(new IntConst(c.clearBit(0)), new Bit(x[i]));
+			Bit q = new Bit(c.testBit(0) ? Const.ONE : Bin.not(x[i]));
 			r = new Mul(r, new Sum(p, q));
-    		a = a.multiply(a).mod(m);
     	}
     	return new Mod(r, m);
     }
