@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.swined.dsa.integer.BitMul;
+import org.swined.dsa.integer.Bits;
+import org.swined.dsa.integer.IInteger;
+import org.swined.dsa.integer.Mod;
+import org.swined.dsa.integer.Mul;
+import org.swined.dsa.integer.Sum;
+
 public class Int {
 
 	public static BigInteger getVars(IExpression[] e) {
@@ -17,7 +24,6 @@ public class Int {
 	public static IExpression[] split(IExpression[] e, BigInteger vars) {
 		IExpression[] r = new IExpression[e.length];
 		for (int i = 0; i < r.length; i++) {
-			System.out.println("" + i + "/" + r.length);
 			r[i] = Bin.split(e[i], vars);
 		}
 		return r;
@@ -114,9 +120,16 @@ public class Int {
         	for (int j = 0; j < b.length; j++)
         		t[i + j] = Bin.and(a[i], b[j]);
         	r = sum(r, t);
+        	r = split(r, getVars(r)); // FIXME explosive!
         }
     	return r;
     }
+    
+    // cmb(A, b) = mb(A, b) | [!b]
+    // mb(c1, f1) * mb(c2, f2) = mb(c1 * c2, f1 & f2)
+    // *{cmb(C_i, x_i)} = *{mb(C_i >> 1, x_i) << 1 + (C_i & 1) ^ [x_i]}
+    // (mb(C_i >> 1, x_i) << 1 + (C_i & 1) ^ [x_i]) * (mb(C_j >> 1, x_j) << 1 + (C_j & 1) ^ [x_j]) = 
+    // 
     
     public static IExpression[] mulMod(IExpression[][] x, BigInteger m) {
     	List<IExpression[]> y = new ArrayList<IExpression[]>();
@@ -144,27 +157,39 @@ public class Int {
     		z = split(z, vars);
     		System.out.println("done");
 			y.add(z);
+			break;
     	}
     	for (IExpression[] z : y)
     		System.out.println(Arrays.toString(z));
     	throw new UnsupportedOperationException();
     }
+
+    public static IExpression[] mul(IExpression[] a, IExpression[] b) {
+        IExpression[] r = zero(a.length + b.length);
+        for (int i = 0; i < a.length; i++) {
+        	IExpression[] t = zero(r.length);
+        	for (int j = 0; j < b.length; j++)
+        		t[i + j] = Bin.and(a[i], b[j]);
+        	r = sum(r, t);
+        }
+    	return r;
+    }
     
-    public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
+    public static IInteger modPow(BigInteger a, IExpression[] x, BigInteger m) {
+    	IInteger r = new org.swined.dsa.integer.Const(BigInteger.ONE);
     	if (BigInteger.ZERO.equals(a))
-    		return new IExpression[] { Const.ZERO };
-    	List<IExpression[]> r = new ArrayList<IExpression[]>();
+    		return r; 
     	for (int i = 0; i < x.length; i++) {
     		IExpression[] t = new IExpression[a.bitLength()];
         if (t.length > 0)
-          t[0] = a.testBit(0) ? Const.ONE : Bin.not(x[i]);
-    		for (int j = 1; j < t.length; j++) 
-    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
-    		t = mod(t, m);
-    		r.add(t);
+//            t[0] = a.testBit(0) ? Const.ONE : Bin.not(x[i]);
+//    		for (int j = 1; j < t.length; j++) 
+//    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
+//    		t = mod(t, m);
+    		r = new Mul(r, new Sum(new BitMul(new org.swined.dsa.integer.Const(a.clearBit(0)), x[i]), new Bits(new IExpression[] { a.testBit(0) ? Const.ONE : Bin.not(x[i]) })));
     		a = a.multiply(a).mod(m);
     	}
-    	return mulMod(r.toArray(new IExpression[][] {}), m);
+    	return new Mod(r, m);
     }
     
 }

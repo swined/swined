@@ -60,7 +60,7 @@ public class IntTest {
 			BigInteger a = genInt(4); 
 			BigInteger b = genInt(4);
 			BigInteger c = genInt(4);
-			BigInteger r = Int.toInt(Int.modPow(a, Int.toExp(b), c)); 
+			BigInteger r = Int.toInt(Int.modPow(a, Int.toExp(b), c).getBits()); 
 			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.modPow(b, c), r);
 		}
 	}
