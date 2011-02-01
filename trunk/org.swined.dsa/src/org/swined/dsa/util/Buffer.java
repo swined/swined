@@ -4,7 +4,6 @@ import java.math.BigInteger;
 
 public class Buffer {
 
-	private final static int BN_BYTES = 1; // FIXME wtf is that ?
 	private int pos;
 	private final byte[] data;
 	
@@ -38,7 +37,10 @@ public class Buffer {
 	
 	public BigInteger getBigInt() {
 		byte[] d = getStr();
-		return BigInteger.valueOf(d.length);
+		BigInteger r = BigInteger.ZERO;
+		for (int i = 0; i < d.length; i++)
+			r = r.add(BigInteger.valueOf((d[i] + 0x100) % 0x100).shiftLeft((d.length - i - 1) * 8));
+		return r;
 	}
 	
 	public DsaPublicKey readDsaPublicKey() {
