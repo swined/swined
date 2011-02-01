@@ -36,26 +36,6 @@ public class IntTest {
 	}
 
 	@Test
-	public void testMul() {
-		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(10); 
-			BigInteger b = genInt(10);
-			BigInteger r = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
-			Assert.assertEquals("" + a + " * " + b, a.multiply(b), r);
-		}
-	}
-
-	@Test
-	public void testPow() {
-		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(4); 
-			BigInteger b = genInt(4);
-			BigInteger r = Int.toInt(Int.pow(a, Int.toExp(b)));
-			Assert.assertEquals("" + a + " ^ " + b, a.pow(b.intValue()), r);
-		}
-	}
-	
-	@Test
 	public void testNegate() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
@@ -77,9 +57,9 @@ public class IntTest {
 	@Test
 	public void testModPow() {
 		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(2); 
-			BigInteger b = genInt(2);
-			BigInteger c = genInt(2);
+			BigInteger a = genInt(4); 
+			BigInteger b = genInt(4);
+			BigInteger c = genInt(4);
 			BigInteger r = Int.toInt(Int.modPow(a, Int.toExp(b), c)); 
 			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.modPow(b, c), r);
 		}

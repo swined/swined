@@ -65,7 +65,7 @@ public class Main {
     
     public static void main(String[] args) {
     	DsaPublicKey publicKey = new Buffer(DatatypeConverter.parseBase64Binary(PUBLIC_KEY)).readDsaPublicKey();
-		System.out.println(publicKey);
-		System.out.println(publicKey.guessPrivateKeyBitLength());
+		int pkl = publicKey.guessPrivateKeyBitLength();
+		IExpression e = eq(Int.modPow(publicKey.g, var(pkl), publicKey.p), publicKey.y);
     }
 }

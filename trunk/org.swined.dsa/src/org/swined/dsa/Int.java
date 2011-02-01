@@ -1,10 +1,19 @@
 package org.swined.dsa;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Int {
 
+	public static IExpression[] split(IExpression[] e) {
+		IExpression[] r = new IExpression[e.length];
+		for (int i = 0; i < r.length; i++)
+			r[i] = Bin.split(e[i]);
+		return r;
+	}
+	
 	public static IExpression[] toExp(BigInteger x) {
 		Const[] c = new Const[x.bitLength()];
 		for (int i = 0; i < c.length; i++)
@@ -89,7 +98,7 @@ public class Int {
         return e;
     }
 
-    public static IExpression[] mul(IExpression[] a, IExpression[] b) {
+    public static IExpression[] mulMod(IExpression[] a, IExpression[] b, BigInteger m) {
         IExpression[] r = zero(a.length + b.length);
         for (int i = 0; i < a.length; i++) {
         	IExpression[] t = zero(r.length);
@@ -100,36 +109,47 @@ public class Int {
     	return r;
     }
     
-    public static IExpression[] pow(BigInteger a, IExpression[] b) {
-    	if (BigInteger.ZERO.equals(a))
-    		return new IExpression[] { Const.ZERO };
-    	IExpression[] r = new IExpression[] { Const.ONE };
-    	for (int i = 0; i < b.length; i++) {
-    		IExpression[] t = new IExpression[a.bitLength()];
-    		for (int j = 0; j < t.length; j++) 
-    			t[j] = a.testBit(j) ? b[i] : Const.ZERO;
-    		t[0] = Bin.or(t[0], Bin.not(b[i]));
-    		r = mul(r, t);
-    		a = a.multiply(a);
+    public static IExpression[] mulMod(IExpression[][] x, BigInteger m) {
+    	List<IExpression[]> y = new ArrayList<IExpression[]>();
+    	for (IExpression[] e : x)
+    		y.add(e);
+    	while (true) {
+    	//for (int i = 0; i < 1; i++) {
+    		IExpression[] p = y.remove(0);
+    		if (y.size() == 0)
+       			return p;
+    		IExpression[] q = y.remove(0);
+    		System.out.println("mul");
+    		IExpression[] z = mulMod(p, q, m);
+    		System.out.println("split");
+    		z = split(z);
+    		System.out.println("mod");
+    		z = mod(z, m);
+    		System.out.println("split");
+    		z = split(z);
+    		System.out.println("done");
+			y.add(z);
     	}
-    	return r;
+//    	for (IExpression[] z : y)
+//    		System.out.println(Arrays.toString(z));
+//    	throw new UnsupportedOperationException();
     }
-
+    
     public static IExpression[] modPow(BigInteger a, IExpression[] x, BigInteger m) {
     	if (BigInteger.ZERO.equals(a))
     		return new IExpression[] { Const.ZERO };
-    	IExpression[] r = new IExpression[] { Const.ONE };
+    	List<IExpression[]> r = new ArrayList<IExpression[]>();
     	for (int i = 0; i < x.length; i++) {
     		IExpression[] t = new IExpression[a.bitLength()];
         if (t.length > 0)
           t[0] = a.testBit(0) ? Const.ONE : Bin.not(x[i]);
     		for (int j = 1; j < t.length; j++) 
     			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
-    		System.out.println(Arrays.toString(t));
-    		r = mul(r, mod(t, m));
+    		t = mod(t, m);
+    		r.add(t);
     		a = a.multiply(a).mod(m);
     	}
-    	return mod(r, m);
+    	return mulMod(r.toArray(new IExpression[][] {}), m);
     }
     
 }
