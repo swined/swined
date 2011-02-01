@@ -146,8 +146,8 @@ public class Int {
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
-    		IExpression[] t = new IExpression[a.bitLength()];
-        if (t.length > 0)
+    		//IExpression[] t = new IExpression[a.bitLength()];
+        //if (t.length > 0)
 //            t[0] = a.testBit(0) ? Const.ONE : Bin.not(x[i]);
 //    		for (int j = 1; j < t.length; j++) 
 //    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
