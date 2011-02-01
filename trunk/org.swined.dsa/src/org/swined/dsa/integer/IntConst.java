@@ -5,11 +5,11 @@ import java.math.BigInteger;
 import org.swined.dsa.IExpression;
 import org.swined.dsa.Int;
 
-public class Const implements IInteger {
+public class IntConst implements IInteger {
 
 	public final BigInteger value;
 	
-	public Const(BigInteger value) {
+	public IntConst(BigInteger value) {
 		this.value = value;
 	}
 	
