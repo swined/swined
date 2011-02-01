@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.Arrays;
 
 import org.swined.dsa.integer.Bit;
-import org.swined.dsa.integer.BitAnd;
 import org.swined.dsa.integer.IInteger;
 import org.swined.dsa.integer.IntConst;
 import org.swined.dsa.integer.Mod;
@@ -128,7 +127,7 @@ public class Int {
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
-    		r = new Mul(r, new Sum(new BitAnd(new IntConst(a.clearBit(0)), x[i]), new Bit(a.testBit(0) ? Const.ONE : Bin.not(x[i]))));
+    		r = new Mul(r, new Sum(new Mul(new IntConst(a.clearBit(0)), new Bit(x[i])), new Bit(a.testBit(0) ? Const.ONE : Bin.not(x[i]))));
     		a = a.multiply(a).mod(m);
     	}
     	return new Mod(r, m);
