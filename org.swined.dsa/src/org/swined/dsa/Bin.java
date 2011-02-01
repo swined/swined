@@ -5,17 +5,19 @@ import java.util.HashMap;
 
 public class Bin {
 
-	public static IExpression split(IExpression e) {
-		BigInteger vars = e.getVars();
-		int c = 0;
+	public static IExpression split(IExpression e, BigInteger vars) {
 		for (int i = 0; i < vars.bitLength(); i++)
 			if (vars.testBit(i)) {
 				Var v = new Var(i, false);
-        IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
+				IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
 				IExpression n = and(not(v), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
 				e = or(p, n);
 			}
 		return e;
+	}
+	
+	public static IExpression split(IExpression e) {
+		return split(e, e.getVars());
 	}
 
   public static IExpression and(IExpression a, IExpression b) {
