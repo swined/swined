@@ -130,39 +130,6 @@ public class Int {
     // *{cmb(C_i, x_i)} = *{mb(C_i >> 1, x_i) << 1 + (C_i & 1) ^ [x_i]}
     // (mb(C_i >> 1, x_i) << 1 + (C_i & 1) ^ [x_i]) * (mb(C_j >> 1, x_j) << 1 + (C_j & 1) ^ [x_j]) = 
     // 
-    
-    public static IExpression[] mulMod(IExpression[][] x, BigInteger m) {
-    	List<IExpression[]> y = new ArrayList<IExpression[]>();
-    	for (IExpression[] e : x)
-    		y.add(e);
-    	while (true) {
-    		IExpression[] p = y.remove(0);
-    		if (y.size() == 0)
-       			return p;
-    		IExpression[] q = y.remove(0);
-    		System.out.println("vars");
-    		BigInteger vars = getVars(p).or(getVars(q));
-    		if (vars.bitCount() > 2) {
-    			y.add(p);
-    			y.add(q);
-    			break;
-    		}
-    		System.out.println("mul");
-    		IExpression[] z = mulMod(p, q, m);
-    		System.out.println("split");
-    		z = split(z, vars);
-    		System.out.println("mod");
-    		z = mod(z, m);
-    		System.out.println("split");
-    		z = split(z, vars);
-    		System.out.println("done");
-			y.add(z);
-			break;
-    	}
-    	for (IExpression[] z : y)
-    		System.out.println(Arrays.toString(z));
-    	throw new UnsupportedOperationException();
-    }
 
     public static IExpression[] mul(IExpression[] a, IExpression[] b) {
         IExpression[] r = zero(a.length + b.length);
@@ -176,7 +143,7 @@ public class Int {
     }
     
     public static IInteger modPow(BigInteger a, IExpression[] x, BigInteger m) {
-    	IInteger r = new org.swined.dsa.integer.Const(BigInteger.ONE);
+    	IInteger r = new org.swined.dsa.integer.IntConst(BigInteger.ONE);
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
@@ -186,7 +153,7 @@ public class Int {
 //    		for (int j = 1; j < t.length; j++) 
 //    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
 //    		t = mod(t, m);
-    		r = new Mul(r, new Sum(new BitMul(new org.swined.dsa.integer.Const(a.clearBit(0)), x[i]), new Bits(new IExpression[] { a.testBit(0) ? Const.ONE : Bin.not(x[i]) })));
+    		r = new Mul(r, new Sum(new BitMul(new org.swined.dsa.integer.IntConst(a.clearBit(0)), x[i]), new Bits(new IExpression[] { a.testBit(0) ? Const.ONE : Bin.not(x[i]) })));
     		a = a.multiply(a).mod(m);
     	}
     	return new Mod(r, m);
