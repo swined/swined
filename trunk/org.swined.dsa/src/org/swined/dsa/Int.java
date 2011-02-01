@@ -127,7 +127,9 @@ public class Int {
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
-    		r = new Mul(r, new Sum(new Mul(new IntConst(a.clearBit(0)), new Bit(x[i])), new Bit(a.testBit(0) ? Const.ONE : Bin.not(x[i]))));
+    		Mul p = new Mul(new IntConst(a.clearBit(0)), new Bit(x[i]));
+			Bit q = new Bit(a.testBit(0) ? Const.ONE : Bin.not(x[i]));
+			r = new Mul(r, new Sum(p, q));
     		a = a.multiply(a).mod(m);
     	}
     	return new Mod(r, m);
