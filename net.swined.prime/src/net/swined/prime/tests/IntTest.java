@@ -15,17 +15,6 @@ public class IntTest {
 	}
 	
 	@Test
-	public void testGe() {
-		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(10); 
-			BigInteger b = genInt(10);
-			Const ge = (Const)Int.ge(Int.pad(Int.toExp(a), 10), Int.pad(Int.toExp(b), 10));
-			Const p = a.compareTo(b) >= 0 ? Const.ONE : Const.ZERO;
-			Assert.assertEquals("" + a + " vs " + b, p, ge);
-		}
-	}
-
-	@Test
 	public void testGeN() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
@@ -76,16 +65,6 @@ public class IntTest {
 	}
 	
 	@Test
-	public void testMod() {
-		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(10); 
-			BigInteger b = genInt(4);
-			BigInteger r = Int.toInt(Int.mod(Int.toExp(a), Int.toExp(b))); 
-			Assert.assertEquals("" + a + " mod " + b, a.mod(b), r);
-		}
-	}
-
-	@Test
 	public void testModN() {
 		for (int i = 0; i < 10000; i++) {
 			BigInteger a = genInt(10); 
@@ -103,26 +82,6 @@ public class IntTest {
 			BigInteger c = genInt(2);
 			BigInteger r = Int.toInt(Int.modPow(a, Int.toExp(b), c)); 
 			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.modPow(b, c), r);
-		}
-	}
-	
-	@Test
-	public void testWtf0() { // ((a mod m) ^ b) mod m == (a ^ b) mod m 
-		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(10); 
-			BigInteger b = genInt(10);
-			BigInteger c = genInt(5);
-			Assert.assertEquals("" + a + " ^ " + b + " mod " + c, a.pow(b.intValue()).mod(c), a.mod(c).pow(b.intValue()).mod(c));
-		}
-	}
-
-	@Test
-	public void testWtf1() { // (a mod m + b mod m) mod m == (a + b) mod m 
-		for (int i = 0; i < 10000; i++) {
-			BigInteger a = genInt(100); 
-			BigInteger b = genInt(100);
-			BigInteger c = genInt(100);
-			Assert.assertEquals("" + a + " + " + b + " mod " + c, a.add(b).mod(c), a.mod(c).add(b.mod(c)).mod(c));
 		}
 	}
 	
