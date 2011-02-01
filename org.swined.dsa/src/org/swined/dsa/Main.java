@@ -1,7 +1,6 @@
 package org.swined.dsa;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,16 +37,6 @@ public class Main {
         return r;
     }
     
-    private static String toBinary(BigInteger n) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = n.bitLength(); i > 0; i--) {
-            sb.append(n.testBit(i - 1) ? "1" : "0");
-        }
-        sb.append("b/");
-        sb.append(n.bitLength());
-        return sb.toString();
-    }
-
     private static Map<Integer, Const> solve(IExpression eq) {
         if (eq == Const.ONE) {
             return new HashMap<Integer, Const>();
