@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.swined.dsa.util.Buffer;
+import org.swined.dsa.util.DsaPublicKey;
+
 public class Main {
 
     private static IExpression[] var(int l) {
@@ -57,14 +60,12 @@ public class Main {
         return null;
     }
 
-    private final static String KEY = "AAAAB3NzaC1kc3MAAACBAIJ17oBkvzjmOhUzUHpEOsmYeON1CJ7PaCQogT61frbGeJdS4gi45d6GUfRZl5nuA43Q0HFX7zlmFCNM59XQDAh+SI/yyvri6D6M9x2lC2L/LXffWNpj+Z3lNnOOWaKYNpCjLQXpO1FgavaERzTA4zHRQGKkZfu61fkC0zmEuTRnAAAAFQDk7XyVY1zUIGJbNhLu10VzjoMcOQAAAIAyKtxjO4orIm+5urSPQzwmPlt5jWWHynXO1ueqx6bPSv3X3XYtmhD3f5twsBDmQg7rE5Bk0UXa1694NlJVk8tqpS7cDEhMgmSYgvMoUo76NCPI19oXmtUPOHZdoG71yHEK8dPWMwgAC7HKgvSLPo7TDhwQCr2wPb48iGAVoQR0dAAAAIBc4surbhNmgxfdm+JePkuXTTl4BVh0EaZakXqbPIqLRL7ksZxMpqAzLBmTS5SDmQEAC3AtkcybdvjXBMAm5S9OohAXdbS3jo1RqfHT6heuYt98Dvr5toWjO3ixsmjqwRfE6ECq7JAyLSltMIBNr9RFDB8MlcBLSBasDtVb/uuC2A==";
+    private final static String PUBLIC_KEY = "AAAAB3NzaC1kc3MAAACBAOKrUButGeIr3JqgEcHFDf3ixuFXVPEAxcO1351TbcWwtJGQWTr7s/JjAH4//KIJ/Jz4sHBTV+puU9WcaFQqSDpJj4yrp5BDhrWXyKHvqXYxpClC98gX7wC/AFLFvBSfkC9z26ID/ZA6xZ/vxnLRSVvT7Kk4GPIVlNL7IlD5LpNdAAAAFQC2MFVm8JMwY5XbbkJp14TDNOAHRQAAAIEA2jeKEjqDUMSAlXpV6ZnKeqYfIXpUg0jAQ7QI+ScuVMLjWIByLbpZuF6SBrmGkmIZ8X8e6O7rRwhj5DcevFH6lwz/e8BWl/7VeYBmSZEgSJbVVaUn1osKG0hVIekktKkodYsGyWKxycJRGvWkyYxfSat+NgiHGpcOEsf0kZ+/lpEAAACBAJ+siyR6dbk44mjS0725KeolAge7sEbp9PCFkuJ4tIVxbKaSMUzNIYP2fmyxbrtMcvC5KmTZe9GuM45Jpj6/PFB9eaBA2LSlHojFRtM129O5Dphlfca8GEInGd0t0iciRNpK4cYh6I+Rx88y/HF7EpJF1o/ptmvRnYpmbSm8R483";
+    private final static String PRIVATE_KEY = "MIIBvQIBAAKBgQDiq1AbrRniK9yaoBHBxQ394sbhV1TxAMXDtd+dU23FsLSRkFk6+7PyYwB+P/yiCfyc+LBwU1fqblPVnGhUKkg6SY+Mq6eQQ4a1l8ih76l2MaQpQvfIF+8AvwBSxbwUn5Avc9uiA/2QOsWf78Zy0Ulb0+ypOBjyFZTS+yJQ+S6TXQIVALYwVWbwkzBjldtuQmnXhMM04AdFAoGBANo3ihI6g1DEgJV6VemZynqmHyF6VINIwEO0CPknLlTC41iAci26Wbhekga5hpJiGfF/Huju60cIY+Q3HrxR+pcM/3vAVpf+1XmAZkmRIEiW1VWlJ9aLChtIVSHpJLSpKHWLBsliscnCURr1pMmMX0mrfjYIhxqXDhLH9JGfv5aRAoGBAJ+siyR6dbk44mjS0725KeolAge7sEbp9PCFkuJ4tIVxbKaSMUzNIYP2fmyxbrtMcvC5KmTZe9GuM45Jpj6/PFB9eaBA2LSlHojFRtM129O5Dphlfca8GEInGd0t0iciRNpK4cYh6I+Rx88y/HF7EpJF1o/ptmvRnYpmbSm8R483AhUAgBewJWUfpXocdKNtr7rWnVcOK4Y=";
     
     public static void main(String[] args) {
-    	IExpression[] x = Int.modPow(BigInteger.valueOf(5), var(5), BigInteger.valueOf(400));
-//    	for (IExpression y : x)
-//    		System.out.println(y);
-    	IExpression eq = eq(x, BigInteger.valueOf(10));
-    	//eq = Bin.split(eq);
-    	System.out.println(extract(15, solve(eq)));
+    	DsaPublicKey publicKey = new Buffer(DatatypeConverter.parseBase64Binary(PUBLIC_KEY)).readDsaPublicKey();
+		System.out.println(publicKey);
+		System.out.println(publicKey.guessPrivateKeyBitLength());
     }
 }
