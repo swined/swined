@@ -1,13 +1,12 @@
 package org.swined.dsa;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import org.swined.dsa.integer.BitMul;
+import org.swined.dsa.integer.BitAnd;
 import org.swined.dsa.integer.Bits;
 import org.swined.dsa.integer.IInteger;
+import org.swined.dsa.integer.IntConst;
 import org.swined.dsa.integer.Mod;
 import org.swined.dsa.integer.Mul;
 import org.swined.dsa.integer.Sum;
@@ -143,7 +142,7 @@ public class Int {
     }
     
     public static IInteger modPow(BigInteger a, IExpression[] x, BigInteger m) {
-    	IInteger r = new org.swined.dsa.integer.IntConst(BigInteger.ONE);
+    	IInteger r = new IntConst(BigInteger.ONE);
     	if (BigInteger.ZERO.equals(a))
     		return r; 
     	for (int i = 0; i < x.length; i++) {
@@ -153,7 +152,7 @@ public class Int {
 //    		for (int j = 1; j < t.length; j++) 
 //    			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
 //    		t = mod(t, m);
-    		r = new Mul(r, new Sum(new BitMul(new org.swined.dsa.integer.IntConst(a.clearBit(0)), x[i]), new Bits(new IExpression[] { a.testBit(0) ? Const.ONE : Bin.not(x[i]) })));
+    		r = new Mul(r, new Sum(new BitAnd(new IntConst(a.clearBit(0)), x[i]), new Bits(new IExpression[] { a.testBit(0) ? Const.ONE : Bin.not(x[i]) })));
     		a = a.multiply(a).mod(m);
     	}
     	return new Mod(r, m);

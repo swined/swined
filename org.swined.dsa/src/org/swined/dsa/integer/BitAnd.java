@@ -3,12 +3,12 @@ package org.swined.dsa.integer;
 import org.swined.dsa.Bin;
 import org.swined.dsa.IExpression;
 
-public class BitMul implements IInteger {
+public class BitAnd implements IInteger {
 
 	private final IInteger a;
 	private final IExpression b;
 	
-	public BitMul(IInteger a, IExpression b) {
+	public BitAnd(IInteger a, IExpression b) {
 		this.a = a;
 		this.b = b;
 	}
