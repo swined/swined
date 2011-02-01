@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class Main {
 
     private static IExpression[] var(int l) {
@@ -55,6 +57,8 @@ public class Main {
         return null;
     }
 
+    private final static String KEY = "AAAAB3NzaC1kc3MAAACBAIJ17oBkvzjmOhUzUHpEOsmYeON1CJ7PaCQogT61frbGeJdS4gi45d6GUfRZl5nuA43Q0HFX7zlmFCNM59XQDAh+SI/yyvri6D6M9x2lC2L/LXffWNpj+Z3lNnOOWaKYNpCjLQXpO1FgavaERzTA4zHRQGKkZfu61fkC0zmEuTRnAAAAFQDk7XyVY1zUIGJbNhLu10VzjoMcOQAAAIAyKtxjO4orIm+5urSPQzwmPlt5jWWHynXO1ueqx6bPSv3X3XYtmhD3f5twsBDmQg7rE5Bk0UXa1694NlJVk8tqpS7cDEhMgmSYgvMoUo76NCPI19oXmtUPOHZdoG71yHEK8dPWMwgAC7HKgvSLPo7TDhwQCr2wPb48iGAVoQR0dAAAAIBc4surbhNmgxfdm+JePkuXTTl4BVh0EaZakXqbPIqLRL7ksZxMpqAzLBmTS5SDmQEAC3AtkcybdvjXBMAm5S9OohAXdbS3jo1RqfHT6heuYt98Dvr5toWjO3ixsmjqwRfE6ECq7JAyLSltMIBNr9RFDB8MlcBLSBasDtVb/uuC2A==";
+    
     public static void main(String[] args) {
     	IExpression[] x = Int.modPow(BigInteger.valueOf(5), var(5), BigInteger.valueOf(400));
 //    	for (IExpression y : x)
