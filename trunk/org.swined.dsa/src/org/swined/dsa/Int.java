@@ -121,6 +121,19 @@ public class Int {
         }
     	return r;
     }
+
+    public static IExpression[] mulMod(IExpression[] a, BigInteger b, BigInteger m) {
+        IExpression[] r = zero(a.length + b.bitLength());
+        for (int i = 0; i < a.length; i++) {
+        	IExpression[] t = zero(r.length);
+        	for (int j = 0; j < b.bitLength(); j++)
+        		t[i + j] = b.testBit(i) ? a[j] : Const.ZERO;
+        	t = mod(t, m);
+        	r = sum(r, t);
+        	r = mod(r, m);
+        }
+    	return r;
+    }
     
     public static BigInteger mpc(BigInteger a, BigInteger m, int ix) {
     	for (int i = 0; i < ix; i++)
