@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Licencing
+Bundle-SymbolicName: com.excelsior.lms.licencing
+Bundle-Version: 2.0.1.qualifier
+Bundle-Vendor: EXCELSIOR
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: com.excelsior.lms.licencing
+Bundle-ActivationPolicy: lazy
