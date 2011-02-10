@@ -12,4 +12,9 @@ public class Pair {
     this.b = b;
   }
   
+  @Override
+  public String toString() {
+    return "<" + a + ", " + b + ">";
+  }
+  
 }
