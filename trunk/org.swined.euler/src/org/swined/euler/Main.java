@@ -14,7 +14,7 @@ public class Main {
           if (r == null)
             r = new Pair(x, y);
           else 
-            if (x.equals(r.b) && y.equals(r.a))
+            if (x.equals(r.b) && y.equals(r.a) && b.equals(c))
               continue;
             else
               return null;
@@ -43,7 +43,7 @@ public class Main {
     System.out.println();
     BigInteger p = BigInteger.valueOf(2);
     Pair r = null;
-    while (p.compareTo(d) <= 0) {
+    while (p.compareTo(d.add(BigInteger.ONE)) <= 0) {
       r = solve(a, b, c, d, p);
       if (r == null)
         p = p.nextProbablePrime();
@@ -70,7 +70,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = BigInteger.valueOf(10);
+    BigInteger n = BigInteger.valueOf(100);
     n = n.nextProbablePrime();
     n = n.multiply(n.nextProbablePrime());
     System.out.println(solve(BigInteger.valueOf(1), BigInteger.ZERO, BigInteger.ZERO, n));
