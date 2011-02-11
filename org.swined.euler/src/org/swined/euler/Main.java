@@ -26,6 +26,13 @@ public class Main {
 	  return r;
   }
   
+  private static Pair egcd(BigInteger a, BigInteger b) {
+	  if (a.mod(b).equals(BigInteger.ZERO))
+		  return new Pair(BigInteger.ZERO, BigInteger.ONE);
+	  Pair x = egcd(b, a.mod(b));
+	  return new Pair(x.b, x.a.subtract(x.b.multiply(a.divide(b))));
+  }
+  
   public static void main(String[] args) {
     BigInteger n = new BigInteger("10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
     n = n.nextProbablePrime();
