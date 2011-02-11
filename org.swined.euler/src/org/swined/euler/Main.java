@@ -26,6 +26,16 @@ public class Main {
 	  return r;
   }
   
+  private static BigInteger[] e(BigInteger[] n) {
+	  BigInteger[] r = new BigInteger[n.length];
+	  BigInteger m = m(n);
+	  for (int i = 0; i < r.length; i++) {
+		  BigInteger d = m.divide(n[i]);
+		  r[i] = egcd(n[i], d).b.multiply(d);
+	  }
+	  return r;
+  }
+  
   private static Pair egcd(BigInteger a, BigInteger b) {
 	  if (a.mod(b).equals(BigInteger.ZERO))
 		  return new Pair(BigInteger.ZERO, BigInteger.ONE);
