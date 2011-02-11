@@ -47,21 +47,11 @@ public class Main {
     BigInteger n = new BigInteger("10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
     n = n.nextProbablePrime();
     n = n.multiply(n.nextProbablePrime().nextProbablePrime().nextProbablePrime().nextProbablePrime());
-    System.out.println(Arrays.toString(p(n)));
-    BigInteger m = BigInteger.ONE;
-    BigInteger d = BigInteger.valueOf(2);
-    int c = 0;
-    while (d.compareTo(n) < 0 && m.multiply(m).compareTo(n) < 0) {
-    	if (n.mod(d).isProbablePrime(100)) {
-    		System.out.println(d);
-    		m = m.multiply(d);
-    		c++;
-    	}
-    	d = d.nextProbablePrime();
-    }
-    System.out.println();
-    System.out.println(n.bitLength());
-    System.out.println(c);
+    BigInteger[] p = p(n);
+    BigInteger[] e = e(p);
+	System.out.println(Arrays.toString(p));
+	System.out.println(Arrays.toString(e));
+	System.out.println(p.length);
   }
   
 }
