@@ -44,14 +44,14 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+    BigInteger n = new BigInteger("1000000");
     n = n.nextProbablePrime();
-    n = n.multiply(n.nextProbablePrime().nextProbablePrime().nextProbablePrime().nextProbablePrime());
+    n = n.multiply(n.nextProbablePrime().nextProbablePrime().nextProbablePrime());
+    System.out.println(n);
     BigInteger[] p = p(n);
     BigInteger[] e = e(p);
 	System.out.println(Arrays.toString(p));
 	System.out.println(Arrays.toString(e));
-	System.out.println(p.length);
   }
   
 }
