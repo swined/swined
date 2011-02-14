@@ -2,13 +2,17 @@ package org.proofpic;
 
 import java.util.List;
 
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.users.User;
 
 @PersistenceCapable
@@ -68,14 +72,26 @@ public class ImageInfo {
     	return owner;
     }
     
+    @SuppressWarnings("unchecked")
     public static ImageInfo load(String key) {
-        Query query = PMUtils.pm.newQuery(ImageInfo.class, "key == keyParam");
+        javax.jdo.Query query = PMUtils.pm.newQuery(ImageInfo.class, "key == keyParam");
         query.declareParameters("String keyParam");
         query.setRange(0, 1);
         for (ImageInfo img : (List<ImageInfo>)query.execute(key))
             return img;
         return null;
     }
+
+    public static String[] loadIds(User owner) {
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      Query query = new Query("ImageInfo");
+      query.addFilter("owner", FilterOperator.EQUAL, owner);
+      List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+      String[] r = new String[entities.size()];
+      for (int i = 0; i < r.length; i++)
+        r[i] = entities.get(i).getProperty("key").toString();
+      return r;
+   }
     
     public long getId() {
     	return id;
