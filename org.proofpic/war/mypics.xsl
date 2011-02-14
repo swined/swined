@@ -14,7 +14,7 @@
         </xsl:template>
         <xsl:template match='pic'>
         	<a href="http://{@key}.proofpic.org/">
-        		<img src="http://{@key}.proofpic.org/?w=100&h=100" />
+        		<img src="http://{@key}.proofpic.org/?w=100&amp;h=100" />
         	</a>
         </xsl:template>
 </xsl:stylesheet>     
