@@ -26,8 +26,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<security-constraint>
 		<web-resource-collection>
-			<url-pattern>/mypics.jsp</url-pattern>
 			<url-pattern>/upload.jsp</url-pattern>
+			<url-pattern>/mypics.jsp</url-pattern>
 			<url-pattern>/upload</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
