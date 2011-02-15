@@ -12,9 +12,11 @@ public class Main {
 	  BigInteger m = BigInteger.ONE;
 	  List<BigInteger> r = new ArrayList<BigInteger>();
 	  while (m.multiply(m).compareTo(n) < 0) {
-		  r.add(d);
-		  d = d.nextProbablePrime();
-		  m = m.multiply(d);
+	    if (n.mod(d).isProbablePrime(100)) {
+  		  r.add(d);
+  		  m = m.multiply(d);
+	    }
+	    d = d.nextProbablePrime();	    
 	  }
 	  return r.toArray(new BigInteger[r.size()]);
   }
@@ -44,7 +46,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("1000000");
+    BigInteger n = new BigInteger("100000000");
     n = n.nextProbablePrime();
     n = n.multiply(n.nextProbablePrime().nextProbablePrime().nextProbablePrime());
     System.out.println(n);
