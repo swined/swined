@@ -27,8 +27,8 @@ public class UploadServlet extends HttpServlet {
 			BlobKey blobKey = blobs.get("image");
 			if (blobKey == null)
 				res.sendRedirect("http://proofpic.org/");
-			ImageInfo img = ImageInfo.create(blobKey.getKeyString(), userService.getCurrentUser());
-			res.sendRedirect("http://" + img.getKey() + "." + DomainUtils.guessDomain(req) + "/");
+			String key = ImageUtils.create(userService.getCurrentUser(), blobKey.getKeyString());
+			res.sendRedirect("http://" + key + "." + DomainUtils.guessDomain(req) + "/");
 		} catch (Throwable e) {
 			res.setContentType("text/plain");
 			e.printStackTrace(res.getWriter());

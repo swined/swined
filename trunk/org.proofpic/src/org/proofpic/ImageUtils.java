@@ -2,11 +2,6 @@ package org.proofpic;
 
 import java.util.List;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -15,36 +10,11 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.users.User;
 
-@PersistenceCapable
-public class ImageInfo {
+public class ImageUtils {
 	
 	private final static char[] DIGITS = "1234567890qwertyuiopasdfghjklzxcvbnm".toCharArray();
 	
-    @PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Long id;
-
-    @Persistent
-    private User owner;
-    
-    @Persistent
-    private String key;
-
-    @Persistent
-    private String blobKey;
-
-    private ImageInfo(String blobKey, User owner) {
-        this.key = generateKey();
-        this.blobKey = blobKey;
-        this.owner = owner;
-    }
-
-    public String getBlobKey() {
-        return blobKey;
-    }
-
-    public String getKey() {
-        return key;
+    private ImageUtils() {
     }
 
     private static String generateKey() {
@@ -62,14 +32,15 @@ public class ImageInfo {
         return r.toString();
     }
 
-    public static ImageInfo create(String blobKey, User owner) {
-        ImageInfo url = new ImageInfo(blobKey, owner);
-        PMUtils.pm.makePersistent(url);
-        return url;
-    }
-
-    public User getOwner() {
-    	return owner;
+    public static String create(User owner, String blobKey) {
+    	String key = generateKey();
+    	Entity image = new Entity("ImageInfo");
+    	image.setProperty("key", key);
+    	image.setProperty("blobKey", blobKey);
+    	image.setProperty("owner", owner);
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    	datastore.put(image);
+    	return key;
     }
     
     public static String getBlobKey(String key) {
@@ -83,7 +54,7 @@ public class ImageInfo {
         	return image.getProperty("blobKey").toString();
      }
     
-    public static String[] loadIds(User owner) {
+    public static String[] getKeys(User owner) {
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       Query query = new Query("ImageInfo");
       query.addFilter("owner", FilterOperator.EQUAL, owner);
@@ -94,8 +65,4 @@ public class ImageInfo {
       return r;
    }
     
-    public long getId() {
-    	return id;
-    }
-
 }
