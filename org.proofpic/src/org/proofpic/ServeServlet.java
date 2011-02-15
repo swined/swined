@@ -35,11 +35,11 @@ public void doGet(HttpServletRequest req, HttpServletResponse res)
 
 	public BlobKey load(HttpServletRequest req) {
 		String id = DomainUtils.guessSubdomain(req);
-		ImageInfo img = ImageInfo.load(id);
-		if (img == null)
+		String blobKey = ImageInfo.getBlobKey(id);
+		if (blobKey == null)
 			return null;
 		else
-			return new BlobKey(img.getBlobKey());
+			return new BlobKey(blobKey);
 	}
 
 	public Image resize(BlobKey blob, String sw, String sh) {
