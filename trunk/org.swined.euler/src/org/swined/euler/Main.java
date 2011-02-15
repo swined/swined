@@ -11,7 +11,7 @@ public class Main {
 	  BigInteger d = BigInteger.valueOf(2);
 	  BigInteger m = BigInteger.ONE;
 	  List<BigInteger> r = new ArrayList<BigInteger>();
-	  while (m.multiply(m).compareTo(n) < 0) {
+	  while (m.compareTo(n) < 0) {
  		  r.add(d);
 		  m = m.multiply(d);
 	    d = d.nextProbablePrime();	    
