@@ -50,7 +50,7 @@ public class ImageInfo {
     private static String generateKey() {
         for (int i = 1; true; i++) {
             String key = randStr(i);
-            if (load(key) == null)
+            if (getBlobKey(key) == null)
                 return key;
         }
     }
@@ -72,16 +72,17 @@ public class ImageInfo {
     	return owner;
     }
     
-    @SuppressWarnings("unchecked")
-    public static ImageInfo load(String key) {
-        javax.jdo.Query query = PMUtils.pm.newQuery(ImageInfo.class, "key == keyParam");
-        query.declareParameters("String keyParam");
-        query.setRange(0, 1);
-        for (ImageInfo img : (List<ImageInfo>)query.execute(key))
-            return img;
-        return null;
-    }
-
+    public static String getBlobKey(String key) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("ImageInfo");
+        query.addFilter("key", FilterOperator.EQUAL, key);
+        Entity image = datastore.prepare(query).asSingleEntity();
+        if (image == null)
+        	return null;
+        else
+        	return image.getProperty("blobKey").toString();
+     }
+    
     public static String[] loadIds(User owner) {
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       Query query = new Query("ImageInfo");
