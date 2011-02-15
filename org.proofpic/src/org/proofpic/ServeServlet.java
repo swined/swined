@@ -35,7 +35,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res)
 
 	public BlobKey load(HttpServletRequest req) {
 		String id = DomainUtils.guessSubdomain(req);
-		String blobKey = ImageInfo.getBlobKey(id);
+		String blobKey = ImageUtils.getBlobKey(id);
 		if (blobKey == null)
 			return null;
 		else
