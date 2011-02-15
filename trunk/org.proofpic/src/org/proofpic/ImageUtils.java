@@ -2,6 +2,7 @@ package org.proofpic;
 
 import java.util.List;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -13,6 +14,7 @@ import com.google.appengine.api.users.User;
 public class ImageUtils {
 	
 	private final static char[] DIGITS = "1234567890qwertyuiopasdfghjklzxcvbnm".toCharArray();
+	private final static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	
     private ImageUtils() {
     }
@@ -32,30 +34,28 @@ public class ImageUtils {
         return r.toString();
     }
 
-    public static String create(User owner, String blobKey) {
+    public static String create(User owner, BlobKey blobKey) {
     	String key = generateKey();
     	Entity image = new Entity("ImageInfo");
     	image.setProperty("key", key);
-    	image.setProperty("blobKey", blobKey);
+    	image.setProperty("blobKey", blobKey.getKeyString());
     	image.setProperty("owner", owner);
-    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     	datastore.put(image);
     	return key;
     }
     
-    public static String getBlobKey(String key) {
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    public static BlobKey getBlobKey(String key) {
         Query query = new Query("ImageInfo");
         query.addFilter("key", FilterOperator.EQUAL, key);
         Entity image = datastore.prepare(query).asSingleEntity();
         if (image == null)
         	return null;
         else
-        	return image.getProperty("blobKey").toString();
+        	return new BlobKey(image.getProperty("blobKey").toString());
      }
     
     public static String[] getKeys(User owner) {
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      
       Query query = new Query("ImageInfo");
       query.addFilter("owner", FilterOperator.EQUAL, owner);
       List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
