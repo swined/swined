@@ -12,10 +12,8 @@ public class Main {
 	  BigInteger m = BigInteger.ONE;
 	  List<BigInteger> r = new ArrayList<BigInteger>();
 	  while (m.multiply(m).compareTo(n) < 0) {
-	    if (n.mod(d).isProbablePrime(100)) {
-  		  r.add(d);
-  		  m = m.multiply(d);
-	    }
+ 		  r.add(d);
+		  m = m.multiply(d);
 	    d = d.nextProbablePrime();	    
 	  }
 	  return r.toArray(new BigInteger[r.size()]);
@@ -52,8 +50,8 @@ public class Main {
     System.out.println(n);
     BigInteger[] p = p(n);
     BigInteger[] e = e(p);
-	System.out.println(Arrays.toString(p));
-	System.out.println(Arrays.toString(e));
+	  System.out.println(Arrays.toString(p));
+	  System.out.println(Arrays.toString(e));
   }
   
 }
