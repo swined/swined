@@ -22,17 +22,20 @@ public class ServeServlet extends HttpServlet {
 
 public void doGet(HttpServletRequest req, HttpServletResponse res)
     throws IOException {
-        BlobKey blob = load(req);
-		if (blob == null)
+		String key = DomainUtils.guessSubdomain(req);
+		Image image = load(key);
+		if (image == null)
 			res.sendRedirect("/404.jpg");
-		Image image = ImagesServiceFactory.makeImageFromBlob(blob);
         Image resized = resize(image, req.getParameter("w"), req.getParameter("h"));
         serve(resized, res);
     }
 
-	public BlobKey load(HttpServletRequest req) {
-		String id = DomainUtils.guessSubdomain(req);
-		return ImageUtils.getBlobKey(id);
+	public Image load(String key) {
+		BlobKey blobKey = ImageUtils.getBlobKey(key);
+		if (blobKey == null)
+			return null;
+		else 
+			return ImagesServiceFactory.makeImageFromBlob(blobKey);
 	}
 
 	private static void serve(Image image, HttpServletResponse res) throws IOException {
