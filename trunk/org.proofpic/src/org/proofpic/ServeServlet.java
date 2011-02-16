@@ -1,6 +1,8 @@
 package org.proofpic;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,24 +22,46 @@ public class ServeServlet extends HttpServlet {
 	private final static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	private final static ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
-public void doGet(HttpServletRequest req, HttpServletResponse res)
+public void doGet(HttpServletRequest q, HttpServletResponse r)
     throws IOException {
-		String key = DomainUtils.guessSubdomain(req);
-		Image image = load(key);
-		if (image == null)
-			res.sendRedirect("/404.jpg");
-        Image resized = resize(image, req.getParameter("w"), req.getParameter("h"));
-        serve(resized, res);
+		String k = DomainUtils.guessSubdomain(q);
+        int w = atoi(q.getParameter("w"));
+		int h = atoi(q.getParameter("h"));
+		serve(resize(load(k), w, h), r);
     }
 
-	public Image load(String key) {
+	private Image load(String key) throws IOException {
 		BlobKey blobKey = ImageUtils.getBlobKey(key);
 		if (blobKey == null)
-			return null;
+			return loadStatic("/404.jpg");
 		else 
 			return ImagesServiceFactory.makeImageFromBlob(blobKey);
 	}
 
+	private Image loadStatic(String path) throws IOException {
+		InputStream stream = null;
+		try {
+			stream = getServletContext().getResourceAsStream(path);
+			if (stream == null)
+				throw new IOException(path + " not found");
+			byte[] r = new byte[0];
+			while (true) {
+				byte[] b = new byte[stream.available()];
+				int c = stream.read(b);
+				if (c < 0)
+					break;
+				if (b.length == 0)
+					continue;
+				r = Arrays.copyOf(r, r.length + c);
+				System.arraycopy(b, 0, r, r.length - c, c);
+			}
+			return ImagesServiceFactory.makeImage(r);
+		} finally {
+			if (stream != null)
+				stream.close();
+		}
+	}
+	
 	private static void serve(Image image, HttpServletResponse res) throws IOException {
 		BlobKey key = image.getBlobKey();
         if (key == null) {
@@ -47,9 +71,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res)
         	blobstoreService.serve(key, res);
 	}
 	
-	private static Image resize(Image image, String sw, String sh) {
-		int w = atoi(sw);
-		int h = atoi(sh);		
+	private static Image resize(Image image, int w, int h) {
     	if (w == 0 & h == 0)
     		return image;
     	else {
