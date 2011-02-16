@@ -46,11 +46,11 @@ public void doGet(HttpServletRequest q, HttpServletResponse r)
 				throw new IOException(path + " not found");
 			byte[] r = new byte[0];
 			while (true) {
-				byte[] b = new byte[stream.available()];
+				byte[] b = new byte[1024];
 				int c = stream.read(b);
 				if (c < 0)
 					break;
-				if (b.length == 0)
+				if (c == 0)
 					continue;
 				r = Arrays.copyOf(r, r.length + c);
 				System.arraycopy(b, 0, r, r.length - c, c);
