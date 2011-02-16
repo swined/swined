@@ -45,8 +45,8 @@ public void doGet(HttpServletRequest q, HttpServletResponse r)
 			if (stream == null)
 				throw new IOException(path + " not found");
 			byte[] r = new byte[0];
+			byte[] b = new byte[1024];
 			while (true) {
-				byte[] b = new byte[1024];
 				int c = stream.read(b);
 				if (c < 0)
 					break;
