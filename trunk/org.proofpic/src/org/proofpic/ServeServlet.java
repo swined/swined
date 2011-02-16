@@ -25,12 +25,9 @@ public void doGet(HttpServletRequest req, HttpServletResponse res)
         BlobKey blob = load(req);
 		if (blob == null)
 			res.sendRedirect("/404.jpg");
-        Image resized = resize(blob, req.getParameter("w"), req.getParameter("h")); 
-        if (resized != null) {
-        	res.setContentType("image/" + resized.getFormat().name());
-        	res.getOutputStream().write(resized.getImageData());
-        } else
-        	blobstoreService.serve(blob, res);
+		Image image = ImagesServiceFactory.makeImageFromBlob(blob);
+        Image resized = resize(image, req.getParameter("w"), req.getParameter("h"));
+        serve(resized, res);
     }
 
 	public BlobKey load(HttpServletRequest req) {
@@ -38,20 +35,31 @@ public void doGet(HttpServletRequest req, HttpServletResponse res)
 		return ImageUtils.getBlobKey(id);
 	}
 
-	public Image resize(BlobKey blob, String sw, String sh) {
-		int w = 0;
-		if (sw != null)
-			w = Integer.parseInt("0" + sw.replaceAll("[^0-9]", ""));
-		int h = 0;		
-		if (sh != null)
-			h = Integer.parseInt("0" + sh.replaceAll("[^0-9]", ""));
+	private static void serve(Image image, HttpServletResponse res) throws IOException {
+		BlobKey key = image.getBlobKey();
+        if (key == null) {
+        	res.setContentType("image/" + image.getFormat().name().toLowerCase());
+        	res.getOutputStream().write(image.getImageData());
+        } else
+        	blobstoreService.serve(key, res);
+	}
+	
+	private static Image resize(Image image, String sw, String sh) {
+		int w = atoi(sw);
+		int h = atoi(sh);		
     	if (w == 0 & h == 0)
-    		return null;
+    		return image;
     	else {
-    		Image image = ImagesServiceFactory.makeImageFromBlob(blob);
     		Transform resize = ImagesServiceFactory.makeResize(w, h);
     		return imagesService.applyTransform(resize, image);
     	}
+	}
+	
+	private static int atoi(String a) {
+		if (a == null)
+			return 0;
+		else
+			return Integer.parseInt("0" + a.replaceAll("[^0-9]", ""));
 	}
 	
 }
