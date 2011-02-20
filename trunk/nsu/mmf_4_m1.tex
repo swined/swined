@@ -1,0 +1,35 @@
+\documentclass[russian]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,esint,babel}
+\makeatletter
+\makeatother
+\pagestyle{myheadings}
+\markright{Александров А., 3372}
+
+\begin{document}
+\section*{1.1}
+\paragraph*{а}
+$(xy' - 1) \ln x = 2y$
+
+$(x \frac{dy}{dx} - 1) \ln x = 2y$
+
+$\frac{dy}{dx} = \frac{2}{x \ln x} y + \frac{1}{x}$
+
+$\begin{cases}
+y(x) = C(x) e^{\int \frac{2}{x \ln x} dx} \\
+\frac{dC}{dx} = \frac{1}{x} e^{-\int \frac{2}{x \ln x} dx}
+\end{cases}$
+
+$\int \frac{2}{x \ln x} dx = 2 \ln \ln x + c_0$
+
+$\begin{cases}
+y(x) = C(x) e^{2 \ln \ln x + c_0} = C(x) e^{c_0} \ln ^2 x\\
+\frac{dC}{dx} = \frac{1}{x} e^{-2 \ln \ln x - c_0} = \frac{1}{e^{c_0} x \ln ^2 x}
+\end{cases}$
+
+$C(x) = \int \frac{1}{e^{c_0} x \ln ^2 x} dx + c_1 = - \frac{1}{e^{c_0} \ln x} + c_1$
+
+$y(x) = C(x) e^{c_0} \ln ^2 x = -\ln x + c_1 e^{c_0} \ln ^2 x = c \ln ^2 x - \ln x$
+
+\end{document}
