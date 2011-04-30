@@ -1,0 +1,53 @@
+#!/bin/sh
+
+iptables -F
+iptables -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD DROP
+iptables -t nat -F
+iptables -t mangle -F
+
+function efw { 
+	iptables -A FORWARD -i $extif -p tcp --dport $3 -d $2 -j ACCEPT
+	iptables -t nat -A PREROUTING -p tcp --dport $1 -d $extip -j DNAT --to-destination $2:$3
+}
+
+extip="85.118.226.201"
+extif="eth0"
+
+EPORTS="80 220 17001"
+E1080="10.198.146.2 10.198.2.34 10.198.2.9 85.118.231.99"
+E8080="10.198.146.2 85.118.231.99 85.118.231.39"
+LPORTS="1080 8080"
+LNETS="172.16.0.0/12 85.118.224.0/21 89.31.112.0/21 10.208.0.0/12 80.64.80.0/20 91.151.240.0/20 195.46.32.0/22 195.189.238.0/23 192.168.234.0/24 81.1.226.0/23 10.0.0.0/8 62.76.100.0/23 62.76.110.0/23 193.124.208.0/20 212.192.164.0/24 194.149.224.0/24 81.28.208.0/20"
+
+iptables -A OUTPUT -p tcp --dport 25 -d 85.118.224.218 -j DROP
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+for port in $EPORTS; do iptables -A INPUT -p tcp --dport $port -j ACCEPT; done
+for ip in $E1080; do iptables -A INPUT -i $extif -p tcp -s $ip --dport 1080 -j ACCEPT; done
+for ip in $E8080; do iptables -A INPUT -i $extif -p tcp -s $ip --dport 8080 -j ACCEPT; done
+#for net in $LNETS; do iptables -A FORWARD -i ! $extif -d $net -j ACCEPT; done
+for port in $LPORTS; do iptables -A INPUT -i ! $extif -p tcp --dport $port -j ACCEPT; done
+
+iptables -A FORWARD -i ! $extif -j ACCEPT
+
+efw 21 10.0.1.5 21
+iptables -A FORWARD -i $extif -p tcp --dport 62000:62999 -d 10.0.1.5 -j ACCEPT
+iptables -t nat -A PREROUTING -p tcp --dport 62000:62999 -d $extip -j DNAT --to-destination 10.0.1.5
+
+efw 22 10.0.1.1 22
+#efw 80 10.0.2.10 80
+efw 84 10.0.1.3 80
+efw 83 10.0.2.3 80
+efw 139 10.0.1.2 139
+efw 445 10.0.1.2 445
+efw 2203 172.23.47.131 2203
+efw 3389 10.0.0.114 3389
+
+iptables -A FORWARD -p tcp --dport 2222 -d 193.124.208.93 -j ACCEPT
+iptables -t nat -A PREROUTING -p tcp --dport 22 -d 193.124.208.93 -j DNAT --to-destination 193.124.208.93:2222
+
+iptables -t nat -A PREROUTING -d 10.100.0.0/16 -j NETMAP --to 10.0.0.0/16
+iptables -t nat -o $extif -A POSTROUTING -j MASQUERADE
