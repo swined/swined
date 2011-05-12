@@ -1,0 +1,3 @@
+RewriteEngine	On
+RewriteBase	/
+RewriteRule	^$	cgi-bin/index.pl

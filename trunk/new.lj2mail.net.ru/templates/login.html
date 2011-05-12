@@ -1,0 +1,10 @@
+<TMPL_INCLUDE NAME="header.html">
+
+<center>
+You need to login to view this page<br>
+<input type="text" name="login" value="<TMPL_VAR NAME=login>">
+<input type="password" name="pass">
+<input type="button" onclick="return process('<TMPL_VAR NAME=return>');" value="Login">
+</center>
+
+<TMPL_INCLUDE NAME="footer.html">
