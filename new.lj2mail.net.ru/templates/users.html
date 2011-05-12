@@ -1,0 +1,33 @@
+<TMPL_INCLUDE NAME="header.html">
+
+<TMPL_IF NAME="users">
+    <table style="width: 100%; text-align: center">
+        <tr style="background-color: #AAAAAA">
+	    <td>id</td>
+	    <td>login</td>		
+	    <td>email</td>		
+	    <td>failures</td>			    
+	    <td>entries</td>
+	    <td>actions</td>
+	</tr>
+	<TMPL_LOOP NAME="users">
+	    <tr style="background-color: <TMPL_VAR NAME=color>">
+		<td><TMPL_VAR NAME=id></td>
+		<td><a href='http://www.livejournal.com/~<TMPL_VAR NAME=login>'><TMPL_VAR NAME=login></a></td>		
+		<td><TMPL_VAR NAME=email></td>		
+		<td><TMPL_VAR NAME=failures></td>				
+		<td><TMPL_VAR NAME='COUNT(*)'></td>						
+		<td>&nbsp;
+		<TMPL_IF NAME=can_drop>
+		    <a href='#' onclick="return process('users', 'drop=<TMPL_VAR NAME=id>', 1)">drop</a>
+		</TMPL_IF>
+		</td>
+	    </tr>
+	</TMPL_LOOP>
+    </table>
+<TMPL_ELSE>
+    <center>No users found!</center>
+</TMPL_IF>
+
+
+<TMPL_INCLUDE NAME="footer.html">

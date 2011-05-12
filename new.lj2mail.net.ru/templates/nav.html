@@ -1,0 +1,8 @@
+<p>
+	<a href="#" onclick="return process('index', '', 1);">Home</a> 
+	| <a href="#" onclick="return process('users', '', 1);">Users</a> 
+	| <a href="#" onclick="return process('prereg', '', 1);">Prereg</a>  	
+	<TMPL_IF NAME="user">
+	    | <a href="#" onclick="return process('<TMPL_VAR NAME=_current_template>', 'logout', 1);">Logout</a>
+	</TMPL_IF>
+</p>
