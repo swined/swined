@@ -24,7 +24,7 @@ public class Main {
   }
   
   public static void main(String[] args) {
-    BigInteger n = new BigInteger("77777777777");
+    BigInteger n = new BigInteger("77777777777777");
     System.out.println(phi(n));
   }
   
