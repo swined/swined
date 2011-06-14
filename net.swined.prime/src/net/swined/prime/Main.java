@@ -1,98 +1,90 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 
-    private static IExpression[] var(int l) {
+    private static IExpression[] var(int o, int l) {
         IExpression[] e = new IExpression[l];
-        for (int i = 0; i < l; i++) {
-            e[i] = new Var(i, false);
-        }
+        for (int i = 0; i < l; i++) 
+            e[i] = new Var(i + o, false);
         return e;
     }
 
-    private static BigInteger extract(int l, Map<Integer, Const> s) {
-    	if (s == null)
-    		return null;
-        BigInteger r = BigInteger.ZERO;
-        for (int v : s.keySet()) {
-            if (v < l) {
-                if (s.get(v) == Const.ONE) {
-                    r = r.setBit(v);
-                }
-            }
-        }
-        return r;
+    private static BigInteger key(int l) {
+    	BigInteger a = BigInteger.ZERO.setBit(l / 2).nextProbablePrime();
+    	BigInteger b = a.nextProbablePrime();
+    	System.out.println(a);
+    	System.out.println(b);
+    	BigInteger c = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
+    	System.out.println(c);
+    	BigInteger d = a.multiply(b);
+    	assert c.equals(d);
+      return d;
     }
 
-    private static IExpression eq(IExpression[] e, BigInteger n) {
-        IExpression r = Const.ONE;
-        for (int i = 0; i < e.length; i++) {
-            IExpression x = n.testBit(i) ? e[i] : Bin.not(e[i]);
-            r = Bin.and(r, x);
-        }
-        return r;
+    private static int findNonConst(IExpression[] t) {
+      for (int i = 0; i < t.length; i++)
+        if (t[i].getVars().bitCount() > 0)
+          return i;
+      return -1;
     }
     
-    private static String toBinary(BigInteger n) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = n.bitLength(); i > 0; i--) {
-            sb.append(n.testBit(i - 1) ? "1" : "0");
+    private static void div(BigInteger n) {
+      final int l = n.bitLength();// / 2 + n.bitLength() % 2;
+      final IExpression[] a = var(0, l);
+      final IExpression[] b = var(l, l);
+      while (true) {
+        final IExpression[] t = Int.mul(a, b);
+        int ix = findNonConst(t);
+        if (ix < 0) 
+          break;
+        IExpression e = n.testBit(ix) ? t[ix] : t[ix].not();
+        int v = e.getVars().getLowestSetBit();
+        System.out.println(e);
+        IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
+        IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
+        System.out.println(x);
+        System.out.println(y);
+        IExpression s = Bin.and(x, y.not());
+        System.out.println("x" + v + " = " + s);
+        for (int i = 0; i < l; i++) {
+          a[i] = a[i].sub(v, s, new HashMap<IExpression, IExpression>());
+          b[i] = b[i].sub(v, s, new HashMap<IExpression, IExpression>());
         }
-        sb.append("b/");
-        sb.append(n.bitLength());
-        return sb.toString();
+      }
+      BigInteger u = Int.toInt(a);
+      BigInteger v = Int.toInt(b);
+      System.out.println(Arrays.toString(a));
+      System.out.println(Arrays.toString(b));
+      System.out.println(Arrays.toString(Int.mul(a, b)));
+      System.out.println(Arrays.toString(Int.toExp(n)));
+      System.out.println(u);
+      System.out.println(v);
+      System.out.println(u.multiply(v));
+      System.out.println(n);
     }
-
-    private static Map<Integer, Const> solve(IExpression eq) {
-        if (eq == Const.ONE) {
-            return new HashMap<Integer, Const>();
-        }
-        if (eq == Const.ZERO) {
-            return null;
-        }
-        int var = eq.getVars().getLowestSetBit();
-        for (Const c : Const.values()) {
-            Map<Integer, Const> s = solve(eq.sub(var, c, new HashMap<IExpression, IExpression>()));
-            if (s != null) {
-                s.put(var, c);
-                return s;
-            }
-        }
-        return null;
-    }
-
-    private static BigInteger divisor(BigInteger n) {
-    	int l = n.bitLength() / 2 + n.bitLength() % 2;
-    	IExpression[] d = Int.toExp(n);
-    	System.out.println("building (" + l + ")");
-    	System.out.println(new Date());
-    	IExpression e = eq(Int.mod(d, var(l)), BigInteger.ZERO);
-    	System.out.println(new Date());
-    	e = Bin.split(e);
-    	//System.out.println(e);
-    	System.out.println("solving");
-    	Map<Integer, Const> solution = solve(e);
-    	if (solution == null)
-    		return null;
-    	return extract(l, solution);
-    }
-
-    private static BigInteger key(int l) {
-    	BigInteger n = BigInteger.ZERO.setBit(l / 2).nextProbablePrime();
-    	return n.multiply(n.nextProbablePrime());
-    }
-
+    
     public static void main(String[] args) {
-    	IExpression[] x = Int.modPow(BigInteger.valueOf(5), var(5), BigInteger.valueOf(400));
-//    	for (IExpression y : x)
-//    		System.out.println(y);
-    	IExpression eq = eq(x, BigInteger.valueOf(10));
-    	//eq = Bin.split(eq);
-    	System.out.println(extract(15, solve(eq)));
+      div(key(10));
     }
+    
+    // x & a | !x & b = 1
+    // !x & (a ^ b) = !a
+    // x | !(a ^ b) = a
+
+    
+    // x | a = b
+    
+    // 000
+    // 001
+    // 010
+    // 011
+    // 100
+    // 101
+    // 110
+    // 111
+    
 }

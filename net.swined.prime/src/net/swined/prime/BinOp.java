@@ -36,7 +36,7 @@ public class BinOp implements IExpression {
   }
     
 	@Override
-	public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
+	public IExpression sub(int v, IExpression c, Map<IExpression, IExpression> ctx) {
 	  if (!getVars().testBit(v))
 	    return this;
 	  IExpression s = ctx.get(this);
@@ -51,5 +51,10 @@ public class BinOp implements IExpression {
 	  }
 	  return s;
 	}
+
+  @Override
+  public IExpression not() {
+    return type.invert(a, b);
+  }
 	
 }

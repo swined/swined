@@ -20,7 +20,7 @@ public enum Const implements IExpression {
 
       @Override
       public IExpression xor(IExpression a) {
-        return Bin.not(a);
+        return a.not();
       }
       
       @Override
@@ -74,7 +74,7 @@ public enum Const implements IExpression {
     };
 
     @Override
-    public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
+    public IExpression sub(int v, IExpression c, Map<IExpression, IExpression> ctx) {
         return this;
     }
 

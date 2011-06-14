@@ -14,7 +14,7 @@ public class Bin {
 				System.out.println("" + c++ + "/" + vars.bitCount());
 				Var v = new Var(i, false);
         IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
-				IExpression n = and(not(v), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
+				IExpression n = and(v.not(), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
 				e = or(p, n);
 			}
 		return e;
@@ -25,8 +25,6 @@ public class Bin {
       return ((Const) a).and(b);
     if (b instanceof Const)
       return ((Const) b).and(a);
-    if (a instanceof Not && b instanceof Not)
-      return not(or(not(a), not(b)));
     if (a instanceof Var && b instanceof Var) {
       Var va = (Var)a;
       Var vb = (Var)b;
@@ -34,7 +32,7 @@ public class Bin {
         return va.sign == vb.sign ? a : Const.ZERO;
       }
       if (va.sign && vb.sign)
-        return not(or(not(a), not(b)));
+        return or(a.not(), b.not()).not();
     }
     return new BinOp(BinOpType.AND, a, b);
   }
@@ -44,8 +42,6 @@ public class Bin {
       return ((Const) a).or(b);
     if (b instanceof Const)
       return ((Const) b).or(a);
-    if (a instanceof Not && b instanceof Not)
-      return not(and(not(a), not(b)));
     if (a instanceof Var && b instanceof Var) {
       Var va = (Var)a;
       Var vb = (Var)b;
@@ -53,19 +49,9 @@ public class Bin {
         return va.sign == vb.sign ? a : Const.ONE;
       }
       if (va.sign && vb.sign)
-        return not(and(not(a), not(b)));
+        return and(a.not(), b.not()).not();
     }
     return new BinOp(BinOpType.OR, a, b);
-  }
-  
-  public static IExpression not(IExpression a) {
-    if (a instanceof Const)
-      return ((Const) a).not();
-    if (a instanceof Not)
-      return ((Not) a).a;
-    if (a instanceof Var)
-      return ((Var) a).not;
-    return new Not(a);
   }
   
   public static IExpression xor(IExpression a, IExpression b) {
@@ -73,8 +59,6 @@ public class Bin {
       return ((Const) a).xor(b);
     if (b instanceof Const)
       return ((Const) b).xor(a);
-    if (a instanceof Not && b instanceof Not)
-      return xor(not(a), not(b));
     if (a instanceof Var && b instanceof Var) {
       Var va = (Var)a;
       Var vb = (Var)b;
@@ -82,46 +66,21 @@ public class Bin {
         return va.sign == vb.sign ? Const.ZERO : Const.ONE;
       }
       if (va.sign && vb.sign)
-        return xor(not(va), not(vb));
+        return xor(va.not(), vb.not());
     }
     return new BinOp(BinOpType.XOR, a, b);
   }
 	
   public static IExpression ge(IExpression a, IExpression b, IExpression g) {
-  //   a & !b | (a ^ !b) & g
-    if (a == Const.ZERO) // !b & g
-    	return and(not(b), g);
-    if (a == Const.ONE) // !b | g
-    	return or(not(b), g);
-    if (b == Const.ZERO) // a | g
-        return or(a, g);
-    if (b == Const.ONE) // a & g
-        return and(a, g);
-    if (g == Const.ZERO) // a & !b
-        return and(a, not(g));
-    if (g == Const.ONE) // a | !b
-        return or(a, not(b));
-    return new TerOp(TerOpType.GE, a, b, g);
+    return or(and(a, b.not()), and(xor(a, b.not()), g)); 
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {
-    if (a instanceof Const)
-      return ((Const) a).m2(b, c);
-    if (b instanceof Const)
-      return ((Const) b).m2(a, c);
-    if (c instanceof Const)
-      return ((Const) c).m2(b, a);
-    return new TerOp(TerOpType.M2, a, b, c);
+    return or(and(a, b), or(and(b, c), and(a, c)));
   }  
 
   public static IExpression xor(IExpression a, IExpression b, IExpression c) {
-	  if (a instanceof Const)
-		  return ((Const) a).xor(xor(b, c));
-	  if (b instanceof Const)
-		  return ((Const) b).xor(xor(a, c));
-	  if (c instanceof Const)
-		  return ((Const) c).xor(xor(a, b));
-	  return new TerOp(TerOpType.XOR, a, b, c);
+	  return xor(xor(a, b), c);
   }  
   
 }

@@ -7,6 +7,11 @@ public enum BinOpType {
     @Override
     public IExpression apply(IExpression a, IExpression b) {
       return Bin.and(a, b);
+    }
+
+    @Override
+    public IExpression invert(IExpression a, IExpression b) {
+      return Bin.or(a.not(), b.not());
     }    
     
   },
@@ -16,12 +21,22 @@ public enum BinOpType {
     public IExpression apply(IExpression a, IExpression b) {
       return Bin.or(a, b);
     }
+
+    @Override
+    public IExpression invert(IExpression a, IExpression b) {
+      return Bin.and(a.not(), b.not());
+    }
     
   },
   
   XOR("^") {
     @Override
     public IExpression apply(IExpression a, IExpression b) {
+      return Bin.xor(a, b);
+    }
+
+    @Override
+    public IExpression invert(IExpression a, IExpression b) {
       return Bin.xor(a, b);
     }
     
@@ -34,11 +49,10 @@ public enum BinOpType {
   }
   
   public abstract IExpression apply(IExpression a, IExpression b);
+  public abstract IExpression invert(IExpression a, IExpression b);
   
   public void checkConstraints(IExpression a, IExpression b) {
     if (a instanceof Const || b instanceof Const)
-      throw new IllegalArgumentException();
-    if (a instanceof Not && b instanceof Not)
       throw new IllegalArgumentException();
     if (a instanceof Var && b instanceof Var) {
       Var va = (Var)a;
