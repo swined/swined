@@ -85,7 +85,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        div(key(14));
+        div(key(10));
       } catch (RuntimeException e) {
         System.out.println("fail");
       }
