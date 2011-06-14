@@ -18,7 +18,8 @@ public class Main {
     	BigInteger b = a.nextProbablePrime();
     	BigInteger c = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
     	BigInteger d = a.multiply(b);
-    	assert c.equals(d);
+    	if (!c.equals(d))
+    	  throw new RuntimeException();
       return d;
     }
 
@@ -48,9 +49,8 @@ public class Main {
     }
     
     private static void div(BigInteger n) {
-      final int l = n.bitLength() / 2 + n.bitLength() % 2;
-      final IExpression[] a = var(0, l);
-      final IExpression[] b = var(l, l);
+      final IExpression[] a = var(0, n.bitLength() / 2);
+      final IExpression[] b = var(a.length, n.bitLength() - a.length);
       while (true) {
         final IExpression[] t = Int.mul(a, b);
         int ix = findNonConst(t);
@@ -58,13 +58,9 @@ public class Main {
           break;
         IExpression e = n.testBit(ix) ? t[ix] : t[ix].not();
         int v = e.getVars().getLowestSetBit();
-        System.out.println(e);
         IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
         IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
-        System.out.println(x);
-        System.out.println(y);
         IExpression s = Bin.and(x, y.not());
-        System.out.println("x" + v + " = " + s);
         sub(v, s, a, b);
       }
       System.out.println(Arrays.toString(a));
@@ -77,18 +73,22 @@ public class Main {
           break;
         sub(v, Const.ZERO, a, b);
       }
-      System.out.println(Arrays.toString(a));
-      System.out.println(Arrays.toString(b));
       BigInteger u = Int.toInt(a);
       BigInteger v = Int.toInt(b);
       System.out.println(u);
       System.out.println(v);
       System.out.println(u.multiply(v));
       System.out.println(n);
+      if (!u.multiply(v).equals(n))
+        throw new RuntimeException();
     }
     
     public static void main(String[] args) {
-      div(key(20));
+      try {
+        div(key(14));
+      } catch (RuntimeException e) {
+        System.out.println("fail");
+      }
     }
     
 }
