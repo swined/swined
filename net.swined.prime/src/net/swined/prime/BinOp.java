@@ -12,6 +12,7 @@ public class BinOp implements IExpression {
   private final IExpression a;
   private final IExpression b;
   private SoftReference<BigInteger> vars;
+  private SoftReference<IExpression> not;
 
   public BinOp(BinOpType type, IExpression a, IExpression b) {
     type.checkConstraints(a, b);
@@ -54,7 +55,15 @@ public class BinOp implements IExpression {
 
   @Override
   public IExpression not() {
-    return type.invert(a, b);
+    IExpression n = not == null ? null : not.get();
+    if (n == null) {
+      n = type.invert(a, b);
+      if (n instanceof BinOp) {
+        ((BinOp)n).not = new SoftReference<IExpression>(this);
+      }
+      not = new SoftReference<IExpression>(n);
+    }
+    return n;
   }
 	
 }
