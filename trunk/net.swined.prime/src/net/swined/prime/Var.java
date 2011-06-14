@@ -32,7 +32,7 @@ public class Var implements IExpression {
 	}
 	
 	@Override
-	public IExpression sub(int v, Const c,
+	public IExpression sub(int v, IExpression c,
 			Map<IExpression, IExpression> ctx) {
 		if (v == name) {
 			return sign ? c.not() : c;
@@ -40,5 +40,10 @@ public class Var implements IExpression {
 			return this;
 		}
 	}
+
+  @Override
+  public IExpression not() {
+    return not;
+  }
 	
 }

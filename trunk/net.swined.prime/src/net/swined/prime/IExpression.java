@@ -5,7 +5,9 @@ import java.util.Map;
 
 public interface IExpression {
 
-    IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx);
+    IExpression not();
+  
+    IExpression sub(int v, IExpression c, Map<IExpression, IExpression> ctx);
 
     BigInteger getVars();
     
