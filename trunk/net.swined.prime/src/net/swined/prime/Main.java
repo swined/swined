@@ -16,24 +16,23 @@ public class Main {
     private static BigInteger key(int l) {
     	BigInteger a = BigInteger.ZERO.setBit(l / 2).nextProbablePrime();
     	BigInteger b = a.nextProbablePrime();
-    	System.out.println(a);
-    	System.out.println(b);
     	BigInteger c = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
-    	System.out.println(c);
     	BigInteger d = a.multiply(b);
     	assert c.equals(d);
       return d;
     }
 
     private static int findNonConst(IExpression[] t) {
-      for (int i = 0; i < t.length; i++)
+      for (int i = 0; i < t.length; i++) {
+        t[i] = Bin.split(t[i]);
         if (t[i].getVars().bitCount() > 0)
           return i;
+      }
       return -1;
     }
     
     private static void div(BigInteger n) {
-      final int l = n.bitLength();// / 2 + n.bitLength() % 2;
+      final int l = n.bitLength() / 2 + n.bitLength() % 2;
       final IExpression[] a = var(0, l);
       final IExpression[] b = var(l, l);
       while (true) {
@@ -55,12 +54,12 @@ public class Main {
           b[i] = b[i].sub(v, s, new HashMap<IExpression, IExpression>());
         }
       }
-      BigInteger u = Int.toInt(a);
-      BigInteger v = Int.toInt(b);
       System.out.println(Arrays.toString(a));
       System.out.println(Arrays.toString(b));
       System.out.println(Arrays.toString(Int.mul(a, b)));
       System.out.println(Arrays.toString(Int.toExp(n)));
+      BigInteger u = Int.toInt(a);
+      BigInteger v = Int.toInt(b);
       System.out.println(u);
       System.out.println(v);
       System.out.println(u.multiply(v));
@@ -68,23 +67,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
-      div(key(10));
+      div(key(6));
     }
-    
-    // x & a | !x & b = 1
-    // !x & (a ^ b) = !a
-    // x | !(a ^ b) = a
-
-    
-    // x | a = b
-    
-    // 000
-    // 001
-    // 010
-    // 011
-    // 100
-    // 101
-    // 110
-    // 111
     
 }
