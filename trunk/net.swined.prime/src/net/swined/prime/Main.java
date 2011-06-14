@@ -67,7 +67,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
-      div(key(6));
+      div(key(10));
     }
     
 }
