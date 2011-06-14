@@ -31,6 +31,22 @@ public class Main {
       return -1;
     }
     
+    private static int getVar(IExpression[]... x) {
+      for (IExpression[] y : x)
+        for (IExpression z : y) {
+          int v = z.getVars().getLowestSetBit();
+          if (v >= 0)
+            return v;
+        }
+      return -1;
+    }
+    
+    private static void sub(int v, IExpression e, IExpression[]... x) {
+      for (IExpression[] y : x) 
+        for (int i = 0; i < y.length; i++)
+          y[i] = y[i].sub(v, e, new HashMap<IExpression, IExpression>());
+    }
+    
     private static void div(BigInteger n) {
       final int l = n.bitLength() / 2 + n.bitLength() % 2;
       final IExpression[] a = var(0, l);
@@ -49,15 +65,20 @@ public class Main {
         System.out.println(y);
         IExpression s = Bin.and(x, y.not());
         System.out.println("x" + v + " = " + s);
-        for (int i = 0; i < l; i++) {
-          a[i] = a[i].sub(v, s, new HashMap<IExpression, IExpression>());
-          b[i] = b[i].sub(v, s, new HashMap<IExpression, IExpression>());
-        }
+        sub(v, s, a, b);
       }
       System.out.println(Arrays.toString(a));
       System.out.println(Arrays.toString(b));
       System.out.println(Arrays.toString(Int.mul(a, b)));
       System.out.println(Arrays.toString(Int.toExp(n)));
+      while (true) {
+        int v = getVar(a, b);
+        if (v < 0)
+          break;
+        sub(v, Const.ZERO, a, b);
+      }
+      System.out.println(Arrays.toString(a));
+      System.out.println(Arrays.toString(b));
       BigInteger u = Int.toInt(a);
       BigInteger v = Int.toInt(b);
       System.out.println(u);
@@ -67,7 +88,7 @@ public class Main {
     }
     
     public static void main(String[] args) {
-      div(key(10));
+      div(key(20));
     }
     
 }
