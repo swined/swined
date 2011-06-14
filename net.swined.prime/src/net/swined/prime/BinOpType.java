@@ -27,19 +27,6 @@ public enum BinOpType {
       return Bin.and(a.not(), b.not());
     }
     
-  },
-  
-  XOR("^") {
-    @Override
-    public IExpression apply(IExpression a, IExpression b) {
-      return Bin.xor(a, b);
-    }
-
-    @Override
-    public IExpression invert(IExpression a, IExpression b) {
-      return Bin.xor(a, b);
-    }
-    
   };
   
   public final String sign;
@@ -58,8 +45,6 @@ public enum BinOpType {
       Var va = (Var)a;
       Var vb = (Var)b;
       if (va.name == vb.name)
-        throw new IllegalArgumentException();
-      if (va.sign && vb.sign)
         throw new IllegalArgumentException();
     }
   }
