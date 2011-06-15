@@ -2,6 +2,9 @@ package net.swined.prime;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Bin {
 
@@ -45,6 +48,27 @@ public class Bin {
       }
     }
     return new BinOp(BinOpType.OR, a, b);
+  }
+
+  public static Set<Map<Integer, Const>> solve(IExpression e) {
+    Set<Map<Integer, Const>> r = new HashSet<Map<Integer, Const>>();
+    if (e instanceof Const) {
+      if (e == Const.ONE)
+        r.add(new HashMap<Integer, Const>());
+      return r;
+    }
+    int v = e.getVars().getLowestSetBit();
+    
+    for (Const c : Const.values()) {
+      Set<Map<Integer, Const>> s = solve(e.sub(v, c, new HashMap<IExpression, IExpression>()));
+      if (s == null)
+        continue;
+      for (Map<Integer, Const> p : s) {
+        p.put(v, c);
+        r.add(p);
+      }
+    }
+    return r;
   }
   
   public static IExpression xor(IExpression a, IExpression b) {
