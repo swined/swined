@@ -25,8 +25,8 @@ public class Main {
 
     private static int findNonConst(IExpression[] t) {
       for (int i = 0; i < t.length; i++) {
-        t[i] = Bin.split(t[i]);
-        if (t[i].getVars().bitCount() > 0)
+        //t[i] = Bin.split(t[i]);
+        if (!(t[i] instanceof Const))
           return i;
       }
       return -1;
@@ -41,27 +41,48 @@ public class Main {
         }
       return -1;
     }
-    
+        
     private static void sub(int v, IExpression e, IExpression[]... x) {
       for (IExpression[] y : x) 
         for (int i = 0; i < y.length; i++)
           y[i] = y[i].sub(v, e, new HashMap<IExpression, IExpression>());
     }
     
+    private static Var v(int n) {
+      return new Var(n, false);
+    }
+
+    private static Var V(int n) {
+      return new Var(n, true);
+    }
+    
     private static void div(BigInteger n) {
       final IExpression[] a = var(0, n.bitLength() / 2);
       final IExpression[] b = var(a.length, n.bitLength() - a.length);
+      sub(0, Const.ONE, a, b);
+      sub(5, Const.ONE, a, b);
+      sub(6, v(1), a, b);
+      sub(7, V(1), a, b);
+      sub(2, v(1), a, b);
+      sub(8, V(3), a, b);
+      sub(1, Const.ZERO, a, b); // ?
+      sub(9, v(4), a, b);
+      // 010
+      // 100
+      // 001
+      // 111
       while (true) {
         final IExpression[] t = Int.mul(a, b);
         int ix = findNonConst(t);
         if (ix < 0) 
           break;
         IExpression e = n.testBit(ix) ? t[ix] : t[ix].not();
-        int v = e.getVars().getLowestSetBit();
+        System.out.println(Bin.solve(e));
+        if (true)
+          return;
+        int v = e.getVars().bitLength() - 1;
         IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
-        IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
-        IExpression s = Bin.and(x, y.not());
-        sub(v, s, a, b);
+        sub(v, x, a, b);
       }
       System.out.println(Arrays.toString(a));
       System.out.println(Arrays.toString(b));
@@ -86,9 +107,9 @@ public class Main {
     public static void main(String[] args) {
       try {
         div(key(10));
-      } catch (RuntimeException e) {
+      } catch (Exception e) {
         System.out.println("fail");
       }
     }
     
-}
+} 
