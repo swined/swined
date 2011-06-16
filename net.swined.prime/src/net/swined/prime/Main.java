@@ -61,47 +61,31 @@ public class Main {
       final IExpression[] b = var(a.length, n.bitLength() - a.length);
       sub(0, Const.ONE, a, b);
       sub(5, Const.ONE, a, b);
-      sub(6, v(1), a, b);
-      sub(7, V(1), a, b);
-      sub(2, v(1), a, b);
-      sub(8, V(3), a, b);
-      sub(1, Const.ZERO, a, b); // ?
-      sub(9, v(4), a, b);
-      // 010
-      // 100
-      // 001
-      // 111
-      while (true) {
-        final IExpression[] t = Int.mul(a, b);
-        int ix = findNonConst(t);
-        if (ix < 0) 
-          break;
-        IExpression e = n.testBit(ix) ? t[ix] : t[ix].not();
-        System.out.println(Bin.solve(e));
-        if (true)
-          return;
-        int v = e.getVars().bitLength() - 1;
-        IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
-        sub(v, x, a, b);
-      }
-      System.out.println(Arrays.toString(a));
-      System.out.println(Arrays.toString(b));
-      System.out.println(Arrays.toString(Int.mul(a, b)));
-      System.out.println(Arrays.toString(Int.toExp(n)));
-      while (true) {
-        int v = getVar(a, b);
-        if (v < 0)
-          break;
-        sub(v, Const.ZERO, a, b);
-      }
-      BigInteger u = Int.toInt(a);
-      BigInteger v = Int.toInt(b);
-      System.out.println(u);
-      System.out.println(v);
-      System.out.println(u.multiply(v));
-      System.out.println(n);
-      if (!u.multiply(v).equals(n))
-        throw new RuntimeException();
+      sub(6, V(1), a, b);
+      sub(7, V(2), a, b);
+      sub(8, Bin.xor(V(1), v(2), v(3)), a, b);
+      
+      final IExpression[] t = Int.mul(a, b);
+      // 12349
+
+      // 11011
+      // 11110
+      // 00001
+      // 10001
+      // 11101
+      // 11000
+      // 01001
+      // 01110
+      // 10010
+      // 10110
+      // 00111
+      // 00010
+      // }, {1=0, 2=1, 3=0, 4=1, 9=0}, {1=0, 2=0, 3=1, 4=0, 9=0}, {1=0, 2=1, 3=1, 4=0, 9=1}, {1=1, 2=0, 3=1, 4=0, 9=1}]
+    
+
+      
+      for (int i = 0; i < 5; i++)
+        System.out.println(Bin.solve(t[i]));
     }
     
     public static void main(String[] args) {
