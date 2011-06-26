@@ -13,8 +13,8 @@ public class Main {
     }
 
     private static BigInteger key(int l) {
-    	BigInteger a = BigInteger.ZERO.setBit(l / 2).nextProbablePrime();
-    	BigInteger b = a.nextProbablePrime();
+    	BigInteger a = BigInteger.ZERO.setBit(l / 2).nextProbablePrime().add(BigInteger.ONE);
+    	BigInteger b = a.nextProbablePrime().nextProbablePrime().nextProbablePrime();
     	BigInteger c = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
     	BigInteger d = a.multiply(b);
     	if (!c.equals(d))
@@ -69,12 +69,12 @@ public class Main {
       BigInteger na = Int.toInt(a);
       BigInteger nb = Int.toInt(b);
       BigInteger nn = na.multiply(nb);
-      System.out.println(na + " * " + nb + " = " + nn + " ~ " + n);
+      System.out.println(na + " * " + nb + " = " + nn + " ~ " + n); 
     }
     
     public static void main(String[] args) {
       try {
-        div(key(25));
+        div(key(15));
       } catch (Exception e) {
         e.printStackTrace();
       }
