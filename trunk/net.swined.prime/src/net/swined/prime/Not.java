@@ -32,4 +32,9 @@ public class Not implements IExpression {
 		return e.getVar();
 	}
 
+	@Override
+	public boolean hasVar(int v) {
+		return e.hasVar(v);
+	}
+
 }

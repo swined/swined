@@ -26,4 +26,9 @@ public class Var implements IExpression {
 		return name;
 	}
 
+	@Override
+	public boolean hasVar(int v) {
+		return v == name;
+	}
+
 }

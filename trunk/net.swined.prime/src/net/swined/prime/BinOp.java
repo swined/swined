@@ -41,4 +41,9 @@ public class BinOp implements IExpression {
 		return a.getVar();
 	}
 
+	@Override
+	public boolean hasVar(int v) {
+		return a.hasVar(v) || b.hasVar(v);
+	}
+
 }
