@@ -1,6 +1,5 @@
 package net.swined.prime;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,18 +7,14 @@ import java.util.Set;
 
 public class Bin {
 
-	public static IExpression split(IExpression e) {
-		BigInteger vars = e.getVars();
-		for (int i = 0; i < vars.bitLength(); i++)
-			if (vars.testBit(i)) {
-				Var v = new Var(i, false);
-        IExpression p = and(v, e.sub(i, Const.ONE, new HashMap<IExpression, IExpression>()));
-				IExpression n = and(v.not(), e.sub(i, Const.ZERO, new HashMap<IExpression, IExpression>()));
-				e = or(p, n);
-			}
-		return e;
+	public static IExpression not(IExpression e) {
+		if (e instanceof Const)
+			return ((Const)e).not();
+		if (e instanceof Not)
+			return ((Not)e).e;
+		return new Not(e);
 	}
-
+	
   public static IExpression and(IExpression a, IExpression b) {
     if (a instanceof Const)
       return ((Const) a).and(b);
@@ -28,9 +23,8 @@ public class Bin {
     if (a instanceof Var && b instanceof Var) {
       Var va = (Var)a;
       Var vb = (Var)b;
-      if (va.name == vb.name) {
-        return va.sign == vb.sign ? a : Const.ZERO;
-      }
+      if (va.name == vb.name)
+        return a;
     }
     return new BinOp(BinOpType.AND, a, b);
   }
@@ -43,9 +37,8 @@ public class Bin {
     if (a instanceof Var && b instanceof Var) {
       Var va = (Var)a;
       Var vb = (Var)b;
-      if (va.name == vb.name) {
-        return va.sign == vb.sign ? a : Const.ONE;
-      }
+      if (va.name == vb.name)
+        return a;
     }
     return new BinOp(BinOpType.OR, a, b);
   }
@@ -57,8 +50,7 @@ public class Bin {
         r.add(new HashMap<Integer, Const>());
       return r;
     }
-    int v = e.getVars().getLowestSetBit();
-    
+    int v = e.getVar();
     for (Const c : Const.values()) {
       Set<Map<Integer, Const>> s = solve(e.sub(v, c, new HashMap<IExpression, IExpression>()));
       if (s == null)
@@ -72,11 +64,11 @@ public class Bin {
   }
   
   public static IExpression xor(IExpression a, IExpression b) {
-    return or(and(a, b.not()), and(a.not(), b));
+    return or(and(a, not(b)), and(not(a), b));
   }
 	
   public static IExpression ge(IExpression a, IExpression b, IExpression g) {
-    return or(and(a, b.not()), and(xor(a, b.not()), g)); 
+    return or(and(a, not(b)), and(xor(a, not(b)), g)); 
   }
 
   public static IExpression m2(IExpression a, IExpression b, IExpression c) {

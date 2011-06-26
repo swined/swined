@@ -67,7 +67,7 @@ public class Int {
     public static IExpression[] negate(IExpression[] a) {
     	IExpression[] r = new IExpression[a.length];
     	for (int i = 0; i < a.length; i++)
-    		r[i] = a[i].not();
+    		r[i] = Bin.not(a[i]);
     	return sum(r, Int.pad(new IExpression[] { Const.ONE }, r.length));
     }
     
@@ -137,7 +137,7 @@ public class Int {
     		IExpression[] t = new IExpression[a.bitLength()];
     		for (int j = 0; j < t.length; j++) 
     			t[j] = a.testBit(j) ? b[i] : Const.ZERO;
-    		t[0] = Bin.or(t[0], b[i].not());
+    		t[0] = Bin.or(t[0], Bin.not(b[i]));
     		r = mul(r, t);
     		a = a.multiply(a);
     	}
@@ -153,7 +153,7 @@ public class Int {
     		for (int j = 0; j < t.length; j++) 
     			t[j] = a.testBit(j) ? x[i] : Const.ZERO;
     		if (t.length > 0)
-    			t[0] = Bin.or(t[0], x[i].not());
+    			t[0] = Bin.or(t[0], Bin.not(x[i]));
     		r = mul(r, mod(t, m));
     		a = a.multiply(a).mod(m);
     	}
