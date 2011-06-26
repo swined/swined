@@ -1,7 +1,6 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Main {
@@ -58,13 +57,9 @@ public class Main {
     	  IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
     	  IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
     	  sub(v, x, a, b);
-    	  e = Bin.or(x, Bin.and(Bin.not(x), y));
-    	  
+    	  e = Bin.or(x, y);
       }
       System.out.println();
-      System.out.println(Arrays.toString(a));
-      System.out.println(Arrays.toString(b));
-      System.out.println(e);
       while (true) {
     	  int v = getVar(a, b);
     	  if (v < 0)
@@ -79,10 +74,10 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        div(key(15));
+        div(key(25));
       } catch (Exception e) {
         e.printStackTrace();
       }
     }
-    
+  
 } 
