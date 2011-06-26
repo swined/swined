@@ -4,14 +4,12 @@ import java.util.Map;
 
 public class BinOp implements IExpression {
 
-	private final int var;
 	private final BinOpType type;
 	private final IExpression a;
 	private final IExpression b;
 
 	public BinOp(BinOpType type, IExpression a, IExpression b) {
 		type.checkConstraints(a, b);
-		this.var = a.getVar();
 		this.type = type;
 		this.a = a;
 		this.b = b;
@@ -23,7 +21,7 @@ public class BinOp implements IExpression {
 	}
 
 	@Override
-	public IExpression sub(int v, IExpression c,
+	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
 		IExpression s = ctx.get(this);
 		if (s == null) {
@@ -40,7 +38,7 @@ public class BinOp implements IExpression {
 
 	@Override
 	public int getVar() {
-		return var;
+		return a.getVar();
 	}
 
 }

@@ -13,7 +13,7 @@ public class Not implements IExpression {
 	}
 	
 	@Override
-	public IExpression sub(int v, IExpression c,
+	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
 		IExpression s = ctx.get(this);
 		if (s == null) {
