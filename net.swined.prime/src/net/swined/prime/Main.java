@@ -36,7 +36,7 @@ public class Main {
     private static void sub(int v, IExpression e, IExpression[]... x) {
       for (IExpression[] y : x) 
         for (int i = 0; i < y.length; i++)
-          y[i] = y[i].sub(v, e, new HashMap<IExpression, IExpression>());
+          y[i] = Bin.sub(y[i], v, e);
     }
     
     private static IExpression eq(IExpression[] x, BigInteger n) {
@@ -51,15 +51,17 @@ public class Main {
       final IExpression[] b = var(a.length, n.bitLength() - 1);
       IExpression e = eq(Int.mul(a, b), n);
       while (true) {
-    	  System.out.println(".");
+    	  System.out.print(".");
     	  int v = e.getVar();
     	  if (v < 0)
     		  break;
     	  IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
+    	  IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
     	  sub(v, x, a, b);
-    	  e = e.sub(v, x, new HashMap<IExpression, IExpression>());
+    	  e = Bin.or(x, Bin.and(Bin.not(x), y));
     	  
       }
+      System.out.println();
       System.out.println(Arrays.toString(a));
       System.out.println(Arrays.toString(b));
       System.out.println(e);
@@ -77,7 +79,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        div(key(5));
+        div(key(12));
       } catch (Exception e) {
         e.printStackTrace();
       }

@@ -53,7 +53,7 @@ public enum Const implements IExpression {
     };
 
     @Override
-    public IExpression sub(int v, IExpression c, Map<IExpression, IExpression> ctx) {
+    public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
         return this;
     }
 

@@ -16,7 +16,7 @@ public class Var implements IExpression {
 	}
 
 	@Override
-	public IExpression sub(int v, IExpression c,
+	public IExpression sub(int v, Const c,
 			Map<IExpression, IExpression> ctx) {
 		return v == name ? c : this;
 	}

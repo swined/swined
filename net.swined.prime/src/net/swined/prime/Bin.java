@@ -78,5 +78,11 @@ public class Bin {
   public static IExpression xor(IExpression a, IExpression b, IExpression c) {
 	  return xor(xor(a, b), c);
   }  
+ 
+  public static IExpression sub(IExpression x, int v, IExpression s) {
+	  IExpression a = x.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
+	  IExpression b = x.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
+	  return or(and(s, a), and(not(s), b));
+  }
   
 }

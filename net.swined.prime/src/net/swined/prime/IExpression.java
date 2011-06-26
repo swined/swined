@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface IExpression {
 
-    IExpression sub(int v, IExpression c, Map<IExpression, IExpression> ctx);
+    IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx);
 
     int getVar();
     
