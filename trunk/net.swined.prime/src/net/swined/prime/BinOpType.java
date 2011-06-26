@@ -11,7 +11,7 @@ public enum BinOpType {
 
     @Override
     public IExpression invert(IExpression a, IExpression b) {
-      return Bin.or(a.not(), b.not());
+      return Bin.or(Bin.not(a), Bin.not(b));
     }    
     
   },
@@ -24,7 +24,7 @@ public enum BinOpType {
 
     @Override
     public IExpression invert(IExpression a, IExpression b) {
-      return Bin.and(a.not(), b.not());
+      return Bin.and(Bin.not(a), Bin.not(b));
     }
     
   };
