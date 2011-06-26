@@ -8,7 +8,7 @@ public class Main {
     private static IExpression[] var(int o, int l) {
         IExpression[] e = new IExpression[l];
         for (int i = 0; i < l; i++) 
-            e[i] = new Var(i + o, false);
+            e[i] = new Var(i + o);
         return e;
     }
 

@@ -6,7 +6,7 @@ public class Var implements IExpression {
 
 	public final int name;
 
-	public Var(int name, boolean sign) {
+	public Var(int name) {
 		this.name = name;
 	}
 
