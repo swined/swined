@@ -8,4 +8,6 @@ public interface IExpression {
 
     int getVar();
     
+    boolean hasVar(int v);
+    
 }

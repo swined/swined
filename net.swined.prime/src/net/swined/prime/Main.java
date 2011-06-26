@@ -79,7 +79,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        div(key(12));
+        div(key(15));
       } catch (Exception e) {
         e.printStackTrace();
       }

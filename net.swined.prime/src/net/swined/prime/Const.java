@@ -61,6 +61,11 @@ public enum Const implements IExpression {
     public int getVar() {
     	return -1;
     }
+
+    @Override
+    public boolean hasVar(int v) {
+    	return false;
+    }
     
     public abstract Const not();
     public abstract IExpression and(IExpression a);
