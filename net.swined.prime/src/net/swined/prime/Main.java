@@ -47,7 +47,7 @@ public class Main {
     
     private static void div(BigInteger n) {
       final IExpression[] a = var(0, n.bitLength() / 2 + 1);
-      final IExpression[] b = var(a.length, n.bitLength() / 2 + 1);
+      final IExpression[] b = var(a.length, a.length);
       IExpression e = eq(Int.mul(a, b), n);
       while (true) {
     	  System.out.print(".");
