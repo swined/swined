@@ -1,7 +1,6 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.WeakHashMap;
 
 public class Main {
 
@@ -57,6 +56,8 @@ public class Main {
     		  break;
     	  sub(v, Const.ONE, a, b);
       }
+      if (e != Const.ONE)
+    	  throw new RuntimeException(e.toString());
       BigInteger na = Int.toInt(a);
       BigInteger nb = Int.toInt(b);
       BigInteger nn = na.multiply(nb);
