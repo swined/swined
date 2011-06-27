@@ -37,4 +37,14 @@ public class Not implements IExpression {
 		return e.hasVar(v);
 	}
 
+  @Override
+  public IExpression eo(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    return Bin.not(e.ea(v, co, ca));
+  }
+
+  @Override
+  public IExpression ea(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    return Bin.not(e.eo(v, co, ca));
+  }
+
 }

@@ -67,6 +67,16 @@ public enum Const implements IExpression {
     	return false;
     }
     
+    @Override
+    public IExpression eo(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+      return this;
+    }
+
+    @Override
+    public IExpression ea(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+      return this;
+    }
+    
     public abstract Const not();
     public abstract IExpression and(IExpression a);
     public abstract IExpression or(IExpression a);

@@ -2,6 +2,7 @@ package net.swined.prime;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -50,26 +51,33 @@ public class Main {
       final IExpression[] b = var(a.length, a.length);
       IExpression e = eq(Int.mul(a, b), n);
       while (true) {
-    	  System.out.print(".");
-    	  int v = e.getVar();
-    	  if (v < 0)
-    		  break;
-    	  IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
-    	  IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
-    	  sub(v, x, a, b);
-    	  e = Bin.or(x, y);
+        System.out.print(".");
+        int v = e.getVar();
+        if (v < 0)
+          break;
+        e = e.eo(v, new HashMap<IExpression, IExpression>(), new HashMap<IExpression, IExpression>());
       }
-      System.out.println();
-      while (true) {
-    	  int v = getVar(a, b);
-    	  if (v < 0)
-    		  break;
-    	  sub(v, Const.ONE, a, b);
-      }
-      BigInteger na = Int.toInt(a);
-      BigInteger nb = Int.toInt(b);
-      BigInteger nn = na.multiply(nb);
-      System.out.println(na + " * " + nb + " = " + nn + " (" + n + ")"); 
+//      while (true) {
+//    	  System.out.print(".");
+//    	  int v = e.getVar();
+//    	  if (v < 0)
+//    		  break;
+//    	  IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
+//    	  IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
+//    	  sub(v, x, a, b);
+//    	  e = Bin.or(x, y);
+//      }
+//      System.out.println();
+//      while (true) {
+//    	  int v = getVar(a, b);
+//    	  if (v < 0)
+//    		  break;
+//    	  sub(v, Const.ONE, a, b);
+//      }
+//      BigInteger na = Int.toInt(a);
+//      BigInteger nb = Int.toInt(b);
+//      BigInteger nn = na.multiply(nb);
+//      System.out.println(na + " * " + nb + " = " + nn + " (" + n + ")"); 
     }
     
     public static void main(String[] args) {
