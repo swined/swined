@@ -1,7 +1,7 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.HashMap;
+import java.util.WeakHashMap;
 
 public class Main {
 
@@ -44,9 +44,9 @@ public class Main {
     	  int v = e.getVar();
     	  if (v < 0)
     		  break;
-    	  IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
+    	  IExpression x = e.sub(v, Const.ONE, new WeakHashMap<IExpression, IExpression>());
     	  System.out.print(",");
-    	  IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
+    	  IExpression y = e.sub(v, Const.ZERO, new WeakHashMap<IExpression, IExpression>());
     	  sub(v, x, a, b);
     	  e = Bin.or(x, y);
       }
