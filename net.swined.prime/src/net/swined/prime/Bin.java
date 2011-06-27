@@ -23,16 +23,18 @@ public class Bin {
 			if (va.name == vb.name)
 				return a;
 		}
-		if (a instanceof Var && !(b instanceof Var)) {
-			Var va = (Var) a;
-			if (b.hasVar(va.name))
-				b = b.sub(va.name, Const.ONE, new HashMap<IExpression, IExpression>());
-		}
-		if (b instanceof Var && !(a instanceof Var)) {
-			Var vb = (Var) b;
-			if (a.hasVar(vb.name))
-				a = a.sub(vb.name, Const.ONE, new HashMap<IExpression, IExpression>());
-		}
+//		if (a instanceof Var) {
+//			Var va = (Var) a;
+//			if (b.hasVar(va.name))
+//				return and(a, b.sub(va.name, Const.ONE,
+//						new HashMap<IExpression, IExpression>()));
+//		}
+//		if (b instanceof Var) {
+//			Var vb = (Var) b;
+//			if (a.hasVar(vb.name))
+//				return and(b, a.sub(vb.name, Const.ONE,
+//						new HashMap<IExpression, IExpression>()));
+//		}
 		return new And(a, b);
 	}
 
@@ -47,16 +49,18 @@ public class Bin {
 			if (va.name == vb.name)
 				return a;
 		}
-		if (a instanceof Var && !(b instanceof Var)) {
-			Var va = (Var) a;
-			if (b.hasVar(va.name))
-				b = b.sub(va.name, Const.ZERO, new HashMap<IExpression, IExpression>());
-		}
-		if (b instanceof Var && !(a instanceof Var)) {
-			Var vb = (Var) b;
-			if (a.hasVar(vb.name))
-				a = a.sub(vb.name, Const.ZERO, new HashMap<IExpression, IExpression>());
-		}
+//		if (a instanceof Var) {
+//			Var va = (Var) a;
+//			if (b.hasVar(va.name))
+//				return or(a, b.sub(va.name, Const.ZERO,
+//						new HashMap<IExpression, IExpression>()));
+//		}
+//		if (b instanceof Var) {
+//			Var vb = (Var) b;
+//			if (a.hasVar(vb.name))
+//				return or(b, a.sub(vb.name, Const.ZERO,
+//						new HashMap<IExpression, IExpression>()));
+//		}
 		return new Or(a, b);
 	}
 
