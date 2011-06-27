@@ -35,7 +35,7 @@ public class Main {
     }
     
     private static void div(BigInteger n) {
-      final IExpression[] a = var(0, n.bitLength() / 2 + 1);
+      final IExpression[] a = var(0, n.bitLength() - 1);
       final IExpression[] b = var(a.length, a.length);
       IExpression e = eq(Int.mul(a, b), n);
       while (true) {
@@ -61,7 +61,9 @@ public class Main {
       BigInteger na = Int.toInt(a);
       BigInteger nb = Int.toInt(b);
       BigInteger nn = na.multiply(nb);
-      System.out.println(na + " * " + nb + " = " + nn + " (" + n + ")"); 
+      System.out.println(na + " * " + nb + " = " + nn);
+      if (!nn.equals(n))
+    	  throw new RuntimeException("!= " + n);
     }
     
     private static final BigInteger RSA100 = new BigInteger("1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139");
