@@ -2,7 +2,6 @@ package net.swined.prime;
 
 import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 

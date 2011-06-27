@@ -57,7 +57,9 @@ public class Or implements IExpression {
 
   @Override
   public IExpression ea(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    // (f0 | g0) & (f1 | g1)
+    // f0 f1 | g0 g1 | f0 g1 | g0 f1
     throw new RuntimeException();
   }
-
+  
 }

@@ -47,6 +47,28 @@ public class And implements IExpression {
 
   @Override
   public IExpression eo(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    
+    // f0 & g0 | f1 & g1 = 
+    // (f0 | f1) & g0 & g1 | f0 & g0 & !g1 | f1 & !g0 & g1 =
+    
+    //         eo fa ga fo go
+    // 0000 00 0  0  0  0  0
+    // 0001 00 0  0  0  0  1
+    // 0010 00 0  0  0  0  1
+    // 0100 00 0  0  0  1  0
+    // 1000 00 0  0  0  1  0
+    // 0101 01 1  0  0  1  1
+    // 0110 00 0  0  0  1  1
+    // 1001 00 0  0  0  1  1
+    // 1010 10 1  0  0  1  1
+    // 0011 00 0  0  1  0  1
+    // 1011 10 1  0  1  1  1
+    // 0111 01 1  0  1  1  1
+    // 1100 00 0  1  0  1  0
+    // 1101 01 1  1  0  1  1
+    // 1110 10 1  1  0  1  1
+    // 1111 11 1  1  1  1  1
+    
     throw new RuntimeException();
   }
 
