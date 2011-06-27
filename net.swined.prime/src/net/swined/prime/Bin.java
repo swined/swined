@@ -23,7 +23,7 @@ public class Bin {
       if (va.name == vb.name)
         return a;
     }
-    return new BinOp(BinOpType.AND, a, b);
+    return new And(a, b);
   }
 
   public static IExpression or(IExpression a, IExpression b) {
@@ -37,7 +37,7 @@ public class Bin {
       if (va.name == vb.name)
         return a;
     }
-    return new BinOp(BinOpType.OR, a, b);
+    return new Or(a, b);
   }
 
   public static IExpression xor(IExpression a, IExpression b) {
