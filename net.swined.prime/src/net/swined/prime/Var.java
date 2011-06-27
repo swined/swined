@@ -31,4 +31,14 @@ public class Var implements IExpression {
 		return v == name;
 	}
 
+  @Override
+  public IExpression eo(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    return v == name ? Const.ONE : this;
+  }
+
+  @Override
+  public IExpression ea(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    return v == name ? Const.ZERO : this;
+  }
+
 }

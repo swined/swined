@@ -29,12 +29,7 @@ public class And implements IExpression {
   public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
     IExpression s = ctx.get(this);
     if (s == null) {
-      IExpression sa = a.sub(v, c, ctx);
-      IExpression sb = b.sub(v, c, ctx);
-      if (sa != a || sb != b)
-        s = Bin.and(sa, sb);
-      else
-        s = this;
+      s = Bin.and(a.sub(v, c, ctx), b.sub(v, c, ctx));
       ctx.put(this, s);
     }
     return s;
@@ -48,6 +43,21 @@ public class And implements IExpression {
   @Override
   public boolean hasVar(int v) {
     return a.hasVar(v) || b.hasVar(v);
+  }
+
+  @Override
+  public IExpression eo(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    throw new RuntimeException();
+  }
+
+  @Override
+  public IExpression ea(int v, Map<IExpression, IExpression> co, Map<IExpression, IExpression> ca) {
+    IExpression s = ca.get(this);
+    if (s == null) {
+      s = Bin.and(a.ea(v, co, ca), b.ea(v, co, ca));
+      ca.put(this, s);
+    }
+    return s;
   }
 
 }
