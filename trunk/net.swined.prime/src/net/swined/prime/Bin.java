@@ -1,6 +1,6 @@
 package net.swined.prime;
 
-import java.util.HashMap;
+import java.util.WeakHashMap;
 
 public class Bin {
 
@@ -90,9 +90,9 @@ public class Bin {
 		if (!x.hasVar(v))
 			return x;
 		IExpression a = x.sub(v, Const.ONE,
-				new HashMap<IExpression, IExpression>());
+				new WeakHashMap<IExpression, IExpression>());
 		IExpression b = x.sub(v, Const.ZERO,
-				new HashMap<IExpression, IExpression>());
+				new WeakHashMap<IExpression, IExpression>());
 		return or(and(s, a), and(not(s), b));
 	}
 
