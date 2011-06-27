@@ -12,16 +12,6 @@ public class Main {
         return e;
     }
 
-    private static BigInteger key(int l) {
-    	BigInteger a = BigInteger.ZERO.setBit(l / 2).nextProbablePrime().add(BigInteger.ONE);
-    	BigInteger b = a.nextProbablePrime().nextProbablePrime().nextProbablePrime();
-    	BigInteger c = Int.toInt(Int.mul(Int.toExp(a), Int.toExp(b)));
-    	BigInteger d = a.multiply(b);
-    	if (!c.equals(d))
-    	  throw new RuntimeException();
-      return d;
-    }
-
     private static int getVar(IExpression[]... x) {
       for (IExpression[] y : x)
         for (IExpression z : y) {
@@ -49,19 +39,13 @@ public class Main {
       final IExpression[] a = var(0, n.bitLength() / 2 + 1);
       final IExpression[] b = var(a.length, a.length);
       IExpression e = eq(Int.mul(a, b), n);
-//      while (true) {
-//        System.out.print(".");
-//        int v = e.getVar();
-//        if (v < 0)
-//          break;
-//        e = e.eo(v, new HashMap<IExpression, IExpression>(), new HashMap<IExpression, IExpression>());
-//      }
       while (true) {
     	  System.out.print(".");
     	  int v = e.getVar();
     	  if (v < 0)
     		  break;
     	  IExpression x = e.sub(v, Const.ONE, new HashMap<IExpression, IExpression>());
+    	  System.out.print(",");
     	  IExpression y = e.sub(v, Const.ZERO, new HashMap<IExpression, IExpression>());
     	  sub(v, x, a, b);
     	  e = Bin.or(x, y);
@@ -79,9 +63,11 @@ public class Main {
       System.out.println(na + " * " + nb + " = " + nn + " (" + n + ")"); 
     }
     
+    private static final BigInteger RSA100 = new BigInteger("1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139");
+    
     public static void main(String[] args) {
       try {
-        div(key(1024));
+        div(RSA100);
       } catch (Exception e) {
         e.printStackTrace();
       }
