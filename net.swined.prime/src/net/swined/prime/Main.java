@@ -69,7 +69,7 @@ public class Main {
       BigInteger na = Int.toInt(a);
       BigInteger nb = Int.toInt(b);
       BigInteger nn = na.multiply(nb);
-      System.out.println(na + " * " + nb + " = " + nn + " ~ " + n); 
+      System.out.println(na + " * " + nb + " = " + nn + " (" + n + ")"); 
     }
     
     public static void main(String[] args) {
