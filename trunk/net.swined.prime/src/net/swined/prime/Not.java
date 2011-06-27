@@ -17,11 +17,7 @@ public class Not implements IExpression {
 			Map<IExpression, IExpression> ctx) {
 		IExpression s = ctx.get(this);
 		if (s == null) {
-			IExpression x = e.sub(v, c, ctx);
-			if (x != e)
-				s = Bin.not(x);
-			else
-				s = this;
+			s = Bin.not(e.sub(v, c, ctx));
 			ctx.put(this, s);
 		}
 		return s;
