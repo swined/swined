@@ -86,13 +86,15 @@ public class Bin {
 		return xor(xor(a, b), c);
 	}
 
+	public static IExpression sub(IExpression x, int v, Const c) {
+		return x.sub(v, Const.ONE, new WeakHashMap<IExpression, IExpression>());
+	}
+	
 	public static IExpression sub(IExpression x, int v, IExpression s) {
 		if (!x.hasVar(v))
 			return x;
-		IExpression a = x.sub(v, Const.ONE,
-				new WeakHashMap<IExpression, IExpression>());
-		IExpression b = x.sub(v, Const.ZERO,
-				new WeakHashMap<IExpression, IExpression>());
+		IExpression a = sub(x, v, Const.ONE);
+		IExpression b = sub(x, v, Const.ZERO);
 		return or(and(s, a), and(not(s), b));
 	}
 

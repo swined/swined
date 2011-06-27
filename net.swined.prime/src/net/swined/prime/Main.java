@@ -44,9 +44,9 @@ public class Main {
     	  int v = e.getVar();
     	  if (v < 0)
     		  break;
-    	  IExpression x = e.sub(v, Const.ONE, new WeakHashMap<IExpression, IExpression>());
+    	  IExpression x = Bin.sub(e, v, Const.ONE);
     	  System.out.print(",");
-    	  IExpression y = e.sub(v, Const.ZERO, new WeakHashMap<IExpression, IExpression>());
+    	  IExpression y = Bin.sub(e, v, Const.ZERO);
     	  sub(v, x, a, b);
     	  e = Bin.or(x, y);
       }
