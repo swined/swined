@@ -63,7 +63,7 @@ public class Bin {
 	}
 
 	public static IExpression sub(IExpression x, int v, Const c) {
-		return x.sub(v, Const.ONE, new WeakHashMap<IExpression, IExpression>());
+		return x.sub(v, c, new WeakHashMap<IExpression, IExpression>());
 	}
 	
 	public static IExpression sub(IExpression x, int v, IExpression s) {
