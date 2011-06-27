@@ -23,6 +23,11 @@ public enum Const implements IExpression {
       }
       
       @Override
+      public IExpression xor(IExpression a) {
+    		return Bin.not(a);
+    	}
+      
+      @Override
       public String toString() {
           return "1";
       }
@@ -44,6 +49,11 @@ public enum Const implements IExpression {
       public Const not() {
         return ONE;
       }
+
+      @Override
+  	public IExpression xor(IExpression a) {
+		return a;
+	}
       
       @Override
       public String toString() {
@@ -80,5 +90,6 @@ public enum Const implements IExpression {
     public abstract Const not();
     public abstract IExpression and(IExpression a);
     public abstract IExpression or(IExpression a);
+    public abstract IExpression xor(IExpression a);
     
 }

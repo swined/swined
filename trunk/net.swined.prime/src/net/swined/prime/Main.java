@@ -81,7 +81,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        div(key(150));
+        div(key(1024));
       } catch (Exception e) {
         e.printStackTrace();
       }
