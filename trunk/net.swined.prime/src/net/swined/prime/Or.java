@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class Or implements IExpression {
 
+  private final int hash;
 	private final IExpression a;
 	private final IExpression b;
 
@@ -16,6 +17,7 @@ public class Or implements IExpression {
 			if (va.name == vb.name)
 				throw new IllegalArgumentException();
 		}
+		this.hash = a.hashCode() * b.hashCode();
 		this.a = a;
 		this.b = b;
 	}
@@ -45,4 +47,21 @@ public class Or implements IExpression {
 		return a.hasVar(v) || b.hasVar(v);
 	}
 
+  @Override
+  public int hashCode() {
+    return hash;
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (obj == this)
+      return true;
+    if (obj instanceof Or)
+      return a.equals(((Or)obj).a) && b.equals(((Or)obj).b);
+    else
+      return false;
+  }	
+	
 }

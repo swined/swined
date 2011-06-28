@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class Xor implements IExpression {
 
+  private final int hash;
 	private final IExpression a;
 	private final IExpression b;
 
@@ -16,6 +17,7 @@ public class Xor implements IExpression {
 			if (va.name == vb.name)
 				throw new IllegalArgumentException();
 		}
+		this.hash = a.hashCode() * b.hashCode();
 		this.a = a;
 		this.b = b;
 	}
@@ -45,4 +47,21 @@ public class Xor implements IExpression {
 		return a.hasVar(v) || b.hasVar(v);
 	}
 
+  @Override
+  public int hashCode() {
+    return hash;
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (obj == this)
+      return true;
+    if (obj instanceof Xor)
+      return a.equals(((Xor)obj).a) && b.equals(((Xor)obj).b);
+    else
+      return false;
+  }
+	
 }

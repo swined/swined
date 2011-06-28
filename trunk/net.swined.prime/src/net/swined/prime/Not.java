@@ -32,4 +32,21 @@ public class Not implements IExpression {
 		return e.hasVar(v);
 	}
 
+  @Override
+  public int hashCode() {
+    return e.hashCode() * e.hashCode();
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (obj == this)
+      return true;
+    if (obj instanceof Not)
+      return e.equals(((Not)obj).e);
+    else
+      return false;
+  }	
+	
 }
