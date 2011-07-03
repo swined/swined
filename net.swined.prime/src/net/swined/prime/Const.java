@@ -12,11 +12,6 @@ public enum Const implements IExpression {
 		}
 
 		@Override
-		public IExpression or(IExpression a) {
-			return ONE;
-		}
-
-		@Override
 		public Const not() {
 			return ZERO;
 		}
@@ -32,11 +27,6 @@ public enum Const implements IExpression {
 		@Override
 		public IExpression and(IExpression a) {
 			return ZERO;
-		}
-
-		@Override
-		public IExpression or(IExpression a) {
-			return a;
 		}
 
 		@Override
@@ -69,7 +59,5 @@ public enum Const implements IExpression {
 	public abstract Const not();
 
 	public abstract IExpression and(IExpression a);
-
-	public abstract IExpression or(IExpression a);
 
 }
