@@ -68,16 +68,19 @@ public class Main {
     	  throw new RuntimeException("!= " + n);
     }
 
-    private static void wtf(BigInteger n) {
+    private static void sat(BigInteger n) {
         final IExpression[] a = var(0, n.bitLength() / 2 + 1);
         final IExpression[] b = var(a.length, a.length);
         IExpression e = eq(Int.mul(a, b), n);
-        int v = e.getVar();
-        IExpression pp = Bin.sub(e, v, Const.ONE);
-        IExpression pn = Bin.sub(e, v, Const.ZERO);
-        System.out.println(v);
-        System.out.println(pp);
-        System.out.println(pn);
+        while (true) {
+      	  System.out.print(".");
+      	  int v = e.getVar();
+      	  if (v < 0)
+      		  break;
+      	  e = Bin.exclude(e, v);
+        }
+        System.out.println();
+        System.out.println(e);
       }
     
     private static final BigInteger WTF = new BigInteger("121");
@@ -86,7 +89,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        wtf(RSA100);
+        sat(WTF);
       } catch (Exception e) {
         e.printStackTrace();
       }
