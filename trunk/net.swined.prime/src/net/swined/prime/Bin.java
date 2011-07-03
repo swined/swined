@@ -9,6 +9,8 @@ public class Bin {
 			return ((Const) e).not();
 		if (e instanceof Not)
 			return ((Not) e).e;
+		if (e instanceof WTF)
+			return WTF.GET;
 		return new Not(e);
 	}
 
@@ -17,6 +19,8 @@ public class Bin {
 			return ((Const) a).and(b);
 		if (b instanceof Const)
 			return ((Const) b).and(a);
+		if (a instanceof WTF && b instanceof WTF)
+			return WTF.GET;
 		if (a instanceof Var && b instanceof Var) {
 			Var va = (Var) a;
 			Var vb = (Var) b;
@@ -31,6 +35,8 @@ public class Bin {
 			return ((Const) a).or(b);
 		if (b instanceof Const)
 			return ((Const) b).or(a);
+		if (a instanceof WTF && b instanceof WTF)
+			return WTF.GET;
 		if (a instanceof Var && b instanceof Var) {
 			Var va = (Var) a;
 			Var vb = (Var) b;

@@ -7,7 +7,7 @@ public class Not implements IExpression {
 	public final IExpression e;
 
 	public Not(IExpression e) {
-		if (e instanceof Const || e instanceof Not)
+		if (e instanceof Const || e instanceof Not || e instanceof WTF)
 			throw new IllegalArgumentException();
 		this.e = e;
 	}

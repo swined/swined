@@ -2,37 +2,36 @@ package net.swined.prime;
 
 import java.util.Map;
 
-public class Var implements IExpression {
+public class WTF implements IExpression {
 
-	public final int name;
-
-	public Var(int name) {
-		this.name = name;
+	public static final WTF GET = new WTF();
+	
+	private WTF() {
 	}
 
 	@Override
 	public String toString() {
-		return "x" + name;
+		return "wtf";
 	}
 
 	@Override
 	public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
-		return v == name ? c : this;
+		return this;
 	}
 
 	@Override
 	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
-		return v == name ? this : WTF.GET;
+		return this;
 	}
 	
 	@Override
 	public int getVar() {
-		return name;
+		return -1;
 	}
 
 	@Override
 	public boolean hasVar(int v) {
-		return v == name;
+		return false;
 	}
 
 }

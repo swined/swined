@@ -75,7 +75,7 @@ public class Main {
         IExpression e = eq(Int.mul(a, b), n);
         int v = e.getVar();
         e = e.wxsub(v, new HashMap<IExpression, IExpression>());
-        System.out.println(e);
+        //System.out.println(e);
         System.out.println();
         IExpression pp = Bin.sub(e, v, Const.ONE);
         IExpression pn = Bin.sub(e, v, Const.ZERO);
@@ -90,8 +90,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        wtf(WTF);
-        div(WTF);
+        wtf(RSA100);
       } catch (Exception e) {
         e.printStackTrace();
       }
