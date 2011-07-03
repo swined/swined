@@ -1,6 +1,7 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 
 public class Main {
 
@@ -71,27 +72,17 @@ public class Main {
     private static void wtf(BigInteger n) {
         final IExpression[] a = var(0, n.bitLength() / 2 + 1);
         final IExpression[] b = var(a.length, a.length);
-        sub(3, Const.ZERO, a, b);
-        IExpression p = null;
         IExpression e = eq(Int.mul(a, b), n);
-        while (true) {
-      	  System.out.print(".");
-      	  int v = e.getVar();
-      	  if (v < 0)
-      		  break;
-      	  p = e;
-      	  e = Bin.sub(e, v, Const.WTF);
-      	  System.out.println(e);
-        }
+        int v = e.getVar();
+        e = e.wxsub(v, new HashMap<IExpression, IExpression>());
+        System.out.println(e);
         System.out.println();
-        IExpression pp = Bin.sub(p, p.getVar(), Const.ONE);
-        IExpression pn = Bin.sub(p, p.getVar(), Const.ZERO);
-        System.out.println(p.getVar());
+        IExpression pp = Bin.sub(e, v, Const.ONE);
+        IExpression pn = Bin.sub(e, v, Const.ZERO);
+        System.out.println(v);
         System.out.println(pp);
         System.out.println(pn);
       }
-    
-    // !x3
     
     private static final BigInteger WTF = new BigInteger("121");
     private static final BigInteger RSA100 = new BigInteger("1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139");
