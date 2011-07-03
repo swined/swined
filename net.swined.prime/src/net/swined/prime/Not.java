@@ -14,12 +14,7 @@ public class Not implements IExpression {
 
 	@Override
 	public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
-		IExpression s = ctx.get(this);
-		if (s == null) {
-			s = Bin.not(e.sub(v, c, ctx));
-			ctx.put(this, s);
-		}
-		return s;
+		return Bin.not(e.sub(v, c, ctx));
 	}
 
 	@Override
