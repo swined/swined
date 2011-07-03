@@ -4,11 +4,11 @@ import java.util.Map;
 
 public class And implements IExpression {
 
-	private final Var a;
+	private final IExpression a;
 	private final IExpression b;
 
-	public And(Var a, IExpression b) {
-		if (b instanceof Const)
+	public And(IExpression a, IExpression b) {
+		if (a instanceof Const || b instanceof Const)
 			throw new IllegalArgumentException();
 		this.a = a;
 		this.b = b;
