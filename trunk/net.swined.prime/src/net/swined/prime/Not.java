@@ -7,7 +7,7 @@ public class Not implements IExpression {
 	public final IExpression e;
 
 	public Not(IExpression e) {
-		if (e instanceof Const || e instanceof Not || e instanceof WTF)
+		if (e instanceof Const || e instanceof Not)
 			throw new IllegalArgumentException();
 		this.e = e;
 	}
@@ -23,16 +23,6 @@ public class Not implements IExpression {
 	}
 
 	@Override
-	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
-		IExpression s = ctx.get(this);
-		if (s == null) {
-			s = Bin.not(e.wxsub(v, ctx));
-			ctx.put(this, s);
-		}
-		return s;
-	}
-	
-	@Override
 	public int getVar() {
 		return e.getVar();
 	}
@@ -46,5 +36,5 @@ public class Not implements IExpression {
 	public String toString() {
 		return "!" + e;
 	}
-  
+
 }

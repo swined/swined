@@ -1,7 +1,6 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 
 public class Main {
 
@@ -74,9 +73,6 @@ public class Main {
         final IExpression[] b = var(a.length, a.length);
         IExpression e = eq(Int.mul(a, b), n);
         int v = e.getVar();
-        e = e.wxsub(v, new HashMap<IExpression, IExpression>());
-        //System.out.println(e);
-        System.out.println();
         IExpression pp = Bin.sub(e, v, Const.ONE);
         IExpression pn = Bin.sub(e, v, Const.ZERO);
         System.out.println(v);

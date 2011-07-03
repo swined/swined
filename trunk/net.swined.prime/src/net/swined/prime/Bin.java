@@ -9,8 +9,6 @@ public class Bin {
 			return ((Const) e).not();
 		if (e instanceof Not)
 			return ((Not) e).e;
-		if (e instanceof WTF)
-			return WTF.GET;
 		return new Not(e);
 	}
 
@@ -19,8 +17,6 @@ public class Bin {
 			return ((Const) a).and(b);
 		if (b instanceof Const)
 			return ((Const) b).and(a);
-		if (a instanceof WTF && b instanceof WTF)
-			return WTF.GET;
 		if (a instanceof Var && b instanceof Var) {
 			Var va = (Var) a;
 			Var vb = (Var) b;
@@ -35,8 +31,6 @@ public class Bin {
 			return ((Const) a).or(b);
 		if (b instanceof Const)
 			return ((Const) b).or(a);
-		if (a instanceof WTF && b instanceof WTF)
-			return WTF.GET;
 		if (a instanceof Var && b instanceof Var) {
 			Var va = (Var) a;
 			Var vb = (Var) b;
@@ -67,13 +61,21 @@ public class Bin {
 	public static IExpression sub(IExpression x, int v, Const c) {
 		return x.sub(v, c, new WeakHashMap<IExpression, IExpression>());
 	}
-	
+
 	public static IExpression sub(IExpression x, int v, IExpression s) {
 		if (!x.hasVar(v))
 			return x;
 		IExpression a = sub(x, v, Const.ONE);
 		IExpression b = sub(x, v, Const.ZERO);
 		return or(and(s, a), and(not(s), b));
+	}
+
+	public static IExpression exclude(IExpression x, int v) {
+		if (!x.hasVar(v))
+			return x;
+		IExpression a = sub(x, v, Const.ONE);
+		IExpression b = sub(x, v, Const.ZERO);
+		return or(a, b);
 	}
 
 }

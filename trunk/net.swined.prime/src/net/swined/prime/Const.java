@@ -57,11 +57,6 @@ public enum Const implements IExpression {
 	}
 
 	@Override
-	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
-		return this;
-	}
-	
-	@Override
 	public int getVar() {
 		return -1;
 	}
