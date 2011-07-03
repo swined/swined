@@ -48,7 +48,7 @@ public class Main {
     	  IExpression x = Bin.sub(e, v, Const.ONE);
     	  System.out.print(",");
     	  IExpression y = Bin.sub(e, v, Const.ZERO);
-    	  //sub(v, x, a, b);
+    	  sub(v, x, a, b);
     	  e = Bin.or(x, y);
       }
       System.out.println();
@@ -71,7 +71,7 @@ public class Main {
     private static void wtf(BigInteger n) {
         final IExpression[] a = var(0, n.bitLength() / 2 + 1);
         final IExpression[] b = var(a.length, a.length);
-        //sub(3, Const.ZERO, a, b);
+        sub(3, Const.ZERO, a, b);
         IExpression p = null;
         IExpression e = eq(Int.mul(a, b), n);
         while (true) {
@@ -100,6 +100,7 @@ public class Main {
     public static void main(String[] args) {
       try {
         wtf(WTF);
+        div(WTF);
       } catch (Exception e) {
         e.printStackTrace();
       }
