@@ -51,7 +51,7 @@ public class Bin {
 			if (va.name == vb.name)
 				return Const.ZERO;
 		}
-		return new Xor(a, b);
+		return or(and(a, not(b)), and(not(a), b));
 	}
 
 	public static IExpression m2(IExpression a, IExpression b, IExpression c) {
