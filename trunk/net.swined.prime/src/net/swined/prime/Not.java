@@ -23,6 +23,16 @@ public class Not implements IExpression {
 	}
 
 	@Override
+	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
+		IExpression s = ctx.get(this);
+		if (s == null) {
+			s = Bin.not(e.wxsub(v, ctx));
+			ctx.put(this, s);
+		}
+		return s;
+	}
+	
+	@Override
 	public int getVar() {
 		return e.getVar();
 	}

@@ -21,6 +21,11 @@ public class Var implements IExpression {
 	}
 
 	@Override
+	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
+		return v == name ? this : Const.WTF;
+	}
+	
+	@Override
 	public int getVar() {
 		return name;
 	}

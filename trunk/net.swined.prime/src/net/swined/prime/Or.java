@@ -36,6 +36,16 @@ public class Or implements IExpression {
 	}
 
 	@Override
+	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
+		IExpression s = ctx.get(this);
+		if (s == null) {
+			s = Bin.or(a.wxsub(v, ctx), b.wxsub(v, ctx));
+			ctx.put(this, s);
+		}
+		return s;
+	}
+	
+	@Override
 	public int getVar() {
 		return a.getVar();
 	}
