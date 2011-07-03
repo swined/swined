@@ -10,8 +10,6 @@ public class And implements IExpression {
 	public And(IExpression a, IExpression b) {
 		if (a instanceof Const || b instanceof Const)
 			throw new IllegalArgumentException();
-		if (a instanceof WTF && b instanceof WTF)
-			throw new IllegalArgumentException();
 		if (a instanceof Var && b instanceof Var) {
 			Var va = (Var) a;
 			Var vb = (Var) b;
@@ -37,16 +35,6 @@ public class And implements IExpression {
 		return s;
 	}
 
-	@Override
-	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
-		IExpression s = ctx.get(this);
-		if (s == null) {
-			s = Bin.and(a.wxsub(v, ctx), b.wxsub(v, ctx));
-			ctx.put(this, s);
-		}
-		return s;
-	}
-	
 	@Override
 	public int getVar() {
 		return a.getVar();

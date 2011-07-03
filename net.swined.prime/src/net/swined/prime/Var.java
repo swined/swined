@@ -21,11 +21,6 @@ public class Var implements IExpression {
 	}
 
 	@Override
-	public IExpression wxsub(int v, Map<IExpression, IExpression> ctx) {
-		return v == name ? this : WTF.GET;
-	}
-	
-	@Override
 	public int getVar() {
 		return name;
 	}
