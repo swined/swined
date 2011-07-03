@@ -32,9 +32,9 @@ public class Not implements IExpression {
 		return e.hasVar(v);
 	}
 
-  @Override
-  public int hashCode() {
-    return e.hashCode() * e.hashCode();
-  }
+	@Override
+	public String toString() {
+		return "!" + e;
+	}
   
 }

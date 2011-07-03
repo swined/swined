@@ -48,7 +48,7 @@ public class Main {
     	  IExpression x = Bin.sub(e, v, Const.ONE);
     	  System.out.print(",");
     	  IExpression y = Bin.sub(e, v, Const.ZERO);
-    	  sub(v, x, a, b);
+    	  //sub(v, x, a, b);
     	  e = Bin.or(x, y);
       }
       System.out.println();
@@ -68,13 +68,38 @@ public class Main {
     	  throw new RuntimeException("!= " + n);
     }
 
+    private static void wtf(BigInteger n) {
+        final IExpression[] a = var(0, n.bitLength() / 2 + 1);
+        final IExpression[] b = var(a.length, a.length);
+        //sub(3, Const.ZERO, a, b);
+        IExpression p = null;
+        IExpression e = eq(Int.mul(a, b), n);
+        while (true) {
+      	  System.out.print(".");
+      	  int v = e.getVar();
+      	  if (v < 0)
+      		  break;
+      	  p = e;
+      	  e = Bin.sub(e, v, Const.WTF);
+      	  System.out.println(e);
+        }
+        System.out.println();
+        IExpression pp = Bin.sub(p, p.getVar(), Const.ONE);
+        IExpression pn = Bin.sub(p, p.getVar(), Const.ZERO);
+        System.out.println(p.getVar());
+        System.out.println(pp);
+        System.out.println(pn);
+      }
+    
+    // !x3
+    
     private static final BigInteger WTF = new BigInteger("121");
     private static final BigInteger RSA100 = new BigInteger("1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139");
     private static final BigInteger RSA120 = new BigInteger("227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479");
     
     public static void main(String[] args) {
       try {
-        div(WTF);
+        wtf(WTF);
       } catch (Exception e) {
         e.printStackTrace();
       }
