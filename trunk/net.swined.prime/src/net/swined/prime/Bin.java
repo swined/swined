@@ -41,10 +41,6 @@ public class Bin {
 	}
 
 	public static IExpression xor(IExpression a, IExpression b) {
-		if (a instanceof Const)
-			return ((Const) a).xor(b);
-		if (b instanceof Const)
-			return ((Const) b).xor(a);
 		if (a instanceof Var && b instanceof Var) {
 			Var va = (Var) a;
 			Var vb = (Var) b;

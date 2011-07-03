@@ -4,7 +4,6 @@ import java.util.Map;
 
 public class And implements IExpression {
 
-  private final int hash;
 	private final IExpression a;
 	private final IExpression b;
 
@@ -17,7 +16,6 @@ public class And implements IExpression {
 			if (va.name == vb.name)
 				throw new IllegalArgumentException();
 		}
-		this.hash = a.hashCode() * b.hashCode();
 		this.a = a;
 		this.b = b;
 	}
@@ -47,9 +45,4 @@ public class And implements IExpression {
 		return a.hasVar(v) || b.hasVar(v);
 	}
 
-  @Override
-  public int hashCode() {
-    return hash;
-  }
-	
 }

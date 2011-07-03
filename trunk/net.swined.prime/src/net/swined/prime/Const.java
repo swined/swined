@@ -4,6 +4,29 @@ import java.util.Map;
 
 public enum Const implements IExpression {
 
+	WTF {
+
+		@Override
+		public IExpression and(IExpression a) {
+			return a;
+		}
+
+		@Override
+		public IExpression or(IExpression a) {
+			return a;
+		}
+
+		@Override
+		public Const not() {
+			return WTF;
+		}
+
+		@Override
+		public String toString() {
+			return "wtf";
+		}
+
+	},
 	ONE {
 
 		@Override
@@ -19,11 +42,6 @@ public enum Const implements IExpression {
 		@Override
 		public Const not() {
 			return ZERO;
-		}
-
-		@Override
-		public IExpression xor(IExpression a) {
-			return Bin.not(a);
 		}
 
 		@Override
@@ -47,11 +65,6 @@ public enum Const implements IExpression {
 		@Override
 		public Const not() {
 			return ONE;
-		}
-
-		@Override
-		public IExpression xor(IExpression a) {
-			return a;
 		}
 
 		@Override
@@ -81,7 +94,5 @@ public enum Const implements IExpression {
 	public abstract IExpression and(IExpression a);
 
 	public abstract IExpression or(IExpression a);
-
-	public abstract IExpression xor(IExpression a);
 
 }
