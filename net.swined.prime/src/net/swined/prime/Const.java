@@ -4,29 +4,6 @@ import java.util.Map;
 
 public enum Const implements IExpression {
 
-	WTF {
-
-		@Override
-		public IExpression and(IExpression a) {
-			return a;
-		}
-
-		@Override
-		public IExpression or(IExpression a) {
-			return a;
-		}
-
-		@Override
-		public Const not() {
-			return WTF;
-		}
-
-		@Override
-		public String toString() {
-			return "wtf";
-		}
-
-	},
 	ONE {
 
 		@Override
