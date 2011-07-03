@@ -17,13 +17,11 @@ public class Bin {
 			return ((Const) a).and(b);
 		if (b instanceof Const)
 			return ((Const) b).and(a);
-		if (a instanceof Var && b instanceof Var) {
-			Var va = (Var) a;
-			Var vb = (Var) b;
-			if (va.name == vb.name)
-				return a;
-		}
-		return new And(a, b);
+		if (a instanceof Var)
+			return new And((Var)a, b);
+		if (b instanceof Var)
+			return new And((Var)b, a);
+		return not(or(not(a), not(b)));
 	}
 
 	public static IExpression or(IExpression a, IExpression b) {
@@ -31,22 +29,10 @@ public class Bin {
 			return ((Const) a).or(b);
 		if (b instanceof Const)
 			return ((Const) b).or(a);
-		if (a instanceof Var && b instanceof Var) {
-			Var va = (Var) a;
-			Var vb = (Var) b;
-			if (va.name == vb.name)
-				return a;
-		}
 		return new Or(a, b);
 	}
 
 	public static IExpression xor(IExpression a, IExpression b) {
-		if (a instanceof Var && b instanceof Var) {
-			Var va = (Var) a;
-			Var vb = (Var) b;
-			if (va.name == vb.name)
-				return Const.ZERO;
-		}
 		return or(and(a, not(b)), and(not(a), b));
 	}
 

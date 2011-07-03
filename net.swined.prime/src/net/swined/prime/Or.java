@@ -10,12 +10,6 @@ public class Or implements IExpression {
 	public Or(IExpression a, IExpression b) {
 		if (a instanceof Const || b instanceof Const)
 			throw new IllegalArgumentException();
-		if (a instanceof Var && b instanceof Var) {
-			Var va = (Var) a;
-			Var vb = (Var) b;
-			if (va.name == vb.name)
-				throw new IllegalArgumentException();
-		}
 		this.a = a;
 		this.b = b;
 	}

@@ -89,7 +89,7 @@ public class Main {
     
     public static void main(String[] args) {
       try {
-        sat(WTF);
+        div(RSA100);
       } catch (Exception e) {
         e.printStackTrace();
       }
