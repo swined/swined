@@ -1,5 +1,6 @@
 package net.swined.prime;
 
+import java.math.BigInteger;
 import java.util.WeakHashMap;
 
 public class Bin {
@@ -40,6 +41,10 @@ public class Bin {
 		return x.sub(v, c, new WeakHashMap<IExpression, IExpression>());
 	}
 
+	public static BigInteger complexity(IExpression x) {
+		return x.complexity(new WeakHashMap<IExpression, BigInteger>());
+	}
+	
 	public static IExpression sub(IExpression x, int v, IExpression s) {
 		if (!x.hasVar(v))
 			return x;

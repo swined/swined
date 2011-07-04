@@ -72,6 +72,7 @@ public class Main {
         final IExpression[] a = var(0, n.bitLength() - 1);
         final IExpression[] b = var(a.length, a.length);
         IExpression e = eq(Int.mul(a, b), n);
+        System.out.println(Bin.complexity(e));
         while (true) {
       	  System.out.print(".");
       	  int v = e.getVar();
