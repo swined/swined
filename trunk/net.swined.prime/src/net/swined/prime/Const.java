@@ -1,7 +1,9 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
+import java.util.BitSet;
 import java.util.Map;
+import java.util.Set;
 
 public enum Const implements IExpression {
 
@@ -42,6 +44,10 @@ public enum Const implements IExpression {
 
 	};
 
+	@Override
+	public void getVars(BitSet vars, Set<IExpression> ctx) {
+	}
+	
 	@Override
 	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
 		return BigInteger.ZERO;

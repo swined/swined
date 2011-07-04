@@ -1,7 +1,9 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
+import java.util.BitSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Not implements IExpression {
 
@@ -13,6 +15,11 @@ public class Not implements IExpression {
 		this.e = e;
 	}
 
+	@Override
+	public void getVars(BitSet vars, Set<IExpression> ctx) {
+		e.getVars(vars, ctx);
+	}
+	
 	@Override
 	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
 		return e.complexity(ctx);
