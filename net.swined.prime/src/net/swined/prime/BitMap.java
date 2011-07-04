@@ -23,7 +23,7 @@ public class BitMap implements IExpression {
 			return Const.ZERO;
 		if (map == ONE)
 			return Const.ONE;
-		return new BitMap(block, map);
+		return new BitMap(block, map & ONE);
 	}
 	
 	private static long[] varMaps() {
@@ -38,8 +38,8 @@ public class BitMap implements IExpression {
 		return BigInteger.valueOf(e).pow(p).intValue();
 	}
 	
-	public static BitMap var(int name) {
-		return new BitMap(name / BLOCK_SIZE, VARS[name % BLOCK_SIZE]);
+	public static IExpression var(int name) {
+		return create(name / BLOCK_SIZE, VARS[name % BLOCK_SIZE]);
 	}
 	
 	@Override
