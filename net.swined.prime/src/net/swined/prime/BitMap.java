@@ -5,7 +5,11 @@ import java.util.Map;
 
 public class BitMap implements IExpression {
 
-	private static final int BLOCK_SIZE = 2;
+	// 130841266 1
+	// 261682532 2
+	// 392523798 3
+	// 523348160 4
+	private static final int BLOCK_SIZE = 4;
 	private static final long ZERO = 0L;
 	private static final long ONE = pow(2, pow(2, BLOCK_SIZE)) - 1;
 	private static final long[] VARS = varMaps();

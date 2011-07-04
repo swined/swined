@@ -77,7 +77,6 @@ public class Main {
       	  int v = e.getVar();
       	  if (v < 0)
       		  break;
-      	  System.out.println(v);
       	  e = Bin.exclude(e, v);
         }
         System.out.println();
@@ -91,6 +90,7 @@ public class Main {
     public static void main(String[] args) {
       try {
     	div(WTF);
+    	sat(WTF);
       } catch (Exception e) {
         e.printStackTrace();
       }
