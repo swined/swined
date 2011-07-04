@@ -1,6 +1,7 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 public class Main {
 
@@ -32,7 +33,7 @@ public class Main {
     		throw new IllegalArgumentException();
     	IExpression r = Const.ONE;
     	for (int i = 0; i < x.length; i++)
-    		r = Bin.and(r, n.testBit(i) ? x[i] : Bin.not(x[i]));
+    		r = And.create(r, (n.testBit(i) ? x[i] : Bin.not(x[i])));
     	return r;
     }
     
@@ -41,7 +42,7 @@ public class Main {
       final IExpression[] b = var(a.length, a.length);
       IExpression e = eq(Int.mul(a, b), n);
       while (true) {
-    	  System.out.println(e);
+    	  //System.out.println(e);
     	  int v = e.getVar();
     	  if (v < 0)
     		  break;
@@ -57,8 +58,7 @@ public class Main {
     		  break;
     	  sub(v, Const.ONE, a, b);
       }
-      if (e != Const.ONE)
-    	  throw new RuntimeException(e.toString());
+      System.out.println(Arrays.toString(a));
       BigInteger na = Int.toInt(a);
       BigInteger nb = Int.toInt(b);
       BigInteger nn = na.multiply(nb);
@@ -71,8 +71,8 @@ public class Main {
         final IExpression[] a = var(0, n.bitLength() - 1);
         final IExpression[] b = var(a.length, a.length);
         IExpression e = eq(Int.mul(a, b), n);
-        System.out.println(Bin.complexity(e));
         while (true) {
+          System.out.print(".");
       	  int v = e.getVar();
       	  if (v < 0)
       		  break;
@@ -82,13 +82,13 @@ public class Main {
         System.out.println(e);
       }
     
-    private static final BigInteger WTF = new BigInteger("15");
+    private static final BigInteger WTF = new BigInteger("156");
     private static final BigInteger RSA100 = new BigInteger("1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139");
     private static final BigInteger RSA120 = new BigInteger("227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479");
     
     public static void main(String[] args) {
       try {
-    	div(WTF);
+    	sat(WTF);
       } catch (Exception e) {
         e.printStackTrace();
       }

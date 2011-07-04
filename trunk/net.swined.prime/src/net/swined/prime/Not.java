@@ -1,6 +1,5 @@
 package net.swined.prime;
 
-import java.math.BigInteger;
 import java.util.Map;
 
 public class Not implements IExpression {
@@ -13,11 +12,6 @@ public class Not implements IExpression {
 		this.e = e;
 	}
 
-	@Override
-	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
-		return e.complexity(ctx);
-	}
-	
 	@Override
 	public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
 		return Bin.not(e.sub(v, c, ctx));

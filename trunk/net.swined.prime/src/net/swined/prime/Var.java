@@ -1,6 +1,5 @@
 package net.swined.prime;
 
-import java.math.BigInteger;
 import java.util.Map;
 
 public class Var implements IExpression {
@@ -16,11 +15,6 @@ public class Var implements IExpression {
 		return "x" + name;
 	}
 
-	@Override
-	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
-		return BigInteger.ONE;
-	}
-	
 	@Override
 	public IExpression sub(int v, Const c, Map<IExpression, IExpression> ctx) {
 		return v == name ? c : this;
