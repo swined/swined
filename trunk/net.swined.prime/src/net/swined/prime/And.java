@@ -1,9 +1,7 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.BitSet;
 import java.util.Map;
-import java.util.Set;
 
 public class And implements IExpression {
 
@@ -38,11 +36,6 @@ public class And implements IExpression {
 	}
 
 	@Override
-	public boolean hasVar(int v) {
-		return a.hasVar(v) || b.hasVar(v);
-	}
-
-	@Override
 	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
 		BigInteger s = ctx.get(this);
 		if (s == null) {
@@ -50,15 +43,6 @@ public class And implements IExpression {
 			ctx.put(this, s);
 		}
 		return s;
-	}
-
-	@Override
-	public void getVars(BitSet vars, Set<IExpression> ctx) {
-		if (!ctx.contains(this)) {
-			a.getVars(vars, ctx);
-			b.getVars(vars, ctx);
-			ctx.add(this);
-		}
 	}
 
 }

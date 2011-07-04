@@ -1,8 +1,6 @@
 package net.swined.prime;
 
 import java.math.BigInteger;
-import java.util.BitSet;
-import java.util.HashSet;
 import java.util.WeakHashMap;
 
 public class Bin {
@@ -43,31 +41,17 @@ public class Bin {
 		return x.sub(v, c, new WeakHashMap<IExpression, IExpression>());
 	}
 
-	public static BigInteger getVars(IExpression x) {
-		BitSet vars = new BitSet();
-		x.getVars(vars, new HashSet<IExpression>());
-		BigInteger r = BigInteger.ZERO;
-		for (int i = 0; i < vars.length(); i++)
-			if (vars.get(i))
-				r = r.setBit(i);
-		return r;
-	}
-	
 	public static BigInteger complexity(IExpression x) {
 		return x.complexity(new WeakHashMap<IExpression, BigInteger>());
 	}
 	
 	public static IExpression sub(IExpression x, int v, IExpression s) {
-		if (!x.hasVar(v))
-			return x;
 		IExpression a = sub(x, v, Const.ONE);
 		IExpression b = sub(x, v, Const.ZERO);
 		return or(and(s, a), and(not(s), b));
 	}
 
 	public static IExpression exclude(IExpression x, int v) {
-		if (!x.hasVar(v))
-			return x;
 		IExpression a = sub(x, v, Const.ONE);
 		IExpression b = sub(x, v, Const.ZERO);
 		return or(a, b);
