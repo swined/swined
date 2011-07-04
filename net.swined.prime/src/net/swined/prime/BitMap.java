@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class BitMap implements IExpression {
 
-	private static final int BLOCK_SIZE = 6;
+	private static final int BLOCK_SIZE = 3;
 	private static final long ZERO = 0L;
-	private static final long ONE = pow(2, BLOCK_SIZE + 1) - 1;
+	private static final long ONE = pow(2, BLOCK_SIZE) - 1;
 	private static final long[] VARS = varMaps();
 	
 	public final int block;
@@ -30,7 +30,7 @@ public class BitMap implements IExpression {
 		long[] maps = new long[BLOCK_SIZE];
 		for (int i = 0; i < pow(2, BLOCK_SIZE); i++)
 			for (int o = 0; o < BLOCK_SIZE; o++)
-				maps[o] |= ((i >> o) & 1) << i;
+				maps[BLOCK_SIZE - o - 1] |= ((i >> o) & 1) << i;
 		return maps;
 	}
 
