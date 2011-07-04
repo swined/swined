@@ -50,7 +50,7 @@ public class Int {
         for (int i = 0; i < a.length; i++) {
         	IExpression[] t = zero(r.length);
         	for (int j = 0; j < b.length; j++)
-        		t[i + j] = Bin.and(a[i], b[j]);
+        		t[i + j] = And.create(a[i], b[j]);
         	r = sum(r, t);
         }
     	return r;

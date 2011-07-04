@@ -73,18 +73,4 @@ public class BitMap implements IExpression {
 		return -1;
 	}
 
-	@Override
-	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
-		BigInteger r = ctx.get(this);
-		if (r == null) {
-			int c = 0;
-			for (int i = 0; i < BLOCK_SIZE; i++)
-				if (hasVar(i))
-					c++;
-			r = BigInteger.valueOf(c);
-			ctx.put(this, r);
-		}
-		return r;
-	}
-
 }
