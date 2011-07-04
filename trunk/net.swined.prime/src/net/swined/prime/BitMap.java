@@ -68,7 +68,7 @@ public class BitMap implements IExpression {
 	@Override
 	public int getVar() {
 		for (int i = 0; i < BLOCK_SIZE; i++)
-			if (hasVar(block))
+			if (hasVar(i))
 				return i + block * BLOCK_SIZE;
 		return -1;
 	}
