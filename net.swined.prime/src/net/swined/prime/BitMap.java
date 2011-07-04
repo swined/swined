@@ -5,10 +5,6 @@ import java.util.Map;
 
 public class BitMap implements IExpression {
 
-	// 130841266 1
-	// 261682532 2
-	// 392523798 3
-	// 523348160 4
 	private static final int BLOCK_SIZE = 4;
 	private static final long ZERO = 0L;
 	private static final long ONE = pow(2, pow(2, BLOCK_SIZE)) - 1;
@@ -79,7 +75,16 @@ public class BitMap implements IExpression {
 
 	@Override
 	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
-		return BigInteger.valueOf(BLOCK_SIZE);
+		BigInteger r = ctx.get(this);
+		if (r == null) {
+			int c = 0;
+			for (int i = 0; i < BLOCK_SIZE; i++)
+				if (hasVar(i))
+					c++;
+			r = BigInteger.valueOf(c);
+			ctx.put(this, r);
+		}
+		return r;
 	}
 
 }

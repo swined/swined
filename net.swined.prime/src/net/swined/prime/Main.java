@@ -41,12 +41,11 @@ public class Main {
       final IExpression[] b = var(a.length, a.length);
       IExpression e = eq(Int.mul(a, b), n);
       while (true) {
-    	  System.out.print(".");
+    	  System.out.println(e);
     	  int v = e.getVar();
     	  if (v < 0)
     		  break;
     	  IExpression x = Bin.sub(e, v, Const.ONE);
-    	  System.out.print(",");
     	  IExpression y = Bin.sub(e, v, Const.ZERO);
     	  sub(v, x, a, b);
     	  e = Bin.or(x, y);
@@ -83,14 +82,13 @@ public class Main {
         System.out.println(e);
       }
     
-    private static final BigInteger WTF = new BigInteger("66");//67");
+    private static final BigInteger WTF = new BigInteger("15");
     private static final BigInteger RSA100 = new BigInteger("1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139");
     private static final BigInteger RSA120 = new BigInteger("227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479");
     
     public static void main(String[] args) {
       try {
     	div(WTF);
-    	sat(WTF);
       } catch (Exception e) {
         e.printStackTrace();
       }
