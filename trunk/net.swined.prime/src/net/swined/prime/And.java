@@ -1,5 +1,6 @@
 package net.swined.prime;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class And implements IExpression {
@@ -37,6 +38,16 @@ public class And implements IExpression {
 	@Override
 	public boolean hasVar(int v) {
 		return a.hasVar(v) || b.hasVar(v);
+	}
+
+	@Override
+	public BigInteger complexity(Map<IExpression, BigInteger> ctx) {
+		BigInteger s = ctx.get(this);
+		if (s == null) {
+			s = a.complexity(ctx).add(b.complexity(ctx));
+			ctx.put(this, s);
+		}
+		return s;
 	}
 
 }
