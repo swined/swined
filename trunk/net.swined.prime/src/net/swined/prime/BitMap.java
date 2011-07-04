@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class BitMap implements IExpression {
 
-	private static final int BLOCK_SIZE = 3;
+	private static final int BLOCK_SIZE = 2;
 	private static final long ZERO = 0L;
-	private static final long ONE = pow(2, BLOCK_SIZE) - 1;
+	private static final long ONE = pow(2, pow(2, BLOCK_SIZE)) - 1;
 	private static final long[] VARS = varMaps();
 	
 	public final int block;
@@ -54,23 +54,22 @@ public class BitMap implements IExpression {
 		int o = v % BLOCK_SIZE;
 		int l = pow(2, BLOCK_SIZE - o - 1);
 		switch (c) {
-		case ZERO: return create(block, ((map & VARS[o]) >> l) | (map & ~VARS[o]));
-		case ONE: return create(block, (map & VARS[o]) | ((map & ~VARS[o]) << l));
+		case ZERO: return create(block, (map & ~VARS[o]) | ((map & ~VARS[o]) << l));
+		case ONE: return create(block, (map & VARS[o]) | ((map & VARS[o]) >> l));
 		default: throw new UnsupportedOperationException();
 		}
 	}
 
-	private boolean hasVar(int name) {
-		int o = name % BLOCK_SIZE;
+	private boolean hasVar(int o) {
 		int l = pow(2, BLOCK_SIZE - o - 1);
-		return (map & VARS[o]) == ((map & ~VARS[o]) << l);
+		return ((map & VARS[o]) >> l) != (map & ~VARS[o]);
 	}
 	
 	@Override
 	public int getVar() {
 		for (int i = 0; i < BLOCK_SIZE; i++)
-			if (hasVar(i))
-				return i;
+			if (hasVar(block))
+				return i + block * BLOCK_SIZE;
 		return -1;
 	}
 
