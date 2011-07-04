@@ -6,17 +6,23 @@ import java.util.Map;
 public class BitMap implements IExpression {
 
 	private static final int BLOCK_SIZE = 6;
+	private static final long ZERO = 0L;
+	private static final long ONE = pow(2, BLOCK_SIZE + 1) - 1;
 	private static final long[] VARS = varMaps();
 	
-	private final int block;
-	private final long map;
+	public final int block;
+	public final long map;
 
 	private BitMap(int block, long map) {
 		this.block = block;
 		this.map = map;
 	}
 
-	public IExpression create(int block, long map) {
+	public static IExpression create(int block, long map) {
+		if (map == ZERO)
+			return Const.ZERO;
+		if (map == ONE)
+			return Const.ONE;
 		return new BitMap(block, map);
 	}
 	

@@ -11,6 +11,12 @@ public class And implements IExpression {
 	public And(IExpression a, IExpression b) {
 		if (a instanceof Const || b instanceof Const)
 			throw new IllegalArgumentException();
+		if (a instanceof BitMap && b instanceof BitMap) {
+			BitMap ba = (BitMap)a;
+			BitMap bb = (BitMap)b;
+			if (ba.block == bb.block)
+				throw new IllegalArgumentException();
+		}
 		this.a = a;
 		this.b = b;
 	}

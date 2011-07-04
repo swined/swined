@@ -10,6 +10,10 @@ public class Bin {
 			return ((Const) e).not();
 		if (e instanceof Not)
 			return ((Not) e).e;
+		if (e instanceof BitMap) {
+			BitMap be = (BitMap)e;
+			return BitMap.create(be.block, ~be.map);
+		}
 		return new Not(e);
 	}
 
@@ -18,6 +22,12 @@ public class Bin {
 			return ((Const) a).and(b);
 		if (b instanceof Const)
 			return ((Const) b).and(a);
+		if (a instanceof BitMap && b instanceof BitMap) {
+			BitMap ba = (BitMap)a;
+			BitMap bb = (BitMap)b;
+			if (ba.block == bb.block)
+				return BitMap.create(ba.block, ba.map & bb.map);
+		}
 		return new And(a, b);
 	}
 
