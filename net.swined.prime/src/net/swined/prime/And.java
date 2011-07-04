@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class And implements IExpression {
 
-	private final IExpression a;
-	private final IExpression b;
+	public final IExpression a;
+	public final IExpression b;
 
 	public And(IExpression a, IExpression b) {
 		if (a instanceof Const || b instanceof Const)
