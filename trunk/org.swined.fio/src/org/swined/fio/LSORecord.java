@@ -2,7 +2,7 @@ package org.swined.fio;
 
 import java.nio.ByteBuffer;
 
-public class LSO {
+public class LSORecord {
 
 	public final int LENGTH = 16;
 	
