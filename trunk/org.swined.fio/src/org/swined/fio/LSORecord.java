@@ -27,8 +27,8 @@ public class LSORecord {
 		returnsAmount = (byte)(t >> 4);
 		rangesAmount = (byte)(t & 15);
 		t = buf.get();
-		scanDirection = ((t & 128) > 0) ? true : false;
-		scanEdge = ((t & 64) > 0) ? true : false;
+		scanDirection = ((t & 128) != 0) ? true : false;
+		scanEdge = ((t & 64) != 0) ? true : false;
 		scanLineCount = (byte)(t & 127);
 		return true;
 	}
