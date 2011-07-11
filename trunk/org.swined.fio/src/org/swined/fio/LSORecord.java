@@ -29,7 +29,7 @@ public class LSORecord {
 		t = ubyte(buf.get());
 		scanDirection = ((t & 128) != 0) ? true : false;
 		scanEdge = ((t & 64) != 0) ? true : false;
-		scanLineCount =t & 127;
+		scanLineCount =t & 63;
 		return true;
 	}
 	
