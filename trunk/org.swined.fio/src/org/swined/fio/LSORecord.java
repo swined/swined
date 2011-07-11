@@ -33,5 +33,20 @@ public class LSORecord {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("gt:%d a1:%d a2:%d ad:%d re:%d ra:%d sd:%s se:%s lc:%d",
+				timeGPS,
+				scanAngle1,
+				scanAngle2,
+				scanAngleDeviation,
+				returnsAmount,
+				rangesAmount,
+				scanDirection ? "+" : "-",
+				scanEdge ? "+" : "-",
+				scanLineCount
+				);
+	}
+	
 }
 
