@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 public class LSORecord {
 
-	public final int LENGTH = 16;
+	public static final int LENGTH = 16;
 	
 	int timeGPS; // 32
 	int scanAngle1; // 32

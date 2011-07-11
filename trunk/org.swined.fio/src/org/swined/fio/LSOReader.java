@@ -18,7 +18,10 @@ public class LSOReader {
 		ByteBuffer buffer = ByteBuffer.allocate(SIZEOF_INT);
 		buffer.order(BYTE_ORDER);
 		chan.read(buffer, LSO_OFFSET_OFFSET);
-		return buffer.getInt();
+		buffer.flip();
+		int offset = buffer.getInt();
+		assert (chan.size() - offset) % LSORecord.LENGTH == 0;
+		return offset;
 	}
 	
 	private void reset() {
@@ -40,7 +43,7 @@ public class LSOReader {
 	}
 	
 	private void processRecord(LSORecord record) {
-		
+		System.out.println(record);
 	}
 	
 }
