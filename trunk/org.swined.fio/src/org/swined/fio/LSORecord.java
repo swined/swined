@@ -23,10 +23,10 @@ public class LSORecord {
 		scanAngle1 = buf.getInt();
 		scanAngle2 = buf.getInt();
 		scanAngleDeviation = buf.getShort();
-		char t = buf.getChar();
+		byte t = buf.get();
 		returnsAmount = (byte)(t >> 4);
 		rangesAmount = (byte)(t & 15);
-		t = buf.getChar();
+		t = buf.get();
 		scanDirection = ((t & 128) > 0) ? true : false;
 		scanEdge = ((t & 64) > 0) ? true : false;
 		scanLineCount = (byte)(t & 127);

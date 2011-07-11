@@ -36,6 +36,7 @@ public class LSOReader {
 			if (offset + length > chan.size())
 				length = chan.size() - offset;
 			MappedByteBuffer buffer = chan.map(MapMode.READ_ONLY, offset, length);
+			buffer.order(BYTE_ORDER);
 			while (record.read(buffer))
 				processRecord(record);
 			offset += length;
