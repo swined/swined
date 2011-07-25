@@ -15,7 +15,7 @@ public class V implements IB {
 	}
 
 	@Override
-	public boolean isFree(int n) {
+	public boolean isFree(int n, Map<IB, Boolean> ctx) {
 		return this.n != n;
 	}
 

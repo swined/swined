@@ -23,8 +23,11 @@ public class A implements IB {
 	}
 
 	@Override
-	public boolean isFree(int n) {
-		return a.isFree(n) && b.isFree(n);
+	public boolean isFree(int n, Map<IB, Boolean> ctx) {
+		Boolean r = ctx.get(this);
+		if (r == null)
+			ctx.put(this, r = a.isFree(n, ctx) && b.isFree(n, ctx));
+		return r;
 	}
 
 	@Override

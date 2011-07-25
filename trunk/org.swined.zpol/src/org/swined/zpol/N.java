@@ -1,6 +1,7 @@
 package org.swined.zpol;
 
 import java.math.BigInteger;
+import java.util.WeakHashMap;
 
 public class N {
 
@@ -13,7 +14,7 @@ public class N {
 			if (v < 0)
 				break;
 			System.out.print(".");
-			C c = e.isFree(v) ? C.ZERO : C.ONE;
+			C c = e.isFree(v, new WeakHashMap<IB, Boolean>()) ? C.ZERO : C.ONE;
 			e = B.sub(e, v, c);
 			for (int i = 0; i < a.length; i++)
 				a[i] = B.sub(a[i], v, c);
