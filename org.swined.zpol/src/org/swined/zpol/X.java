@@ -34,5 +34,10 @@ public class X implements IB {
 			ctx.put(this, r = get(a.sub(v, c, ctx), b.sub(v, c, ctx)));
 		return r;
 	}
+
+	@Override
+	public int getVar() {
+		return a == C.ONE ? b.getVar() : a.getVar();
+	}
 	
 }

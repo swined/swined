@@ -9,6 +9,17 @@ public class I {
 	private I() {
 	}
 
+	public static BigInteger toInt(IB[] a) {
+		BigInteger r = BigInteger.ZERO;
+		for (int i = 0; i < a.length; i++)
+			if (a[i] == C.ONE)
+				r = r.setBit(i);
+			else
+				if (a[i] != C.ZERO)
+					throw new IllegalArgumentException();
+		return r;
+	}
+	
 	private static Z get(Z[] a, int i) {
 		if (a == null)
 			return null;
@@ -31,6 +42,13 @@ public class I {
 		Z[] z = new Z[c];
 		for (int i = 0; i < c; i++)
 			z[i] = Z.v(i + s);
+		return z;
+	}
+
+	public static IB[] var(int s, int c) {
+		IB[] z = new IB[c];
+		for (int i = 0; i < c; i++)
+			z[i] = V.get(i + s);
 		return z;
 	}
 	
