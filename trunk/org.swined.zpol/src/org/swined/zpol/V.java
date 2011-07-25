@@ -1,5 +1,6 @@
 package org.swined.zpol;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class V implements IB {
@@ -27,6 +28,11 @@ public class V implements IB {
 	@Override
 	public int getVar() {
 		return n;
+	}
+	
+	@Override
+	public BigInteger getNonFreeVars(Map<IB, BigInteger> ctx) {
+		return BigInteger.ZERO.setBit(n);
 	}
 	
 }
