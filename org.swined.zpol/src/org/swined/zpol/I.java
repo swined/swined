@@ -18,6 +18,15 @@ public class I {
 			return Z.c(false);
 	}
 
+	private static IB get(IB[] a, int i) {
+		if (a == null)
+			return null;
+		if (i >= 0 && i < a.length)
+			return a[i];
+		else
+			return C.ZERO;
+	}
+	
 	public static Z[] vars(int s, int c) {
 		Z[] z = new Z[c];
 		for (int i = 0; i < c; i++)
@@ -42,6 +51,32 @@ public class I {
 	    }
 		return r.toArray(new Z[0]);
 	}
+
+	public static IB[] sum(IB[] a, IB[] b) {
+		List<IB> r = new ArrayList<IB>();
+	    IB f = C.ZERO;
+	    int i = 0;
+	    while (i <= a.length || i <= b.length) {
+	    	r.add(X.get(get(a, i), get(b, i)));
+	    	f = B.m2(get(a, i), get(b, i), f);
+	    	i++;
+	    }
+		return r.toArray(new IB[0]);
+	}
+
+    public static IB[] mul(IB[] a, IB[] b) {
+        IB[] r = new IB[1];
+        r[0] = C.ZERO;
+        for (int i = 0; i < a.length; i++) {
+        	IB[] t = new IB[i + b.length];
+        	for (int j = 0; j < t.length; j++)
+        		t[j] = C.ZERO;
+        	for (int j = 0; j < b.length; j++)
+        		t[i + j] = A.get(a[i], b[j]);
+        	r = sum(r, t);
+        }
+    	return r;
+    }
 	
     public static Z[] mul(Z[] a, Z[] b) {
         Z[] r = zero();
@@ -60,6 +95,13 @@ public class I {
     	Z r = Z.c(true);
     	for (int i = 0; i < z.length; i++)
     		r = r.and(z[i].xor(Z.c(!n.testBit(i))));
+    	return r;
+    }
+
+    public static IB eq(IB[] z, BigInteger n) {
+    	IB r = C.ONE;
+    	for (int i = 0; i < z.length; i++)
+    		r = A.get(r, n.testBit(i) ? z[i] : X.get(z[i], C.ONE));
     	return r;
     }
     
