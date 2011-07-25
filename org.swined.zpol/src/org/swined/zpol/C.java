@@ -8,7 +8,7 @@ public enum C implements IB {
 	ONE;
 
 	@Override
-	public boolean isFree(int n) {
+	public boolean isFree(int n, Map<IB, Boolean> ctx) {
 		return true;
 	}
 
