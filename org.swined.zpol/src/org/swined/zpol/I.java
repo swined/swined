@@ -74,9 +74,11 @@ public class I {
 		List<IB> r = new ArrayList<IB>();
 	    IB f = C.ZERO;
 	    int i = 0;
-	    while (i <= a.length || i <= b.length) {
-	    	r.add(X.get(get(a, i), get(b, i)));
-	    	f = B.m2(get(a, i), get(b, i), f);
+	    while ((i < a.length + 3) || (i < b.length + 3)) {
+	    	IB p = get(a, i);
+			IB q = get(b, i);
+			r.add(X.get(f, X.get(p, q)));
+	    	f = B.m2(p, q, f);
 	    	i++;
 	    }
 		return r.toArray(new IB[0]);
