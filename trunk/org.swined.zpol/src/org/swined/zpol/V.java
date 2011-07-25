@@ -23,5 +23,10 @@ public class V implements IB {
 	public IB sub(int v, C c, Map<IB, IB> ctx) {
 		return v == n ? c : this;
 	}
+
+	@Override
+	public int getVar() {
+		return n;
+	}
 	
 }

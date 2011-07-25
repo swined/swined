@@ -16,5 +16,10 @@ public enum C implements IB {
 	public IB sub(int v, C c, Map<IB, IB> ctx) {
 		return this;
 	}
+
+	@Override
+	public int getVar() {
+		return -1;
+	}
 	
 }
