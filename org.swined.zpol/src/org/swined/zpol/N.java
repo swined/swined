@@ -14,12 +14,19 @@ public class N {
 			if (v < 0)
 				break;
 			System.out.print(".");
-			C c = e.isFree(v, new WeakHashMap<IB, Boolean>()) ? C.ZERO : C.ONE;
-			e = B.sub(e, v, c);
-			for (int i = 0; i < a.length; i++)
-				a[i] = B.sub(a[i], v, c);
-			for (int i = 0; i < b.length; i++)
-				b[i] = B.sub(b[i], v, c);
+			BigInteger f = e.getNonFreeVars(new WeakHashMap<IB, BigInteger>());
+			if (f.equals(BigInteger.ZERO)) {
+				throw new RuntimeException();
+			} else
+				for (int j = 0; j < f.bitLength(); j++)
+					if (f.testBit(j)) {
+						C c = C.ONE;
+						e = B.sub(e, v, c);
+						for (int i = 0; i < a.length; i++)
+							a[i] = B.sub(a[i], v, c);
+						for (int i = 0; i < b.length; i++)
+							b[i] = B.sub(b[i], v, c);
+					}
 		}
 		System.out.println();
 		if (e != C.ONE)

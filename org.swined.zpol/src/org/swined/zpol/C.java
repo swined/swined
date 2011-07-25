@@ -1,5 +1,6 @@
 package org.swined.zpol;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public enum C implements IB {
@@ -20,6 +21,11 @@ public enum C implements IB {
 	@Override
 	public int getVar() {
 		return -1;
+	}
+
+	@Override
+	public BigInteger getNonFreeVars(Map<IB, BigInteger> ctx) {
+		return BigInteger.ZERO;
 	}
 	
 }

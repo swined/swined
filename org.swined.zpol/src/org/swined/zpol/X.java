@@ -1,5 +1,6 @@
 package org.swined.zpol;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class X implements IB {
@@ -41,6 +42,14 @@ public class X implements IB {
 	@Override
 	public int getVar() {
 		return a == C.ONE ? b.getVar() : a.getVar();
+	}
+
+	@Override
+	public BigInteger getNonFreeVars(Map<IB, BigInteger> ctx) {
+		BigInteger r = ctx.get(this);
+		if (r == null)
+			ctx.put(this, r = a.getNonFreeVars(ctx).and(b.getNonFreeVars(ctx)));
+		return r;
 	}
 	
 }
