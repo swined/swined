@@ -40,8 +40,6 @@ public class Main {
 				System.out.println(z.toInt());
 //			}
 				
-				// x0 & (10)
-				// 10 & 100
 		}
 	}
 	

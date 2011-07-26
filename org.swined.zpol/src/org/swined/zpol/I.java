@@ -9,17 +9,6 @@ public class I {
 	private I() {
 	}
 
-	public static BigInteger toInt(IB[] a) {
-		BigInteger r = BigInteger.ZERO;
-		for (int i = 0; i < a.length; i++)
-			if (a[i] == C.ONE)
-				r = r.setBit(i);
-			else
-				if (a[i] != C.ZERO)
-					throw new IllegalArgumentException();
-		return r;
-	}
-	
 	private static Z get(Z[] a, int i) {
 		if (a == null)
 			return null;
@@ -29,15 +18,6 @@ public class I {
 			return Z.c(false);
 	}
 
-	private static IB get(IB[] a, int i) {
-		if (a == null)
-			return null;
-		if (i >= 0 && i < a.length)
-			return a[i];
-		else
-			return C.ZERO;
-	}
-	
 	public static Z[] vars(int s, int c) {
 		Z[] z = new Z[c];
 		for (int i = 0; i < c; i++)
@@ -45,13 +25,6 @@ public class I {
 		return z;
 	}
 
-	public static IB[] var(int s, int c) {
-		IB[] z = new IB[c];
-		for (int i = 0; i < c; i++)
-			z[i] = V.get(i + s);
-		return z;
-	}
-	
 	public static Z[] zero() {
 		Z[] z = new Z[1];
 		z[0] = Z.c(false);
@@ -70,34 +43,6 @@ public class I {
 		return r.toArray(new Z[0]);
 	}
 
-	public static IB[] sum(IB[] a, IB[] b) {
-		List<IB> r = new ArrayList<IB>();
-	    IB f = C.ZERO;
-	    int i = 0;
-	    while ((i < a.length + 3) || (i < b.length + 3)) {
-	    	IB p = get(a, i);
-			IB q = get(b, i);
-			r.add(X.get(f, X.get(p, q)));
-	    	f = B.m2(p, q, f);
-	    	i++;
-	    }
-		return r.toArray(new IB[0]);
-	}
-
-    public static IB[] mul(IB[] a, IB[] b) {
-        IB[] r = new IB[1];
-        r[0] = C.ZERO;
-        for (int i = 0; i < a.length; i++) {
-        	IB[] t = new IB[i + b.length];
-        	for (int j = 0; j < t.length; j++)
-        		t[j] = C.ZERO;
-        	for (int j = 0; j < b.length; j++)
-        		t[i + j] = A.get(a[i], b[j]);
-        	r = sum(r, t);
-        }
-    	return r;
-    }
-	
     public static Z[] mul(Z[] a, Z[] b) {
         Z[] r = zero();
         for (int i = 0; i < a.length; i++) {
@@ -118,11 +63,4 @@ public class I {
     	return r;
     }
 
-    public static IB eq(IB[] z, BigInteger n) {
-    	IB r = C.ONE;
-    	for (int i = 0; i < z.length; i++)
-    		r = A.get(r, n.testBit(i) ? z[i] : X.get(z[i], C.ONE));
-    	return r;
-    }
-    
 }
