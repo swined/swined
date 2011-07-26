@@ -18,6 +18,12 @@ public class Z {
 			z.poly.add(m);
 	}
 	
+	public static Z m(BigInteger m) {
+		Z z = new Z();
+		z.poly.add(m);
+		return z;
+	}
+	
 	public static Z c(boolean value) {
 		Z z = new Z();
 		if (value)
@@ -60,27 +66,31 @@ public class Z {
 	public Z m2(Z x, Z y) {
 		return x.and(y).xor(and(x), and(y));
 	}
-	
+
 	@Override
 	public String toString() {
+		return toString("x");
+	}
+	
+	public String toString(String v) {
 		StringBuilder sb = new StringBuilder();
 		for (BigInteger n : poly) {
 			if (sb.length() > 0)
 				sb.append(" + ");
-			sb.append(toString(n));
+			sb.append(toString(n, v));
 		}
 		if (sb.length() == 0)
 			sb.append("0");
 		return sb.toString();
 	}
 	
-	private static String toString(BigInteger n) {
+	private static String toString(BigInteger n, String v) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n.bitLength(); i++)
 			if (n.testBit(i)) {
 				if (sb.length() > 0)
 					sb.append(" & ");
-				sb.append("x");
+				sb.append(v);
 				sb.append(i);
 			}
 		if (sb.length() == 0)
@@ -90,6 +100,27 @@ public class Z {
 	
 	public int complexity() {
 		return poly.size();
+	}
+	
+	public BigInteger toInt() {
+		BigInteger r = BigInteger.ZERO;
+		for (BigInteger i : poly)
+			r = r.setBit(i.intValue());
+		return r;
+	}
+	
+	public BigInteger getNonFreeVars() {
+		BigInteger r = null;
+		for (BigInteger m : poly)
+			if (r == null)
+				r = m;
+			else
+				r = r.and(m);
+		return r;
+	}
+	
+	public boolean isZero() {
+		return poly.size() == 0;
 	}
 	
 }
