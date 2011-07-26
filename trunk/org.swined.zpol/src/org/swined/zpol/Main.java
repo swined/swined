@@ -17,7 +17,7 @@ public class Main {
 //    }
     
 	public static void main(String... args) {
-		Z[] a = new Z[3];
+		Z[] a = new Z[5];
 		Z[] b = new Z[a.length];
 		for (int i = 0; i < a.length; i++) {
 			a[i] = Z.v(2 * i);
@@ -33,13 +33,12 @@ public class Main {
 					z = z.and(m[j]);
 					co = co.clearBit(j);
 				}
-//			Z cp = Z.m(co);
-//			if (!z.isZero()) {
-//				System.out.print(cp.toString("c"));
-//				System.out.print(" * ");
-				System.out.println(z.toInt());
-//			}
-				
+			Z cp = Z.m(co);
+			if (!z.isZero()) {
+				System.out.print(cp.toString("c"));
+				System.out.print(" * ");
+				System.out.println(z);
+			}
 		}
 	}
 	

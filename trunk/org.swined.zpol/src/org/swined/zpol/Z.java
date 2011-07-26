@@ -1,66 +1,43 @@
 package org.swined.zpol;
 
 import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Z {
 
-	private final Set<BigInteger> poly = new HashSet<BigInteger>();
+	private final BigInteger p;
 	
-	private Z() {
+	private Z(BigInteger p) {
+		this.p = p;
 	}
 
-	private static void push(Z z, BigInteger m) {
-		if (z.poly.contains(m))
-			z.poly.remove(m);
-		else
-			z.poly.add(m);
-	}
-	
 	public static Z m(BigInteger m) {
-		Z z = new Z();
-		z.poly.add(m);
-		return z;
+		return new Z(BigInteger.ZERO.setBit(m.intValue()));
 	}
 	
 	public static Z c(boolean value) {
-		Z z = new Z();
-		if (value)
-			z.poly.add(BigInteger.ZERO);
-		return z;
+		return new Z(value ? BigInteger.ONE : BigInteger.ZERO);
 	}
 	
 	public static Z v(int name) {
-		Z z = new Z();
-		z.poly.add(BigInteger.ZERO.setBit(name));
-		return z;
+		return new Z(BigInteger.ZERO.setBit(1 << name));
 	}
 	
 	public Z and(Z x) {
-		Z z = new Z();
-		for (BigInteger a : poly)
-			for (BigInteger b : x.poly)
-				push(z, a.or(b));
-		return z;
+		BigInteger r = BigInteger.ZERO;
+		for (int i = 0; i < p.bitLength(); i++)
+			if (p.testBit(i))
+				for (int j = 0; j < x.p.bitLength(); j++)
+					if (x.p.testBit(j))
+						r = r.flipBit(i | j);
+		return new Z(r);
 	}
 
 	public Z xor(Z x) {
-		Z z = new Z();
-		z.poly.addAll(poly);
-		for (BigInteger a : x.poly)
-			push(z, a);
-		return z;
+		return new Z(p.xor(x.p));
 	}
 	
 	public Z xor(Z x, Z y) {
-		Z z = new Z();
-		z.poly.addAll(poly);
-		for (BigInteger a : x.poly)
-			push(z, a);
-		for (BigInteger a : y.poly)
-			push(z, a);
-		return z;
+		return new Z(p.xor(x.p).xor(y.p));
 	}
 	
 	public Z m2(Z x, Z y) {
@@ -74,11 +51,12 @@ public class Z {
 	
 	public String toString(String v) {
 		StringBuilder sb = new StringBuilder();
-		for (BigInteger n : poly) {
-			if (sb.length() > 0)
-				sb.append(" + ");
-			sb.append(toString(n, v));
-		}
+		for (int i = 0; i < p.bitLength(); i++)
+			if (p.testBit(i)) {
+				if (sb.length() > 0)
+					sb.append(" + ");
+				sb.append(toString(BigInteger.valueOf(i), v));
+			}
 		if (sb.length() == 0)
 			sb.append("0");
 		return sb.toString();
@@ -98,29 +76,12 @@ public class Z {
 		return sb.toString();
 	}
 	
-	public int complexity() {
-		return poly.size();
-	}
-	
 	public BigInteger toInt() {
-		BigInteger r = BigInteger.ZERO;
-		for (BigInteger i : poly)
-			r = r.setBit(i.intValue());
-		return r;
-	}
-	
-	public BigInteger getNonFreeVars() {
-		BigInteger r = null;
-		for (BigInteger m : poly)
-			if (r == null)
-				r = m;
-			else
-				r = r.and(m);
-		return r;
+		return p;
 	}
 	
 	public boolean isZero() {
-		return poly.size() == 0;
+		return p.equals(BigInteger.ZERO);
 	}
 	
 }
