@@ -19,6 +19,10 @@ public class L implements IB {
 	}
 	
 	public static IB get(int v, IB a, IB b) {
+		a = Bin.sub(a, v, true);
+		b = Bin.sub(b, v, false);
+		if (a == Const.ZERO)
+			return b;
 		return new L(v, a, b);
 	}
 
