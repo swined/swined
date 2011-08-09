@@ -19,6 +19,14 @@ public class And implements IB {
 			return b;
 		if (b == Const.ONE)
 			return a;
+		if (a instanceof L) {
+			L l = (L)a;
+			return L.get(l.v, And.get(l.a, b), And.get(l.b, b));
+		}
+		if (b instanceof L) {
+			L l = (L)b;
+			return L.get(l.v, And.get(l.a, a), And.get(l.b, a));
+		}
 		return new And(a, b);
 	}
 

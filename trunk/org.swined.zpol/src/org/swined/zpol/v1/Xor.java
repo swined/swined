@@ -17,6 +17,8 @@ public class Xor implements IB {
 			return b;
 		if (b == Const.ZERO)
 			return a;
+		if (a == Const.ONE && b == Const.ONE)
+			return Const.ZERO;
 		return new Xor(a, b);
 	}
 
