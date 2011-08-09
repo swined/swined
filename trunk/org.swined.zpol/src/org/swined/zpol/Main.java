@@ -21,7 +21,11 @@ public class Main {
 //    }
     
 	public static void main(String... args) {
-		BigInteger n = RSA100;
+		test(WTF);
+		test(RSA100);
+	}
+
+	private static void test(BigInteger n) {
 		IB[] a = Int.vars(0, n.bitLength() - 1);
 		IB[] b = Int.vars(a.length, a.length);
 		IB[] m = Int.mul(a, b);
