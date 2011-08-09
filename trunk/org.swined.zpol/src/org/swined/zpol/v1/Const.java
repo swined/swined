@@ -21,7 +21,7 @@ public enum Const implements IB {
 	};
 
 	@Override
-	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
+	public IB sub(int v, Const c, Map<IB, IB> ctx) {
 		return this;
 	}
 	

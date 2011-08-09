@@ -21,7 +21,7 @@ public class Int {
 	public static IB[] vars(int s, int c) {
 		IB[] z = new IB[c];
 		for (int i = 0; i < c; i++)
-			z[i] = L.get(i + s);
+			z[i] = Var.get(i + s);
 		return z;
 	}
 
