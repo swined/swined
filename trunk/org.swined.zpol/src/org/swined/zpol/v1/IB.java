@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface IB {
 
-	IB sub(int v, Const c, Map<IB, IB> ctx);
+	IB sub(int v, boolean c, Map<IB, IB> ctx);
 	
 }
