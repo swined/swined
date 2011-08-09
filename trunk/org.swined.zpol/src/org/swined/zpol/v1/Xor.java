@@ -13,6 +13,10 @@ public class Xor implements IB {
 	}
 	
 	public static IB get(IB a, IB b) {
+		if (a == Const.ZERO)
+			return b;
+		if (b == Const.ZERO)
+			return a;
 		return new Xor(a, b);
 	}
 

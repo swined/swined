@@ -13,6 +13,12 @@ public class And implements IB {
 	}
 	
 	public static IB get(IB a, IB b) {
+		if (a == Const.ZERO || b == Const.ZERO)
+			return Const.ZERO;
+		if (a == Const.ONE)
+			return b;
+		if (b == Const.ONE)
+			return a;
 		return new And(a, b);
 	}
 
