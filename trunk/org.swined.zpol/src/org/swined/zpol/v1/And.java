@@ -29,4 +29,9 @@ public class And implements IB {
 			ctx.put(this, r = get(a.sub(v, c, ctx), b.sub(v, c, ctx)));
 		return r;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("(%s & %s)", a, b);
+	}
 }
