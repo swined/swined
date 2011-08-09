@@ -11,17 +11,10 @@ public enum Const implements IB {
 			return "0";
 		}
 		
-	}, ONE {
-		
-		@Override
-		public String toString() {
-			return "1";
-		}
-		
 	};
 
 	@Override
-	public IB sub(int v, Const c, Map<IB, IB> ctx) {
+	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
 		return this;
 	}
 	

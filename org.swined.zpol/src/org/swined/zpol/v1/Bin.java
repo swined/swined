@@ -8,7 +8,7 @@ public class Bin {
 		
 	}
 	
-	public static IB sub(IB x, int v, Const c) {
+	public static IB sub(IB x, int v, boolean c) {
 		return x.sub(v, c, new WeakHashMap<IB, IB>());
 	}
 	

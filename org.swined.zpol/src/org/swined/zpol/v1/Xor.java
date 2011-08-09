@@ -17,13 +17,11 @@ public class Xor implements IB {
 			return b;
 		if (b == Const.ZERO)
 			return a;
-		if (a == Const.ONE && b == Const.ONE)
-			return Const.ZERO;
 		return new Xor(a, b);
 	}
 
 	@Override
-	public IB sub(int v, Const c, Map<IB, IB> ctx) {
+	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
 		IB r = ctx.get(this);
 		if (r == null)
 			ctx.put(this, r = get(a.sub(v, c, ctx), b.sub(v, c, ctx)));

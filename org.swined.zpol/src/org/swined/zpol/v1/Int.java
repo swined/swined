@@ -57,9 +57,9 @@ public class Int {
     }
 	
     public static IB eq(IB[] z, BigInteger n) {
-    	IB r = Const.ONE;
+    	IB r = Vars.get();
     	for (int i = 0; i < z.length; i++)
-    		r = And.get(r, Xor.get(z[i], n.testBit(i) ? Const.ZERO : Const.ONE));
+    		r = And.get(r, Xor.get(z[i], n.testBit(i) ? Const.ZERO : Vars.get()));
     	return r;
     }
 

@@ -11,6 +11,10 @@ public class Vars implements IB {
 		this.vars = vars;
 	}
 
+	public static IB get() {
+		return get(BigInteger.ZERO);
+	}
+	
 	public static IB get(int v) {
 		return get(BigInteger.ZERO.setBit(v));
 	}
@@ -20,14 +24,10 @@ public class Vars implements IB {
 	}
 	
 	@Override
-	public IB sub(int v, Const c, Map<IB, IB> ctx) {
-		if (vars.testBit(v)) {
-			switch (c) {
-			case ZERO: return Const.ZERO;
-			case ONE: get(vars.clearBit(v));
-			default: throw new UnsupportedOperationException();
-			}
-		} else return this;
+	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
+		if (vars.testBit(v))
+			return c ? get(vars.clearBit(v)) : Const.ZERO;
+		else return this;
 	}
 	
 	@Override
