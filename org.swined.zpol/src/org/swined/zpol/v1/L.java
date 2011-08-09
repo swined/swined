@@ -36,4 +36,9 @@ public class L implements IB {
 		return r;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("(%s & x%s + %s)", a, v, b);
+	}
+	
 }
