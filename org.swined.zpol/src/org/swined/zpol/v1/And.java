@@ -19,19 +19,11 @@ public class And implements IB {
 			return b;
 		if (b == Const.ONE)
 			return a;
-		if (a instanceof L) {
-			L l = (L)a;
-			return L.get(l.v, And.get(l.a, b), And.get(l.b, b));
-		}
-		if (b instanceof L) {
-			L l = (L)b;
-			return L.get(l.v, And.get(l.a, a), And.get(l.b, a));
-		}
 		return new And(a, b);
 	}
 
 	@Override
-	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
+	public IB sub(int v, Const c, Map<IB, IB> ctx) {
 		IB r = ctx.get(this);
 		if (r == null)
 			ctx.put(this, r = get(a.sub(v, c, ctx), b.sub(v, c, ctx)));
