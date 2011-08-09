@@ -10,4 +10,8 @@ public class Xor implements IB {
 		this.b = b;
 	}
 	
+	public static IB get(IB a, IB b) {
+		return new Xor(a, b);
+	}
+	
 }
