@@ -21,15 +21,15 @@ public class Main {
 //    }
     
 	public static void main(String... args) {
-		BigInteger n = WTF;
+		BigInteger n = RSA100;
 		IB[] a = Int.vars(0, n.bitLength() - 1);
 		IB[] b = Int.vars(a.length, a.length);
 		IB[] m = Int.mul(a, b);
 		IB e = Int.eq(m, n);
 		System.out.println(e.getClass());
-		System.out.println(e);
+		if (n.bitLength() < 8)
+			System.out.println(e);
 	}
 	
 }
 
-// (((((x0 & x3 & (x4 + x1)) & ((x0 & x1 & x3 & x4 + (x0 & x5 + x1 & x4)) + x2 & x3)) & (((x0 & x1 & x4 + (x0 & x5 + x1 & x4)) & x2 & x3) + ((((x0 & x1 & x3 & x4 & (x5 + 1)) + x0 & x1 & x4 & x5) + x1 & x5) + x2 & x4))) & ((((((x0 & x1 & x4 + (x0 & x5 + x1 & x4)) & x2 & x3) & ((((x0 & x1 & x3 & x4 & (x5 + 1)) + x0 & x1 & x4 & x5) + x1 & x5) + x2 & x4)) + ((((x0 & x1 & x3 & (x5 + 1)) + x0 & x1 & x5) + x1 & x5) & x2 & x4)) + ((((x0 & x1 & x3 & x4 & (x5 + 1)) + x0 & x1 & x4 & x5) & x1 & x5) + x2 & x5)) + 1)) & (((((((x0 & x1 & x3 & x4 + (x0 & x5 + x1 & x4)) & x2 & x3) & ((((x0 & x1 & x3 & x4 & (x0 & x5 + x1 & x4)) + x0 & x1 & x4 & x5) + x1 & x5) + x2 & x4)) + ((((x0 & x1 & x3 & (x5 + 1)) + x0 & x1 & x5) + x1 & x5) & x2 & x4)) & (x0 & x4 & x1 & x5 + x2 & x5)) + x0 & x4 & x1 & x2 & x5) + 1))
