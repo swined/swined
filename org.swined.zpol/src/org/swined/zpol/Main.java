@@ -2,6 +2,7 @@ package org.swined.zpol;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.swined.zpol.v1.Poly;
@@ -22,12 +23,15 @@ public class Main {
 //    }
     
 	public static void main(String[] args) {
-		int c = 20;
+		int c = 2;
+		BigInteger[] b = new BigInteger[c];
+		for (int i = 0; i < c; i++)
+			b[i] = BigInteger.ZERO.setBit(i).setBit(c - i - 1);
 		List<Poly> p = new ArrayList<Poly>();
 		for (int i = 0; i < c; i++)
 			p.add(Poly.get(i, c - i - 1));
-		System.out.println(p.size());
-		System.out.println(Poly.bitCount(p).size());
+		System.out.println(Poly.bitCount(p));
+		System.out.println(Arrays.toString(Poly.bitCount1(b)));
 //		test(WTF);
 //		test(RSA100);
 	}
