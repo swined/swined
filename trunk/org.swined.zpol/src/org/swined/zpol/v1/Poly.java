@@ -69,7 +69,7 @@ public class Poly implements IB {
 			return current;
 		while (current.size() > 1) {
 			List<Poly> next = new ArrayList<Poly>();
-			while (current.size() > 2) {
+			while (current.size() > 1) {
 				Poly x = current.remove(0);
 				Poly y = current.remove(0);
 				overflow.add(Poly.and(x, y));
@@ -80,9 +80,15 @@ public class Poly implements IB {
 		}
 		overflow = bitCount(overflow);
 		overflow.add(0, current.get(0));
+		while (overflow.size() > 1 && overflow.get(overflow.size() - 1).isZero())
+			overflow.remove(overflow.size() - 1);
 		return overflow;
 	}
 
+	public boolean isZero() {
+		return poly.size() == 0;
+	}
+	
 	@Override
 	public String toString() {
 		return toString("x");

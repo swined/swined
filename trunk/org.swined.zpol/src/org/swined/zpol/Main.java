@@ -22,16 +22,17 @@ public class Main {
 //    }
     
 	public static void main(String... args) {
-		test(WTF);
-		test(RSA100);
-	}
-
-	private static void test(BigInteger n) {
-		int c = 1;
+		int c = 7;
 		List<Poly> p = new ArrayList<Poly>();
 		for (int i = 0; i < c; i++)
 			p.add(Poly.get(i, c - i - 1));
+		System.out.println(p);
 		System.out.println(Poly.bitCount(p));
+//		test(WTF);
+//		test(RSA100);
+	}
+
+//	private static void test(BigInteger n) {
 //		IB[] a = Int.vars(0, n.bitLength() - 1);
 //		IB[] b = Int.vars(a.length, a.length);
 //		IB[] m = Int.mul(a, b);
@@ -39,7 +40,7 @@ public class Main {
 //		System.out.println(e.getClass());
 //		if (n.bitLength() < 8)
 //			System.out.println(e);
-	}
+//	}
 	
 }
 
