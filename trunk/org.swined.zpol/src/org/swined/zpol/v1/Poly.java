@@ -28,6 +28,23 @@ public class Poly implements IB {
 			poly.add(m);
 	}
 	
+	public static Poly and(Poly a, Poly b) {
+		Poly r = new Poly();
+		for (BigInteger ma : a.poly)
+			for (BigInteger mb : b.poly)
+				r.push(ma.or(mb));
+		return r;
+	}
+
+	public static Poly xor(Poly a, Poly b) {
+		Poly r = new Poly();
+		for (BigInteger m : a.poly)
+			r.push(m);
+		for (BigInteger m : b.poly)
+			r.push(m);
+		return r;
+	}
+	
 	@Override
 	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
 		Poly r = (Poly)ctx.get(this);
