@@ -65,7 +65,7 @@ public class Poly implements IB {
 	private static int[] init(int l) {
 		int[] r = new int[l];
 		for (int i = 0; i < l; i++)
-			r[i] = l;
+			r[i] = i;
 		return r;
 	}
 	
@@ -79,9 +79,28 @@ public class Poly implements IB {
 			if (c >= a.length)
 				return false;
 		}
-		for (int i = 0; i <= c; i++)
+		for (int i = 0; i < c; i++)
 			a[i] = i;
 		return true;
+	}
+	
+	public static Poly[] bitCount1(BigInteger[] a) {
+		int m = a.length;
+		Poly[] r = new Poly[Integer.highestOneBit(m)];
+		for (int i = 0; i < r.length; i++) {
+			int[] ix = init(1 << i);
+			Poly p = new Poly();
+			while (true) {
+				BigInteger t = BigInteger.ZERO;
+				for (int j : ix)
+					t = t.or(a[j]);
+				p.push(t);
+				if (!inc(ix, m))
+					break;
+			}
+			r[i] = p;
+		}
+		return r;
 	}
 	
 	public static List<Poly> bitCount(List<Poly> a) {
