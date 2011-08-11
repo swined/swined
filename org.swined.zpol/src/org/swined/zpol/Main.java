@@ -1,9 +1,10 @@
 package org.swined.zpol;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.swined.zpol.v1.IB;
-import org.swined.zpol.v1.Int;
+import org.swined.zpol.v1.Poly;
 
 
 
@@ -26,13 +27,18 @@ public class Main {
 	}
 
 	private static void test(BigInteger n) {
-		IB[] a = Int.vars(0, n.bitLength() - 1);
-		IB[] b = Int.vars(a.length, a.length);
-		IB[] m = Int.mul(a, b);
-		IB e = Int.eq(m, n);
-		System.out.println(e.getClass());
-		if (n.bitLength() < 8)
-			System.out.println(e);
+		int c = 1;
+		List<Poly> p = new ArrayList<Poly>();
+		for (int i = 0; i < c; i++)
+			p.add(Poly.get(i, c - i - 1));
+		System.out.println(Poly.bitCount(p));
+//		IB[] a = Int.vars(0, n.bitLength() - 1);
+//		IB[] b = Int.vars(a.length, a.length);
+//		IB[] m = Int.mul(a, b);
+//		IB e = Int.eq(m, n);
+//		System.out.println(e.getClass());
+//		if (n.bitLength() < 8)
+//			System.out.println(e);
 	}
 	
 }
