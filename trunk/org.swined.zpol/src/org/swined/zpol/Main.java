@@ -23,7 +23,7 @@ public class Main {
 //    }
     
 	public static void main(String[] args) {
-		int c = 2;
+		int c = 7;
 		BigInteger[] b = new BigInteger[c];
 		for (int i = 0; i < c; i++)
 			b[i] = BigInteger.ZERO.setBit(i).setBit(c - i - 1);

@@ -70,30 +70,42 @@ public class Poly implements IB {
 	}
 	
 	private static boolean inc(int[] a, int m) {
-		int c = 0;
+		int c = a.length - 1;
 		while (true) {
 			a[c]++;
 			if (a[c] < m)
 				break;
-			c++;
-			if (c >= a.length)
+			c--;
+			if (c < 0)
 				return false;
 		}
-		for (int i = 0; i < c; i++)
-			a[i] = i;
+		int s = a[c];
+		if (s + a.length > m + c)
+			return false;
+		for (int i = c + 1; i < a.length; i++)
+			a[i] = s + i - c;
 		return true;
+	}
+	
+	private static int bitLength(int x) {
+		int c = 0;
+		while (x > 0) {
+			x >>= 1;
+			c++;
+		}
+		return c;
 	}
 	
 	public static Poly[] bitCount1(BigInteger[] a) {
 		int m = a.length;
-		Poly[] r = new Poly[Integer.highestOneBit(m)];
+		Poly[] r = new Poly[bitLength(m)];
 		for (int i = 0; i < r.length; i++) {
 			int[] ix = init(1 << i);
 			Poly p = new Poly();
 			while (true) {
 				BigInteger t = BigInteger.ZERO;
 				for (int j : ix)
-					t = t.or(a[j]);
+					t = t.or(a[j]); 
 				p.push(t);
 				if (!inc(ix, m))
 					break;
