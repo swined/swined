@@ -12,7 +12,7 @@ public class Poly implements IB {
 	private Poly() {
 		
 	}
-	
+
 	public static Poly get(int a, int b) {
 		BigInteger p = BigInteger.ZERO;
 		p = p.setBit(a).setBit(b);
@@ -46,7 +46,7 @@ public class Poly implements IB {
 	}
 	
 	@Override
-	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
+	public Poly sub(int v, boolean c, Map<IB, IB> ctx) {
 		Poly r = (Poly)ctx.get(this);
 		if (r == null) {
 			ctx.put(this, r = new Poly());
