@@ -32,8 +32,7 @@ public class Poly implements IB {
 	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
 		Poly r = (Poly)ctx.get(this);
 		if (r == null) {
-			r = new Poly();
-			ctx.put(this, r);
+			ctx.put(this, r = new Poly());
 			for (BigInteger m : poly)
 				if (m.testBit(v)) {
 					if (c)
