@@ -1,7 +1,10 @@
 package org.swined.zpol.v1;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,6 +61,27 @@ public class Poly implements IB {
 					r.push(m);
 		}
 		return r;
+	}
+	
+	public static List<Poly> bitCount(List<Poly> a) {
+		List<Poly> overflow = new ArrayList<Poly>();
+		List<Poly> current = new ArrayList<Poly>(a);
+		if (current.size() == 0)
+			return current;
+		while (current.size() > 1) {
+			List<Poly> next = new ArrayList<Poly>();
+			while (current.size() > 2) {
+				Poly x = current.remove(0);
+				Poly y = current.remove(0);
+				overflow.add(Poly.and(x, y));
+				next.add(Poly.xor(x, y));
+			}
+			next.addAll(current);
+			current = next;
+		}
+		overflow = bitCount(overflow);
+		overflow.add(0, current.get(0));
+		return overflow;
 	}
 	
 }
