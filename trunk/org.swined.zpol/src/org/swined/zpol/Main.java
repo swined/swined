@@ -21,13 +21,13 @@ public class Main {
 //    	return sb.toString();
 //    }
     
-	public static void main(String... args) {
-		int c = 7;
+	public static void main(String[] args) {
+		int c = 20;
 		List<Poly> p = new ArrayList<Poly>();
 		for (int i = 0; i < c; i++)
 			p.add(Poly.get(i, c - i - 1));
-		System.out.println(p);
-		System.out.println(Poly.bitCount(p));
+		System.out.println(p.size());
+		System.out.println(Poly.bitCount(p).size());
 //		test(WTF);
 //		test(RSA100);
 	}
