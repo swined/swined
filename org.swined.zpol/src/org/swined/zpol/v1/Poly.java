@@ -62,6 +62,28 @@ public class Poly implements IB {
 		return r;
 	}
 	
+	private static int[] init(int l) {
+		int[] r = new int[l];
+		for (int i = 0; i < l; i++)
+			r[i] = l;
+		return r;
+	}
+	
+	private static boolean inc(int[] a, int m) {
+		int c = 0;
+		while (true) {
+			a[c]++;
+			if (a[c] < m)
+				break;
+			c++;
+			if (c >= a.length)
+				return false;
+		}
+		for (int i = 0; i <= c; i++)
+			a[i] = i;
+		return true;
+	}
+	
 	public static List<Poly> bitCount(List<Poly> a) {
 		List<Poly> overflow = new ArrayList<Poly>();
 		List<Poly> current = new ArrayList<Poly>(a);
