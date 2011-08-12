@@ -50,10 +50,10 @@ public class Vars implements IB {
 	}
 
 	@Override
-	public Poly toPoly(int limit, Map<IB, Poly> ctx) {
+	public Poly toPoly(BigInteger mask, Map<IB, Poly> ctx) {
 		Poly r = ctx.get(this);
 		if (r == null)
-			ctx.put(this, r = Poly.get(limit, vars));
+			ctx.put(this, r = Poly.get(mask, vars));
 		return r;
 	}
 	

@@ -1,5 +1,6 @@
 package org.swined.zpol.v1;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class Xor implements IB {
@@ -34,10 +35,10 @@ public class Xor implements IB {
 	}
 
 	@Override
-	public Poly toPoly(int limit, Map<IB, Poly> ctx) {
+	public Poly toPoly(BigInteger mask, Map<IB, Poly> ctx) {
 		Poly r = ctx.get(this);
 		if (r == null)
-			ctx.put(this, r = Poly.xor(a.toPoly(limit, ctx), b.toPoly(limit, ctx)));
+			ctx.put(this, r = Poly.xor(a.toPoly(mask, ctx), b.toPoly(mask, ctx)));
 		return r;
 	}
 	
