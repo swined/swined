@@ -1,13 +1,13 @@
 package org.swined.zpol.v1;
 
 import java.math.BigInteger;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Poly {
 
 	private final int limit;
-	private final Set<BigInteger> poly = new HashSet<BigInteger>();
+	private final List<BigInteger> poly = new ArrayList<BigInteger>();
 
 	private Poly(int limit) {
 		this.limit = limit;
