@@ -22,9 +22,11 @@ public class Main {
 //    	return sb.toString();
 //    }
     
-    public static void guess(BigInteger n, int... b) {
+    public static void guess(BigInteger n, List<Integer> g, int... b) {
     	if (n.equals(BigInteger.ZERO)) {
-    		System.out.println("+");
+    		for (int i : g)
+    			System.out.print(i);
+    		System.out.println();
     		return;
     	}
     	if (b.length == 0)
@@ -32,14 +34,17 @@ public class Main {
     	int ix = b.length - 1;
     	for (int i = 0; i <= b[ix]; i++) {
     		BigInteger t = n.subtract(BigInteger.valueOf(i).shiftLeft(ix));
-    		if (t.compareTo(BigInteger.ZERO) >= 0)
-    			guess(t, Arrays.copyOf(b, ix));
+    		if (t.compareTo(BigInteger.ZERO) >= 0) {
+    			List<Integer> o = new ArrayList<Integer>(g);
+    			o.add(i);
+    			guess(t, o, Arrays.copyOf(b, ix));
+    		}
     	}
     }
     
     
 	public static void main(String[] args) {
-		guess(BigInteger.valueOf(143), 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1);
+		guess(BigInteger.valueOf(43), new ArrayList<Integer>(), 1, 2, 3, 4, 5, 4, 3, 2, 1);
 //		int c = 7;
 //		BigInteger[] b = new BigInteger[c];
 //		for (int i = 0; i < c; i++)
