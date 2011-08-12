@@ -11,6 +11,10 @@ public class Poly {
 	private Poly() {
 	}
 
+	public static Poly zero() {
+		return new Poly();
+	}
+	
 	public static Poly get(BigInteger vars) {
 		Poly z = new Poly();
 		z.poly.add(vars);

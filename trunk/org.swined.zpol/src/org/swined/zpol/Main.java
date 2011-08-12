@@ -1,9 +1,11 @@
 package org.swined.zpol;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 
 import org.swined.zpol.v1.IB;
 import org.swined.zpol.v1.Int;
+import org.swined.zpol.v1.Poly;
 
 
 
@@ -17,6 +19,7 @@ public class Main {
     	IB e1 = Int.meq(WTF), e2 = Int.meq(RSA100);
     	System.out.println(e1);
     	System.out.println(e2.getClass());
+    	System.out.println(e1.toPoly(2, new HashMap<IB, Poly>()));
     }
 	
 }

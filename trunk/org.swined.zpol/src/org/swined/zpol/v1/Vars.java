@@ -48,5 +48,14 @@ public class Vars implements IB {
 			sb.append("1");
 		return sb.toString();
 	}
+
+	@Override
+	public Poly toPoly(int limit, Map<IB, Poly> ctx) {
+		Poly r = ctx.get(this);
+		if (r == null)
+			ctx.put(this, r = Poly.get(vars).limit(limit));
+		return r;
+	}
+	
 	
 }
