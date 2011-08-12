@@ -63,4 +63,10 @@ public class Int {
     	return r;
     }
 
+    public static IB meq(BigInteger n) {
+    	IB[] a = vars(0, n.bitLength() - 1);
+    	IB[] b = vars(a.length, n.bitLength() - 1);
+    	return eq(mul(a, b), n);
+    }
+    
 }
