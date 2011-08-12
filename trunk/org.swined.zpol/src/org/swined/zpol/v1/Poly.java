@@ -2,22 +2,26 @@ package org.swined.zpol.v1;
 
 import java.math.BigInteger;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-public class Poly implements IB {
+public class Poly {
 
 	private final Set<BigInteger> poly = new HashSet<BigInteger>();
 
 	private Poly() {
-		
 	}
 
-	public static Poly get(int a, int b) {
-		BigInteger p = BigInteger.ZERO;
-		p = p.setBit(a).setBit(b);
+	public static Poly get(BigInteger vars) {
 		Poly z = new Poly();
-		z.poly.add(p);
+		z.poly.add(vars);
+		return z;
+	}
+
+	public Poly limit(int l) {
+		Poly z = new Poly();
+		for (BigInteger m : poly)
+			if (m.bitCount() <= l)
+				z.poly.add(m);
 		return z;
 	}
 	
@@ -43,25 +47,6 @@ public class Poly implements IB {
 		for (BigInteger m : b.poly)
 			r.push(m);
 		return r;
-	}
-	
-	@Override
-	public Poly sub(int v, boolean c, Map<IB, IB> ctx) {
-		Poly r = (Poly)ctx.get(this);
-		if (r == null) {
-			ctx.put(this, r = new Poly());
-			for (BigInteger m : poly)
-				if (m.testBit(v)) {
-					if (c)
-						r.push(m.clearBit(v));
-				} else
-					r.push(m);
-		}
-		return r;
-	}
-	
-	public boolean isZero() {
-		return poly.size() == 0;
 	}
 	
 	@Override
