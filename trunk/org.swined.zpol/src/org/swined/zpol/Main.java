@@ -19,7 +19,7 @@ public class Main {
     	IB e1 = Int.meq(WTF), e2 = Int.meq(RSA100);
     	System.out.println(e1);
     	System.out.println(e2.getClass());
-    	System.out.println(e1.toPoly(2, new HashMap<IB, Poly>()));
+    	System.out.println(e1.toPoly(4, new HashMap<IB, Poly>()));
     }
 	
 }

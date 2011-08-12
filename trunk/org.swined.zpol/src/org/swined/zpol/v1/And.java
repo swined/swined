@@ -37,7 +37,7 @@ public class And implements IB {
 	public Poly toPoly(int limit, Map<IB, Poly> ctx) {
 		Poly r = ctx.get(this);
 		if (r == null)
-			ctx.put(this, r = Poly.and(a.toPoly(limit, ctx), b.toPoly(limit, ctx)).limit(limit));
+			ctx.put(this, r = Poly.and(a.toPoly(limit, ctx), b.toPoly(limit, ctx)));
 		return r;
 	}
 }

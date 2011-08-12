@@ -13,7 +13,7 @@ public enum Const implements IB {
 
 		@Override
 		public Poly toPoly(int limit, Map<IB, Poly> ctx) {
-			return Poly.zero();
+			return Poly.zero(limit);
 		}
 		
 	};

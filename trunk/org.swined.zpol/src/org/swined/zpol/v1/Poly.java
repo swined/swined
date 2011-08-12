@@ -6,30 +6,26 @@ import java.util.Set;
 
 public class Poly {
 
+	private final int limit;
 	private final Set<BigInteger> poly = new HashSet<BigInteger>();
 
-	private Poly() {
+	private Poly(int limit) {
+		this.limit = limit;
 	}
 
-	public static Poly zero() {
-		return new Poly();
+	public static Poly zero(int limit) {
+		return new Poly(limit);
 	}
 	
-	public static Poly get(BigInteger vars) {
-		Poly z = new Poly();
-		z.poly.add(vars);
+	public static Poly get(int limit, BigInteger vars) {
+		Poly z = new Poly(limit);
+		z.push(vars);
 		return z;
 	}
 
-	public Poly limit(int l) {
-		Poly z = new Poly();
-		for (BigInteger m : poly)
-			if (m.bitCount() <= l)
-				z.poly.add(m);
-		return z;
-	}
-	
 	private void push(BigInteger m) {
+		if (m.bitCount() > limit)
+			return;
 		if (poly.contains(m))
 			poly.remove(m);
 		else
@@ -37,7 +33,9 @@ public class Poly {
 	}
 	
 	public static Poly and(Poly a, Poly b) {
-		Poly r = new Poly();
+		if (a.limit != b.limit)
+			throw new UnsupportedOperationException();
+		Poly r = new Poly(a.limit);
 		for (BigInteger ma : a.poly)
 			for (BigInteger mb : b.poly)
 				r.push(ma.or(mb));
@@ -45,7 +43,9 @@ public class Poly {
 	}
 
 	public static Poly xor(Poly a, Poly b) {
-		Poly r = new Poly();
+		if (a.limit != b.limit)
+			throw new UnsupportedOperationException();
+		Poly r = new Poly(a.limit);
 		for (BigInteger m : a.poly)
 			r.push(m);
 		for (BigInteger m : b.poly)
