@@ -19,7 +19,7 @@ public class Main {
     	IB e1 = Int.meq(WTF), e2 = Int.meq(RSA100);
     	System.out.println(e1.getClass());
     	System.out.println(e2.getClass());
-    	Poly p = e2.toPoly(2, new WeakHashMap<IB, Poly>());
+    	Poly p = e1.toPoly(BigInteger.valueOf(0xFFFF), new WeakHashMap<IB, Poly>());
     	System.out.println(p.getClass());
 			System.out.println(p);
     }

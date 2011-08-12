@@ -6,25 +6,25 @@ import java.util.List;
 
 public class Poly {
 
-	private final int limit;
+	private final BigInteger mask;
 	private final List<BigInteger> poly = new ArrayList<BigInteger>();
 
-	private Poly(int limit) {
-		this.limit = limit;
+	private Poly(BigInteger mask) {
+		this.mask = mask;
 	}
 
-	public static Poly zero(int limit) {
-		return new Poly(limit);
+	public static Poly zero(BigInteger mask) {
+		return new Poly(mask);
 	}
 	
-	public static Poly get(int limit, BigInteger vars) {
-		Poly z = new Poly(limit);
+	public static Poly get(BigInteger mask, BigInteger vars) {
+		Poly z = new Poly(mask);
 		z.push(vars);
 		return z;
 	}
 
 	private void push(BigInteger m) {
-		if (m.bitCount() > limit)
+		if (!m.and(mask).equals(m))
 			return;
 		if (poly.contains(m))
 			poly.remove(m);
@@ -33,9 +33,9 @@ public class Poly {
 	}
 	
 	public static Poly and(Poly a, Poly b) {
-		if (a.limit != b.limit)
+		if (!a.mask.equals(b.mask))
 			throw new UnsupportedOperationException();
-		Poly r = new Poly(a.limit);
+		Poly r = new Poly(a.mask);
 		for (BigInteger ma : a.poly)
 			for (BigInteger mb : b.poly)
 				r.push(ma.or(mb));
@@ -43,9 +43,9 @@ public class Poly {
 	}
 
 	public static Poly xor(Poly a, Poly b) {
-		if (a.limit != b.limit)
+		if (!a.mask.equals(b.mask))
 			throw new UnsupportedOperationException();
-		Poly r = new Poly(a.limit);
+		Poly r = new Poly(a.mask);
 		for (BigInteger m : a.poly)
 			r.push(m);
 		for (BigInteger m : b.poly)
