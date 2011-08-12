@@ -1,9 +1,7 @@
 package org.swined.zpol.v1;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,82 +60,6 @@ public class Poly implements IB {
 		return r;
 	}
 	
-	private static int[] init(int l) {
-		int[] r = new int[l];
-		for (int i = 0; i < l; i++)
-			r[i] = i;
-		return r;
-	}
-	
-	private static boolean inc(int[] a, int m) {
-		int c = a.length - 1;
-		while (true) {
-			a[c]++;
-			if (a[c] < m)
-				break;
-			c--;
-			if (c < 0)
-				return false;
-		}
-		int s = a[c];
-		if (s + a.length > m + c)
-			return false;
-		for (int i = c + 1; i < a.length; i++)
-			a[i] = s + i - c;
-		return true;
-	}
-	
-	private static int bitLength(int x) {
-		int c = 0;
-		while (x > 0) {
-			x >>= 1;
-			c++;
-		}
-		return c;
-	}
-	
-	public static Poly[] bitCount1(BigInteger[] a) {
-		int m = a.length;
-		Poly[] r = new Poly[bitLength(m)];
-		for (int i = 0; i < r.length; i++) {
-			int[] ix = init(1 << i);
-			Poly p = new Poly();
-			while (true) {
-				BigInteger t = BigInteger.ZERO;
-				for (int j : ix)
-					t = t.or(a[j]); 
-				p.push(t);
-				if (!inc(ix, m))
-					break;
-			}
-			r[i] = p;
-		}
-		return r;
-	}
-	
-	public static List<Poly> bitCount(List<Poly> a) {
-		List<Poly> overflow = new ArrayList<Poly>();
-		List<Poly> current = new ArrayList<Poly>(a);
-		if (current.size() == 0)
-			return current;
-		while (current.size() > 1) {
-			List<Poly> next = new ArrayList<Poly>();
-			while (current.size() > 1) {
-				Poly x = current.remove(0);
-				Poly y = current.remove(0);
-				overflow.add(Poly.and(x, y));
-				next.add(Poly.xor(x, y));
-			}
-			next.addAll(current);
-			current = next;
-		}
-		overflow = bitCount(overflow);
-		overflow.add(0, current.get(0));
-		while (overflow.size() > 1 && overflow.get(overflow.size() - 1).isZero())
-			overflow.remove(overflow.size() - 1);
-		return overflow;
-	}
-
 	public boolean isZero() {
 		return poly.size() == 0;
 	}
