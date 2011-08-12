@@ -42,7 +42,7 @@ public class Main {
     
     
 	public static void main(String[] args) {
-		guess(BigInteger.valueOf(43), new ArrayList<Integer>(), 1, 2, 3, 4, 5, 4, 3, 2, 1);
+		guess(BigInteger.valueOf(49), new ArrayList<Integer>(), 1, 2, 3, 4, 5, 4, 3, 2, 1);
 //		int c = 7;
 //		BigInteger[] b = new BigInteger[c];
 //		for (int i = 0; i < c; i++)
