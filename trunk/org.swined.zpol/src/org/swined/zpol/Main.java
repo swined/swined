@@ -22,18 +22,35 @@ public class Main {
 //    	return sb.toString();
 //    }
     
+    public static void guess(BigInteger n, int... b) {
+    	if (n.equals(BigInteger.ZERO)) {
+    		System.out.println("+");
+    		return;
+    	}
+    	if (b.length == 0)
+    		return;
+    	int ix = b.length - 1;
+    	for (int i = 0; i <= b[ix]; i++) {
+    		BigInteger t = n.subtract(BigInteger.valueOf(i).shiftLeft(ix));
+    		if (t.compareTo(BigInteger.ZERO) >= 0)
+    			guess(t, Arrays.copyOf(b, ix));
+    	}
+    }
+    
+    
 	public static void main(String[] args) {
-		int c = 7;
-		BigInteger[] b = new BigInteger[c];
-		for (int i = 0; i < c; i++)
-			b[i] = BigInteger.ZERO.setBit(i).setBit(c - i - 1);
-		List<Poly> p = new ArrayList<Poly>();
-		for (int i = 0; i < c; i++)
-			p.add(Poly.get(i, c - i - 1));
-		System.out.println(Poly.bitCount(p));
-		System.out.println(Arrays.toString(Poly.bitCount1(b)));
-//		test(WTF);
-//		test(RSA100);
+		guess(BigInteger.valueOf(143), 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1);
+//		int c = 7;
+//		BigInteger[] b = new BigInteger[c];
+//		for (int i = 0; i < c; i++)
+//			b[i] = BigInteger.ZERO.setBit(i).setBit(c - i - 1);
+//		List<Poly> p = new ArrayList<Poly>();
+//		for (int i = 0; i < c; i++)
+//			p.add(Poly.get(i, c - i - 1));
+//		System.out.println(Poly.bitCount(p));
+//		System.out.println(Arrays.toString(Poly.bitCount1(b)));
+////		test(WTF);
+////		test(RSA100);
 	}
 
 //	private static void test(BigInteger n) {
