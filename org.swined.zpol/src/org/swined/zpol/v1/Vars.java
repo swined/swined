@@ -53,7 +53,7 @@ public class Vars implements IB {
 	public Poly toPoly(int limit, Map<IB, Poly> ctx) {
 		Poly r = ctx.get(this);
 		if (r == null)
-			ctx.put(this, r = Poly.get(vars).limit(limit));
+			ctx.put(this, r = Poly.get(limit, vars));
 		return r;
 	}
 	
