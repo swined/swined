@@ -1,10 +1,8 @@
 package org.swined.zpol;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
+import org.swined.zpol.v1.IB;
 import org.swined.zpol.v1.Int;
 
 
@@ -16,8 +14,10 @@ public class Main {
 //    private static final BigInteger RSA120 = new BigInteger("227010481295437363334259960947493668895875336466084780038173258247009162675779735389791151574049166747880487470296548479");
 
     public static void main(String[] args) {
-		System.out.println(Int.meq(BigInteger.valueOf(6)));
-	}
+    	IB e1 = Int.meq(WTF), e2 = Int.meq(RSA100);
+    	System.out.println(e1);
+    	System.out.println(e2.getClass());
+    }
 	
 }
 
