@@ -32,4 +32,12 @@ public class And implements IB {
 	public String toString() {
 		return String.format("(%s & %s)", a, b);
 	}
+
+	@Override
+	public Poly toPoly(int limit, Map<IB, Poly> ctx) {
+		Poly r = ctx.get(this);
+		if (r == null)
+			ctx.put(this, r = Poly.and(a.toPoly(limit, ctx), b.toPoly(limit, ctx)).limit(limit));
+		return r;
+	}
 }

@@ -10,6 +10,11 @@ public enum Const implements IB {
 		public String toString() {
 			return "0";
 		}
+
+		@Override
+		public Poly toPoly(int limit, Map<IB, Poly> ctx) {
+			return Poly.zero();
+		}
 		
 	};
 
@@ -17,5 +22,5 @@ public enum Const implements IB {
 	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
 		return this;
 	}
-	
+
 }
