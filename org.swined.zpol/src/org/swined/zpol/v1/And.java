@@ -34,4 +34,17 @@ public class And implements IB {
 		return String.format("(%s & %s)", a, b);
 	}
 
+	@Override
+	public void iterate(final Iterator it) {
+		a.iterate(new Iterator() {
+			public void process(final BigInteger n) {
+				b.iterate(new Iterator() {
+					public void process(final BigInteger m) {
+						it.process(m.or(n));
+					}
+				});
+			}
+		});
+	}
+
 }
