@@ -1,6 +1,5 @@
 package org.swined.zpol.v1;
 
-import java.util.Map;
 
 public class And implements IB {
 
@@ -15,31 +14,32 @@ public class And implements IB {
 	public static IB get(IB a, IB b) {
 		if (a == Const.ZERO || b == Const.ZERO)
 			return Const.ZERO;
-		if (a.isOne())
-			return b;
-		if (b.isOne())
-			return a;
 		if (a instanceof Vars && b instanceof Vars)
 			return Vars.get(((Vars)a).vars.or(((Vars)b).vars));
+//		if (a instanceof Vars && b instanceof Xor) {
+//			Xor xb = (Xor)b;
+//			return Xor.get(get(a, xb.a), get(a, xb.b)); 
+//		}
+//		if (a instanceof Vars && b instanceof And) {
+//			And xb = (And)b;
+//			return get(get(a, xb.a), get(a, xb.b)); 
+//		}
+//		if (b instanceof Vars && a instanceof Xor) {
+//			Xor xa = (Xor)a;
+//			return Xor.get(get(b, xa.a), get(b, xa.b)); 
+//		}
+//		if (b instanceof Vars && a instanceof And) {
+//			And xa = (And)a;
+//			return get(get(b, xa.a), get(b, xa.b)); 
+//		}
+//		if (a instanceof Vars || b instanceof Vars)
+//			throw new UnsupportedOperationException(String.format("%s & %s", a.getClass(), b.getClass()));
 		return new And(a, b);
 	}
 
 	@Override
-	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
-		IB r = ctx.get(this);
-		if (r == null)
-			ctx.put(this, r = get(a.sub(v, c, ctx), b.sub(v, c, ctx)));
-		return r;
-	}
-	
-	@Override
 	public String toString() {
 		return String.format("(%s & %s)", a, b);
-	}
-
-	@Override
-	public boolean isOne() {
-		return false;
 	}
 
 }

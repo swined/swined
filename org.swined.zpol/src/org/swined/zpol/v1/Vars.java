@@ -1,7 +1,6 @@
 package org.swined.zpol.v1;
 
 import java.math.BigInteger;
-import java.util.Map;
 
 public class Vars implements IB {
 
@@ -24,13 +23,6 @@ public class Vars implements IB {
 	}
 	
 	@Override
-	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
-		if (vars.testBit(v))
-			return c ? get(vars.clearBit(v)) : Const.ZERO;
-		else return this;
-	}
-	
-	@Override
 	public String toString() {
 		return toString(vars, "x");
 	}
@@ -47,11 +39,6 @@ public class Vars implements IB {
 		if (sb.length() == 0)
 			sb.append("1");
 		return sb.toString();
-	}
-
-	@Override
-	public boolean isOne() {
-		return vars.equals(BigInteger.ZERO);
 	}
 
 }
