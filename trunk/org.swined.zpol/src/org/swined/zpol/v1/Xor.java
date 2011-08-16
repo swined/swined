@@ -1,6 +1,5 @@
 package org.swined.zpol.v1;
 
-import java.util.Map;
 
 public class Xor implements IB {
 
@@ -17,25 +16,15 @@ public class Xor implements IB {
 			return b;
 		if (b == Const.ZERO)
 			return a;
+		if (a instanceof Vars && b instanceof Vars)
+			if (((Vars)a).vars.equals(((Vars)b).vars))
+				return Const.ZERO;
 		return new Xor(a, b);
-	}
-
-	@Override
-	public IB sub(int v, boolean c, Map<IB, IB> ctx) {
-		IB r = ctx.get(this);
-		if (r == null)
-			ctx.put(this, r = get(a.sub(v, c, ctx), b.sub(v, c, ctx)));
-		return r;
 	}
 
 	@Override
 	public String toString() {
 		return String.format("(%s + %s)", a, b);
-	}
-
-	@Override
-	public boolean isOne() {
-		return false;
 	}
 
 }
