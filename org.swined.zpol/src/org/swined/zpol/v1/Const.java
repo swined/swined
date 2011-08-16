@@ -1,6 +1,5 @@
 package org.swined.zpol.v1;
 
-import java.math.BigInteger;
 import java.util.Map;
 
 public enum Const implements IB {
@@ -13,10 +12,10 @@ public enum Const implements IB {
 		}
 
 		@Override
-		public Poly toPoly(BigInteger mask, Map<IB, Poly> ctx) {
-			return Poly.zero(mask);
+		public boolean isOne() {
+			return false;
 		}
-		
+
 	};
 
 	@Override

@@ -50,12 +50,8 @@ public class Vars implements IB {
 	}
 
 	@Override
-	public Poly toPoly(BigInteger mask, Map<IB, Poly> ctx) {
-		Poly r = ctx.get(this);
-		if (r == null)
-			ctx.put(this, r = Poly.get(mask, vars));
-		return r;
+	public boolean isOne() {
+		return vars.equals(BigInteger.ZERO);
 	}
-	
-	
+
 }

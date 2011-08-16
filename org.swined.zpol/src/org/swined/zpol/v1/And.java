@@ -1,6 +1,5 @@
 package org.swined.zpol.v1;
 
-import java.math.BigInteger;
 import java.util.Map;
 
 public class And implements IB {
@@ -16,6 +15,10 @@ public class And implements IB {
 	public static IB get(IB a, IB b) {
 		if (a == Const.ZERO || b == Const.ZERO)
 			return Const.ZERO;
+		if (a.isOne())
+			return b;
+		if (b.isOne())
+			return a;
 		if (a instanceof Vars && b instanceof Vars)
 			return Vars.get(((Vars)a).vars.or(((Vars)b).vars));
 		return new And(a, b);
@@ -35,10 +38,8 @@ public class And implements IB {
 	}
 
 	@Override
-	public Poly toPoly(BigInteger mask, Map<IB, Poly> ctx) {
-		Poly r = ctx.get(this);
-		if (r == null)
-			ctx.put(this, r = Poly.and(a.toPoly(mask, ctx), b.toPoly(mask, ctx)));
-		return r;
+	public boolean isOne() {
+		return false;
 	}
+
 }
