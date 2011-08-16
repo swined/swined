@@ -10,6 +10,10 @@ public enum Const implements IB {
 			return "0";
 		}
 
+		@Override
+		public void iterate(Iterator it) {
+		}
+
 	};
 
 }

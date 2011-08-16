@@ -27,4 +27,10 @@ public class Xor implements IB {
 		return String.format("(%s + %s)", a, b);
 	}
 
+	@Override
+	public void iterate(Iterator it) {
+		a.iterate(it);
+		b.iterate(it);
+	}
+
 }

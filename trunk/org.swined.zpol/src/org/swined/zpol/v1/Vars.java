@@ -41,4 +41,9 @@ public class Vars implements IB {
 		return sb.toString();
 	}
 
+	@Override
+	public void iterate(Iterator it) {
+		it.process(vars);
+	}
+
 }
