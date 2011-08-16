@@ -16,24 +16,6 @@ public class And implements IB {
 			return Const.ZERO;
 		if (a instanceof Vars && b instanceof Vars)
 			return Vars.get(((Vars)a).vars.or(((Vars)b).vars));
-//		if (a instanceof Vars && b instanceof Xor) {
-//			Xor xb = (Xor)b;
-//			return Xor.get(get(a, xb.a), get(a, xb.b)); 
-//		}
-//		if (a instanceof Vars && b instanceof And) {
-//			And xb = (And)b;
-//			return get(get(a, xb.a), get(a, xb.b)); 
-//		}
-//		if (b instanceof Vars && a instanceof Xor) {
-//			Xor xa = (Xor)a;
-//			return Xor.get(get(b, xa.a), get(b, xa.b)); 
-//		}
-//		if (b instanceof Vars && a instanceof And) {
-//			And xa = (And)a;
-//			return get(get(b, xa.a), get(b, xa.b)); 
-//		}
-//		if (a instanceof Vars || b instanceof Vars)
-//			throw new UnsupportedOperationException(String.format("%s & %s", a.getClass(), b.getClass()));
 		return new And(a, b);
 	}
 
