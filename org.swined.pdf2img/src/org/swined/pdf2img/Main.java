@@ -59,10 +59,17 @@ public static void setup(String in, String prefix) throws IOException {
 
     //save it as a file
     BufferedImage bImg = toBufferedImage( img );
-    File yourImageFile = new File(prefix + i + ".png");
+    File yourImageFile = new File(prefix + pad(i + 1, Integer.toString(numPgs).length()) + ".png");
     ImageIO.write( bImg,"png",yourImageFile);
     }
    System.out.println("Done");
+}
+
+private static String pad(int n, int l) {
+	String s = Integer.toString(n);
+	while (s.length() < l)
+		s = "0" + s;
+	return s;
 }
 
 
