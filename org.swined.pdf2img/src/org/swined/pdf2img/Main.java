@@ -1,14 +1,9 @@
 package org.swined.pdf2img;
 
-import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.awt.Image;
+import java.awt.Color;
 import java.awt.Rectangle;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -16,123 +11,65 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
+import com.sun.pdfview.PDFRenderer;
 
 public class Main {
 
-public static void setup(String in, String prefix) throws IOException {
+	private static PDFFile loadPdf(String path) throws IOException {
+		File file = new File(path);
+		RandomAccessFile raf = new RandomAccessFile(file, "r");
+		FileChannel channel = raf.getChannel();
+		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
+		return new PDFFile(buf);
+	}
+	
+	private static void render(String in, String prefix, float zoom) throws IOException {
+		PDFFile pdf = loadPdf(in);
+		int np = pdf.getNumPages();
+		int nl = Integer.toString(np).length();
+		for (int i = 1; i <= np; i++) {
+			System.out.println("Extracting page " + i + " of " + np);
+			PDFPage page = pdf.getPage(i);
+			RenderedImage img = render(page, zoom);
+			File yourImageFile = new File(prefix + pad(i, nl) + ".png");
+			ImageIO.write(img, "png", yourImageFile);
+		}
+		System.out.println("Done");
+	}
 
-    //load a pdf from a byte buffer
-    File file = new File(in);
-    RandomAccessFile raf = new RandomAccessFile(file, "r");
-    FileChannel channel = raf.getChannel();
-    ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
-    PDFFile pdffile = new PDFFile(buf);
+	private static String pad(int n, int l) {
+		String s = Integer.toString(n);
+		while (s.length() < l)
+			s = "0" + s;
+		return s;
+	}
 
-    int numPgs = pdffile.getNumPages();
+	private static RenderedImage render(PDFPage page, float zoom) {
+		int width = (int)(page.getWidth() * zoom);
+		int height = (int)(page.getHeight() * zoom);
+		Rectangle bounds = new Rectangle(0, 0, width, height);
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		image.getGraphics().setColor(Color.WHITE);
+		image.getGraphics().fillRect(0, 0, width, height);
+		PDFRenderer renderer = new PDFRenderer(page, image.createGraphics(), bounds, null, null);
+		renderer.run();
+		renderer.cleanup();
+		return image;
+	}
 
-
-   for (int i=0; i<numPgs; i++)
-   {
-  	 System.out.println("Extracting page " + (i + 1) + " of " + numPgs);
-   // draw the first page to an image
-    PDFPage page = pdffile.getPage(i);
-
-    //get the width and height for the doc at the default zoom 
-    Rectangle rect = new Rectangle(0,0,
-            (int)page.getBBox().getWidth(),
-            (int)page.getBBox().getHeight());
-
-    //generate the image
-    Image img = page.getImage(
-            rect.width, rect.height, //width & height
-            rect, // clip rect
-            null, // null for the ImageObserver
-            true, // fill background with white
-            true  // block until drawing is done
-            );
-
-
-    //save it as a file
-    BufferedImage bImg = toBufferedImage( img );
-    File yourImageFile = new File(prefix + pad(i + 1, Integer.toString(numPgs).length()) + ".png");
-    ImageIO.write( bImg,"png",yourImageFile);
-    }
-   System.out.println("Done");
-}
-
-private static String pad(int n, int l) {
-	String s = Integer.toString(n);
-	while (s.length() < l)
-		s = "0" + s;
-	return s;
-}
-
-
-// This method returns a buffered image with the contents of an image
-public static BufferedImage toBufferedImage(Image image) {
-    if (image instanceof BufferedImage) {
-        return (BufferedImage)image;
-    }
-
-    // This code ensures that all the pixels in the image are loaded
-    image = new ImageIcon(image).getImage();
-
-//    // Determine if the image has transparent pixels; for this method's
-//    // implementation, see e661 Determining If an Image Has Transparent Pixels
-//    boolean hasAlpha = hasAlpha(image);
-
-    // Create a buffered image with a format that's compatible with the screen
-    BufferedImage bimage = null;
-    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    try {
-        // Determine the type of transparency of the new buffered image
-        int transparency = Transparency.OPAQUE;
-//        if (hasAlpha) {
-//            transparency = Transparency.BITMASK;
-//        }
-
-        // Create the buffered image
-        GraphicsDevice gs = ge.getDefaultScreenDevice();
-        GraphicsConfiguration gc = gs.getDefaultConfiguration();
-        bimage = gc.createCompatibleImage(
-            image.getWidth(null), image.getHeight(null), transparency);
-    } catch (HeadlessException e) {
-        // The system does not have a screen
-    }
-
-    if (bimage == null) {
-        // Create a buffered image using the default color model
-        int type = BufferedImage.TYPE_INT_RGB;
-//        if (hasAlpha) {
-//            type = BufferedImage.TYPE_INT_ARGB;
-//        }
-        bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
-    }
-
-    // Copy image to buffered image
-    Graphics g = bimage.createGraphics();
-
-    // Paint the image onto the buffered image
-    g.drawImage(image, 0, 0, null);
-    g.dispose();
-
-    return bimage;
-}
-
-public static void main(final String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-        public void run() {
-            try {
-                Main.setup(args[0], "page_");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    });
-}
+	public static void main(final String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					render(args[0], "page_", Float.parseFloat(args[1]));
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+	}
 }
