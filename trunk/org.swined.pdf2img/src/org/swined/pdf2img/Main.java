@@ -11,7 +11,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import javax.imageio.ImageIO;
-import javax.swing.SwingUtilities;
 
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
@@ -61,15 +60,7 @@ public class Main {
 		return image;
 	}
 
-	public static void main(final String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					render(args[0], "page_", Float.parseFloat(args[1]));
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+	public static void main(final String[] args) throws NumberFormatException, IOException {
+		render(args[0], "page_", Float.parseFloat(args[1]));
 	}
 }
