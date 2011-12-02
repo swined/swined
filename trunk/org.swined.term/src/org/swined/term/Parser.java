@@ -104,11 +104,35 @@ public class Parser {
 			
 		}
 
-		public static class Action implements IRule, IMatchResult {
+		public static class N implements IRule {
+			
+			private final IRule rule;
+
+			public N(IRule rule) {
+				this.rule = rule;
+			}
+			
+			@Override
+			public IMatchResult match(char[] buffer, int from, int to) {
+				for (int i = from; i < to; i++) {
+					char c = buffer[i];
+					if (!Character.isDigit(c)) {
+						if (i == from)
+							return IMatchResult.NO;
+					}
+				}
+				return null;
+			}
+			
+			
+			
+		}
+		
+		public static class A implements IRule, IMatchResult {
 			
 			private final IAction action;
 			
-			public Action(IAction action) {
+			public A(IAction action) {
 				this.action = action;
 			}
 
