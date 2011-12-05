@@ -1,7 +1,10 @@
 default: run
 clean:
-	rm *.class || true
+	rm *.class *.jar || true
 build:	clean
 	javac *.java
-run:	build
-	java Main
+jar:	build
+	jar cmf MANIFEST.MF battery.jar *.class
+	rm *.class || true
+run:	jar
+	java -jar battery.jar

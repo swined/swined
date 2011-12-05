@@ -9,15 +9,20 @@ public class Main {
 	public static void main(String[] args) throws Throwable {
 		SystemTray tray = SystemTray.getSystemTray();
 		Dimension size = tray.getTrayIconSize();
-		TrayIcon trayIcon = new TrayIcon(ImageUtils.textIcon(size, "?"), "battery charge", null);
-		tray.add(trayIcon);
+		TrayIcon chargeIcon = new TrayIcon(ImageUtils.textIcon(size, "?"), "battery charge", null);
+		TrayIcon timeIcon = new TrayIcon(ImageUtils.textIcon(size, "?"), "battery time", null);
+		tray.add(chargeIcon);
+		tray.add(timeIcon);
 		while (true) {
 			float charge = BatteryStatus.getChargePercentage();
+			float time = BatteryStatus.getTimeToLive();
 			System.out.println(
 				charge + "% " + 
-				BatteryStatus.getTimeToLive() + "h");
-			trayIcon.setImage(ImageUtils.textIcon(size, Float.toString(charge)));
-			trayIcon.setToolTip(Float.toString(charge) + "%");
+				time + "h");
+			chargeIcon.setImage(ImageUtils.textIcon(size, Float.toString(charge)));
+			chargeIcon.setToolTip(Float.toString(charge) + "%");
+			timeIcon.setImage(ImageUtils.textIcon(size, Float.toString(time)));
+			timeIcon.setToolTip(Float.toString(time) + "h");
 			Thread.sleep(5000);
 		}
 	}
