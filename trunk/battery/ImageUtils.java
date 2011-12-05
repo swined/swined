@@ -13,7 +13,7 @@ public class ImageUtils {
 		BufferedImage image = new BufferedImage((int)dimension.getWidth(), (int)dimension.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics = image.createGraphics();
 		graphics.setColor(Color.BLACK);
-		graphics.drawString(text, 0, 24);
+		graphics.drawString(text, 0, (int)dimension.getHeight());
 		return image;
 	}
 
