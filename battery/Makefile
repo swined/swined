@@ -1,3 +1,4 @@
+default: run
 clean:
 	rm *.class || true
 build:	clean
