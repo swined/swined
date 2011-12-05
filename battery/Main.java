@@ -16,9 +16,6 @@ public class Main {
 		while (true) {
 			float charge = BatteryStatus.getChargePercentage();
 			float time = BatteryStatus.getTimeToLive();
-			System.out.println(
-				charge + "% " + 
-				time + "h");
 			chargeIcon.setImage(ImageUtils.textIcon(size, Float.toString(charge)));
 			chargeIcon.setToolTip(Float.toString(charge) + "%");
 			timeIcon.setImage(ImageUtils.textIcon(size, Float.toString(time)));
