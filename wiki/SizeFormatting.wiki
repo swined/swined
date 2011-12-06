@@ -1,6 +1,0 @@
-#labels perl
-{{{
-
-sub fmsz { local $i = 4, (map { return (int(100 * $n) / 100) . $_ if 0.99 < abs(local $n = $_[0] / (1 << 10 * $i--)) } split '', 'TGMkb'), return 0 }
-
-}}}
