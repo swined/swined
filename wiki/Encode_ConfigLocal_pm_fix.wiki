@@ -1,6 +1,0 @@
-#summary Encode/ConfigLocal.pm fix
-#labels fix,perl
-
-{{{
-enc2xs -C
-}}}
