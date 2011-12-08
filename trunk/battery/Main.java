@@ -8,6 +8,7 @@ public class Main {
 
 	public static void main(String[] args) throws Throwable {
 		SystemTray tray = SystemTray.getSystemTray();
+		Dimension size = tray.getTrayIconSize();
 		TrayIcon timeIcon = new TrayIcon(ImageUtils.textIcon(size, "?"), "battery time", null);
 		BatteryChargeIcon batteryChargeIcon = new BatteryChargeIcon(tray);
 		tray.add(timeIcon);
@@ -16,7 +17,7 @@ public class Main {
 			batteryChargeIcon.update();
 			timeIcon.setImage(ImageUtils.textIcon(size, Float.toString(time)));
 			timeIcon.setToolTip(Float.toString(time) + "h");
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 		}
 	}
 
