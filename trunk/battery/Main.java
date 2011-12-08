@@ -8,7 +8,6 @@ public class Main {
 
 	public static void main(String[] args) throws Throwable {
 		SystemTray tray = SystemTray.getSystemTray();
-		Dimension size = tray.getTrayIconSize();
 		TrayIcon timeIcon = new TrayIcon(ImageUtils.textIcon(size, "?"), "battery time", null);
 		BatteryChargeIcon batteryChargeIcon = new BatteryChargeIcon(tray);
 		tray.add(timeIcon);
