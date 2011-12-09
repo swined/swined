@@ -5,6 +5,7 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.Dimension;
 import java.awt.AWTException;
+import java.awt.Color;
 
 public class BatteryChargeIcon {
 
@@ -20,10 +21,11 @@ public class BatteryChargeIcon {
 	};
 	private final TrayIcon icon;
 
-	public BatteryChargeIcon(SystemTray tray) throws AWTException {
-		this.icon = new TrayIcon(batteryMissing, "battery missing", null);
-		icon.setImageAutoSize(true);
+	public BatteryChargeIcon(SystemTray tray) throws Throwable { //AWTException {
+		this.icon = new TrayIcon(batteryMissing);
 		tray.add(icon);
+		Utils.getCanvas(icon).setBackground(new Color(100, 100, 100, 0));
+		icon.setImageAutoSize(true);
 	}
 
 	public void update() throws IOException {
