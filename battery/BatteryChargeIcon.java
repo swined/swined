@@ -28,7 +28,7 @@ public class BatteryChargeIcon {
 
 	public void update() throws IOException {
 		float charge = BatteryStatus.getChargePercentage();
-		int image = Math.round(charge * images.length / 100);
+		int image = Math.round(charge * (images.length - 1) / 100);
 		icon.setImage(images[image]);
 		icon.setToolTip(String.format("%f%%", charge, image));
 	}
