@@ -12,6 +12,7 @@ public class Main {
 		TrayIcon timeIcon = new TrayIcon(ImageUtils.textIcon(size, "?"), "battery time", null);
 		BatteryChargeIcon batteryChargeIcon = new BatteryChargeIcon(tray);
 		tray.add(timeIcon);
+		System.out.println(Utils.getCanvas(timeIcon));
 		while (true) {
 			float time = BatteryStatus.getTimeToLive();
 			batteryChargeIcon.update();
