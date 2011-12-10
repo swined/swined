@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DL=10
+DL=20
 LP=/sys/class/backlight/pwm-backlight/brightness
 BL=$(cat $LP)
 case $1 in
