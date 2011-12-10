@@ -16,3 +16,5 @@ esac
 echo "echo $BL > $LP" > $SV
 chmod +x $SV 
 $SV
+
+notify-send "Set backlight level to $BL%" -t 2000
