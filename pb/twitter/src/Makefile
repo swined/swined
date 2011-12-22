@@ -1,2 +1,2 @@
 build:
-	gcc *.c oauth/*.c -o twitter -lm -lssl
+	gcc *.c oauth/src/*.c -o twitter -lm -lssl -lcrypto
