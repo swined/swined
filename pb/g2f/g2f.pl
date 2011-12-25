@@ -10,7 +10,7 @@ my $reader = new WebService::Google::Reader(
 	password => shift
 ) or die;
 
-my $feed = $reader->starred(count => 1) or die 'failed to retrieve feed';
+my $feed = $reader->starred(count => 10) or die 'failed to retrieve feed';
 for my $entry ($feed->entries) {
-	printf Data::Dumper::Dump($entry);
+	printf "%s\n%s\n\n%s\n\n", $entry->title, $entry->link->href, $entry->content || 'no content';
 }
