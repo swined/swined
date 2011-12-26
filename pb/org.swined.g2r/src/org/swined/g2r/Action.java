@@ -2,6 +2,9 @@ package org.swined.g2r;
 
 import java.io.IOException;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
 public enum Action {
 
 	AUTH("auth") {
@@ -13,7 +16,9 @@ public enum Action {
 	STARRED("starred") {
 		@Override
 		public void invoke(String... args) throws Throwable {
-			System.out.println(new String(Utils.read(ReaderUtils.starred(args[1], 10))));
+			Document atom = AtomUtils.parse(ReaderUtils.starred(args[1], 10));
+			for (Node node : AtomUtils.getEntries(atom))
+				System.out.println(AtomUtils.getTitle(node));
 		}
 	},
 	HELP("help") {
