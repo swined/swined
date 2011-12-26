@@ -1,20 +1,19 @@
 package org.swined.g2r;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public enum Action {
 
 	AUTH("auth") {
 		@Override
 		public void invoke(String... args) throws IOException {
-			System.out.println(ReaderUtils.login(args[0], args[1]));
+			System.out.println(ReaderUtils.login(args[1], args[2]));
 		}
 	},
 	STARRED("starred") {
 		@Override
 		public void invoke(String... args) throws Throwable {
-			System.out.println(new String(Utils.read(ReaderUtils.starred(args[0], 10))));
+			System.out.println(new String(Utils.read(ReaderUtils.starred(args[1], 10))));
 		}
 	},
 	HELP("help") {
@@ -33,7 +32,7 @@ public enum Action {
 	public abstract void invoke(String... args) throws Throwable;
 	
 	public static void run(String... args) throws Throwable {
-		get(args[0]).invoke(Arrays.copyOfRange(args, 1, args.length - 1));
+		get(args[0]).invoke(args);
 	}
 	
 	public static Action get(String id) {
