@@ -16,7 +16,8 @@ public enum Action {
 	STARRED("starred") {
 		@Override
 		public void invoke(String... args) throws Throwable {
-			Document atom = AtomUtils.parse(ReaderUtils.starred(args[1], 10));
+			String auth = ReaderUtils.login(args[1], args[2]);
+			Document atom = AtomUtils.parse(ReaderUtils.starred(auth, 10));
 			for (Node node : AtomUtils.getEntries(atom))
 				System.out.println(AtomUtils.getTitle(node));
 		}
@@ -24,7 +25,7 @@ public enum Action {
 	HELP("help") {
 		@Override
 		public void invoke(String... args) {
-			System.out.println("unknown action");
+			System.out.println("unknown action " + args[0]);
 		}
 	};
 	

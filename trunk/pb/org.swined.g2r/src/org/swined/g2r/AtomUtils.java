@@ -24,7 +24,7 @@ public class AtomUtils {
 	}
 	
 	public static Collection<Node> getEntries(Document doc) {
-		return getChildNodesByTagName(doc.getNextSibling(), "entry");
+		return getChildNodesByTagName(doc.getDocumentElement(), "entry");
 	}
 	
 	private static Collection<Node> getChildNodesByTagName(Node node, String tag) {
@@ -32,7 +32,7 @@ public class AtomUtils {
 		NodeList children = node.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			Node child = children.item(i);
-			if (child.getLocalName().equals(tag))
+			if (child.getNodeName().equals(tag))
 				nodes.add(node);
 		}
 		return nodes;
