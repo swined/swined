@@ -19,9 +19,9 @@ pbres -c %IMAGES% images/*.bmp
 if errorlevel 1 goto L_ER
 :NOIMG
 
-set SOURCE=*.c oauth/src/hash.c oauth/src/oauth.c oauth/src/oauth_http.c oauth/src/xmalloc.c
+set SOURCE=*.c
 
-gcc -Wall -O2 -fomit-frame-pointer %INCLUDE% -o %OUTPUT% %SOURCE% %IMAGES% %LIBS% -DUSE_BUILTIN_HASH -DHAVE_CURL -DVERSION=LIBOAUTH_VERSION
+gcc -Wall -O2 -fomit-frame-pointer %INCLUDE% -o %OUTPUT% %SOURCE% %IMAGES% %LIBS% -DHAVE_CURL -DVERSION=LIBOAUTH_VERSION
 if errorlevel 1 goto L_ER
 strip %OUTPUT%
 
