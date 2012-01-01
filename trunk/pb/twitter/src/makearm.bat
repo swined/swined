@@ -12,16 +12,7 @@ set OUTPUT=twitter.app
 
 rm -f %OUTPUT%
 
-set IMAGES=
-if not exist images\*.bmp goto NOIMG
-set IMAGES=%TEMP%\images.temp.c
-pbres -c %IMAGES% images/*.bmp
-if errorlevel 1 goto L_ER
-:NOIMG
-
-set SOURCE=*.c
-
-gcc -Wall -O2 -fomit-frame-pointer %INCLUDE% -o %OUTPUT% %SOURCE% %IMAGES% %LIBS% -DHAVE_CURL -DVERSION=LIBOAUTH_VERSION
+gcc -Wall -O2 -fomit-frame-pointer %INCLUDE% -o %OUTPUT% *.c %LIBS% -DHAVE_CURL -DVERSION=LIBOAUTH_VERSION
 if errorlevel 1 goto L_ER
 strip %OUTPUT%
 
