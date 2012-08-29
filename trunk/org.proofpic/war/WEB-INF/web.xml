@@ -12,6 +12,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-name>Serve</servlet-name>
     <servlet-class>org.proofpic.ServeServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>PicsJson</servlet-name>
+    <servlet-class>org.proofpic.PicsJsonServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Upload</servlet-name>
     <url-pattern>/put</url-pattern>
@@ -19,6 +23,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet-mapping>
     <servlet-name>Serve</servlet-name>
     <url-pattern>/image.jpg</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PicsJson</servlet-name>
+    <url-pattern>/pics.json</url-pattern>
   </servlet-mapping>
   	<welcome-file-list>
 		<welcome-file>image.jpg</welcome-file>
