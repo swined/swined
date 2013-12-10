@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TheController {
 
     @Autowired
-    private HelloServiceImpl helloService;
+    private HelloService helloService;
 
     @RequestMapping("/index")
     public ModelAndView getIndex() {
