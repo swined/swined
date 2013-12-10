@@ -3,9 +3,8 @@ package org.swined.gae.test;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HelloServiceImpl implements HelloService {
+public class HelloServiceImpl {
 
-    @Override
     public String getHello() {
         return "goodbye, world";
     }
