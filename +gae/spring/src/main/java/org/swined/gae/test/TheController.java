@@ -14,7 +14,7 @@ public class TheController {
     @Autowired
     final HelloService helloService = null;
 
-    @RequestMapping("/index")
+    @RequestMapping("/index.html")
     public ModelAndView getIndex(
             final @RequestParam(required = false) String p,
             final HttpSession session
