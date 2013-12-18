@@ -1,12 +1,12 @@
 package org.swined.gae;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 public class BetFairWeb {
 
-    public static Set<String> getLiveSoccerMarkets() throws IOException {
+    public static Collection<String> getLiveSoccerMarkets() throws IOException {
         return new HashSet<String>() {{
             String html = Utils.httpGet("http://www.betfair.com/exchange/football/coupon?id=4&goingInPlay=true");
             while (html.contains("data-rules-marketId=\"")) {
