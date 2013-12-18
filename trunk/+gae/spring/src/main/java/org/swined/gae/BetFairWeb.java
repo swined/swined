@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class BetFairWeb {
 
-    public static Set<String> getInPlayMarkets() throws IOException {
+    public static Set<String> getLiveSoccerMarkets() throws IOException {
         return new HashSet<String>() {{
             String html = Utils.httpGet("http://www.betfair.com/exchange/football/coupon?id=4&goingInPlay=true");
             while (html.contains("data-rules-marketId=\"")) {

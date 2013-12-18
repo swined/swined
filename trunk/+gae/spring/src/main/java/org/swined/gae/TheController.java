@@ -1,8 +1,12 @@
 package org.swined.gae;
 
+import org.json.JSONArray;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletResponse;
 import java.io.IOException;
@@ -15,9 +19,17 @@ public class TheController {
         throw new UnsupportedOperationException();
     }
 
-    @RequestMapping("/bf/inPlayMarkets.json")
-    public void getInPlayMarkets(ServletResponse response) throws IOException {
-        response.getWriter().write(BetFairWeb.getInPlayMarkets().toString());
+    @ResponseBody
+    @RequestMapping(
+            value = "/bf/liveSoccerMarkets.json",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getLiveSoccerMarkets() throws IOException {
+        return new JSONArray() {{
+            for (String id : BetFairWeb.getLiveSoccerMarkets())
+                put(id);
+        }}.toString();
     }
 
     @ExceptionHandler(Throwable.class)
