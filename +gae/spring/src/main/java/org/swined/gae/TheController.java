@@ -3,7 +3,6 @@ package org.swined.gae;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.swined.gae.BetFairWeb;
 
 import javax.servlet.ServletResponse;
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class TheController {
         throw new UnsupportedOperationException();
     }
 
-    @RequestMapping("/bf/inPlayMarkets.html")
+    @RequestMapping("/bf/inPlayMarkets.json")
     public void getInPlayMarkets(ServletResponse response) throws IOException {
         response.getWriter().write(BetFairWeb.getInPlayMarkets().toString());
     }
