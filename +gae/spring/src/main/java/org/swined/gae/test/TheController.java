@@ -5,19 +5,27 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletResponse;
+import java.io.IOException;
+
 @Controller
 public class TheController {
 
     @RequestMapping("/index.html")
-    public ModelAndView getIndex() {
+    public void getIndex() {
         throw new UnsupportedOperationException();
     }
 
+    @RequestMapping("/bf/inPlayMarkets.html")
+    public void getInPlayMarkets(ServletResponse response) throws IOException {
+        response.getWriter().write(BetFairWeb.getInPlayMarkets().toString());
+    }
+
     @ExceptionHandler(Throwable.class)
-    public ModelAndView exceptionHandler(final Throwable throwable) {
-        return new ModelAndView("error") {{
-            addObject("error", throwable);
-        }};
+    public void exceptionHandler(Throwable throwable, ServletResponse response) throws IOException {
+        response.getWriter().write("<pre>");
+        throwable.printStackTrace(response.getWriter());
+        response.getWriter().write("</pre>");
     }
 
 }
