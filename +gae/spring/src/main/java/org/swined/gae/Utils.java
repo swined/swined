@@ -1,4 +1,4 @@
-package org.swined.gae.test;
+package org.swined.gae;
 
 import org.apache.commons.io.IOUtils;
 

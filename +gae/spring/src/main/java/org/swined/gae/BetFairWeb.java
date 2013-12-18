@@ -1,4 +1,6 @@
-package org.swined.gae.test;
+package org.swined.gae;
+
+import org.swined.gae.Utils;
 
 import java.io.IOException;
 import java.util.HashSet;
