@@ -26,10 +26,7 @@ public class TheController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String getLiveSoccerMarkets() throws IOException {
-        return new JSONArray() {{
-            for (String id : BetFairWeb.getLiveSoccerMarkets())
-                put(id);
-        }}.toString();
+        return new JSONArray(BetFairWeb.getLiveSoccerMarkets()).toString();
     }
 
     @ExceptionHandler(Throwable.class)
