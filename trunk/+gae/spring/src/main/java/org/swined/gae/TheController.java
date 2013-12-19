@@ -20,11 +20,7 @@ public class TheController {
     }
 
     @ResponseBody
-    @RequestMapping(
-            value = "/bf/liveSoccerMarkets.json",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @RequestMapping(value = "/bf/liveSoccerMarkets.json", method = RequestMethod.GET)
     public String getLiveSoccerMarkets() throws IOException {
         return new JSONArray(BetFairWeb.getLiveSoccerMarkets()).toString();
     }
