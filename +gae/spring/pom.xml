@@ -10,7 +10,7 @@
     <artifactId>test</artifactId>
 
     <properties>
-        <spring.version>3.2.5.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <appengine.app.version>1</appengine.app.version>
         <appengine.target.version>1.7.5</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
